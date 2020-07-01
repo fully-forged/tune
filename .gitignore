@@ -36,3 +36,6 @@ npm-debug.log
 # PLTs
 /priv/plts/*.plt
 /priv/plts/*.plt.hash
+
+# ENV file
+.envrc
