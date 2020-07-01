@@ -14,6 +14,15 @@ defmodule TuneWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/auth", TuneWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    post "/logout", AuthController, :delete
+  end
+
   scope "/", TuneWeb do
     pipe_through :browser
 
