@@ -6,6 +6,8 @@ defmodule Tune.Application do
   use Application
 
   def start(_type, _args) do
+    Tune.Spotify.Auth.configure!()
+
     children = [
       # Start the Telemetry supervisor
       TuneWeb.Telemetry,
