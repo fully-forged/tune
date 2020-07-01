@@ -6,6 +6,7 @@ defmodule TuneWeb.AuthController do
   def callback(conn = %{assigns: %{ueberauth_auth: auth}}, _params) do
     conn
     |> put_flash(:info, "Hello #{auth.info.name}!")
+    |> put_session(:spotify_token, auth.credentials.token)
     |> configure_session(renew: true)
     |> redirect(to: Routes.page_path(conn, :index))
   end

@@ -15,6 +15,9 @@ config :tune, TuneWeb.Endpoint,
   pubsub_server: Tune.PubSub,
   live_view: [signing_salt: "Op07Dt9x"]
 
+config :tune,
+  spotify: Tune.Spotify.Client
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

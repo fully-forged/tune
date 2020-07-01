@@ -45,7 +45,9 @@ defmodule Tune.MixProject do
       {:telemetry_poller, "~> 0.4"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:ueberauth_spotify, "~> 0.2.1"}
+      {:ueberauth_spotify, "~> 0.2.1"},
+      {:finch, "~> 0.3.0"},
+      {:mox, "~> 0.5", only: :test}
     ]
   end
 
