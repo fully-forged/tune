@@ -23,9 +23,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+spotify_scope =
+  "user-read-email, user-read-private, user-read-playback-state, user-modify-playback-state, user-read-currently-playing"
+
 config :ueberauth, Ueberauth,
   providers: [
-    spotify: {Ueberauth.Strategy.Spotify, []}
+    spotify: {Ueberauth.Strategy.Spotify, [default_scope: spotify_scope]}
   ]
 
 # Import environment specific config. This must remain at the bottom
