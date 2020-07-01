@@ -1,6 +1,9 @@
 /* This file is for your main application css. */
-@import "./phoenix.css";
+// @import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
+@import "bootstrap.css";
+@import "bootstrap-reboot.css";
+@import "bootstrap-grid.css";
 
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
