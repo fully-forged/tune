@@ -1,10 +1,8 @@
-<header>
+<header class="container">
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Tune</a>
-    <form class="form-inline mt-2 mt-md-0">
-      <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    </div>
+    <span class="navbar-text">
+      <%= link "Login via Spotify", to: Routes.auth_path(@conn, :request, :spotify) %>
+    </span>
   </nav>
 </header>
