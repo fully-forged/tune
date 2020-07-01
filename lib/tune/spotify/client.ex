@@ -20,6 +20,21 @@ defmodule Tune.Spotify.Client do
     end
   end
 
+  def now_playing(token) do
+    headers = @json_headers ++ authorization_headers(token)
+
+    case get("/me/player", headers) do
+      {:ok, %{status: 204}} ->
+        :not_playing
+
+      {:ok, response} ->
+        {:playing, Jason.decode!(response.body)}
+
+      error ->
+        error
+    end
+  end
+
   defp authorization_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end

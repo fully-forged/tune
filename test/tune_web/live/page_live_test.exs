@@ -11,6 +11,9 @@ defmodule TuneWeb.PageLiveTest do
     |> expect(:get_profile, 2, fn "example-token" ->
       {:ok, %{"display_name" => "Example user"}}
     end)
+    |> expect(:now_playing, 2, fn "example-token" ->
+      {:playing, %{"item" => %{"name" => "Example song"}}}
+    end)
 
     {:ok, page_live, disconnected_html} =
       conn
@@ -18,6 +21,8 @@ defmodule TuneWeb.PageLiveTest do
       |> live("/")
 
     assert disconnected_html =~ "Example user"
+    assert disconnected_html =~ "Example song"
     assert render(page_live) =~ "Example user"
+    assert render(page_live) =~ "Example song"
   end
 end
