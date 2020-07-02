@@ -13,7 +13,19 @@ defmodule TuneWeb.PageLiveTest do
   }
 
   @song_title "Example song"
-  @now_playing %{"item" => %{"name" => @song_title}}
+  @artist_name "Example artist"
+  @album_image_url "http://example.com/album.png"
+  @now_playing %{
+    "item" => %{
+      "name" => @song_title,
+      "artists" => [%{"name" => @artist_name}],
+      "album" => %{
+        "images" => [
+          %{"url" => @album_image_url}
+        ]
+      }
+    }
+  }
 
   setup :verify_on_exit!
 

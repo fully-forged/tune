@@ -1,4 +1,4 @@
-<section class="phx-hero">
+<section class="d-flex justify-content-center">
   <%= if @status == :authenticated do %>
     <%= live_component @socket, PlayerComponent, id: :player, spotify_token: @spotify_token %>
   <% end %>
