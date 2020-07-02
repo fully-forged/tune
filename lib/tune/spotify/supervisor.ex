@@ -27,4 +27,3 @@ defmodule Tune.Spotify.Supervisor do
     DynamicSupervisor.start_child(Tune.Spotify.SessionSupervisor, {Tune.Spotify.Session, token})
   end
 end
-
