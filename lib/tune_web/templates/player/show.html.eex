@@ -1,10 +1,17 @@
 <%= case @now_playing do %>
   <% {:playing, track} -> %>
-    <div class="card text-center now-playing">
+    <div class="card now-playing">
       <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
-      <div class="card-body">
-        <h5 class="card-title"><%= track.name %></h5>
-        <h6 class="card-subtitle mb-2 text-muted"><%= track.artist.name %></h6>
+      <div class="card-body d-flex">
+        <%= if track.playing do %>
+          <%= render "play.html" %>
+        <% else %>
+          <%= render "pause.html" %>
+        <% end %>
+        <div>
+          <h5 class="card-title"><%= track.name %></h5>
+          <h6 class="card-subtitle text-muted"><%= track.artist.name %></h6>
+        </div>
       </div>
     </div>
   <% :not_playing -> %>

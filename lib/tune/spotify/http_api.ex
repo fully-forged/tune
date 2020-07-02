@@ -68,6 +68,7 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_now_playing(data) do
+    playing = Map.get(data, "is_playing")
     track_name = get_in(data, ["item", "name"])
     track_artist = get_in(data, ["item", "artists", Access.at(0), "name"])
     album_name = get_in(data, ["item", "album", "name"])
@@ -75,6 +76,7 @@ defmodule Tune.Spotify.HttpApi do
 
     %Track{
       name: track_name,
+      playing: playing,
       artist: %Artist{name: track_artist},
       album: %Album{name: album_name, thumbnail: album_thumbnail}
     }
