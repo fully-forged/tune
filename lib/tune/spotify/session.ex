@@ -4,7 +4,8 @@ defmodule Tune.Spotify.Session do
 
   alias Tune.Spotify.{HttpApi, SessionRegistry}
 
-  defstruct user: nil,
+  defstruct token: nil,
+            user: nil,
             now_playing: :not_playing
 
   def start_link(token) do
@@ -26,7 +27,7 @@ defmodule Tune.Spotify.Session do
   def init(token) do
     case HttpApi.get_profile(token) do
       {:ok, user} ->
-        {:ok, %__MODULE__{user: user}}
+        {:ok, %__MODULE__{user: user, token: token}, {:continue, :get_now_playing}}
 
       _error ->
         {:stop, :invalid_token}
@@ -39,6 +40,16 @@ defmodule Tune.Spotify.Session do
 
   def handle_call(:now_playing, _from, state) do
     {:reply, state.now_playing, state}
+  end
+
+  def handle_continue(:get_now_playing, state) do
+    now_playing = HttpApi.now_playing(state.token)
+    Process.send_after(self(), :get_now_playing, 5000)
+    {:noreply, %{state | now_playing: now_playing}}
+  end
+
+  def handle_info(:get_now_playing, state) do
+    handle_continue(:get_now_playing, state)
   end
 
   defp via(token) do
