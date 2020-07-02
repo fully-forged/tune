@@ -1,0 +1,14 @@
+<%= case @now_playing do %>
+  <% {:playing, track} -> %>
+    <div class="card now-playing">
+      <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
+      <div class="card-body">
+        <h5 class="card-title"><%= track.name %></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><%= track.artist.name %></h6>
+      </div>
+    </div>
+  <% :not_playing -> %>
+    <p>Not playing.</p>
+  <% {:error, _reason} -> %>
+    <p>Error fetching playing information.</p>
+<% end %>

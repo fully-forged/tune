@@ -3,6 +3,7 @@ defmodule Tune.Spotify.Session do
   @behaviour Tune.Spotify
 
   alias Tune.Spotify.{HttpApi, SessionRegistry}
+  alias Phoenix.PubSub
 
   defstruct token: nil,
             user: nil,
@@ -10,6 +11,10 @@ defmodule Tune.Spotify.Session do
 
   def start_link(token) do
     GenServer.start_link(__MODULE__, token, name: via(token))
+  end
+
+  def subscribe(token) do
+    PubSub.subscribe(Tune.PubSub, token)
   end
 
   def setup(token) do
@@ -44,6 +49,11 @@ defmodule Tune.Spotify.Session do
 
   def handle_continue(:get_now_playing, state) do
     now_playing = HttpApi.now_playing(state.token)
+
+    if state.now_playing !== now_playing do
+      PubSub.broadcast(Tune.PubSub, state.token, now_playing)
+    end
+
     Process.send_after(self(), :get_now_playing, 5000)
     {:noreply, %{state | now_playing: now_playing}}
   end
