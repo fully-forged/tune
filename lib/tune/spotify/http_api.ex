@@ -1,4 +1,4 @@
-defmodule Tune.Spotify.Client do
+defmodule Tune.Spotify.HttpApi do
   @behaviour Tune.Spotify
 
   alias Tune.{Album, Artist, Track}
@@ -11,9 +11,7 @@ defmodule Tune.Spotify.Client do
   ]
 
   def get_profile(token) do
-    headers = @json_headers ++ authorization_headers(token)
-
-    case get("/me", headers) do
+    case json_get("/me", auth_headers(token)) do
       {:ok, %{status: 200} = response} ->
         Jason.decode(response.body)
 
@@ -26,9 +24,7 @@ defmodule Tune.Spotify.Client do
   end
 
   def now_playing(token) do
-    headers = @json_headers ++ authorization_headers(token)
-
-    case get("/me/player", headers) do
+    case json_get("/me/player", auth_headers(token)) do
       {:ok, %{status: 204}} ->
         :not_playing
 
@@ -48,8 +44,12 @@ defmodule Tune.Spotify.Client do
     end
   end
 
-  defp authorization_headers(token) do
+  defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
+  end
+
+  defp json_get(path, headers) do
+    get(path, @json_headers ++ headers)
   end
 
   defp get(path, headers) do
