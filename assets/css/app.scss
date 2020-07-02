@@ -5,6 +5,11 @@
 @import "bootstrap-reboot.css";
 @import "bootstrap-grid.css";
 
+.user-avatar {
+  width: 2rem;
+  height: 2rem;
+}
+
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
   color: #a94442;

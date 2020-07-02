@@ -17,4 +17,11 @@ defmodule TuneWeb.AuthController do
     |> configure_session(drop: true)
     |> redirect(to: Routes.page_path(conn, :index))
   end
+
+  def delete(conn, _params) do
+    conn
+    |> put_flash(:info, "Logged out")
+    |> configure_session(drop: true)
+    |> redirect(to: Routes.page_path(conn, :index))
+  end
 end

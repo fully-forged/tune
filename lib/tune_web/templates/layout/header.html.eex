@@ -1,8 +1,13 @@
 <header class="container">
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Tune</a>
-    <span class="navbar-text">
-      <%= link "Login via Spotify", to: Routes.auth_path(@conn, :request, :spotify) %>
-    </span>
+    <%= if authenticated?(@conn) do %>
+      <%= link "Logout", to: Routes.auth_path(@conn, :delete), method: :post %>
+      <%= render "user.html", user: @conn.assigns.user %>
+    <% else %>
+      <span class="navbar-text">
+        <%= link "Login via Spotify", to: Routes.auth_path(@conn, :request, :spotify) %>
+      </span>
+  <% end %>
   </nav>
 </header>

@@ -7,13 +7,18 @@ defmodule TuneWeb.PageLiveTest do
   setup :verify_on_exit!
 
   test "disconnected and connected render", %{conn: conn} do
+    profile = %{
+      "display_name" => "Example user",
+      "images" => [
+        %{"url" => "http://example.com/user.png"}
+      ]
+    }
+
+    now_playing = %{"item" => %{"name" => "Example song"}}
+
     Tune.SpotifyMock
-    |> expect(:get_profile, 2, fn "example-token" ->
-      {:ok, %{"display_name" => "Example user"}}
-    end)
-    |> expect(:now_playing, 2, fn "example-token" ->
-      {:playing, %{"item" => %{"name" => "Example song"}}}
-    end)
+    |> expect(:get_profile, 2, fn "example-token" -> {:ok, profile} end)
+    |> expect(:now_playing, 2, fn "example-token" -> {:playing, now_playing} end)
 
     {:ok, page_live, disconnected_html} =
       conn

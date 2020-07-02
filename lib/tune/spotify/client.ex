@@ -12,8 +12,11 @@ defmodule Tune.Spotify.Client do
     headers = @json_headers ++ authorization_headers(token)
 
     case get("/me", headers) do
-      {:ok, response} ->
+      {:ok, %{status: 200} = response} ->
         Jason.decode(response.body)
+
+      {:ok, %{status: status}} ->
+        {:error, status}
 
       error ->
         error
@@ -27,8 +30,11 @@ defmodule Tune.Spotify.Client do
       {:ok, %{status: 204}} ->
         :not_playing
 
-      {:ok, response} ->
+      {:ok, %{status: 200} = response} ->
         {:playing, Jason.decode!(response.body)}
+
+      {:ok, %{status: status}} ->
+        {:error, status}
 
       error ->
         error

@@ -1,4 +1,7 @@
 <section class="phx-hero">
-  <p>Hello, <%= @user["display_name"] %>
-  <p>Now playing: <%= @current_track %></p>
+  <%= if @status == :authenticated do %>
+    <p>Hello, <%= @user["display_name"] %>
+
+    <%= live_component @socket, PlayerComponent, id: :player, spotify_token: @spotify_token %>
+  <% end %>
 </section>
