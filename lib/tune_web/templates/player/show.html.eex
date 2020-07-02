@@ -1,6 +1,6 @@
 <%= case @now_playing do %>
   <% {:playing, track} -> %>
-    <div class="card now-playing">
+    <div class="card text-center now-playing">
       <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
       <div class="card-body">
         <h5 class="card-title"><%= track.name %></h5>
