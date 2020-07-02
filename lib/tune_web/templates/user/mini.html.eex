@@ -1,0 +1,4 @@
+<div class="media">
+  <%= avatar(@user) %>
+  <p><%= @user["display_name"] %></p>
+</div>

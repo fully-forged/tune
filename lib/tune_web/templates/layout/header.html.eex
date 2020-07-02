@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="#">Tune</a>
     <%= if authenticated?(@conn) do %>
       <%= link "Logout", to: Routes.auth_path(@conn, :delete), method: :post %>
-      <%= render "user.html", user: @conn.assigns.user %>
+      <%= render TuneWeb.UserView, "mini.html", user: @conn.assigns.user %>
     <% else %>
       <span class="navbar-text">
         <%= link "Login via Spotify", to: Routes.auth_path(@conn, :request, :spotify) %>
