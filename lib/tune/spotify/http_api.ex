@@ -1,7 +1,7 @@
 defmodule Tune.Spotify.HttpApi do
   @behaviour Tune.Spotify
 
-  alias Tune.{Album, Artist, Track}
+  alias Tune.{Album, Artist, Track, User}
 
   @base_url "https://api.spotify.com/v1"
 
@@ -13,7 +13,12 @@ defmodule Tune.Spotify.HttpApi do
   def get_profile(token) do
     case json_get("/me", auth_headers(token)) do
       {:ok, %{status: 200} = response} ->
-        Jason.decode(response.body)
+        user =
+          response.body
+          |> Jason.decode!()
+          |> parse_profile()
+
+        {:ok, user}
 
       {:ok, %{status: status}} ->
         {:error, status}
@@ -55,6 +60,13 @@ defmodule Tune.Spotify.HttpApi do
   defp get(path, headers) do
     Finch.build(:get, @base_url <> path, headers)
     |> Finch.request(Tune.Finch)
+  end
+
+  defp parse_profile(data) do
+    name = Map.get(data, "display_name")
+    avatar_url = get_in(data, ["images", Access.at(0), "url"])
+
+    %User{name: name, avatar_url: avatar_url}
   end
 
   defp parse_now_playing(data) do
