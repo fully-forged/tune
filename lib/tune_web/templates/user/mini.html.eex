@@ -1,4 +1,4 @@
-<div class="media">
-  <%= avatar(@user) %>
-  <p><%= @user["display_name"] %></p>
-</div>
+<%= avatar(@user) %>
+<span class="p-1">
+  <%= @user["display_name"] %>
+</span>

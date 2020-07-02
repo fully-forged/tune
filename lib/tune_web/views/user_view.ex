@@ -4,6 +4,6 @@ defmodule TuneWeb.UserView do
   defp avatar(user) do
     name = user["display_name"]
     image_url = get_in(user, ["images", Access.at(0), "url"])
-    img_tag(image_url, alt: name, class: "user-avatar")
+    img_tag(image_url, alt: name, class: "user-avatar rounded-circle")
   end
 end

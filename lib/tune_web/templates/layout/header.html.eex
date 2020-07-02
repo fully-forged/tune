@@ -1,13 +1,13 @@
 <header class="container">
-  <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Tune</a>
-    <%= if authenticated?(@conn) do %>
-      <%= link "Logout", to: Routes.auth_path(@conn, :delete), method: :post %>
-      <%= render TuneWeb.UserView, "mini.html", user: @conn.assigns.user %>
-    <% else %>
-      <span class="navbar-text">
-        <%= link "Login via Spotify", to: Routes.auth_path(@conn, :request, :spotify) %>
-      </span>
-  <% end %>
-  </nav>
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h1 class="my-0 mr-md-auto font-weight-normal">Tune</h1>
+    <nav>
+      <%= if authenticated?(@conn) do %>
+        <%= render TuneWeb.UserView, "mini.html", user: @conn.assigns.user %>
+        <%= link "Logout", class: "btn btn-outline-primary", to: Routes.auth_path(@conn, :delete), method: :post %>
+      <% else %>
+        <%= link "Login via Spotify", class: "btn btn-outline-primary", to: Routes.auth_path(@conn, :request, :spotify) %>
+      <% end %>
+    </nav>
+  </div>
 </header>
