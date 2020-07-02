@@ -1,7 +1,5 @@
 <section class="phx-hero">
   <%= if @status == :authenticated do %>
-    <p>Hello, <%= @user["display_name"] %>
-
     <%= live_component @socket, PlayerComponent, id: :player, spotify_token: @spotify_token %>
   <% end %>
 </section>
