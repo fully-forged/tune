@@ -4,17 +4,13 @@ defmodule TuneWeb.PlayerComponent do
   @impl true
   def render(assigns) do
     case spotify().now_playing(assigns.spotify_token) do
-      {:playing, data} ->
-        track_name = get_in(data, ["item", "name"])
-        track_artist = get_in(data, ["item", "artists", Access.at(0), "name"])
-        thumbnail = get_in(data, ["item", "album", "images", Access.at(0), "url"])
-
+      {:playing, track} ->
         ~L(
           <div class="card now-playing">
-            <%= img_tag thumbnail, alt: track_name, class: "card-img-top" %>
+            <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
             <div class="card-body">
-              <h5 class="card-title"><%= track_name %></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><%= track_artist %></h6>
+              <h5 class="card-title"><%= track.name %></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><%= track.artist.name %></h6>
             </div>
           </div>
         )

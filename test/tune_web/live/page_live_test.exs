@@ -4,6 +4,8 @@ defmodule TuneWeb.PageLiveTest do
   import Phoenix.LiveViewTest
   import Mox
 
+  alias Tune.{Album, Artist, Track}
+
   @avatar_url "http://example.com/user.png"
   @profile %{
     "display_name" => "Example user",
@@ -14,16 +16,16 @@ defmodule TuneWeb.PageLiveTest do
 
   @song_title "Example song"
   @artist_name "Example artist"
-  @album_image_url "http://example.com/album.png"
-  @now_playing %{
-    "item" => %{
-      "name" => @song_title,
-      "artists" => [%{"name" => @artist_name}],
-      "album" => %{
-        "images" => [
-          %{"url" => @album_image_url}
-        ]
-      }
+  @album_name "Example album"
+  @album_thumbnail "http://example.com/album.png"
+  @now_playing %Track{
+    name: @song_title,
+    album: %Album{
+      name: @album_name,
+      thumbnail: @album_thumbnail
+    },
+    artist: %Artist{
+      name: @artist_name
     }
   }
 
