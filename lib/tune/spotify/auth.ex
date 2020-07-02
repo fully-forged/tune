@@ -8,4 +8,11 @@ defmodule Tune.Spotify.Auth do
       client_secret: client_secret
     )
   end
+
+  def base64_encoded_credentials do
+    client_id = System.get_env("SPOTIFY_CLIENT_ID")
+    client_secret = System.get_env("SPOTIFY_CLIENT_SECRET")
+
+    Base.encode64(client_id <> ":" <> client_secret)
+  end
 end

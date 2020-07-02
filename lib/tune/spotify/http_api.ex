@@ -1,15 +1,20 @@
 defmodule Tune.Spotify.HttpApi do
   alias Tune.{Album, Artist, Track, User}
+  alias Tune.Spotify.Auth
 
   @base_url "https://api.spotify.com/v1"
+  @refresh_url "https://accounts.spotify.com/api/token"
 
   @json_headers [
     {"Accept", "application/json"},
     {"Content-Type", "application/json"}
   ]
+  @form_headers [
+    {"Content-Type", "application/x-www-form-urlencoded"}
+  ]
 
   def get_profile(token) do
-    case json_get("/me", auth_headers(token)) do
+    case json_get(@base_url <> "/me", auth_headers(token)) do
       {:ok, %{status: 200} = response} ->
         user =
           response.body
@@ -27,7 +32,7 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   def now_playing(token) do
-    case json_get("/me/player", auth_headers(token)) do
+    case json_get(@base_url <> "/me/player", auth_headers(token)) do
       {:ok, %{status: 204}} ->
         :not_playing
 
@@ -47,6 +52,21 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  def get_token(refresh_token) do
+    headers = [
+      {"Authorization", "Basic #{Auth.base64_encoded_credentials()}"}
+    ]
+
+    case post(@refresh_url, %{grant_type: "refresh_token", refresh_token: refresh_token}, headers) do
+      {:ok, response} ->
+        response.body
+        |> Jason.decode()
+
+      error ->
+        error
+    end
+  end
+
   defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end
@@ -55,8 +75,13 @@ defmodule Tune.Spotify.HttpApi do
     get(path, @json_headers ++ headers)
   end
 
-  defp get(path, headers) do
-    Finch.build(:get, @base_url <> path, headers)
+  defp get(url, headers) do
+    Finch.build(:get, url, headers)
+    |> Finch.request(Tune.Finch)
+  end
+
+  defp post(url, params, headers) when is_map(params) do
+    Finch.build(:post, url, @form_headers ++ headers, URI.encode_query(params))
     |> Finch.request(Tune.Finch)
   end
 
