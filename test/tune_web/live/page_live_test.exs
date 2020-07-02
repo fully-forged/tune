@@ -31,7 +31,8 @@ defmodule TuneWeb.PageLiveTest do
 
   test "disconnected and connected render", %{conn: conn} do
     Tune.SpotifyMock
-    |> expect(:get_profile, 2, fn "example-token" -> {:ok, @profile} end)
+    |> expect(:setup, 2, fn "example-token" -> :ok end)
+    |> expect(:get_profile, 2, fn "example-token" -> @profile end)
     |> expect(:now_playing, 2, fn "example-token" -> {:playing, @now_playing} end)
 
     {:ok, page_live, disconnected_html} =

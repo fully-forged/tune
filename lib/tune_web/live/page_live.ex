@@ -17,10 +17,10 @@ defmodule TuneWeb.PageLive do
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp load_user(token, socket) do
-    case spotify().get_profile(token) do
-      {:ok, user} ->
-        assign(socket, status: :authenticated, user: user, spotify_token: token)
-
+    with :ok <- spotify().setup(token),
+         user = spotify().get_profile(token) do
+      assign(socket, status: :authenticated, user: user, spotify_token: token)
+    else
       {:error, _reason} ->
         assign(socket, status: :not_authenticated)
     end

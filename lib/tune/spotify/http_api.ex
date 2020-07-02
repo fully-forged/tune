@@ -1,6 +1,4 @@
 defmodule Tune.Spotify.HttpApi do
-  @behaviour Tune.Spotify
-
   alias Tune.{Album, Artist, Track, User}
 
   @base_url "https://api.spotify.com/v1"
