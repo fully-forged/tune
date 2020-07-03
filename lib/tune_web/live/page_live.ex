@@ -18,7 +18,7 @@ defmodule TuneWeb.PageLive do
 
   defp load_user(session_id, credentials, socket) do
     with :ok <- spotify().setup(session_id, credentials),
-         user = spotify().get_profile(session_id),
+         %Tune.User{} = user = spotify().get_profile(session_id),
          now_playing = spotify().now_playing(session_id) do
       if connected?(socket) do
         spotify().subscribe(session_id)
@@ -31,7 +31,7 @@ defmodule TuneWeb.PageLive do
       )
     else
       {:error, _reason} ->
-        assign(socket, status: :not_authenticated)
+        redirect(socket, to: "/auth/logout")
     end
   end
 

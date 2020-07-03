@@ -17,6 +17,7 @@ defmodule TuneWeb.Router do
   scope "/auth", TuneWeb do
     pipe_through :browser
 
+    get "/logout", AuthController, :delete
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
     post "/:provider/callback", AuthController, :callback
