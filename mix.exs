@@ -47,6 +47,7 @@ defmodule Tune.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:ueberauth_spotify, "~> 0.2.1"},
       {:finch, "~> 0.3.0"},
+      {:gen_state_machine, "~> 2.1"},
       {:mox, "~> 0.5", only: :test}
     ]
   end
