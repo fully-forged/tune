@@ -1,5 +1,5 @@
 defmodule Tune.Spotify.HttpApi do
-  alias Tune.{Album, Artist, Track, User}
+  alias Tune.{Album, Artist, Episode, Publisher, Show, Track, User}
   alias Tune.Spotify.Auth
 
   @base_url "https://api.spotify.com/v1"
@@ -32,7 +32,7 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   def now_playing(token) do
-    case json_get(@base_url <> "/me/player", auth_headers(token)) do
+    case json_get(@base_url <> "/me/player?additional_types=episode", auth_headers(token)) do
       {:ok, %{status: 204}} ->
         :not_playing
 
@@ -93,17 +93,33 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_now_playing(data) do
-    playing = Map.get(data, "is_playing")
-    track_name = get_in(data, ["item", "name"])
-    track_artist = get_in(data, ["item", "artists", Access.at(0), "name"])
-    album_name = get_in(data, ["item", "album", "name"])
-    album_thumbnail = get_in(data, ["item", "album", "images", Access.at(0), "url"])
+    case get_in(data, ["item", "type"]) do
+      "track" ->
+        %Track{
+          name: get_in(data, ["item", "name"]),
+          playing: Map.get(data, "is_playing"),
+          artist: %Artist{name: get_in(data, ["item", "artists", Access.at(0), "name"])},
+          album: %Album{
+            name: get_in(data, ["item", "album", "name"]),
+            thumbnail: get_in(data, ["item", "album", "images", Access.at(0), "url"])
+          }
+        }
 
-    %Track{
-      name: track_name,
-      playing: playing,
-      artist: %Artist{name: track_artist},
-      album: %Album{name: album_name, thumbnail: album_thumbnail}
-    }
+      "episode" ->
+        %Episode{
+          name: get_in(data, ["item", "name"]),
+          playing: Map.get(data, "is_playing"),
+          description: get_in(data, ["item", "description"]),
+          thumbnail: get_in(data, ["item", "images", Access.at(0), "url"]),
+          show: %Show{
+            name: get_in(data, ["item", "show", "name"]),
+            description: get_in(data, ["item", "show", "description"]),
+            total_episodes: get_in(data, ["item", "show", "total_episodes"])
+          },
+          publisher: %Publisher{
+            name: get_in(data, ["item", "show", "publisher"])
+          }
+        }
+    end
   end
 end

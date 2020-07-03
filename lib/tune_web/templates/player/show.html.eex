@@ -1,5 +1,5 @@
 <%= case @now_playing do %>
-  <% {:playing, track} -> %>
+  <% {:playing, %Tune.Track{} = track} -> %>
     <div class="card now-playing">
       <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
       <div class="card-body d-flex">
@@ -11,6 +11,21 @@
         <div>
           <h5 class="card-title"><%= track.name %></h5>
           <h6 class="card-subtitle text-muted"><%= track.artist.name %></h6>
+        </div>
+      </div>
+    </div>
+  <% {:playing, %Tune.Episode{} = episode} -> %>
+    <div class="card now-playing">
+      <%= img_tag episode.thumbnail, alt: episode.name, class: "card-img-top" %>
+      <div class="card-body d-flex">
+        <%= if episode.playing do %>
+          <%= render "play.html" %>
+        <% else %>
+          <%= render "pause.html" %>
+        <% end %>
+        <div>
+          <h5 class="card-title"><%= episode.name %></h5>
+          <h6 class="card-subtitle text-muted"><%= episode.publisher.name %></h6>
         </div>
       </div>
     </div>
