@@ -1,8 +1,10 @@
 defmodule Tune.Spotify do
-  @type token :: String.t()
+  @type session_id :: String.t()
+  @type credentials :: Ueberauth.Auth.Credentials.t()
 
-  @callback setup(token()) :: :ok | {:error, term()}
-  @callback subscribe(token()) :: :ok | {:error, term()}
-  @callback get_profile(token()) :: {:ok, %Tune.User{}} | {:error, term()}
-  @callback now_playing(token()) :: :not_playing | {:playing, %Tune.Track{}} | {:error, term()}
+  @callback setup(session_id(), credentials()) :: :ok | {:error, term()}
+  @callback subscribe(session_id()) :: :ok | {:error, term()}
+  @callback get_profile(session_id()) :: {:ok, %Tune.User{}} | {:error, term()}
+  @callback now_playing(session_id()) ::
+              :not_playing | {:playing, %Tune.Track{} | %Tune.Episode{}} | {:error, term()}
 end

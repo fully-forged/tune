@@ -15,15 +15,18 @@ defmodule Tune.Spotify.Supervisor do
     Supervisor.init(children, strategy: :one_for_one)
   end
 
-  def ensure_session(token) do
-    case start_session(token) do
+  def ensure_session(id, credentials) do
+    case start_session(id, credentials) do
       {:ok, _pid} -> :ok
       {:error, {:already_started, _pid}} -> :ok
       error -> error
     end
   end
 
-  defp start_session(token) do
-    DynamicSupervisor.start_child(Tune.Spotify.SessionSupervisor, {Tune.Spotify.Session, token})
+  defp start_session(id, credentials) do
+    DynamicSupervisor.start_child(
+      Tune.Spotify.SessionSupervisor,
+      {Tune.Spotify.Session, {id, credentials}}
+    )
   end
 end

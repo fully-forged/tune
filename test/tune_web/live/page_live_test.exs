@@ -30,20 +30,22 @@ defmodule TuneWeb.PageLiveTest do
   setup :verify_on_exit!
 
   test "disconnected and connected render", %{conn: conn} do
+    session_id = "example.user"
+
     credentials = %Ueberauth.Auth.Credentials{
       token: "example-token",
       refresh_token: "refresh-token"
     }
 
     Tune.SpotifyMock
-    |> expect(:setup, 2, fn "example-token" -> :ok end)
-    |> expect(:subscribe, 1, fn "example-token" -> :ok end)
-    |> expect(:get_profile, 2, fn "example-token" -> @profile end)
-    |> expect(:now_playing, 2, fn "example-token" -> {:playing, @now_playing} end)
+    |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+    |> expect(:subscribe, 1, fn ^session_id -> :ok end)
+    |> expect(:get_profile, 2, fn ^session_id -> @profile end)
+    |> expect(:now_playing, 2, fn ^session_id -> {:playing, @now_playing} end)
 
     {:ok, page_live, disconnected_html} =
       conn
-      |> init_test_session(spotify_credentials: credentials)
+      |> init_test_session(spotify_id: session_id, spotify_credentials: credentials)
       |> live("/")
 
     assert disconnected_html =~ @song_title
