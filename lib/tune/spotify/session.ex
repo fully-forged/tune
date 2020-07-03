@@ -38,7 +38,8 @@ defmodule Tune.Spotify.Session do
     {:ok, :not_authenticated, data, action}
   end
 
-  def handle_event(:internal, :authenticate, :not_authenticated, data) do
+  def handle_event(event_type, :authenticate, :not_authenticated, data)
+      when event_type in [:internal, :state_timeout] do
     case HttpApi.get_profile(data.credentials.token) do
       {:ok, user} ->
         data = %{data | user: user}
@@ -51,18 +52,29 @@ defmodule Tune.Spotify.Session do
       {:error, :expired_token} ->
         action = {:next_event, :internal, :refresh}
         {:next_state, :expired, data, action}
+
+      # abnormal http error, retry in 5 seconds
+      {:error, _reason} ->
+        action = {:state_timeout, 5000, :authenticate}
+        {:keep_state_and_data, action}
     end
   end
 
-  def handle_event(:internal, :refresh, :expired, data) do
+  def handle_event(event_type, :refresh, :expired, data)
+      when event_type in [:internal, :state_timeout] do
     case HttpApi.get_token(data.credentials.refresh_token) do
       {:ok, new_credentials} ->
         data = %{data | credentials: new_credentials}
         action = {:next_event, :internal, :authenticate}
         {:next_state, :not_authenticated, data, action}
 
-      {:error, _reason} ->
+      {:error, status} when is_integer(status) ->
         {:stop, :invalid_refresh_token}
+
+      # abnormal http error, retry in 5 seconds
+      {:error, _reason} ->
+        action = {:state_timeout, 5000, :refresh}
+        {:keep_state_and_data, action}
     end
   end
 
@@ -75,6 +87,11 @@ defmodule Tune.Spotify.Session do
       {:error, :expired_token} ->
         action = {:next_event, :internal, :refresh}
         {:next_state, :expired, data, action}
+
+      # abnormal http error, retry in 5 seconds
+      {:error, _reason} ->
+        action = {:state_timeout, 5000, :get_now_playing}
+        {:keep_state_and_data, action}
 
       now_playing ->
         if data.now_playing !== now_playing do
