@@ -32,6 +32,10 @@ defmodule Tune.Spotify.Session do
     GenStateMachine.call(via(session_id), :now_playing)
   end
 
+  def toggle_play(session_id) do
+    GenStateMachine.call(via(session_id), :toggle_play)
+  end
+
   def init({session_id, credentials}) do
     data = %__MODULE__{session_id: session_id, credentials: credentials}
     action = {:next_event, :internal, :authenticate}
@@ -112,6 +116,45 @@ defmodule Tune.Spotify.Session do
 
   def handle_event({:call, from}, :now_playing, :authenticated, data) do
     action = {:reply, from, data.now_playing}
+    {:keep_state_and_data, action}
+  end
+
+  def handle_event(
+        {:call, from},
+        :toggle_play,
+        :authenticated,
+        %{now_playing: {:playing, item}} = data
+      ) do
+    if item.playing do
+      case HttpApi.pause(data.credentials.token) do
+        :ok ->
+          actions = [
+            {:next_event, :internal, :get_now_playing},
+            {:reply, from, :ok}
+          ]
+
+          {:keep_state_and_data, actions}
+      end
+    else
+      case HttpApi.play(data.credentials.token) do
+        :ok ->
+          actions = [
+            {:next_event, :internal, :get_now_playing},
+            {:reply, from, :ok}
+          ]
+
+          {:keep_state_and_data, actions}
+      end
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        :toggle_play,
+        :authenticated,
+        _data
+      ) do
+    action = {:reply, from, :ok}
     {:keep_state_and_data, action}
   end
 

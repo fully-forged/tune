@@ -46,6 +46,28 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  # curl -X "PUT" "https://api.spotify.com/v1/me/player/play" --data "{}" -H "Accept: application/json" -H "Content-Type: application/json" -H "Authorization: Bearer BQCzyosqK7HpD1RG5U2j4TgnxUSVn8smAli9Fma7TIRt05jBQ0yCOrcYhw5YaSFOR6Wikyh0dZ--D-kulbs3CER9zPwQZx9ItfC8smMdQCdTwaiwSI4O03nn5kPS5FNuyebZiPOmit49Qz9BHpaF4pSplqZf41eJ"
+
+  def play(token) do
+    case json_put(@base_url <> "/me/player/play", %{}, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  def pause(token) do
+    case json_put(@base_url <> "/me/player/pause", %{}, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   def get_token(refresh_token) do
     headers = [
       {"Authorization", "Basic #{Auth.base64_encoded_credentials()}"}
@@ -72,8 +94,8 @@ defmodule Tune.Spotify.HttpApi do
     [{"Authorization", "Bearer #{token}"}]
   end
 
-  defp json_get(path, headers) do
-    get(path, @json_headers ++ headers)
+  defp json_get(url, headers) do
+    get(url, @json_headers ++ headers)
   end
 
   defp get(url, headers) do
@@ -81,8 +103,17 @@ defmodule Tune.Spotify.HttpApi do
     |> Finch.request(Tune.Finch)
   end
 
+  defp json_put(url, params, headers) do
+    put(url, Jason.encode!(params), @json_headers ++ headers)
+  end
+
   defp post(url, params, headers) when is_map(params) do
     Finch.build(:post, url, @form_headers ++ headers, URI.encode_query(params))
+    |> Finch.request(Tune.Finch)
+  end
+
+  defp put(url, body, headers) do
+    Finch.build(:put, url, headers, body)
     |> Finch.request(Tune.Finch)
   end
 

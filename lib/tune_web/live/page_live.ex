@@ -14,6 +14,13 @@ defmodule TuneWeb.PageLive do
     end
   end
 
+  @impl true
+  def handle_event("toggle_play_pause", _, socket) do
+    spotify().toggle_play(socket.assigns.session_id)
+
+    {:noreply, socket}
+  end
+
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp load_user(session_id, credentials, socket) do
@@ -26,6 +33,7 @@ defmodule TuneWeb.PageLive do
 
       assign(socket,
         status: :authenticated,
+        session_id: session_id,
         user: user,
         now_playing: now_playing
       )
