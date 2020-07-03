@@ -34,8 +34,8 @@ defmodule Tune.Spotify.Session do
       {:ok, user} ->
         {:ok, %__MODULE__{user: user, token: token}, {:continue, :get_now_playing}}
 
-      _error ->
-        {:stop, :invalid_token}
+      {:error, reason} ->
+        {:stop, reason}
     end
   end
 

@@ -23,11 +23,8 @@ defmodule Tune.Spotify.HttpApi do
 
         {:ok, user}
 
-      {:ok, %{status: status}} ->
-        {:error, status}
-
-      error ->
-        error
+      other_response ->
+        handle_errors(other_response)
     end
   end
 
@@ -44,11 +41,8 @@ defmodule Tune.Spotify.HttpApi do
 
         {:playing, track}
 
-      {:ok, %{status: status}} ->
-        {:error, status}
-
-      error ->
-        error
+      other_response ->
+        handle_errors(other_response)
     end
   end
 
@@ -90,6 +84,23 @@ defmodule Tune.Spotify.HttpApi do
     avatar_url = get_in(data, ["images", Access.at(0), "url"])
 
     %User{name: name, avatar_url: avatar_url}
+  end
+
+  defp handle_errors(response) do
+    case response do
+      {:ok, %{status: 401, body: body}} ->
+        if body =~ "expired" do
+          {:error, :expired_token}
+        else
+          {:error, :invalid_token}
+        end
+
+      {:ok, %{status: status}} ->
+        {:error, status}
+
+      error ->
+        error
+    end
   end
 
   defp parse_now_playing(data) do
