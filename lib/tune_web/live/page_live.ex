@@ -15,7 +15,17 @@ defmodule TuneWeb.PageLive do
   end
 
   @impl true
-  def handle_event("toggle_play_pause", _, socket) do
+  def handle_event("toggle_play_pause", %{"key" => " "}, socket) do
+    spotify().toggle_play(socket.assigns.session_id)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("toggle_play_pause", %{"key" => _}, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("toggle_play_pause", _params, socket) do
     spotify().toggle_play(socket.assigns.session_id)
 
     {:noreply, socket}
