@@ -5,19 +5,20 @@ defmodule TuneWeb.PageLive do
 
   @impl true
   def mount(_params, session, socket) do
-    case Map.get(session, "spotify_token") do
+    case Map.get(session, "spotify_credentials") do
       nil ->
         {:ok, assign(socket, status: :not_authenticated)}
 
-      spotify_token ->
-        {:ok, load_user(spotify_token, socket)}
+      credentials ->
+        {:ok, load_user(credentials, socket)}
     end
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
 
-  defp load_user(token, socket) do
-    with :ok <- spotify().setup(token),
+  defp load_user(credentials, socket) do
+    with token = credentials.token,
+         :ok <- spotify().setup(token),
          user = spotify().get_profile(token),
          now_playing = spotify().now_playing(token) do
       if connected?(socket) do
