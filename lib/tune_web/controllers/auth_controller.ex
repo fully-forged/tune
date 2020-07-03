@@ -7,6 +7,7 @@ defmodule TuneWeb.AuthController do
     conn
     |> put_flash(:info, "Hello #{auth.info.name}!")
     |> put_session(:spotify_credentials, auth.credentials)
+    |> put_session(:spotify_id, auth.info.nickname)
     |> configure_session(renew: true)
     |> redirect(to: Routes.page_path(conn, :index))
   end
