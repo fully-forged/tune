@@ -52,9 +52,16 @@ defmodule Tune.Spotify.HttpApi do
     ]
 
     case post(@refresh_url, %{grant_type: "refresh_token", refresh_token: refresh_token}, headers) do
-      {:ok, response} ->
-        response.body
-        |> Jason.decode()
+      {:ok, %{status: 200} = response} ->
+        auth_data =
+          response.body
+          |> Jason.decode!()
+          |> parse_auth_data(refresh_token)
+
+        {:ok, auth_data}
+
+      {:ok, %{status: status}} ->
+        {:error, status}
 
       error ->
         error
@@ -101,6 +108,17 @@ defmodule Tune.Spotify.HttpApi do
       error ->
         error
     end
+  end
+
+  defp parse_auth_data(data, refresh_token) do
+    %Ueberauth.Auth.Credentials{
+      expires: true,
+      expires_at: OAuth2.Util.unix_now() + data["expires_in"],
+      refresh_token: refresh_token,
+      scopes: [data["scope"]],
+      token: data["access_token"],
+      token_type: data["token_type"]
+    }
   end
 
   defp parse_now_playing(data) do
