@@ -38,7 +38,7 @@ defmodule TuneWeb.PageLive do
          %Tune.User{} = user = spotify().get_profile(session_id),
          now_playing = spotify().now_playing(session_id) do
       if connected?(socket) do
-        spotify().subscribe(session_id)
+        Tune.Spotify.Session.subscribe(session_id)
       end
 
       assign(socket,

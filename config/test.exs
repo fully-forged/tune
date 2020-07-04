@@ -7,7 +7,7 @@ config :tune, TuneWeb.Endpoint,
   server: false
 
 config :tune,
-  spotify: Tune.SpotifyMock
+  spotify: Tune.Spotify.SessionMock
 
 # Print only warnings and errors during test
 config :logger, level: :warn

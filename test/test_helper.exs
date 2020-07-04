@@ -1,3 +1,3 @@
 ExUnit.start()
 
-Mox.defmock(Tune.SpotifyMock, for: Tune.Spotify)
+Mox.defmock(Tune.Spotify.SessionMock, for: Tune.Spotify.Session)

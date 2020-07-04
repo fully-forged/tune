@@ -55,16 +55,15 @@ defmodule TuneWeb.PageLiveTest do
     }
 
     setup %{conn: conn} do
-      Tune.SpotifyMock
+      Tune.Spotify.SessionMock
       |> expect(:setup, 2, fn @session_id, @credentials -> :ok end)
-      |> expect(:subscribe, 1, fn @session_id -> :ok end)
       |> expect(:get_profile, 2, fn @session_id -> @profile end)
 
       [conn: init_test_session(conn, spotify_id: @session_id, spotify_credentials: @credentials)]
     end
 
     test "it displays not playing", %{conn: conn} do
-      Tune.SpotifyMock
+      Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn @session_id -> :not_playing end)
 
       {:ok, page_live, disconnected_html} = live(conn, "/")
@@ -74,7 +73,7 @@ defmodule TuneWeb.PageLiveTest do
     end
 
     test "it displays a song playing", %{conn: conn} do
-      Tune.SpotifyMock
+      Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn @session_id -> {:playing, @now_playing} end)
 
       {:ok, page_live, disconnected_html} = live(conn, "/")
@@ -84,7 +83,7 @@ defmodule TuneWeb.PageLiveTest do
     end
 
     test "it updates when the song changes", %{conn: conn} do
-      Tune.SpotifyMock
+      Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn @session_id -> {:playing, @now_playing} end)
 
       {:ok, page_live, _html} = live(conn, "/")
