@@ -36,5 +36,7 @@
       <% {:error, _reason} -> %>
         <p>Error fetching playing information.</p>
     <% end %>
+  <% else %>
+    <p>The application requires you to Login into your Spotify account.</p>
   <% end %>
 </section>
