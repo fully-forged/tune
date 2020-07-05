@@ -1,50 +1,42 @@
-  <section class="row d-flex justify-content-end">
-    <nav class="navbar">
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </nav>
-  </section>
-  <section class="row d-flex justify-content-center" phx-window-keyup="toggle_play_pause">
-    <%= if @status == :authenticated do %>
-      <%= case @now_playing do %>
-        <% {:playing, %Tune.Track{} = track} -> %>
-          <div class="card now-playing text-center">
-            <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
-            <div class="card-body">
-              <h5 class="card-title"><%= track.name %></h5>
-              <p class="card-text text-muted"><%= track.artist.name %></p>
-              <a href="#" class="btn btn-primary btn-lg" phx-click="toggle_play_pause">
-                <%= if track.playing do %>
-                  <%= render PlayerView, "pause.html", [] %>
-                <% else %>
-                  <%= render PlayerView, "play.html", []%>
-                <% end %>
-              </a>
-            </div>
+<section class="row d-flex justify-content-center" phx-window-keyup="toggle_play_pause">
+  <%= if @status == :authenticated do %>
+    <%= case @now_playing do %>
+      <% {:playing, %Tune.Track{} = track} -> %>
+        <div class="card now-playing text-center">
+          <%= img_tag track.album.thumbnail, alt: track.name, class: "card-img-top" %>
+          <div class="card-body">
+            <h5 class="card-title"><%= track.name %></h5>
+            <p class="card-text text-muted"><%= track.artist.name %></p>
+            <a href="#" class="btn btn-primary btn-lg" phx-click="toggle_play_pause">
+              <%= if track.playing do %>
+                <%= render PlayerView, "pause.html", [] %>
+              <% else %>
+                <%= render PlayerView, "play.html", []%>
+              <% end %>
+            </a>
           </div>
-        <% {:playing, %Tune.Episode{} = episode} -> %>
-          <div class="card now-playing text-center">
-            <%= img_tag episode.thumbnail, alt: episode.name, class: "card-img-top" %>
-            <div class="card-body">
-              <h5 class="card-title"><%= episode.name %></h5>
-              <p class="card-subtitle text-muted"><%= episode.publisher.name %></p>
-              <a href="#" class="btn btn-primary btn-lg">
-                <%= if episode.playing do %>
-                  <%= render PlayerView, "pause.html", [] %>
-                <% else %>
-                  <%= render PlayerView, "play.html", []%>
-                <% end %>
-              </a>
-            </div>
+        </div>
+      <% {:playing, %Tune.Episode{} = episode} -> %>
+        <div class="card now-playing text-center">
+          <%= img_tag episode.thumbnail, alt: episode.name, class: "card-img-top" %>
+          <div class="card-body">
+            <h5 class="card-title"><%= episode.name %></h5>
+            <p class="card-subtitle text-muted"><%= episode.publisher.name %></p>
+            <a href="#" class="btn btn-primary btn-lg">
+              <%= if episode.playing do %>
+                <%= render PlayerView, "pause.html", [] %>
+              <% else %>
+                <%= render PlayerView, "play.html", []%>
+              <% end %>
+            </a>
           </div>
-        <% :not_playing -> %>
-          <p>Not playing.</p>
-        <% {:error, _reason} -> %>
-          <p>Error fetching playing information.</p>
-      <% end %>
-    <% else %>
-      <p>The application requires you to Login into your Spotify account.</p>
+        </div>
+      <% :not_playing -> %>
+        <p>Not playing.</p>
+      <% {:error, _reason} -> %>
+        <p>Error fetching playing information.</p>
     <% end %>
-  </section>
+  <% else %>
+    <p>The application requires you to Login into your Spotify account.</p>
+  <% end %>
+</section>
