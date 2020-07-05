@@ -10,8 +10,10 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <%= render "header.html", conn: @conn %>
-    <%= @inner_content %>
-    <%= render "footer.html", conn: @conn %>
+    <div class="container-fluid">
+      <%= render "header.html", conn: @conn %>
+      <%= @inner_content %>
+      <%= render "footer.html", conn: @conn %>
+    </div>
   </body>
 </html>

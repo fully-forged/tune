@@ -1,9 +1,7 @@
 <footer class="text-muted">
-  <div class="container">
-    <p class="float-right">
-      <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-        <%= link "Live Dashboard", to: Routes.live_dashboard_path(@conn, :home) %>
-      <% end %>
-    </p>
-  </div>
+  <p class="float-right">
+    <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+      <%= link "Live Dashboard", to: Routes.live_dashboard_path(@conn, :home) %>
+    <% end %>
+  </p>
 </footer>
