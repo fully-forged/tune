@@ -1,7 +1,7 @@
 defmodule TuneWeb.ExplorerLive do
   use TuneWeb, :live_view
 
-  alias TuneWeb.PlayerView
+  alias TuneWeb.{PlayerView, TrackView}
 
   @impl true
   def mount(_params, session, socket) do
@@ -10,7 +10,7 @@ defmodule TuneWeb.ExplorerLive do
       {:ok, load_user(session_id, credentials, socket)}
     else
       :error ->
-        {:ok, assign(socket, status: :not_authenticated)}
+        {:ok, assign(socket, tracks: [], status: :not_authenticated)}
     end
   end
 
@@ -33,13 +33,19 @@ defmodule TuneWeb.ExplorerLive do
 
   def handle_event("search", params, socket) do
     q = Map.get(params, "q", "")
-    types = [:artist, :album, :track, :episode, :show]
+    types = [:track]
 
     if String.length(q) >= 3 do
-      spotify().search(socket.assigns.session_id, q, types)
-    end
+      case spotify().search(socket.assigns.session_id, q, types) do
+        {:ok, results} ->
+          {:noreply, assign(socket, :tracks, results.tracks)}
 
-    {:noreply, socket}
+        _error ->
+          {:noreply, socket}
+      end
+    else
+      {:noreply, assign(socket, :tracks, [])}
+    end
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
@@ -56,7 +62,8 @@ defmodule TuneWeb.ExplorerLive do
         status: :authenticated,
         session_id: session_id,
         user: user,
-        now_playing: now_playing
+        now_playing: now_playing,
+        tracks: []
       )
     else
       {:error, _reason} ->
