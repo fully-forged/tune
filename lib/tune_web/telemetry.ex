@@ -34,7 +34,11 @@ defmodule TuneWeb.Telemetry do
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total"),
       summary("vm.total_run_queue_lengths.cpu"),
-      summary("vm.total_run_queue_lengths.io")
+      summary("vm.total_run_queue_lengths.io"),
+
+      # HTTP
+      summary("finch.request.stop.duration", unit: {:native, :millisecond}, tags: [:path]),
+      summary("finch.response.stop.duration", unit: {:native, :millisecond}, tags: [:path])
     ]
   end
 
