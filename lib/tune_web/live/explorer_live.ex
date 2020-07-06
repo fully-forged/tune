@@ -4,29 +4,44 @@ defmodule TuneWeb.ExplorerLive do
   alias TuneWeb.{PlayerView, TrackView}
 
   @impl true
-  def mount(params, session, socket) do
+  def mount(_params, session, socket) do
     with {:ok, session_id} <- Map.fetch(session, "spotify_id"),
          {:ok, credentials} <- Map.fetch(session, "spotify_credentials") do
       {:ok, load_user(session_id, credentials, socket)}
     else
       :error ->
-        {:ok, assign(socket, tracks: [], q: "", status: :not_authenticated)}
+        {:ok, assign(socket, tracks: [], q: nil, status: :not_authenticated)}
     end
   end
 
   @impl true
   def handle_params(params, _url, socket) do
-    q = Map.get(params, "q", "")
-    types = [:track]
+    q = Map.get(params, "q")
 
-    socket = assign(socket, :q, q)
+    cond do
+      q == nil ->
+        {:noreply,
+         socket
+         |> assign(:q, nil)
+         |> assign(:tracks, [])}
 
-    case spotify().search(socket.assigns.session_id, q, types) do
-      {:ok, results} ->
-        {:noreply, assign(socket, :tracks, results.tracks)}
+      String.length(q) >= 3 ->
+        socket = assign(socket, :q, q)
+        types = [:track]
 
-      _error ->
-        {:noreply, socket}
+        case spotify().search(socket.assigns.session_id, q, types) do
+          {:ok, results} ->
+            {:noreply, assign(socket, :tracks, results.tracks)}
+
+          _error ->
+            {:noreply, socket}
+        end
+
+      true ->
+        {:noreply,
+         socket
+         |> assign(:q, nil)
+         |> assign(:tracks, [])}
     end
   end
 
@@ -47,14 +62,12 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply, socket}
   end
 
-  def handle_event("search", params, socket) do
-    q = Map.get(params, "q", "")
+  def handle_event("search", %{"q" => ""}, socket) do
+    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index))}
+  end
 
-    if String.length(q) >= 3 do
-      {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index, %{q: q}))}
-    else
-      {:noreply, assign(socket, :tracks, [])}
-    end
+  def handle_event("search", %{"q" => q}, socket) do
+    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index, %{q: q}))}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
@@ -73,7 +86,7 @@ defmodule TuneWeb.ExplorerLive do
         user: user,
         now_playing: now_playing,
         tracks: [],
-        q: ""
+        q: nil
       )
     else
       {:error, _reason} ->
