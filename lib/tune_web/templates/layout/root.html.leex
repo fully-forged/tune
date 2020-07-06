@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -9,11 +9,11 @@
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
-  <body>
-    <div class="container-fluid">
-      <%= render "header.html", conn: @conn %>
+  <body class="d-flex flex-column h-100">
+    <%= render "header.html", conn: @conn %>
+    <div class="flex-shrink-0">
       <%= @inner_content %>
-      <%= render "footer.html", conn: @conn %>
     </div>
+    <%= render "footer.html", conn: @conn %>
   </body>
 </html>

@@ -1,4 +1,4 @@
-<section class="row d-flex justify-content-center" phx-window-keyup="toggle_play_pause">
+<section class="d-flex justify-content-center align-items-end" phx-window-keyup="toggle_play_pause">
   <%= if @status == :authenticated do %>
     <%= case @now_playing do %>
       <% {:playing, %Tune.Track{} = track} -> %>
