@@ -1,4 +1,4 @@
-<section id="player" class="d-flex justify-content-center align-items-end">
+<section id="explorer" class="d-flex justify-content-center align-items-end">
   <%= if @status == :authenticated do %>
     <%= render PlayerView, "mini.html", now_playing: @now_playing %>
   <% else %>

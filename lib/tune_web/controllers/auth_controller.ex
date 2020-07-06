@@ -9,20 +9,20 @@ defmodule TuneWeb.AuthController do
     |> put_session(:spotify_credentials, auth.credentials)
     |> put_session(:spotify_id, auth.info.nickname)
     |> configure_session(renew: true)
-    |> redirect(to: Routes.page_path(conn, :index))
+    |> redirect(to: Routes.explorer_path(conn, :index))
   end
 
   def callback(conn = %{assigns: %{ueberauth_failure: _failure}}, _params) do
     conn
     |> put_flash(:error, "Error authenticating via Spotify")
     |> configure_session(drop: true)
-    |> redirect(to: Routes.page_path(conn, :index))
+    |> redirect(to: Routes.explorer_path(conn, :index))
   end
 
   def delete(conn, _params) do
     conn
     |> put_flash(:info, "Logged out")
     |> configure_session(drop: true)
-    |> redirect(to: Routes.page_path(conn, :index))
+    |> redirect(to: Routes.explorer_path(conn, :index))
   end
 end

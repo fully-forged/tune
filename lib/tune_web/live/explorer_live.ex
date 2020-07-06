@@ -1,4 +1,4 @@
-defmodule TuneWeb.PageLive do
+defmodule TuneWeb.ExplorerLive do
   use TuneWeb, :live_view
 
   alias TuneWeb.PlayerView

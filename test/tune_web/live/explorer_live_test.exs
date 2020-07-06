@@ -1,4 +1,4 @@
-defmodule TuneWeb.PageLiveTest do
+defmodule TuneWeb.ExplorerLiveTest do
   use TuneWeb.ConnCase
 
   import Phoenix.LiveViewTest
@@ -40,12 +40,12 @@ defmodule TuneWeb.PageLiveTest do
 
   describe "logged out" do
     test "it displays not playing", %{conn: conn} do
-      {:ok, page_live, disconnected_html} = live(conn, "/")
+      {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
       login_required_message = "The application requires you to Login into your Spotify account."
 
       assert disconnected_html =~ login_required_message
-      assert render(page_live) =~ login_required_message
+      assert render(explorer_live) =~ login_required_message
     end
   end
 
@@ -68,33 +68,33 @@ defmodule TuneWeb.PageLiveTest do
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn @session_id -> :not_playing end)
 
-      {:ok, page_live, disconnected_html} = live(conn, "/")
+      {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
       assert disconnected_html =~ "Not playing."
-      assert render(page_live) =~ "Not playing."
+      assert render(explorer_live) =~ "Not playing."
     end
 
     test "it displays a song playing", %{conn: conn} do
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn @session_id -> {:playing, @now_playing} end)
 
-      {:ok, page_live, disconnected_html} = live(conn, "/")
+      {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
       assert disconnected_html =~ @song_title
-      assert render(page_live) =~ @song_title
+      assert render(explorer_live) =~ @song_title
     end
 
     test "it updates when the song changes", %{conn: conn} do
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn @session_id -> {:playing, @now_playing} end)
 
-      {:ok, page_live, _html} = live(conn, "/")
+      {:ok, explorer_live, _html} = live(conn, "/")
 
       now_playing = {:playing, %{@now_playing | name: "Another song"}}
 
-      send(page_live.pid, now_playing)
+      send(explorer_live.pid, now_playing)
 
-      render(page_live) =~ "Another song"
+      render(explorer_live) =~ "Another song"
     end
   end
 end
