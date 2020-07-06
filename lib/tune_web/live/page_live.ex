@@ -31,6 +31,16 @@ defmodule TuneWeb.PageLive do
     {:noreply, socket}
   end
 
+  def handle_event("search", params, socket) do
+    q = Map.get(params, "q", "")
+
+    if String.length(q) >= 3 do
+      spotify().search(socket.assigns.session_id, q, [:artist])
+    end
+
+    {:noreply, socket}
+  end
+
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp load_user(session_id, credentials, socket) do

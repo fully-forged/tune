@@ -2,10 +2,10 @@
   <nav class="navbar d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h1 class="h2 mr-md-4 my-0 font-weight-normal">Tune</h1>
       <%= if authenticated?(@conn) do %>
-      <form class="form-inline my-2 my-lg-0 mr-md-auto">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+        <form class="form-inline my-2 my-lg-0 mr-md-auto" phx-change="search" phx-target="#player">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" phx-throttle="200">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
         <%= render TuneWeb.UserView, "mini.html", user: @conn.assigns.user %>
         <%= link "Logout", class: "btn btn-outline-primary", to: Routes.auth_path(@conn, :delete), method: :post %>
       <% else %>
