@@ -1,7 +1,7 @@
-<div class="card now-playing text-center">
+<div class="card mini-track text-center">
   <%= img_tag @track.album.thumbnails.small, alt: @track.name, class: "card-img-top" %>
   <div class="card-body">
-    <h5 class="card-title"><%= @track.name %></h5>
+    <h6 class="card-title"><%= @track.name %></h5>
     <p class="card-text text-muted"><%= @track.artist.name %></p>
   </div>
 </div>

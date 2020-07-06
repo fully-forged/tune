@@ -1,7 +1,9 @@
-<section id="explorer" class="d-flex justify-content-center align-items-end">
+<section id="explorer" class="d-flex">
   <%= if @status == :authenticated do %>
-    <%= render_many @tracks, TrackView, "mini.html" %>
     <%= render PlayerView, "mini.html", now_playing: @now_playing %>
+    <div class="results d-flex flex-wrap">
+      <%= render_many @tracks, TrackView, "mini.html" %>
+    </div>
   <% else %>
     <p>The application requires you to Login into your Spotify account.</p>
   <% end %>
