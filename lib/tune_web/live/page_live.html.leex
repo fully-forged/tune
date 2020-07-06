@@ -1,43 +1,6 @@
 <section id="player" class="d-flex justify-content-center align-items-end">
   <%= if @status == :authenticated do %>
-    <%= case @now_playing do %>
-      <% {playing_or_paused, %Tune.Track{} = track} -> %>
-        <div class="card now-playing text-center">
-          <%= img_tag track.album.thumbnails.large, alt: track.name, class: "card-img-top" %>
-          <div class="card-body">
-            <h5 class="card-title"><%= track.name %></h5>
-            <p class="card-text text-muted"><%= track.artist.name %></p>
-            <a href="#" class="btn btn-primary btn-lg" phx-click="toggle_play_pause">
-              <%= case playing_or_paused do %>
-                <% :playing -> %>
-                  <%= render PlayerView, "pause.html", [] %>
-                <% :paused -> %>
-                <%= render PlayerView, "play.html", []%>
-              <% end %>
-            </a>
-          </div>
-        </div>
-      <% {playing_or_paused, %Tune.Episode{} = episode} -> %>
-        <div class="card now-playing text-center">
-          <%= img_tag episode.thumbnails.large, alt: episode.name, class: "card-img-top" %>
-          <div class="card-body">
-            <h5 class="card-title"><%= episode.name %></h5>
-            <p class="card-subtitle text-muted"><%= episode.publisher.name %></p>
-            <a href="#" class="btn btn-primary btn-lg">
-              <%= case playing_or_paused do %>
-                <% :playing -> %>
-                  <%= render PlayerView, "pause.html", [] %>
-                <% :paused -> %>
-                <%= render PlayerView, "play.html", []%>
-              <% end %>
-            </a>
-          </div>
-        </div>
-      <% :not_playing -> %>
-        <p>Not playing.</p>
-      <% {:error, _reason} -> %>
-        <p>Error fetching playing information.</p>
-    <% end %>
+    <%= render PlayerView, "mini.html", now_playing: @now_playing %>
   <% else %>
     <p>The application requires you to Login into your Spotify account.</p>
   <% end %>
