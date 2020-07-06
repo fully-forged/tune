@@ -31,6 +31,10 @@ defmodule Tune.Spotify.Session.Worker do
     GenStateMachine.call(via(session_id), :toggle_play)
   end
 
+  def search(session_id, q, types) do
+    GenStateMachine.call(via(session_id), {:search, q, types})
+  end
+
   def init({session_id, credentials}) do
     data = %__MODULE__{session_id: session_id, credentials: credentials}
     action = {:next_event, :internal, :authenticate}
@@ -151,6 +155,31 @@ defmodule Tune.Spotify.Session.Worker do
       ) do
     action = {:reply, from, :ok}
     {:keep_state_and_data, action}
+  end
+
+  def handle_event(
+        {:call, from},
+        {:search, q, types},
+        :authenticated,
+        data
+      ) do
+    case HttpApi.search(data.credentials.token, q, types) do
+      {:ok, results} ->
+        action = {:reply, from, {:ok, results}}
+        {:keep_state_and_data, action}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
   end
 
   def handle_event({:call, from}, _request, _state, _data) do

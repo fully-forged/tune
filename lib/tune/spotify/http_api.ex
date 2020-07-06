@@ -84,11 +84,26 @@ defmodule Tune.Spotify.HttpApi do
 
         {:ok, auth_data}
 
-      {:ok, %{status: status}} ->
-        {:error, status}
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
 
-      error ->
-        error
+  def search(token, q, types) do
+    types_string = Enum.join(types, ",")
+
+    params = %{
+      q: q,
+      type: types_string,
+      market: "from_token"
+    }
+
+    case json_get(@base_url <> "/search?" <> URI.encode_query(params), auth_headers(token)) do
+      {:ok, %{status: 200} = response} ->
+        Jason.decode(response.body)
+
+      other_response ->
+        handle_errors(other_response)
     end
   end
 
