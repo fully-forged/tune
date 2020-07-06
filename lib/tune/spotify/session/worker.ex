@@ -129,28 +129,33 @@ defmodule Tune.Spotify.Session.Worker do
         {:call, from},
         :toggle_play,
         :authenticated,
-        %{now_playing: {:playing, item}} = data
+        %{now_playing: {:playing, _item}} = data
       ) do
-    if item.playing do
-      case HttpApi.pause(data.credentials.token) do
-        :ok ->
-          actions = [
-            {:next_event, :internal, :get_now_playing},
-            {:reply, from, :ok}
-          ]
+    case HttpApi.pause(data.credentials.token) do
+      :ok ->
+        actions = [
+          {:next_event, :internal, :get_now_playing},
+          {:reply, from, :ok}
+        ]
 
-          {:keep_state_and_data, actions}
-      end
-    else
-      case HttpApi.play(data.credentials.token) do
-        :ok ->
-          actions = [
-            {:next_event, :internal, :get_now_playing},
-            {:reply, from, :ok}
-          ]
+        {:keep_state_and_data, actions}
+    end
+  end
 
-          {:keep_state_and_data, actions}
-      end
+  def handle_event(
+        {:call, from},
+        :toggle_play,
+        :authenticated,
+        %{now_playing: {:paused, _item}} = data
+      ) do
+    case HttpApi.play(data.credentials.token) do
+      :ok ->
+        actions = [
+          {:next_event, :internal, :get_now_playing},
+          {:reply, from, :ok}
+        ]
+
+        {:keep_state_and_data, actions}
     end
   end
 

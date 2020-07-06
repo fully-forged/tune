@@ -34,12 +34,9 @@ defmodule Tune.Spotify.HttpApi do
         :not_playing
 
       {:ok, %{status: 200} = response} ->
-        track =
-          response.body
-          |> Jason.decode!()
-          |> parse_now_playing()
-
-        {:playing, track}
+        response.body
+        |> Jason.decode!()
+        |> parse_now_playing()
 
       other_response ->
         handle_errors(other_response)
@@ -174,39 +171,44 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_now_playing(data) do
-    case get_in(data, ["item", "type"]) do
-      "track" ->
-        %Track{
-          name: get_in(data, ["item", "name"]),
-          playing: Map.get(data, "is_playing"),
-          artist: %Artist{name: get_in(data, ["item", "artists", Access.at(0), "name"])},
-          album: %Album{
-            name: get_in(data, ["item", "album", "name"]),
+    item =
+      case get_in(data, ["item", "type"]) do
+        "track" ->
+          %Track{
+            name: get_in(data, ["item", "name"]),
+            artist: %Artist{name: get_in(data, ["item", "artists", Access.at(0), "name"])},
+            album: %Album{
+              name: get_in(data, ["item", "album", "name"]),
+              thumbnails:
+                data
+                |> get_in(["item", "album", "images"])
+                |> parse_thumbnails()
+            }
+          }
+
+        "episode" ->
+          %Episode{
+            name: get_in(data, ["item", "name"]),
+            description: get_in(data, ["item", "description"]),
             thumbnails:
               data
-              |> get_in(["item", "album", "images"])
-              |> parse_thumbnails()
+              |> get_in(["item", "images"])
+              |> parse_thumbnails(),
+            show: %Show{
+              name: get_in(data, ["item", "show", "name"]),
+              description: get_in(data, ["item", "show", "description"]),
+              total_episodes: get_in(data, ["item", "show", "total_episodes"])
+            },
+            publisher: %Publisher{
+              name: get_in(data, ["item", "show", "publisher"])
+            }
           }
-        }
+      end
 
-      "episode" ->
-        %Episode{
-          name: get_in(data, ["item", "name"]),
-          playing: Map.get(data, "is_playing"),
-          description: get_in(data, ["item", "description"]),
-          thumbnails:
-            data
-            |> get_in(["item", "images"])
-            |> parse_thumbnails(),
-          show: %Show{
-            name: get_in(data, ["item", "show", "name"]),
-            description: get_in(data, ["item", "show", "description"]),
-            total_episodes: get_in(data, ["item", "show", "total_episodes"])
-          },
-          publisher: %Publisher{
-            name: get_in(data, ["item", "show", "publisher"])
-          }
-        }
+    if Map.get(data, "is_playing") do
+      {:playing, item}
+    else
+      {:paused, item}
     end
   end
 

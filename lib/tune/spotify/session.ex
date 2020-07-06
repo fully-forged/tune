@@ -10,7 +10,9 @@ defmodule Tune.Spotify.Session do
   @callback setup(id(), credentials()) :: :ok | {:error, term()}
   @callback get_profile(id()) :: {:ok, %Tune.User{}} | {:error, term()}
   @callback now_playing(id()) ::
-              :not_playing | {:playing, %Tune.Track{} | %Tune.Episode{}} | {:error, term()}
+              :not_playing
+              | {:playing | :paused, %Tune.Track{} | %Tune.Episode{}}
+              | {:error, term()}
   @callback toggle_play(id()) :: :ok | {:error, term()}
   @callback search(id(), String.t(), [item_type()]) :: {:ok, [map()]} | {:error, term()}
 
