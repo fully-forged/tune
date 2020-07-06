@@ -20,7 +20,9 @@ defmodule TuneWeb.PageLiveTest do
     name: @song_title,
     album: %Album{
       name: @album_name,
-      thumbnail: @album_thumbnail
+      thumbnails: %{
+        large: @album_thumbnail
+      }
     },
     artist: %Artist{
       name: @artist_name

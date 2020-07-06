@@ -182,7 +182,10 @@ defmodule Tune.Spotify.HttpApi do
           artist: %Artist{name: get_in(data, ["item", "artists", Access.at(0), "name"])},
           album: %Album{
             name: get_in(data, ["item", "album", "name"]),
-            thumbnail: get_in(data, ["item", "album", "images", Access.at(0), "url"])
+            thumbnails:
+              data
+              |> get_in(["item", "album", "images"])
+              |> parse_thumbnails()
           }
         }
 
@@ -191,7 +194,10 @@ defmodule Tune.Spotify.HttpApi do
           name: get_in(data, ["item", "name"]),
           playing: Map.get(data, "is_playing"),
           description: get_in(data, ["item", "description"]),
-          thumbnail: get_in(data, ["item", "images", Access.at(0), "url"]),
+          thumbnails:
+            data
+            |> get_in(["item", "images"])
+            |> parse_thumbnails(),
           show: %Show{
             name: get_in(data, ["item", "show", "name"]),
             description: get_in(data, ["item", "show", "description"]),
@@ -202,5 +208,13 @@ defmodule Tune.Spotify.HttpApi do
           }
         }
     end
+  end
+
+  def parse_thumbnails(images) do
+    Enum.into(images, %{}, fn
+      %{"height" => 640, "url" => url} -> {:large, url}
+      %{"height" => 300, "url" => url} -> {:medium, url}
+      %{"height" => 64, "url" => url} -> {:small, url}
+    end)
   end
 end
