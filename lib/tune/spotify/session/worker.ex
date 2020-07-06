@@ -15,32 +15,39 @@ defmodule Tune.Spotify.Session.Worker do
     GenStateMachine.start_link(__MODULE__, {session_id, credentials}, name: via(session_id))
   end
 
+  @impl true
   def setup(session_id, credentials) do
     Tune.Spotify.Supervisor.ensure_session(session_id, credentials)
   end
 
+  @impl true
   def get_profile(session_id) do
     GenStateMachine.call(via(session_id), :get_profile)
   end
 
+  @impl true
   def now_playing(session_id) do
     GenStateMachine.call(via(session_id), :now_playing)
   end
 
+  @impl true
   def toggle_play(session_id) do
     GenStateMachine.call(via(session_id), :toggle_play)
   end
 
+  @impl true
   def search(session_id, q, types) do
     GenStateMachine.call(via(session_id), {:search, q, types})
   end
 
+  @impl true
   def init({session_id, credentials}) do
     data = %__MODULE__{session_id: session_id, credentials: credentials}
     action = {:next_event, :internal, :authenticate}
     {:ok, :not_authenticated, data, action}
   end
 
+  @impl true
   def handle_event(event_type, :authenticate, :not_authenticated, data)
       when event_type in [:internal, :state_timeout] do
     case HttpApi.get_profile(data.credentials.token) do

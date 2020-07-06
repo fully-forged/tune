@@ -11,6 +11,7 @@ defmodule Tune.Spotify.Session do
   @callback get_profile(id()) :: {:ok, %Tune.User{}} | {:error, term()}
   @callback now_playing(id()) ::
               :not_playing | {:playing, %Tune.Track{} | %Tune.Episode{}} | {:error, term()}
+  @callback toggle_play(id()) :: :ok | {:error, term()}
   @callback search(id(), String.t(), [item_type()]) :: {:ok, [map()]} | {:error, term()}
 
   def subscribe(session_id) do
