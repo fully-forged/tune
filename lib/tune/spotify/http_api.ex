@@ -174,35 +174,14 @@ defmodule Tune.Spotify.HttpApi do
     item =
       case get_in(data, ["item", "type"]) do
         "track" ->
-          %Track{
-            name: get_in(data, ["item", "name"]),
-            artist: %Artist{name: get_in(data, ["item", "artists", Access.at(0), "name"])},
-            album: %Album{
-              name: get_in(data, ["item", "album", "name"]),
-              thumbnails:
-                data
-                |> get_in(["item", "album", "images"])
-                |> parse_thumbnails()
-            }
-          }
+          data
+          |> Map.get("item")
+          |> parse_track()
 
         "episode" ->
-          %Episode{
-            name: get_in(data, ["item", "name"]),
-            description: get_in(data, ["item", "description"]),
-            thumbnails:
-              data
-              |> get_in(["item", "images"])
-              |> parse_thumbnails(),
-            show: %Show{
-              name: get_in(data, ["item", "show", "name"]),
-              description: get_in(data, ["item", "show", "description"]),
-              total_episodes: get_in(data, ["item", "show", "total_episodes"])
-            },
-            publisher: %Publisher{
-              name: get_in(data, ["item", "show", "publisher"])
-            }
-          }
+          data
+          |> Map.get("item")
+          |> parse_episode()
       end
 
     if Map.get(data, "is_playing") do
@@ -212,7 +191,40 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  def parse_thumbnails(images) do
+  defp parse_track(item) do
+    %Track{
+      name: Map.get(item, "name"),
+      artist: %Artist{name: get_in(item, ["artists", Access.at(0), "name"])},
+      album: %Album{
+        name: get_in(item, ["album", "name"]),
+        thumbnails:
+          item
+          |> get_in(["album", "images"])
+          |> parse_thumbnails()
+      }
+    }
+  end
+
+  defp parse_episode(item) do
+    %Episode{
+      name: Map.get(item, "name"),
+      description: Map.get(item, "description"),
+      thumbnails:
+        item
+        |> Map.get("images")
+        |> parse_thumbnails(),
+      show: %Show{
+        name: get_in(item, ["show", "name"]),
+        description: get_in(item, ["show", "description"]),
+        total_episodes: get_in(item, ["show", "total_episodes"])
+      },
+      publisher: %Publisher{
+        name: get_in(item, ["show", "publisher"])
+      }
+    }
+  end
+
+  defp parse_thumbnails(images) do
     Enum.into(images, %{}, fn
       %{"height" => 640, "url" => url} -> {:large, url}
       %{"height" => 300, "url" => url} -> {:medium, url}
