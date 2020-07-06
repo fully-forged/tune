@@ -33,9 +33,10 @@ defmodule TuneWeb.ExplorerLive do
 
   def handle_event("search", params, socket) do
     q = Map.get(params, "q", "")
+    types = [:artist, :album, :track, :episode, :show]
 
     if String.length(q) >= 3 do
-      spotify().search(socket.assigns.session_id, q, [:artist])
+      spotify().search(socket.assigns.session_id, q, types)
     end
 
     {:noreply, socket}

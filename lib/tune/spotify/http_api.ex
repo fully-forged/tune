@@ -97,7 +97,12 @@ defmodule Tune.Spotify.HttpApi do
 
     case json_get(@base_url <> "/search?" <> URI.encode_query(params), auth_headers(token)) do
       {:ok, %{status: 200} = response} ->
-        Jason.decode(response.body)
+        results =
+          response.body
+          |> Jason.decode!()
+          |> parse_search_results(types)
+
+        {:ok, results}
 
       other_response ->
         handle_errors(other_response)
@@ -181,7 +186,7 @@ defmodule Tune.Spotify.HttpApi do
         "episode" ->
           data
           |> Map.get("item")
-          |> parse_episode()
+          |> parse_episode_with_metadata()
       end
 
     if Map.get(data, "is_playing") do
@@ -194,13 +199,47 @@ defmodule Tune.Spotify.HttpApi do
   defp parse_track(item) do
     %Track{
       name: Map.get(item, "name"),
-      artist: %Artist{name: get_in(item, ["artists", Access.at(0), "name"])},
-      album: %Album{
-        name: get_in(item, ["album", "name"]),
-        thumbnails:
-          item
-          |> get_in(["album", "images"])
-          |> parse_thumbnails()
+      artist:
+        item
+        |> get_in(["artists", Access.at(0)])
+        |> parse_artist(),
+      album:
+        item
+        |> Map.get("album")
+        |> parse_album()
+    }
+  end
+
+  defp parse_artist(item) do
+    %Artist{
+      name: Map.get(item, "name")
+    }
+  end
+
+  defp parse_album(item) do
+    %Album{
+      name: Map.get(item, "name"),
+      thumbnails:
+        item
+        |> Map.get("images")
+        |> parse_thumbnails()
+    }
+  end
+
+  defp parse_episode_with_metadata(item) do
+    %Episode{
+      name: Map.get(item, "name"),
+      description: Map.get(item, "description"),
+      thumbnails:
+        item
+        |> Map.get("images")
+        |> parse_thumbnails(),
+      show:
+        item
+        |> Map.get("show")
+        |> parse_show(),
+      publisher: %Publisher{
+        name: get_in(item, ["show", "publisher"])
       }
     }
   end
@@ -213,14 +252,16 @@ defmodule Tune.Spotify.HttpApi do
         item
         |> Map.get("images")
         |> parse_thumbnails(),
-      show: %Show{
-        name: get_in(item, ["show", "name"]),
-        description: get_in(item, ["show", "description"]),
-        total_episodes: get_in(item, ["show", "total_episodes"])
-      },
-      publisher: %Publisher{
-        name: get_in(item, ["show", "publisher"])
-      }
+      show: :not_fetched,
+      publisher: :not_fetched
+    }
+  end
+
+  defp parse_show(item) do
+    %Show{
+      name: Map.get(item, "name"),
+      description: Map.get(item, "description"),
+      total_episodes: Map.get(item, "total_episodes")
     }
   end
 
@@ -229,6 +270,51 @@ defmodule Tune.Spotify.HttpApi do
       %{"height" => 640, "url" => url} -> {:large, url}
       %{"height" => 300, "url" => url} -> {:medium, url}
       %{"height" => 64, "url" => url} -> {:small, url}
+    end)
+  end
+
+  defp parse_search_results(results, types) do
+    Enum.reduce(types, %{}, fn
+      :album, acc ->
+        albums =
+          results
+          |> get_in(["albums", "items"])
+          |> Enum.map(&parse_album/1)
+
+        Map.put(acc, :albums, albums)
+
+      :artist, acc ->
+        artists =
+          results
+          |> get_in(["artists", "items"])
+          |> Enum.map(&parse_artist/1)
+
+        Map.put(acc, :artists, artists)
+
+      :track, acc ->
+        tracks =
+          results
+          |> get_in(["tracks", "items"])
+          |> Enum.map(&parse_track/1)
+
+        Map.put(acc, :tracks, tracks)
+
+      :show, acc ->
+        shows =
+          results
+          |> get_in(["shows", "items"])
+          |> Enum.map(&parse_show/1)
+
+        Map.put(acc, :shows, shows)
+
+      :episode, acc ->
+        episodes =
+          results
+          |> IO.inspect()
+          |> get_in(["episodes", "items"])
+          |> Enum.map(&parse_episode/1)
+
+        Map.put(acc, :episodes, episodes)
     end)
   end
 end
