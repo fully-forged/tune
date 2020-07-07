@@ -3,7 +3,14 @@
     <h1 class="h2 mr-md-4 my-0 font-weight-normal">Tune</h1>
       <%= if authenticated?(@conn) do %>
         <form class="form-inline my-2 my-lg-0 mr-md-auto" phx-change="search" phx-target="#explorer">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= Map.get(@conn.params, "q") %>">
+          <div class="input-group">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= Map.get(@conn.params, "q") %>">
+          </div>
+          <div class="input-group mr-md-2">
+            <select class="custom-select" name="type" id="type">
+              <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], Map.get(@conn.params, "type")) %>
+            </select>
+          </div>
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <%= render TuneWeb.UserView, "mini.html", user: @conn.assigns.user %>

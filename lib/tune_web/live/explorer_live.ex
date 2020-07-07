@@ -6,6 +6,7 @@ defmodule TuneWeb.ExplorerLive do
   @initial_state [
     status: :not_authenticated,
     q: nil,
+    type: :track,
     tracks: [],
     user: nil,
     now_playing: :not_playing
@@ -23,12 +24,14 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @impl true
-  def handle_params(%{"q" => q}, _url, socket) do
+  def handle_params(%{"q" => q} = params, _url, socket) do
+    type = Map.get(params, "type", "track")
+
     if String.length(q) >= 3 do
       socket = assign(socket, :q, q)
-      types = [:track]
+      type = parse_type(type)
 
-      case spotify().search(socket.assigns.session_id, q, types) do
+      case spotify().search(socket.assigns.session_id, q, [type]) do
         {:ok, results} ->
           {:noreply, assign(socket, :tracks, results.tracks)}
 
@@ -109,4 +112,10 @@ defmodule TuneWeb.ExplorerLive do
   def handle_info(now_playing, socket) do
     {:noreply, assign(socket, :now_playing, now_playing)}
   end
+
+  defp parse_type("track"), do: :track
+  defp parse_type("album"), do: :album
+  defp parse_type("artist"), do: :artist
+  defp parse_type("episode"), do: :episode
+  defp parse_type("show"), do: :show
 end
