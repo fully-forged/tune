@@ -310,7 +310,6 @@ defmodule Tune.Spotify.HttpApi do
       :episode, acc ->
         episodes =
           results
-          |> IO.inspect()
           |> get_in(["episodes", "items"])
           |> Enum.map(&parse_episode/1)
 
