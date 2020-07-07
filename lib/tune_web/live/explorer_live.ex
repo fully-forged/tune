@@ -67,6 +67,12 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply, socket}
   end
 
+  def handle_event("play", %{"uri" => uri}, socket) do
+    spotify().play(socket.assigns.session_id, uri)
+
+    {:noreply, socket}
+  end
+
   def handle_event("search", %{"q" => ""}, socket) do
     {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index))}
   end
