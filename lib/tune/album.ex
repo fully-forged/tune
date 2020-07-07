@@ -1,3 +1,3 @@
 defmodule Tune.Album do
-  defstruct [:name, :thumbnails]
+  defstruct [:id, :uri, :name, :thumbnails]
 end

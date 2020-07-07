@@ -198,6 +198,8 @@ defmodule Tune.Spotify.HttpApi do
 
   defp parse_track(item) do
     %Track{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       artist:
         item
@@ -212,12 +214,16 @@ defmodule Tune.Spotify.HttpApi do
 
   defp parse_artist(item) do
     %Artist{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
       name: Map.get(item, "name")
     }
   end
 
   defp parse_album(item) do
     %Album{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       thumbnails:
         item
@@ -228,6 +234,8 @@ defmodule Tune.Spotify.HttpApi do
 
   defp parse_episode_with_metadata(item) do
     %Episode{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       description: Map.get(item, "description"),
       thumbnails:
@@ -246,6 +254,8 @@ defmodule Tune.Spotify.HttpApi do
 
   defp parse_episode(item) do
     %Episode{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       description: Map.get(item, "description"),
       thumbnails:

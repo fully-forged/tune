@@ -1,3 +1,3 @@
 defmodule Tune.Track do
-  defstruct [:name, :artist, :album]
+  defstruct [:id, :uri, :name, :artist, :album]
 end

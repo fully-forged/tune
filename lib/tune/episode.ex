@@ -1,3 +1,3 @@
 defmodule Tune.Episode do
-  defstruct [:name, :description, :show, :publisher, :thumbnails]
+  defstruct [:id, :uri, :name, :description, :show, :publisher, :thumbnails]
 end

@@ -1,3 +1,3 @@
 defmodule Tune.Artist do
-  defstruct [:name]
+  defstruct [:id, :uri, :name]
 end
