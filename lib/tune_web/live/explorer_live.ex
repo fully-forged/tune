@@ -3,6 +3,14 @@ defmodule TuneWeb.ExplorerLive do
 
   alias TuneWeb.{PlayerView, TrackView}
 
+  @initial_state [
+    status: :not_authenticated,
+    q: nil,
+    tracks: [],
+    user: nil,
+    now_playing: :not_playing
+  ]
+
   @impl true
   def mount(_params, session, socket) do
     with {:ok, session_id} <- Map.fetch(session, "spotify_id"),
@@ -10,39 +18,36 @@ defmodule TuneWeb.ExplorerLive do
       {:ok, load_user(session_id, credentials, socket)}
     else
       :error ->
-        {:ok, assign(socket, tracks: [], q: nil, status: :not_authenticated)}
+        {:ok, assign(socket, @initial_state)}
     end
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    q = Map.get(params, "q")
+  def handle_params(%{"q" => q}, _url, socket) do
+    if String.length(q) >= 3 do
+      socket = assign(socket, :q, q)
+      types = [:track]
 
-    cond do
-      q == nil ->
-        {:noreply,
-         socket
-         |> assign(:q, nil)
-         |> assign(:tracks, [])}
+      case spotify().search(socket.assigns.session_id, q, types) do
+        {:ok, results} ->
+          {:noreply, assign(socket, :tracks, results.tracks)}
 
-      String.length(q) >= 3 ->
-        socket = assign(socket, :q, q)
-        types = [:track]
-
-        case spotify().search(socket.assigns.session_id, q, types) do
-          {:ok, results} ->
-            {:noreply, assign(socket, :tracks, results.tracks)}
-
-          _error ->
-            {:noreply, socket}
-        end
-
-      true ->
-        {:noreply,
-         socket
-         |> assign(:q, nil)
-         |> assign(:tracks, [])}
+        _error ->
+          {:noreply, socket}
+      end
+    else
+      {:noreply,
+       socket
+       |> assign(:q, nil)
+       |> assign(:tracks, [])}
     end
+  end
+
+  def handle_params(_params, _url, socket) do
+    {:noreply,
+     socket
+     |> assign(:q, nil)
+     |> assign(:tracks, [])}
   end
 
   @impl true
@@ -80,13 +85,13 @@ defmodule TuneWeb.ExplorerLive do
         Tune.Spotify.Session.subscribe(session_id)
       end
 
-      assign(socket,
+      socket
+      |> assign(@initial_state)
+      |> assign(
         status: :authenticated,
         session_id: session_id,
         user: user,
-        now_playing: now_playing,
-        tracks: [],
-        q: nil
+        now_playing: now_playing
       )
     else
       {:error, _reason} ->
