@@ -8,10 +8,11 @@ defmodule Tune.Spotify.Session do
   @type item_type :: :album | :artist | :playlist | :track | :show | :episode
 
   @callback setup(id(), credentials()) :: :ok | {:error, term()}
-  @callback get_profile(id()) :: {:ok, %Tune.User{}} | {:error, term()}
+  @callback get_profile(id()) :: {:ok, %Tune.Spotify.Schema.User{}} | {:error, term()}
   @callback now_playing(id()) ::
               :not_playing
-              | {:playing | :paused, %Tune.Track{} | %Tune.Episode{}}
+              | {:playing | :paused,
+                 %Tune.Spotify.Schema.Track{} | %Tune.Spotify.Schema.Episode{}}
               | {:error, term()}
   @callback toggle_play(id()) :: :ok | {:error, term()}
   @callback search(id(), String.t(), [item_type()]) :: {:ok, [map()]} | {:error, term()}

@@ -1,5 +1,5 @@
 <%= case @now_playing do %>
-  <% {playing_or_paused, %Tune.Track{} = track} -> %>
+  <% {playing_or_paused, %Tune.Spotify.Schema.Track{} = track} -> %>
     <div class="card now-playing text-center">
       <%= img_tag track.album.thumbnails.large, alt: track.name, class: "card-img-top" %>
       <div class="card-body">
@@ -15,7 +15,7 @@
         </a>
       </div>
     </div>
-  <% {playing_or_paused, %Tune.Episode{} = episode} -> %>
+  <% {playing_or_paused, %Tune.Spotify.Schema.Episode{} = episode} -> %>
     <div class="card now-playing text-center">
       <%= img_tag episode.thumbnails.large, alt: episode.name, class: "card-img-top" %>
       <div class="card-body">

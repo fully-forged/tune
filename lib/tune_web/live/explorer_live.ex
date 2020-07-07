@@ -74,7 +74,7 @@ defmodule TuneWeb.ExplorerLive do
 
   defp load_user(session_id, credentials, socket) do
     with :ok <- spotify().setup(session_id, credentials),
-         %Tune.User{} = user = spotify().get_profile(session_id),
+         %Tune.Spotify.Schema.User{} = user = spotify().get_profile(session_id),
          now_playing = spotify().now_playing(session_id) do
       if connected?(socket) do
         Tune.Spotify.Session.subscribe(session_id)

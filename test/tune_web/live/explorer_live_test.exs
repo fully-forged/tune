@@ -4,7 +4,7 @@ defmodule TuneWeb.ExplorerLiveTest do
   import Phoenix.LiveViewTest
   import Mox
 
-  alias Tune.{Album, Artist, Track, User}
+  alias Tune.Spotify.Schema.{Album, Artist, Track, User}
 
   @avatar_url "http://example.com/user.png"
   @profile %User{
