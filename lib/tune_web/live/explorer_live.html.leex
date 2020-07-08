@@ -2,7 +2,7 @@
   <h1>Tune</h1>
   <%= if @status == :authenticated do %>
     <div class="search">
-      <form phx-change="search" phx-target="#explorer">
+      <form phx-change="search">
         <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
         <select name="type" id="type">
           <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], @type) %>
