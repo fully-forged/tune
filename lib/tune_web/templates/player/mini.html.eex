@@ -1,10 +1,12 @@
 <%= case @now_playing do %>
   <% {playing_or_paused, %Tune.Spotify.Schema.Track{} = track} -> %>
-    <article>
-      <%= img_tag track.album.thumbnails.large, alt: track.name %>
-      <p><%= track.name %></p>
-      <p><%= track.artist.name %></p>
-      <a href="#" phx-click="toggle_play_pause">
+    <div class="mini-player">
+      <%= img_tag track.album.thumbnails.small, alt: track.name %>
+      <div class="meta">
+        <p class="name"><%= track.name %></p>
+        <p class="artist-name"><%= track.artist.name %></p>
+      </div>
+      <a class="button button-small" href="#" phx-click="toggle_play_pause">
         <%= case playing_or_paused do %>
           <% :playing -> %>
             <%= render "pause.html", [] %>
@@ -12,13 +14,15 @@
             <%= render "play.html", []%>
           <% end %>
       </a>
-    </article>
+    </div>
   <% {playing_or_paused, %Tune.Spotify.Schema.Episode{} = episode} -> %>
-    <article>
-      <%= img_tag episode.thumbnails.large, alt: episode.name %>
-      <p><%= episode.name %></p>
-      <p><%= episode.publisher.name %></p>
-      <a href="#">
+    <div class="mini-player">
+      <%= img_tag episode.thumbnails.small, alt: episode.name %>
+      <div class="meta">
+        <p class="name"><%= episode.name %></p>
+        <p class="artist-name"><%= episode.publisher.name %></p>
+      </div>
+      <a class="button button-small" href="#">
         <%= case playing_or_paused do %>
           <% :playing -> %>
             <%= render "pause.html", [] %>
@@ -26,7 +30,7 @@
             <%= render "play.html", []%>
           <% end %>
       </a>
-    </article>
+    </div>
   <% :not_playing -> %>
     <p>Not playing.</p>
   <% {:error, _reason} -> %>

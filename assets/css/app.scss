@@ -2,6 +2,13 @@
 @import "./milligram.css";
 @import "../node_modules/nprogress/nprogress.css";
 
+.button-small {
+  font-size: .8rem;
+  height: 2.8rem;
+  line-height: 2.8rem;
+  padding: 0 1.5rem;
+}
+
 // Navigation Header
 
 .navbar {
@@ -79,14 +86,25 @@
   }
 }
 
-@media (max-width: 768px) {
-  .button-small {
-    font-size: .8rem;
-    height: 2.8rem;
-    line-height: 2.8rem;
-    padding: 0 1.5rem;
+.mini-player {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 0.5em;
+
+  .meta {
+    margin: 0 1em 0 1em;
   }
 
+  .name, .artist-name, .button {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
   .navbar {
     flex-direction: column;
 
@@ -128,6 +146,15 @@
     .name, .artist-name {
       font-size: 0.8em;
       margin-bottom: 0.2em;
+    }
+  }
+
+  .mini-player {
+    width: 100%;
+    justify-content: space-between;
+
+    .meta {
+      flex-grow: 1;
     }
   }
 }
