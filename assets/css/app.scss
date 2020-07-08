@@ -67,6 +67,29 @@
     justify-content: space-between;
   }
 
+  .meta {
+    position: relative;
+    text-align: center;
+
+    .play-button {
+      position: absolute;
+      text-align: center;
+      color: white;
+      font-size: 4em;
+      justify-content: center;
+      align-items: center;
+      max-height: 150px;
+      width: 100%;
+      height: 100%;
+      display: none;
+
+    }
+
+    &:hover .play-button {
+      display: flex;
+    }
+  }
+
   .name, .artist-name {
     font-size: 1em;
     margin-bottom: 0.2em;
@@ -131,10 +154,6 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 
-    .result {
-      // backgroud-color:
-    }
-
     $img-dimension: 72px;
     img {
       max-height: $img-dimension;
@@ -147,6 +166,12 @@
 
     .meta {
       text-align: center;
+
+      .play-button {
+        font-size: 2em;
+        display: flex;
+        max-height: $img-dimension;
+      }
     }
 
     .name, .artist-name {
