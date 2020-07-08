@@ -1,2 +1,2 @@
 <%= img_tag(@user.avatar_url, alt: @user.name, class: "user-avatar rounded-circle") %>
-<span class="p-1"><%= @user.name %></span>
+<p><%= @user.name %></p>

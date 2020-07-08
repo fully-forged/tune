@@ -1,8 +1,6 @@
-<div class="card mini-track text-center">
-  <%= img_tag @track.album.thumbnails.small, alt: @track.name, class: "card-img-top" %>
-  <div class="card-body">
-    <h6 class="card-title"><%= @track.name %></h5>
-    <p class="card-text text-muted"><%= @track.artist.name %></p>
-    <button type="button" class="btn btn-dark" phx-click="play" phx-value-uri="<%= @track.uri %>">Play</button>
-  </div>
+<div>
+  <%= img_tag @track.album.thumbnails.small, alt: @track.name %>
+  <h2><%= @track.name %></h2>
+  <p><%= @track.artist.name %></p>
+  <button type="button" phx-click="play" phx-value-uri="<%= @track.uri %>">Play</button>
 </div>
