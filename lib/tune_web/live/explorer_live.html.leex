@@ -1,7 +1,7 @@
 <section id="explorer">
   <%= if @status == :authenticated do %>
     <div class="results">
-      <%= render_many @tracks, TrackView, "mini.html" %>
+      <%= render_many @results, SearchView, "result.html", as: :item %>
     </div>
     <%= render PlayerView, "mini.html", now_playing: @now_playing %>
   <% else %>

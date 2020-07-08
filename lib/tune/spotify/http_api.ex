@@ -226,7 +226,15 @@ defmodule Tune.Spotify.HttpApi do
     %Artist{
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
-      name: Map.get(item, "name")
+      name: Map.get(item, "name"),
+      thumbnails:
+        if Map.has_key?(item, "images") do
+          item
+          |> Map.get("images")
+          |> parse_thumbnails()
+        else
+          :not_fetched
+        end
     }
   end
 
@@ -235,6 +243,10 @@ defmodule Tune.Spotify.HttpApi do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      artist:
+        item
+        |> get_in(["artists", Access.at(0)])
+        |> parse_artist(),
       thumbnails:
         item
         |> Map.get("images")
@@ -279,8 +291,17 @@ defmodule Tune.Spotify.HttpApi do
 
   defp parse_show(item) do
     %Show{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       description: Map.get(item, "description"),
+      publisher: %Publisher{
+        name: Map.get(item, "publisher")
+      },
+      thumbnails:
+        item
+        |> Map.get("images")
+        |> parse_thumbnails(),
       total_episodes: Map.get(item, "total_episodes")
     }
   end
@@ -288,8 +309,14 @@ defmodule Tune.Spotify.HttpApi do
   defp parse_thumbnails(images) do
     Enum.into(images, %{}, fn
       %{"height" => 640, "url" => url} -> {:large, url}
+      %{"height" => 360, "url" => url} -> {:medium, url}
       %{"height" => 300, "url" => url} -> {:medium, url}
+      %{"height" => 320, "url" => url} -> {:medium, url}
+      %{"height" => 200, "url" => url} -> {:medium, url}
+      %{"height" => 169, "url" => url} -> {:small, url}
+      %{"height" => 160, "url" => url} -> {:small, url}
       %{"height" => 64, "url" => url} -> {:small, url}
+      %{"height" => 36, "url" => url} -> {:small, url}
     end)
   end
 

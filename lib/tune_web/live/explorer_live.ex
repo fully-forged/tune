@@ -1,13 +1,13 @@
 defmodule TuneWeb.ExplorerLive do
   use TuneWeb, :live_view
 
-  alias TuneWeb.{PlayerView, TrackView}
+  alias TuneWeb.{PlayerView, SearchView}
 
   @initial_state [
     status: :not_authenticated,
     q: nil,
     type: :track,
-    tracks: [],
+    results: [],
     user: nil,
     now_playing: :not_playing
   ]
@@ -33,7 +33,7 @@ defmodule TuneWeb.ExplorerLive do
 
       case spotify().search(socket.assigns.session_id, q, [type]) do
         {:ok, results} ->
-          {:noreply, assign(socket, :tracks, results.tracks)}
+          {:noreply, assign(socket, :results, extract_results(results, type))}
 
         _error ->
           {:noreply, socket}
@@ -42,7 +42,7 @@ defmodule TuneWeb.ExplorerLive do
       {:noreply,
        socket
        |> assign(:q, nil)
-       |> assign(:tracks, [])}
+       |> assign(:results, [])}
     end
   end
 
@@ -50,7 +50,7 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply,
      socket
      |> assign(:q, nil)
-     |> assign(:tracks, [])}
+     |> assign(:results, [])}
   end
 
   @impl true
@@ -118,4 +118,10 @@ defmodule TuneWeb.ExplorerLive do
   defp parse_type("artist"), do: :artist
   defp parse_type("episode"), do: :episode
   defp parse_type("show"), do: :show
+
+  defp extract_results(results, :track), do: Map.get(results, :tracks)
+  defp extract_results(results, :album), do: Map.get(results, :albums)
+  defp extract_results(results, :artist), do: Map.get(results, :artists)
+  defp extract_results(results, :episode), do: Map.get(results, :episodes)
+  defp extract_results(results, :show), do: Map.get(results, :shows)
 end

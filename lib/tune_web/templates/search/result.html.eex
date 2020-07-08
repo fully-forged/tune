@@ -1,0 +1,12 @@
+<div class="result">
+  <div class="meta">
+    <%= img_tag thumbnail(@item), alt: name(@item) %>
+    <p class="name"><%= name(@item) %></p>
+    <p class="artist-name"><%= author_name(@item) %></p>
+  </div>
+  <div class="actions">
+    <button class="button-small" type="button" phx-click="play" phx-value-uri="<%= @item.uri %>">
+      <%= render TuneWeb.PlayerView, "play.html", []%>
+    </button>
+  </div>
+</div>
