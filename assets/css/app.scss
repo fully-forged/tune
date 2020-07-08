@@ -112,8 +112,14 @@
       font-size: 1.5em;
     }
 
+    $font-size: 1.5rem;
     .search form input {
-      max-width: 12em;
+      width: 9em;
+      font-size: $font-size;
+    }
+
+    select {
+      font-size: $font-size;
     }
   }
 
