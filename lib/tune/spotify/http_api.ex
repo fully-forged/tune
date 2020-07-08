@@ -2,6 +2,8 @@ defmodule Tune.Spotify.HttpApi do
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
   alias Tune.Spotify.Auth
 
+  require Logger
+
   @base_url "https://api.spotify.com/v1"
   @refresh_url "https://accounts.spotify.com/api/token"
 
@@ -168,12 +170,24 @@ defmodule Tune.Spotify.HttpApi do
     case response do
       {:ok, %{status: 401, body: body}} ->
         if body =~ "expired" do
+          Logger.warn(fn ->
+            "Spotify HTTP Api error: expired token"
+          end)
+
           {:error, :expired_token}
         else
+          Logger.warn(fn ->
+            "Spotify HTTP Api error: invalid token"
+          end)
+
           {:error, :invalid_token}
         end
 
       {:ok, %{status: status}} ->
+        Logger.warn(fn ->
+          "Spotify HTTP Api error: #{status}"
+        end)
+
         {:error, status}
 
       error ->
