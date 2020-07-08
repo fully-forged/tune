@@ -29,6 +29,16 @@ defmodule TuneWeb.Telemetry do
         tags: [:route],
         unit: {:native, :millisecond}
       ),
+      summary("phoenix.live_view.mount.stop.duration",
+        unit: {:native, :millisecond}
+      ),
+      summary("phoenix.live_view.handle_params.stop.duration",
+        unit: {:native, :millisecond}
+      ),
+      summary("phoenix.live_view.handle_event.stop.duration",
+        unit: {:native, :millisecond},
+        tags: [:event]
+      ),
 
       # VM Metrics
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
