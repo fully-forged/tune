@@ -315,15 +315,9 @@ defmodule Tune.Spotify.HttpApi do
 
   defp parse_thumbnails(images) do
     Enum.into(images, %{}, fn
-      %{"height" => 640, "url" => url} -> {:large, url}
-      %{"height" => 360, "url" => url} -> {:medium, url}
-      %{"height" => 300, "url" => url} -> {:medium, url}
-      %{"height" => 320, "url" => url} -> {:medium, url}
-      %{"height" => 200, "url" => url} -> {:medium, url}
-      %{"height" => 169, "url" => url} -> {:small, url}
-      %{"height" => 160, "url" => url} -> {:small, url}
-      %{"height" => 64, "url" => url} -> {:small, url}
-      %{"height" => 36, "url" => url} -> {:small, url}
+      %{"height" => height, "url" => url} when height in 0..199 -> {:small, url}
+      %{"height" => height, "url" => url} when height in 200..449 -> {:medium, url}
+      %{"height" => height, "url" => url} when height in 450..800 -> {:large, url}
     end)
   end
 
