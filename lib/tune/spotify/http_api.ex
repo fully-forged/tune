@@ -331,7 +331,7 @@ defmodule Tune.Spotify.HttpApi do
     Enum.into(images, %{}, fn
       %{"height" => height, "url" => url} when height in 0..199 -> {:small, url}
       %{"height" => height, "url" => url} when height in 200..449 -> {:medium, url}
-      %{"height" => height, "url" => url} when height in 450..800 -> {:large, url}
+      %{"height" => height, "url" => url} when height >= 450 -> {:large, url}
     end)
   end
 
