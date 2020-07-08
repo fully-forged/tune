@@ -2,13 +2,13 @@
   <h1>Tune</h1>
   <%= if @status == :authenticated do %>
     <div class="search">
-      <form phx-change="search">
+      <%= form_tag("/", method: :get, phx_change: "search") do %>
         <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
         <select name="type" id="type">
-          <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], @type) %>
+          <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], to_string(@type)) %>
         </select>
         <button type="submit">Search</button>
-      </form>
+    <% end %>
     </div>
     <div class="user-mini">
       <%= img_tag @user.avatar_url, alt: @user.name %>

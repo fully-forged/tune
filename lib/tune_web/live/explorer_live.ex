@@ -81,16 +81,11 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply, socket}
   end
 
-  def handle_event("search", %{"q" => ""}, socket) do
-    {:noreply,
-     push_patch(socket, to: Routes.explorer_path(socket, :index, type: socket.assigns.type))}
-  end
+  def handle_event("search", params, socket) do
+    q = Map.get(params, "q")
+    type = Map.get(params, "type", "track")
 
-  def handle_event("search", %{"q" => q}, socket) do
-    {:noreply,
-     push_patch(socket,
-       to: Routes.explorer_path(socket, :index, %{q: q, type: socket.assigns.type})
-     )}
+    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index, q: q, type: type))}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
