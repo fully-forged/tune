@@ -1,5 +1,69 @@
 /* This file is for your main application css. */
+@import "./milligram.css";
 @import "../node_modules/nprogress/nprogress.css";
+
+// Navigation Header
+
+.navbar {
+  display: flex;
+  outline: 1px solid red;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    font-size: 2em;
+    margin: 0 0.5em 0 0;
+  }
+
+  .search {
+    flex-grow: 1;
+
+    form {
+      display: flex;
+      margin-bottom: 0;
+
+      input, select, button {
+        margin: 1rem 0.5rem 1rem 0;
+      }
+
+      input {
+        max-width: 20em;
+      }
+
+      select {
+        max-width: 8em;
+      }
+    }
+  }
+
+  .user-mini {
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 2em;
+    }
+
+    p {
+      margin: 0 0.5em 0 0.5em;
+    }
+
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+
+    h1 {
+      font-size: 1.5em;
+    }
+
+    .search form input {
+      max-width: 12em;
+    }
+  }
+}
 
 /* LiveView specific classes for your customizations */
 
