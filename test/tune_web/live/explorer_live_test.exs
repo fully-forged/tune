@@ -21,6 +21,8 @@ defmodule TuneWeb.ExplorerLiveTest do
     album: %Album{
       name: @album_name,
       thumbnails: %{
+        small: @album_thumbnail,
+        medium: @album_thumbnail,
         large: @album_thumbnail
       }
     },
