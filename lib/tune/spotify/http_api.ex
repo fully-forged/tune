@@ -54,7 +54,14 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   def play(token, uri) do
-    case json_put(@base_url <> "/me/player/play", %{uris: [uri]}, auth_headers(token)) do
+    payload =
+      if uri =~ "track" do
+        %{uris: [uri]}
+      else
+        %{context_uri: uri}
+      end
+
+    case json_put(@base_url <> "/me/player/play", payload, auth_headers(token)) do
       {:ok, %{status: 204}} ->
         :ok
 
