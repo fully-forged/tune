@@ -1,13 +1,24 @@
 defmodule TuneWeb.SearchView do
   use TuneWeb, :view
 
+  @default_medium_thumbnail "https://via.placeholder.com/150"
+
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Show, Track}
 
-  defp thumbnail(%Track{album: album}), do: album.thumbnails.medium
-  defp thumbnail(%Album{thumbnails: thumbnails}), do: thumbnails.medium
-  defp thumbnail(%Artist{thumbnails: thumbnails}), do: thumbnails.medium
-  defp thumbnail(%Show{thumbnails: thumbnails}), do: thumbnails.medium
-  defp thumbnail(%Episode{thumbnails: thumbnails}), do: thumbnails.medium
+  defp thumbnail(%Track{album: album}),
+    do: Map.get(album.thumbnails, :medium, @default_medium_thumbnail)
+
+  defp thumbnail(%Album{thumbnails: thumbnails}),
+    do: Map.get(thumbnails, :medium, @default_medium_thumbnail)
+
+  defp thumbnail(%Artist{thumbnails: thumbnails}),
+    do: Map.get(thumbnails, :medium, @default_medium_thumbnail)
+
+  defp thumbnail(%Show{thumbnails: thumbnails}),
+    do: Map.get(thumbnails, :medium, @default_medium_thumbnail)
+
+  defp thumbnail(%Episode{thumbnails: thumbnails}),
+    do: Map.get(thumbnails, :medium, @default_medium_thumbnail)
 
   defp name(%Track{name: name}), do: name
   defp name(%Album{name: name}), do: name
