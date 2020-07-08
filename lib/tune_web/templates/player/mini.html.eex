@@ -1,29 +1,29 @@
 <%= case @now_playing do %>
   <% {playing_or_paused, %Tune.Spotify.Schema.Track{} = track} -> %>
     <article>
-      <%= img_tag track.album.thumbnails.large, alt: track.name, class: "card-img-top" %>
-      <h2><%= track.name %></h2>
+      <%= img_tag track.album.thumbnails.large, alt: track.name %>
+      <p><%= track.name %></p>
       <p><%= track.artist.name %></p>
       <a href="#" phx-click="toggle_play_pause">
         <%= case playing_or_paused do %>
           <% :playing -> %>
             <%= render "pause.html", [] %>
           <% :paused -> %>
-              <%= render "play.html", []%>
+            <%= render "play.html", []%>
           <% end %>
       </a>
     </article>
   <% {playing_or_paused, %Tune.Spotify.Schema.Episode{} = episode} -> %>
     <article>
-      <%= img_tag episode.thumbnails.large, alt: episode.name, class: "card-img-top" %>
-      <h2><%= episode.name %></h2>
+      <%= img_tag episode.thumbnails.large, alt: episode.name %>
+      <p><%= episode.name %></p>
       <p><%= episode.publisher.name %></p>
       <a href="#">
         <%= case playing_or_paused do %>
           <% :playing -> %>
             <%= render "pause.html", [] %>
           <% :paused -> %>
-              <%= render "play.html", []%>
+            <%= render "play.html", []%>
           <% end %>
       </a>
     </article>

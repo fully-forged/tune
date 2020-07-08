@@ -1,6 +1,6 @@
-<section id="explorer" class="d-flex">
+<section id="explorer">
   <%= if @status == :authenticated do %>
-    <div class="results d-flex flex-wrap">
+    <div class="results">
       <%= render_many @tracks, TrackView, "mini.html" %>
     </div>
     <%= render PlayerView, "mini.html", now_playing: @now_playing %>

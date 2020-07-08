@@ -1,6 +1,12 @@
-<div>
-  <%= img_tag @track.album.thumbnails.small, alt: @track.name %>
-  <h2><%= @track.name %></h2>
-  <p><%= @track.artist.name %></p>
-  <button type="button" phx-click="play" phx-value-uri="<%= @track.uri %>">Play</button>
+<div class="result">
+  <div class="meta">
+    <%= img_tag @track.album.thumbnails.medium, alt: @track.name %>
+    <p class="name"><%= @track.name %></p>
+    <p class="artist-name"><%= @track.artist.name %></p>
+  </div>
+  <div class="actions">
+    <button class="button-small" type="button" phx-click="play" phx-value-uri="<%= @track.uri %>">
+      <%= render TuneWeb.PlayerView, "play.html", []%>
+    </button>
+  </div>
 </div>

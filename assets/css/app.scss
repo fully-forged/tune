@@ -6,7 +6,6 @@
 
 .navbar {
   display: flex;
-  outline: 1px solid red;
   justify-content: space-between;
   align-items: center;
 
@@ -51,7 +50,43 @@
   }
 }
 
+.results {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+
+  .result {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .name, .artist-name {
+    font-size: 1em;
+    margin-bottom: 0.2em;
+  }
+
+  .name {
+    font-weight: bold;
+  }
+
+  img {
+    max-height: 150px;
+    max-width: 150px;
+  }
+
+  .actions {
+    text-align: center;
+  }
+}
+
 @media (max-width: 768px) {
+  .button-small {
+    font-size: .8rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding: 0 1.5rem;
+  }
+
   .navbar {
     flex-direction: column;
 
@@ -61,6 +96,38 @@
 
     .search form input {
       max-width: 12em;
+    }
+  }
+
+  #explorer {
+    margin-top: 1em;
+  }
+
+  .results {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    .result {
+      // backgroud-color:
+    }
+
+    $img-dimension: 72px;
+    img {
+      max-height: $img-dimension;
+      max-width: $img-dimension;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+
+    .meta {
+      text-align: center;
+    }
+
+    .name, .artist-name {
+      font-size: 0.8em;
+      margin-bottom: 0.2em;
     }
   }
 }
