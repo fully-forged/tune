@@ -1,3 +1,25 @@
+<nav class="navbar">
+  <h1>Tune</h1>
+  <%= if @status == :authenticated do %>
+    <div class="search">
+      <form phx-change="search" phx-target="#explorer">
+        <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
+        <select name="type" id="type">
+          <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], @type) %>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+    <div class="user-mini">
+      <%= img_tag @user.avatar_url, alt: @user.name %>
+      <p><%= @user.name %></p>
+      <%= link "Logout", to: Routes.auth_path(@socket, :delete), method: :post %>
+    </div>
+  <% else %>
+    <%= link "Login via Spotify", to: Routes.auth_path(@socket, :request, :spotify) %>
+  <% end %>
+</nav>
+
 <section id="explorer">
   <%= if @status == :authenticated do %>
     <div class="results">

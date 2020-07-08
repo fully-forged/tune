@@ -28,8 +28,12 @@ defmodule TuneWeb.ExplorerLive do
     type = Map.get(params, "type", "track")
 
     if String.length(q) >= 3 do
-      socket = assign(socket, :q, q)
       type = parse_type(type)
+
+      socket =
+        socket
+        |> assign(:q, q)
+        |> assign(:type, type)
 
       case spotify().search(socket.assigns.session_id, q, [type]) do
         {:ok, results} ->
@@ -42,6 +46,7 @@ defmodule TuneWeb.ExplorerLive do
       {:noreply,
        socket
        |> assign(:q, nil)
+       |> assign(:type, type)
        |> assign(:results, [])}
     end
   end
@@ -77,11 +82,15 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   def handle_event("search", %{"q" => ""}, socket) do
-    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index))}
+    {:noreply,
+     push_patch(socket, to: Routes.explorer_path(socket, :index, type: socket.assigns.type))}
   end
 
   def handle_event("search", %{"q" => q}, socket) do
-    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index, %{q: q}))}
+    {:noreply,
+     push_patch(socket,
+       to: Routes.explorer_path(socket, :index, %{q: q, type: socket.assigns.type})
+     )}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
