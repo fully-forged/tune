@@ -6,14 +6,22 @@
         <p class="name"><%= track.name %></p>
         <p class="artist-name"><%= track.artist.name %></p>
       </div>
-      <a class="button button-small" href="#" phx-click="toggle_play_pause">
-        <%= case playing_or_paused do %>
-          <% :playing -> %>
-            <%= render "pause.html", [] %>
-          <% :paused -> %>
-            <%= render "play.html", []%>
-          <% end %>
-      </a>
+      <div class="button-group">
+        <a class="button button-small" href="#" phx-click="prev">
+          <%= render "prev.html", [] %>
+        </a>
+        <a class="button button-small" href="#" phx-click="toggle_play_pause">
+          <%= case playing_or_paused do %>
+            <% :playing -> %>
+              <%= render "pause.html", [] %>
+            <% :paused -> %>
+              <%= render "play.html", []%>
+            <% end %>
+        </a>
+        <a class="button button-small" href="#" phx-click="next">
+          <%= render "next.html", [] %>
+        </a>
+      </div>
     </div>
   <% {playing_or_paused, %Tune.Spotify.Schema.Episode{} = episode} -> %>
     <div class="mini-player">
