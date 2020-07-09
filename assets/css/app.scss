@@ -2,6 +2,30 @@
 @import "./milligram.css";
 @import "../node_modules/nprogress/nprogress.css";
 
+$accent-color: #4cb6cb;
+$bg-color: #5a6a7a;
+
+$general-padding: 1rem;
+
+html {
+  background-color: #f2f4f8;
+}
+
+body {
+  font-size: 14px;
+  margin: 0;
+}
+
+button, .button {
+  background-color: $accent-color;
+  border-color: $accent-color;
+
+  &:hover {
+    background-color: darken($accent-color, 10%);
+    border-color: darken($accent-color, 10%);
+  }
+}
+
 .button-small {
   height: 2.8rem;
   line-height: 2.8rem;
@@ -32,10 +56,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: white;
+  padding: $general-padding;
 
-  h1 {
-    font-size: 2em;
-    margin: 0 0.5em 0 0;
+  .logo {
+    padding-top: 0.4em;
+    margin-right: 0.2em;
+
+    $logo-dimension: 3em;
+    svg {
+      width: $logo-dimension;
+      height: $logo-dimension;
+      fill: $bg-color;
+    }
   }
 
   .search {
@@ -77,6 +110,7 @@
 .results {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  padding: $general-padding;
 
   .result {
     display: flex;
@@ -127,13 +161,18 @@
 }
 
 .mini-player {
-  background-color: white;
+  background-color: $bg-color;
+  color: white;
   display: flex;
   align-items: center;
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: 0.5em;
+  padding: 0.8em;
+
+  img {
+    max-width: 48px;
+  }
 
   .meta {
     margin: 0 1em 0 1em;
