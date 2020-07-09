@@ -115,25 +115,22 @@ button, .button {
   .result {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    margin: 0.4em;
   }
 
-  .meta {
+  .artwork {
     position: relative;
-    text-align: center;
 
     .play-button {
+      display: none;
       position: absolute;
       text-align: center;
       color: white;
       font-size: 4em;
       justify-content: center;
       align-items: center;
-      max-height: 150px;
       width: 100%;
       height: 100%;
-      display: none;
-
     }
 
     &:hover .play-button {
@@ -148,11 +145,6 @@ button, .button {
 
   .name {
     font-weight: bold;
-  }
-
-  img {
-    max-height: 150px;
-    max-width: 150px;
   }
 
   .actions {
@@ -208,25 +200,17 @@ button, .button {
 
   .results {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-
-    $img-dimension: 72px;
-    img {
-      max-height: $img-dimension;
-      max-width: $img-dimension;
-    }
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
 
     p {
       margin-bottom: 0;
     }
 
-    .meta {
-      text-align: center;
-
+    .artwork {
       .play-button {
         font-size: 2em;
         display: flex;
-        max-height: $img-dimension;
       }
     }
 
