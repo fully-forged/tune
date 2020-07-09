@@ -24,6 +24,10 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @impl true
+  def handle_params(params, _url, %{assigns: %{status: :not_authenticated}} = socket) do
+    {:noreply, socket}
+  end
+
   def handle_params(%{"q" => q} = params, _url, socket) do
     type = Map.get(params, "type", "track")
 
