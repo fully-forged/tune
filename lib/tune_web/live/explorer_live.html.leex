@@ -1,7 +1,4 @@
 <nav class="navbar">
-  <div class="logo">
-    <%= render TuneWeb.LayoutView, "logo.html", [] %>
-  </div>
   <%= if @status == :authenticated do %>
     <div class="search">
       <%= form_tag("/", method: :get, phx_change: "search") do %>

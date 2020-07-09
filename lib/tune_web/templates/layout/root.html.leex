@@ -10,6 +10,9 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
+    <header>
+      <%= render TuneWeb.LayoutView, "logo.html", [] %>
+    </header>
     <%= @inner_content %>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
   </body>

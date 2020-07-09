@@ -50,6 +50,20 @@ button, .button {
   }
 }
 
+header {
+  padding: 1.7rem 0.8rem;
+  text-align: center;
+  float: left;
+
+  $logo-dimension: 3em;
+  svg {
+    width: $logo-dimension;
+    height: $logo-dimension;
+    fill: $accent-color;
+  }
+}
+
+
 // Navigation Header
 
 .navbar {
@@ -58,18 +72,6 @@ button, .button {
   align-items: center;
   background-color: white;
   padding: $general-padding;
-
-  .logo {
-    padding-top: 0.4em;
-    margin-right: 0.2em;
-
-    $logo-dimension: 3em;
-    svg {
-      width: $logo-dimension;
-      height: $logo-dimension;
-      fill: $bg-color;
-    }
-  }
 
   .search {
     flex-grow: 1;
@@ -203,6 +205,10 @@ button, .button {
 }
 
 @media (max-width: 768px) {
+  header {
+    float: none;
+  }
+
   .navbar {
     flex-direction: column;
 
