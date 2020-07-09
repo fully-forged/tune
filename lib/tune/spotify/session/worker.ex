@@ -41,6 +41,16 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def next(session_id) do
+    GenStateMachine.call(via(session_id), :next)
+  end
+
+  @impl true
+  def prev(session_id) do
+    GenStateMachine.call(via(session_id), :prev)
+  end
+
+  @impl true
   def search(session_id, q, types) do
     GenStateMachine.call(via(session_id), {:search, q, types})
   end
@@ -206,6 +216,64 @@ defmodule Tune.Spotify.Session.Worker do
         data
       ) do
     case HttpApi.play(data.credentials.token, uri) do
+      :ok ->
+        actions = [
+          {:next_event, :internal, :get_now_playing},
+          {:reply, from, :ok}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        :next,
+        :authenticated,
+        data
+      ) do
+    case HttpApi.next(data.credentials.token) do
+      :ok ->
+        actions = [
+          {:next_event, :internal, :get_now_playing},
+          {:reply, from, :ok}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        :prev,
+        :authenticated,
+        data
+      ) do
+    case HttpApi.prev(data.credentials.token) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},

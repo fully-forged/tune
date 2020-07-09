@@ -82,6 +82,26 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  def next(token) do
+    case post(@base_url <> "/me/player/next", <<>>, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  def prev(token) do
+    case post(@base_url <> "/me/player/previous", <<>>, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   def get_token(refresh_token) do
     headers = [
       {"Authorization", "Basic #{Auth.base64_encoded_credentials()}"}

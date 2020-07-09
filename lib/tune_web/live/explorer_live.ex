@@ -24,7 +24,7 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @impl true
-  def handle_params(params, _url, %{assigns: %{status: :not_authenticated}} = socket) do
+  def handle_params(_params, _url, %{assigns: %{status: :not_authenticated}} = socket) do
     {:noreply, socket}
   end
 
@@ -81,6 +81,18 @@ defmodule TuneWeb.ExplorerLive do
 
   def handle_event("play", %{"uri" => uri}, socket) do
     spotify().play(socket.assigns.session_id, uri)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("next", _params, socket) do
+    spotify().next(socket.assigns.session_id)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("prev", _params, socket) do
+    spotify().prev(socket.assigns.session_id)
 
     {:noreply, socket}
   end
