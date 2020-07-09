@@ -182,6 +182,16 @@ button, .button {
   .name, .artist-name, .button {
     margin-bottom: 0;
   }
+
+  .name {
+    font-weight: bold;
+  }
+
+  .device {
+    font-size: 2em;
+    display: flex;
+    margin-right: .5em;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -243,6 +253,10 @@ button, .button {
 
     .meta {
       flex-grow: 1;
+    }
+
+    .device {
+      display: none;
     }
   }
 }

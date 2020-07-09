@@ -1,6 +1,9 @@
 <%= case @now_playing do %>
   <% {playing_or_paused, %Tune.Spotify.Schema.Track{} = track} -> %>
     <div class="mini-player">
+      <div class="device">
+        <%= render "device.html", [] %>
+      </div>
       <%= img_tag track.album.thumbnails.small, alt: track.name %>
       <div class="meta">
         <p class="name"><%= track.name %></p>
