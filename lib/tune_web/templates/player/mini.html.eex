@@ -43,7 +43,11 @@
       </a>
     </div>
   <% :not_playing -> %>
-    <p>Not playing.</p>
+    <div class="full-screen-notice">
+      <p>Not playing.</p>
+    </div>
   <% {:error, _reason} -> %>
-    <p>Error fetching playing information.</p>
+    <div class="full-screen-notice">
+      <p>Error fetching playing information.</p>
+    </div>
 <% end %>
