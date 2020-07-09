@@ -107,6 +107,15 @@ button, .button {
   }
 }
 
+.full-screen-notice {
+  text-align: center;
+  padding: 3em;
+
+  p {
+    font-size: 1.4em;
+  }
+}
+
 .results {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
