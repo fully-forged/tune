@@ -120,7 +120,7 @@ header {
 
 .results {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   padding: $general-padding;
 
   .result {
