@@ -54,8 +54,8 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
-  def search(session_id, q, types) do
-    GenStateMachine.call(via(session_id), {:search, q, types})
+  def search(session_id, q, opts) do
+    GenStateMachine.call(via(session_id), {:search, q, opts})
   end
 
   @impl true
@@ -194,11 +194,11 @@ defmodule Tune.Spotify.Session.Worker do
 
   def handle_event(
         {:call, from},
-        {:search, q, types},
+        {:search, q, opts},
         :authenticated,
         data
       ) do
-    case HttpApi.search(data.credentials.token, q, types) do
+    case HttpApi.search(data.credentials.token, q, opts) do
       {:ok, results} ->
         action = {:reply, from, {:ok, results}}
         {:keep_state_and_data, action}

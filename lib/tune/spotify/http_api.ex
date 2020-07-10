@@ -125,13 +125,20 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  def search(token, q, types) do
+  @default_limit 20
+  @default_types [:track]
+
+  def search(token, q, opts) do
+    types = Keyword.get(opts, :types, @default_types)
     types_string = Enum.join(types, ",")
+
+    limit = Keyword.get(opts, :limit, @default_limit)
 
     params = %{
       q: q,
       type: types_string,
-      market: "from_token"
+      market: "from_token",
+      limit: limit
     }
 
     case json_get(@base_url <> "/search?" <> URI.encode_query(params), auth_headers(token)) do

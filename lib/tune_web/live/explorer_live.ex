@@ -10,7 +10,8 @@ defmodule TuneWeb.ExplorerLive do
     results: [],
     user: nil,
     now_playing: :not_playing,
-    item: nil
+    item: nil,
+    results_per_page: 32
   ]
 
   @impl true
@@ -40,7 +41,9 @@ defmodule TuneWeb.ExplorerLive do
         |> assign(:q, q)
         |> assign(:type, type)
 
-      case spotify().search(socket.assigns.session_id, q, [type]) do
+      search_opts = [types: [type], limit: socket.assigns.results_per_page]
+
+      case spotify().search(socket.assigns.session_id, q, search_opts) do
         {:ok, results} ->
           {:noreply, assign(socket, :results, extract_results(results, type))}
 

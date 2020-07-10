@@ -82,7 +82,9 @@ defmodule TuneWeb.LoggedInTest do
 
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
-      |> expect(:search, 2, fn ^session_id, ^track_name, [:track] -> {:ok, search_results} end)
+      |> expect(:search, 2, fn ^session_id, ^track_name, [types: [:track], limit: 32] ->
+        {:ok, search_results}
+      end)
 
       {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
       assert html =~ track_name

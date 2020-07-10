@@ -11,6 +11,8 @@ defmodule Tune.Spotify.Session do
   @type uri :: String.t()
   @type item_id :: String.t()
 
+  @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
+
   @callback setup(id(), credentials()) :: :ok | {:error, term()}
   @callback get_profile(id()) :: {:ok, %Schema.User{}} | {:error, term()}
   @callback now_playing(id()) ::
@@ -21,7 +23,7 @@ defmodule Tune.Spotify.Session do
   @callback play(id(), uri()) :: :ok | {:error, term()}
   @callback next(id()) :: :ok | {:error, term()}
   @callback prev(id()) :: :ok | {:error, term()}
-  @callback search(id(), String.t(), [item_type()]) :: {:ok, [map()]} | {:error, term()}
+  @callback search(id(), q(), search_options()) :: {:ok, [map()]} | {:error, term()}
   @callback get_album(id(), item_id()) :: {:ok, %Schema.Album{}} | {:error, term()}
 
   def subscribe(session_id) do
