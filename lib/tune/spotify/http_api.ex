@@ -227,23 +227,33 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_now_playing(data) do
-    item =
-      case get_in(data, ["item", "type"]) do
-        "track" ->
+    case get_in(data, ["item", "type"]) do
+      "track" ->
+        item =
           data
           |> Map.get("item")
           |> parse_track()
 
-        "episode" ->
+        if Map.get(data, "is_playing") do
+          {:playing, item}
+        else
+          {:paused, item}
+        end
+
+      "episode" ->
+        item =
           data
           |> Map.get("item")
           |> parse_episode_with_metadata()
-      end
 
-    if Map.get(data, "is_playing") do
-      {:playing, item}
-    else
-      {:paused, item}
+        if Map.get(data, "is_playing") do
+          {:playing, item}
+        else
+          {:paused, item}
+        end
+
+      nil ->
+        :not_playing
     end
   end
 
