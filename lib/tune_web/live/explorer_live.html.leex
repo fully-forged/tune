@@ -21,9 +21,16 @@
 
 <section id="explorer">
   <%= if @status == :authenticated do %>
-    <div class="results">
-      <%= render_many @results, SearchView, "result.html", as: :item %>
-    </div>
+    <%= case @live_action do %>
+      <% :index -> %>
+        <div class="results">
+          <%= render_many @results, SearchView, "result.html", as: :item, socket: @socket %>
+        </div>
+      <% action when action in [:show_artist, :show_album, :show_show] -> %>
+        <div class="item-show">
+          <%= render AlbumView, "show.html", album: @item %>
+        </div>
+      <% end %>
     <%= render PlayerView, "mini.html", now_playing: @now_playing %>
   <% else %>
     <div class="full-screen-notice">

@@ -1,0 +1,5 @@
+<article>
+  <%= img_tag artwork(@album), alt: @album.name, class: "artwork" %>
+  <%= content_tag :h1, @album.name %>
+  <%= content_tag :h2, @album.artist.name %>
+</article>

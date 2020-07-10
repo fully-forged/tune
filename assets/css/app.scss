@@ -170,6 +170,12 @@ header {
   }
 }
 
+.item-show {
+  .artwork {
+    max-width: 20em;
+  }
+}
+
 .mini-player {
   background-color: $bg-color;
   color: white;

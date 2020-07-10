@@ -1,7 +1,7 @@
 defmodule TuneWeb.ExplorerLive do
   use TuneWeb, :live_view
 
-  alias TuneWeb.{PlayerView, SearchView}
+  alias TuneWeb.{AlbumView, PlayerView, SearchView}
 
   @initial_state [
     status: :not_authenticated,
@@ -9,7 +9,8 @@ defmodule TuneWeb.ExplorerLive do
     type: :track,
     results: [],
     user: nil,
-    now_playing: :not_playing
+    now_playing: :not_playing,
+    item: nil
   ]
 
   @impl true
@@ -52,6 +53,36 @@ defmodule TuneWeb.ExplorerLive do
        |> assign(:q, nil)
        |> assign(:type, type)
        |> assign(:results, [])}
+    end
+  end
+
+  def handle_params(%{"artist_id" => artist_id}, _url, socket) do
+    case spotify().get_artist(socket.assigns.session_id, artist_id) do
+      {:ok, artist} ->
+        {:noreply, assign(socket, :item, artist)}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  def handle_params(%{"album_id" => album_id}, _url, socket) do
+    case spotify().get_album(socket.assigns.session_id, album_id) do
+      {:ok, album} ->
+        {:noreply, assign(socket, :item, album)}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  def handle_params(%{"show_id" => show_id}, _url, socket) do
+    case spotify().get_show(socket.assigns.session_id, show_id) do
+      {:ok, show} ->
+        {:noreply, assign(socket, :item, show)}
+
+      _error ->
+        {:noreply, socket}
     end
   end
 

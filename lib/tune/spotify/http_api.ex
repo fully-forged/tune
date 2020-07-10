@@ -148,6 +148,28 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  def get_album(token, album_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/albums/" <> album_id <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        album =
+          response.body
+          |> Jason.decode!()
+          |> parse_album()
+
+        {:ok, album}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end

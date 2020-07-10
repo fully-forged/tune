@@ -28,6 +28,9 @@ defmodule TuneWeb.Router do
     pipe_through :browser
 
     live "/", ExplorerLive, :index
+    live "/artists/:artist_id", ExplorerLive, :show_artist
+    live "/albums/:album_id", ExplorerLive, :show_album
+    live "/shows/:show_id", ExplorerLive, :show_show
   end
 
   # Other scopes may use custom stacks.

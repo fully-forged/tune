@@ -59,6 +59,11 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def get_album(session_id, album_id) do
+    GenStateMachine.call(via(session_id), {:get_album, album_id})
+  end
+
+  @impl true
   def init({session_id, credentials}) do
     data = %__MODULE__{session_id: session_id, credentials: credentials}
     action = {:next_event, :internal, :authenticate}
@@ -281,6 +286,34 @@ defmodule Tune.Spotify.Session.Worker do
         actions = [
           {:next_event, :internal, :get_now_playing},
           {:reply, from, :ok}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        {:get_album, album_id},
+        :authenticated,
+        data
+      ) do
+    case HttpApi.get_album(data.credentials.token, album_id) do
+      {:ok, album} ->
+        actions = [
+          {:reply, from, {:ok, album}}
         ]
 
         {:keep_state_and_data, actions}
