@@ -9,6 +9,9 @@ defmodule Tune.Spotify.Session.Worker do
             user: nil,
             now_playing: :not_playing
 
+  @now_playing_refresh_interval 2000
+  @retry_interval 5000
+
   def start_link({session_id, credentials}), do: start_link(session_id, credentials)
 
   def start_link(session_id, credentials) do
@@ -80,7 +83,7 @@ defmodule Tune.Spotify.Session.Worker do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, 5000, :authenticate}
+        action = {:state_timeout, @retry_interval, :authenticate}
         {:keep_state_and_data, action}
     end
   end
@@ -98,7 +101,7 @@ defmodule Tune.Spotify.Session.Worker do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, 5000, :refresh}
+        action = {:state_timeout, @retry_interval, :refresh}
         {:keep_state_and_data, action}
     end
   end
@@ -115,7 +118,7 @@ defmodule Tune.Spotify.Session.Worker do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, 5000, :get_now_playing}
+        action = {:state_timeout, @retry_interval, :get_now_playing}
         {:keep_state_and_data, action}
 
       now_playing ->
@@ -125,7 +128,7 @@ defmodule Tune.Spotify.Session.Worker do
 
         data = %{data | now_playing: now_playing}
 
-        action = {:state_timeout, 5000, :get_now_playing}
+        action = {:state_timeout, @now_playing_refresh_interval, :get_now_playing}
         {:keep_state, data, action}
     end
   end
