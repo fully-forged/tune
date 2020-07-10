@@ -80,28 +80,16 @@ defmodule TuneWeb.LoggedInTest do
 
       track_name = track.name
 
-      if String.length(track_name) >= 3 do
-        Tune.Spotify.SessionMock
-        |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
-        |> expect(:search, 2, fn ^session_id, ^track_name, [:track] -> {:ok, search_results} end)
+      Tune.Spotify.SessionMock
+      |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+      |> expect(:search, 2, fn ^session_id, ^track_name, [:track] -> {:ok, search_results} end)
 
-        {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
-        assert html =~ track_name
-        assert html =~ track.artist.name
+      {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
+      assert html =~ track_name
+      assert html =~ track.artist.name
 
-        assert render(explorer_live) =~ track_name
-        assert render(explorer_live) =~ track.artist.name
-      else
-        Tune.Spotify.SessionMock
-        |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
-
-        {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
-        refute html =~ track_name
-        refute html =~ track.artist.name
-
-        refute render(explorer_live) =~ track_name
-        refute render(explorer_live) =~ track.artist.name
-      end
+      assert render(explorer_live) =~ track_name
+      assert render(explorer_live) =~ track.artist.name
     end
   end
 

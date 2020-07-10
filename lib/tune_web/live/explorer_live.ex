@@ -32,7 +32,7 @@ defmodule TuneWeb.ExplorerLive do
   def handle_params(%{"q" => q} = params, _url, socket) do
     type = Map.get(params, "type", "track")
 
-    if String.length(q) >= 3 do
+    if String.length(q) >= 1 do
       type = parse_type(type)
 
       socket =
