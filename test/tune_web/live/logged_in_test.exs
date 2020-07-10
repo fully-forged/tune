@@ -1,7 +1,7 @@
 defmodule TuneWeb.LoggedInTest do
   use TuneWeb.ConnCase
 
-  alias Tune.{Fixtures, Generators}
+  alias Tune.Generators
 
   import Phoenix.LiveViewTest
   import Mox
@@ -9,12 +9,21 @@ defmodule TuneWeb.LoggedInTest do
   setup :verify_on_exit!
 
   setup %{conn: conn} do
-    session_id = Fixtures.session_id()
-    credentials = Fixtures.credentials()
+    [session_id] =
+      Generators.session_id()
+      |> Enum.take(1)
+
+    [credentials] =
+      Generators.credentials()
+      |> Enum.take(1)
+
+    [profile] =
+      Generators.profile()
+      |> Enum.take(1)
 
     Tune.Spotify.SessionMock
     |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-    |> expect(:get_profile, 2, fn ^session_id -> Fixtures.profile() end)
+    |> expect(:get_profile, 2, fn ^session_id -> profile end)
 
     [
       session_id: session_id,

@@ -1,7 +1,7 @@
 defmodule Tune.Generators do
   import StreamData
 
-  alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track}
+  alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
 
   def track do
     tuple({id(), name(), artist()})
@@ -50,7 +50,7 @@ defmodule Tune.Generators do
   end
 
   def episode do
-    tuple({id(), name(), description(), publisher(), thumbnails})
+    tuple({id(), name(), description(), publisher(), thumbnails()})
     |> bind(fn {id, name, description, publisher, thumbnails} ->
       bind(show(publisher), fn show ->
         constant(%Episode{
@@ -102,9 +102,34 @@ defmodule Tune.Generators do
   def thumbnails do
     map_of(
       one_of([constant(:small), constant(:medium), constant(:large)]),
-      string(:printable, min_length: 16, max_length: 128),
+      image_url(),
       max_tries: 100,
       max_length: 3
     )
+  end
+
+  def image_url do
+    string(:printable, min_length: 16, max_length: 128)
+  end
+
+  def session_id, do: string(:alphanumeric, min_length: 6, max_length: 12)
+
+  def token, do: string(:alphanumeric, min_length: 24, max_length: 32)
+
+  def credentials do
+    tuple({token(), token()})
+    |> bind(fn {token, refresh_token} ->
+      constant(%Ueberauth.Auth.Credentials{
+        token: token,
+        refresh_token: refresh_token
+      })
+    end)
+  end
+
+  def profile do
+    tuple({name(), image_url()})
+    |> bind(fn {name, avatar_url} ->
+      constant(%User{name: name, avatar_url: avatar_url})
+    end)
   end
 end
