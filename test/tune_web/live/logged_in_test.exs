@@ -22,40 +22,64 @@ defmodule TuneWeb.LoggedInTest do
     ]
   end
 
-  test "it displays not playing", %{conn: conn, session_id: session_id} do
-    Tune.Spotify.SessionMock
-    |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+  describe "mini player" do
+    test "it displays not playing", %{conn: conn, session_id: session_id} do
+      Tune.Spotify.SessionMock
+      |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
 
-    {:ok, explorer_live, disconnected_html} = live(conn, "/")
+      {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-    assert disconnected_html =~ "Not playing."
-    assert render(explorer_live) =~ "Not playing."
+      assert disconnected_html =~ "Not playing."
+      assert render(explorer_live) =~ "Not playing."
+    end
+
+    test "it displays a song playing", %{conn: conn, session_id: session_id} do
+      track = Fixtures.track()
+
+      Tune.Spotify.SessionMock
+      |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
+
+      {:ok, explorer_live, disconnected_html} = live(conn, "/")
+
+      assert disconnected_html =~ track.name
+      assert render(explorer_live) =~ track.name
+    end
+
+    test "it updates when the song changes", %{conn: conn, session_id: session_id} do
+      track = Fixtures.track()
+
+      Tune.Spotify.SessionMock
+      |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
+
+      {:ok, explorer_live, _html} = live(conn, "/")
+
+      now_playing = {:playing, %{track | name: "Another song"}}
+
+      send(explorer_live.pid, now_playing)
+
+      render(explorer_live) =~ "Another song"
+    end
   end
 
-  test "it displays a song playing", %{conn: conn, session_id: session_id} do
-    track = Fixtures.track()
+  describe "search" do
+    test "it defaults to searching for tracks", %{conn: conn, session_id: session_id} do
+      track = Fixtures.track()
 
-    Tune.Spotify.SessionMock
-    |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
+      search_results = %{
+        tracks: [track]
+      }
 
-    {:ok, explorer_live, disconnected_html} = live(conn, "/")
+      Tune.Spotify.SessionMock
+      |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+      |> expect(:search, 2, fn ^session_id, "example song", [:track] -> {:ok, search_results} end)
 
-    assert disconnected_html =~ track.name
-    assert render(explorer_live) =~ track.name
-  end
+      {:ok, explorer_live, html} = live(conn, "/?q=example+song")
 
-  test "it updates when the song changes", %{conn: conn, session_id: session_id} do
-    track = Fixtures.track()
+      assert html =~ "Example song"
+      assert html =~ "Example artist"
 
-    Tune.Spotify.SessionMock
-    |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
-
-    {:ok, explorer_live, _html} = live(conn, "/")
-
-    now_playing = {:playing, %{track | name: "Another song"}}
-
-    send(explorer_live.pid, now_playing)
-
-    render(explorer_live) =~ "Another song"
+      assert render(explorer_live) =~ "Example song"
+      assert render(explorer_live) =~ "Example artist"
+    end
   end
 end

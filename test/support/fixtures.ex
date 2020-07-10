@@ -14,6 +14,8 @@ defmodule Tune.Fixtures do
 
   def track do
     %Track{
+      id: "123456",
+      uri: "spotify:track:123456",
       name: "Example song",
       album: %Album{
         name: "Example album",
