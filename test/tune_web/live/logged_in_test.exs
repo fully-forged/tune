@@ -1,7 +1,7 @@
 defmodule TuneWeb.LoggedInTest do
   use TuneWeb.ConnCase
 
-  alias Tune.Fixtures
+  alias Tune.{Fixtures, Generators}
 
   import Phoenix.LiveViewTest
   import Mox
@@ -34,7 +34,7 @@ defmodule TuneWeb.LoggedInTest do
     end
 
     test "it displays a song playing", %{conn: conn, session_id: session_id} do
-      track = Fixtures.track()
+      track = pick_track()
 
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
@@ -46,7 +46,7 @@ defmodule TuneWeb.LoggedInTest do
     end
 
     test "it updates when the song changes", %{conn: conn, session_id: session_id} do
-      track = Fixtures.track()
+      track = pick_track()
 
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
@@ -63,23 +63,44 @@ defmodule TuneWeb.LoggedInTest do
 
   describe "search" do
     test "it defaults to searching for tracks", %{conn: conn, session_id: session_id} do
-      track = Fixtures.track()
+      track = pick_track()
 
       search_results = %{
         tracks: [track]
       }
 
-      Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
-      |> expect(:search, 2, fn ^session_id, "example song", [:track] -> {:ok, search_results} end)
+      track_name = track.name
 
-      {:ok, explorer_live, html} = live(conn, "/?q=example+song")
+      if String.length(track_name) >= 3 do
+        Tune.Spotify.SessionMock
+        |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+        |> expect(:search, 2, fn ^session_id, ^track_name, [:track] -> {:ok, search_results} end)
 
-      assert html =~ "Example song"
-      assert html =~ "Example artist"
+        {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
+        assert html =~ track_name
+        assert html =~ track.artist.name
 
-      assert render(explorer_live) =~ "Example song"
-      assert render(explorer_live) =~ "Example artist"
+        assert render(explorer_live) =~ track_name
+        assert render(explorer_live) =~ track.artist.name
+      else
+        Tune.Spotify.SessionMock
+        |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+
+        {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
+        refute html =~ track_name
+        refute html =~ track.artist.name
+
+        refute render(explorer_live) =~ track_name
+        refute render(explorer_live) =~ track.artist.name
+      end
     end
+  end
+
+  defp pick_track do
+    [track] =
+      Generators.track()
+      |> Enum.take(1)
+
+    track
   end
 end
