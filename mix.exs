@@ -48,7 +48,8 @@ defmodule Tune.MixProject do
       {:ueberauth_spotify, "~> 0.2.1"},
       {:finch, "~> 0.3.0"},
       {:gen_state_machine, "~> 2.1"},
-      {:mox, "~> 0.5", only: :test}
+      {:mox, "~> 0.5", only: :test},
+      {:stream_data, "~> 0.5.0", only: :test}
     ]
   end
 
