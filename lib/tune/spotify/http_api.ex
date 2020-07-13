@@ -1,4 +1,5 @@
 defmodule Tune.Spotify.HttpApi do
+  @moduledoc false
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Publisher, Show, Track, User}
   alias Tune.Spotify.Auth
 

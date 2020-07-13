@@ -1,4 +1,5 @@
 defmodule Tune.Generators do
+  @moduledoc false
   import StreamData
 
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}

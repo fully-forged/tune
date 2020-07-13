@@ -1,4 +1,5 @@
 defmodule Tune.Spotify.Auth do
+  @moduledoc false
   def configure! do
     {client_id, client_secret} = get_credentials_from_env!()
 

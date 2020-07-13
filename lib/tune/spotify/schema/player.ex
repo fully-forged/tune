@@ -1,4 +1,5 @@
 defmodule Tune.Spotify.Schema.Player do
+  @moduledoc false
   alias Tune.Spotify.Schema
 
   defstruct status: :not_playing,
