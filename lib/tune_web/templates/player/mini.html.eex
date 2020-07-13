@@ -6,33 +6,11 @@
   <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">
       <div class="device">
-        <%= render "device.html", [] %>
+        <%= render "icon_device.html", [] %>
       </div>
       <%= img_tag thumbnail(item), alt: name(item) %>
-      <div class="meta">
-        <p class="name"><%= name(item) %></p>
-        <p class="artist-name"><%= author_name(item) %></p>
-      </div>
-      <div class="progress">
-        <span class="duration"><%= format_duration(progress_ms) %></span>
-        <progress value="<%= progress_ms %>" max="<%= item.duration_ms %>"></progress>
-        <span class="total_duration"><%= format_duration(item.duration_ms) %></span>
-      </div>
-      <div class="button-group">
-        <a class="button button-small" href="#" phx-click="prev">
-          <%= render "prev.html", [] %>
-        </a>
-        <a class="button button-small" href="#" phx-click="toggle_play_pause">
-          <%= case status do %>
-            <% :playing -> %>
-              <%= render "pause.html", [] %>
-            <% :paused -> %>
-              <%= render "play.html", []%>
-            <% end %>
-        </a>
-        <a class="button button-small" href="#" phx-click="next">
-          <%= render "next.html", [] %>
-        </a>
-      </div>
+      <%= render "meta.html", item: item %>
+      <%= render "progress.html", item: item, progress_ms: progress_ms %>
+      <%= render "controls.html", status: status %>
     </div>
 <% end %>

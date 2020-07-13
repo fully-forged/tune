@@ -1,0 +1,4 @@
+<div class="meta">
+  <p class="name"><%= name(@item) %></p>
+  <p class="artist-name"><%= author_name(@item) %></p>
+</div>

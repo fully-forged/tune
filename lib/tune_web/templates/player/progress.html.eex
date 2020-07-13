@@ -1,0 +1,5 @@
+<div class="progress">
+  <span class="duration"><%= format_duration(@progress_ms) %></span>
+  <progress value="<%= @progress_ms %>" max="<%= @item.duration_ms %>"></progress>
+  <span class="total_duration"><%= format_duration(@item.duration_ms) %></span>
+</div>
