@@ -211,9 +211,16 @@ header {
     max-width: 48px;
   }
 
-  #progress {
+  .progress {
     flex-grow: 1;
     margin: 0 4em;
+    display: flex;
+    align-items: center;
+
+    progress {
+      margin: 0.8em;
+      flex-grow: 1;
+    }
   }
 
   .meta {
@@ -298,7 +305,7 @@ header {
     padding: 0.8em;
     flex-wrap: wrap;
 
-    #progress {
+    .progress {
       flex-grow: 0;
       width: 100%;
       order: -1;

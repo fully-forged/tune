@@ -10,7 +10,7 @@ defmodule Tune.Spotify.Session.Worker do
             user: nil,
             now_playing: :not_playing
 
-  @now_playing_refresh_interval 2000
+  @now_playing_refresh_interval 1000
   @retry_interval 5000
 
   def start_link({session_id, credentials}), do: start_link(session_id, credentials)

@@ -13,7 +13,11 @@
         <p class="name"><%= name(item) %></p>
         <p class="artist-name"><%= author_name(item) %></p>
       </div>
-      <progress id="progress" value="<%= progress_ms %>" max="<%= item.duration_ms %>"></progress>
+      <div class="progress">
+        <span class="duration"><%= format_duration(progress_ms) %></span>
+        <progress value="<%= progress_ms %>" max="<%= item.duration_ms %>"></progress>
+        <span class="total_duration"><%= format_duration(item.duration_ms) %></span>
+      </div>
       <div class="button-group">
         <a class="button button-small" href="#" phx-click="prev">
           <%= render "prev.html", [] %>
