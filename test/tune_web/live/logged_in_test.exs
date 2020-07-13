@@ -2,6 +2,7 @@ defmodule TuneWeb.LoggedInTest do
   use TuneWeb.ConnCase
 
   alias Tune.Generators
+  alias Tune.Spotify.Schema.Player
 
   import Phoenix.LiveViewTest
   import Mox
@@ -34,7 +35,7 @@ defmodule TuneWeb.LoggedInTest do
   describe "mini player" do
     test "it displays not playing", %{conn: conn, session_id: session_id} do
       Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+      |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
 
       {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
@@ -46,7 +47,9 @@ defmodule TuneWeb.LoggedInTest do
       track = pick_track()
 
       Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
+      |> expect(:now_playing, 2, fn ^session_id ->
+        %Player{status: :playing, item: track, progress_ms: track.duration_ms - 100}
+      end)
 
       {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
@@ -56,13 +59,15 @@ defmodule TuneWeb.LoggedInTest do
 
     test "it updates when the song changes", %{conn: conn, session_id: session_id} do
       track = pick_track()
+      now_playing = %Player{status: :playing, item: track, progress_ms: track.duration_ms - 100}
 
       Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> {:playing, track} end)
+      |> expect(:now_playing, 2, fn ^session_id -> now_playing end)
 
       {:ok, explorer_live, _html} = live(conn, "/")
 
-      now_playing = {:playing, %{track | name: "Another song"}}
+      new_track = %{track | name: "Another song"}
+      now_playing = %{now_playing | item: new_track}
 
       send(explorer_live.pid, now_playing)
 
@@ -81,7 +86,7 @@ defmodule TuneWeb.LoggedInTest do
       track_name = track.name
 
       Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> :not_playing end)
+      |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
       |> expect(:search, 2, fn ^session_id, ^track_name, [types: [:track], limit: 32] ->
         {:ok, search_results}
       end)

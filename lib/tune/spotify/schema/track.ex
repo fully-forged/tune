@@ -1,3 +1,3 @@
 defmodule Tune.Spotify.Schema.Track do
-  defstruct [:id, :uri, :name, :artist, :album]
+  defstruct [:id, :uri, :name, :duration_ms, :artist, :album]
 end

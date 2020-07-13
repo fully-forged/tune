@@ -126,7 +126,7 @@ defmodule Tune.Spotify.Session.Worker do
         action = {:state_timeout, @retry_interval, :get_now_playing}
         {:keep_state_and_data, action}
 
-      now_playing ->
+      {:ok, now_playing} ->
         if data.now_playing !== now_playing do
           Tune.Spotify.Session.broadcast(data.session_id, now_playing)
         end

@@ -4,13 +4,14 @@ defmodule Tune.Generators do
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
 
   def track do
-    tuple({id(), name(), artist()})
-    |> bind(fn {id, name, artist} ->
+    tuple({id(), name(), duration(), artist()})
+    |> bind(fn {id, name, duration, artist} ->
       bind(album(artist), fn album ->
         constant(%Track{
           id: id,
           uri: "spotify:track:" <> id,
           name: name,
+          duration_ms: duration,
           album: album,
           artist: artist
         })
@@ -50,14 +51,15 @@ defmodule Tune.Generators do
   end
 
   def episode do
-    tuple({id(), name(), description(), publisher(), thumbnails()})
-    |> bind(fn {id, name, description, publisher, thumbnails} ->
+    tuple({id(), name(), description(), duration(), publisher(), thumbnails()})
+    |> bind(fn {id, name, description, duration, publisher, thumbnails} ->
       bind(show(publisher), fn show ->
         constant(%Episode{
           id: id,
           uri: "spotify:episode:" <> id,
           name: name,
           description: description,
+          duration_ms: duration,
           show: show,
           publisher: publisher,
           thumbnails: thumbnails
@@ -115,6 +117,9 @@ defmodule Tune.Generators do
   def session_id, do: string(:alphanumeric, min_length: 6, max_length: 12)
 
   def token, do: string(:alphanumeric, min_length: 24, max_length: 32)
+
+  # 45 minutes
+  def duration, do: integer(500..2_700_000)
 
   def credentials do
     tuple({token(), token()})

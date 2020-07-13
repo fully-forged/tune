@@ -1,5 +1,5 @@
 defmodule Tune.Spotify.HttpApi do
-  alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
+  alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Publisher, Show, Track, User}
   alias Tune.Spotify.Auth
 
   require Logger
@@ -33,12 +33,13 @@ defmodule Tune.Spotify.HttpApi do
   def now_playing(token) do
     case json_get(@base_url <> "/me/player?additional_types=episode", auth_headers(token)) do
       {:ok, %{status: 204}} ->
-        :not_playing
+        {:ok, %Player{}}
 
       {:ok, %{status: 200} = response} ->
-        response.body
-        |> Jason.decode!()
-        |> parse_now_playing()
+        {:ok,
+         response.body
+         |> Jason.decode!()
+         |> parse_now_playing()}
 
       other_response ->
         handle_errors(other_response)
@@ -256,41 +257,36 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_now_playing(data) do
-    case get_in(data, ["item", "type"]) do
-      "track" ->
-        item =
+    item =
+      case get_in(data, ["item", "type"]) do
+        "track" ->
           data
           |> Map.get("item")
           |> parse_track()
 
-        if Map.get(data, "is_playing") do
-          {:playing, item}
-        else
-          {:paused, item}
-        end
-
-      "episode" ->
-        item =
+        "episode" ->
           data
           |> Map.get("item")
           |> parse_episode_with_metadata()
 
-        if Map.get(data, "is_playing") do
-          {:playing, item}
-        else
-          {:paused, item}
-        end
+        nil ->
+          nil
+      end
 
-      nil ->
-        :not_playing
-    end
+    status = if Map.get(data, "is_playing"), do: :playing, else: :paused
+    progress_ms = Map.get(data, "progress_ms")
+
+    %Player{status: status, item: item, progress_ms: progress_ms}
   end
 
   defp parse_track(item) do
+    item |> IO.inspect()
+
     %Track{
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      duration_ms: Map.get(item, "duration_ms"),
       artist:
         item
         |> get_in(["artists", Access.at(0)])
@@ -340,6 +336,7 @@ defmodule Tune.Spotify.HttpApi do
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       description: Map.get(item, "description"),
+      duration_ms: Map.get(item, "duration_ms"),
       thumbnails:
         item
         |> Map.get("images")

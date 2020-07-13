@@ -9,7 +9,7 @@ defmodule TuneWeb.ExplorerLive do
     type: :track,
     results: [],
     user: nil,
-    now_playing: :not_playing,
+    now_playing: %Tune.Spotify.Schema.Player{},
     item: nil,
     results_per_page: 32
   ]

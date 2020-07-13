@@ -1,13 +1,9 @@
 <%= case @now_playing do %>
-  <% :not_playing -> %>
+  <% %{status: :not_playing} -> %>
     <div class="full-screen-notice">
       <p>Not playing.</p>
     </div>
-  <% {:error, _reason} -> %>
-    <div class="full-screen-notice">
-      <p>Error fetching playing information.</p>
-    </div>
-  <% {playing_or_paused, item} -> %>
+  <% %{status: status, item: item} -> %>
     <div class="mini-player">
       <div class="device">
         <%= render "device.html", [] %>
@@ -22,7 +18,7 @@
           <%= render "prev.html", [] %>
         </a>
         <a class="button button-small" href="#" phx-click="toggle_play_pause">
-          <%= case playing_or_paused do %>
+          <%= case status do %>
             <% :playing -> %>
               <%= render "pause.html", [] %>
             <% :paused -> %>
