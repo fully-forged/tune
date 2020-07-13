@@ -152,7 +152,7 @@ defmodule Tune.Spotify.Session.Worker do
         {:call, from},
         :toggle_play,
         :authenticated,
-        %{now_playing: {:playing, _item}} = data
+        %{now_playing: %{status: :playing}} = data
       ) do
     case HttpApi.pause(data.credentials.token) do
       :ok ->
@@ -169,7 +169,7 @@ defmodule Tune.Spotify.Session.Worker do
         {:call, from},
         :toggle_play,
         :authenticated,
-        %{now_playing: {:paused, _item}} = data
+        %{now_playing: %{status: :paused}} = data
       ) do
     case HttpApi.play(data.credentials.token) do
       :ok ->
