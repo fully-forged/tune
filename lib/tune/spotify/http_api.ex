@@ -280,8 +280,6 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_track(item) do
-    item |> IO.inspect()
-
     %Track{
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
