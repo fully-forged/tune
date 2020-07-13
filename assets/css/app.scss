@@ -211,6 +211,10 @@ header {
     max-width: 48px;
   }
 
+  p {
+    margin-bottom: 0;
+  }
+
   .progress {
     flex-grow: 1;
     margin: 0 4em;

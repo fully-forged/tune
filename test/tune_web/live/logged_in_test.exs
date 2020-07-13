@@ -39,8 +39,8 @@ defmodule TuneWeb.LoggedInTest do
 
       {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-      assert disconnected_html =~ "Not playing."
-      assert render(explorer_live) =~ "Not playing."
+      assert disconnected_html =~ "Not playing"
+      assert render(explorer_live) =~ "Not playing"
     end
 
     test "it displays a song playing", %{conn: conn, session_id: session_id} do
