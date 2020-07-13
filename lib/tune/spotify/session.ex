@@ -1,4 +1,5 @@
 defmodule Tune.Spotify.Session do
+  @moduledoc false
   alias Phoenix.PubSub
 
   alias Tune.Spotify.Schema

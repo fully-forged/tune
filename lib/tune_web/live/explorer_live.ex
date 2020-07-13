@@ -1,4 +1,5 @@
 defmodule TuneWeb.ExplorerLive do
+  @moduledoc false
   use TuneWeb, :live_view
 
   alias TuneWeb.{AlbumView, PlayerView, SearchView}
@@ -141,22 +142,24 @@ defmodule TuneWeb.ExplorerLive do
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp load_user(session_id, credentials, socket) do
-    with :ok <- spotify().setup(session_id, credentials),
-         %Tune.Spotify.Schema.User{} = user = spotify().get_profile(session_id),
-         now_playing = spotify().now_playing(session_id) do
-      if connected?(socket) do
-        Tune.Spotify.Session.subscribe(session_id)
-      end
+    case spotify().setup(session_id, credentials) do
+      :ok ->
+        %Tune.Spotify.Schema.User{} = user = spotify().get_profile(session_id)
+        now_playing = spotify().now_playing(session_id)
 
-      socket
-      |> assign(@initial_state)
-      |> assign(
-        status: :authenticated,
-        session_id: session_id,
-        user: user,
-        now_playing: now_playing
-      )
-    else
+        if connected?(socket) do
+          Tune.Spotify.Session.subscribe(session_id)
+        end
+
+        socket
+        |> assign(@initial_state)
+        |> assign(
+          status: :authenticated,
+          session_id: session_id,
+          user: user,
+          now_playing: now_playing
+        )
+
       {:error, _reason} ->
         redirect(socket, to: "/auth/logout")
     end

@@ -3,7 +3,7 @@ defmodule TuneWeb.AuthController do
 
   plug Ueberauth
 
-  def callback(conn = %{assigns: %{ueberauth_auth: auth}}, _params) do
+  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     conn
     |> put_flash(:info, "Hello #{auth.info.name}!")
     |> put_session(:spotify_credentials, auth.credentials)
@@ -12,7 +12,7 @@ defmodule TuneWeb.AuthController do
     |> redirect(to: Routes.explorer_path(conn, :index))
   end
 
-  def callback(conn = %{assigns: %{ueberauth_failure: _failure}}, _params) do
+  def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
     conn
     |> put_flash(:error, "Error authenticating via Spotify")
     |> configure_session(drop: true)

@@ -1,4 +1,5 @@
 defmodule Tune.Spotify.Session.Worker do
+  @moduledoc false
   use GenStateMachine
   @behaviour Tune.Spotify.Session
 
