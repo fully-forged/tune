@@ -211,9 +211,13 @@ header {
     max-width: 48px;
   }
 
+  #progress {
+    flex-grow: 1;
+    margin: 0 4em;
+  }
+
   .meta {
     margin: 0 1em 0 1em;
-    flex-grow: 1;
   }
 
   .name, .artist-name, .button {
@@ -292,6 +296,14 @@ header {
     width: 100%;
     justify-content: space-between;
     padding: 0.8em;
+    flex-wrap: wrap;
+
+    #progress {
+      flex-grow: 0;
+      width: 100%;
+      order: -1;
+      margin: 0.1em 0.4em 0.8em;
+    }
 
     .meta {
       flex-grow: 1;

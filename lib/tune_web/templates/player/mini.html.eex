@@ -3,7 +3,7 @@
     <div class="full-screen-notice">
       <p>Not playing.</p>
     </div>
-  <% %{status: status, item: item} -> %>
+  <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">
       <div class="device">
         <%= render "device.html", [] %>
@@ -13,6 +13,7 @@
         <p class="name"><%= name(item) %></p>
         <p class="artist-name"><%= author_name(item) %></p>
       </div>
+      <progress id="progress" value="<%= progress_ms %>" max="<%= item.duration_ms %>"></progress>
       <div class="button-group">
         <a class="button button-small" href="#" phx-click="prev">
           <%= render "prev.html", [] %>
