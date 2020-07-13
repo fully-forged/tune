@@ -36,10 +36,9 @@ defmodule Tune.MixProject do
     [
       {:phoenix, "~> 1.5.3"},
       {:phoenix_live_view, "~> 0.14.0"},
-      {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:floki, ">= 0.0.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.2.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
@@ -48,6 +47,8 @@ defmodule Tune.MixProject do
       {:ueberauth_spotify, "~> 0.2.1"},
       {:finch, "~> 0.3.0"},
       {:gen_state_machine, "~> 2.1"},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:mox, "~> 0.5", only: :test},
       {:stream_data, "~> 0.5.0", only: :test}
     ]
