@@ -3,6 +3,7 @@
 @import "../node_modules/nprogress/nprogress.css";
 
 $accent-color: #4cb6cb;
+$complementary-accent-color: darken($accent-color, 20%);
 $bg-color: #5a6a7a;
 
 $general-padding: 1rem;
@@ -22,8 +23,20 @@ button, .button {
   border-color: $accent-color;
 
   &:hover {
-    background-color: darken($accent-color, 10%);
-    border-color: darken($accent-color, 10%);
+    background-color: $complementary-accent-color;
+    border-color: $complementary-accent-color;
+  }
+}
+
+a {
+  color: $accent-color;
+
+  &:visited {
+    color: $accent-color;
+  }
+
+  &:hover {
+    color: $complementary-accent-color;
   }
 }
 
