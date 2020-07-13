@@ -26,6 +26,10 @@ button, .button {
     background-color: $complementary-accent-color;
     border-color: $complementary-accent-color;
   }
+
+  svg {
+    fill: white;
+  }
 }
 
 a {
