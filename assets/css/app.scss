@@ -196,10 +196,12 @@ header {
   color: white;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: fixed;
   bottom: 0;
   right: 0;
-  padding: 0.8em;
+  left: 0;
+  padding: 0.8em 1.5em 0.8em 1em;
 
   img {
     max-width: 48px;
@@ -207,6 +209,7 @@ header {
 
   .meta {
     margin: 0 1em 0 1em;
+    flex-grow: 1;
   }
 
   .name, .artist-name, .button {
@@ -284,9 +287,11 @@ header {
   .mini-player {
     width: 100%;
     justify-content: space-between;
+    padding: 0.8em;
 
     .meta {
       flex-grow: 1;
+      font-size: 0.8em;
     }
 
     .device {
