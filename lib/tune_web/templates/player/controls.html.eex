@@ -1,16 +1,12 @@
-<div class="button-group">
-  <a class="button button-small" href="#" phx-click="prev">
-    <%= render "icon_prev.html", [] %>
-  </a>
+<div class="controls button-group">
+  <a class="button button-small" href="#" phx-click="prev">&#9198;</a>
   <a class="button button-small" href="#" phx-click="toggle_play_pause">
     <%= case @status do %>
       <% :playing -> %>
-        <%= render "icon_pause.html", [] %>
+        &#9208;
       <% :paused -> %>
-        <%= render "icon_play.html", []%>
+        &#9654;
       <% end %>
   </a>
-  <a class="button button-small" href="#" phx-click="next">
-    <%= render "icon_next.html", [] %>
-  </a>
+  <a class="button button-small" href="#" phx-click="next">&#9197;</a>
 </div>

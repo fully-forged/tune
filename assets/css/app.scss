@@ -244,6 +244,10 @@ header {
     display: flex;
     margin-right: .5em;
   }
+
+  .controls a {
+    font-size: 1.2em;
+  }
 }
 
 @media (max-width: 1024px) {
