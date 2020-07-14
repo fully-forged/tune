@@ -1,5 +1,6 @@
 defmodule TuneWeb.LoggedInTest do
   use TuneWeb.ConnCase
+  use ExUnitProperties
 
   alias Tune.Generators
   alias Tune.Spotify.Schema.Player
@@ -9,32 +10,19 @@ defmodule TuneWeb.LoggedInTest do
 
   setup :verify_on_exit!
 
-  setup %{conn: conn} do
-    [session_id] =
-      Generators.session_id()
-      |> Enum.take(1)
-
-    [credentials] =
-      Generators.credentials()
-      |> Enum.take(1)
-
-    [profile] =
-      Generators.profile()
-      |> Enum.take(1)
-
-    Tune.Spotify.SessionMock
-    |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-    |> expect(:get_profile, 2, fn ^session_id -> profile end)
-
-    [
-      session_id: session_id,
-      conn: init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
-    ]
-  end
-
   describe "mini player" do
-    test "it displays not playing", %{conn: conn, session_id: session_id} do
+    test "it displays not playing", %{conn: conn} do
+      # Not necessary to run this as a property, as it doesn't have much
+      # expected variation - we just need some basic working data for the
+      # current session and user.
+      session_id = pick(Generators.session_id())
+      credentials = pick(Generators.credentials())
+      profile = pick(Generators.profile())
+      conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
       Tune.Spotify.SessionMock
+      |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+      |> expect(:get_profile, 2, fn ^session_id -> profile end)
       |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
 
       {:ok, explorer_live, disconnected_html} = live(conn, "/")
@@ -43,72 +31,91 @@ defmodule TuneWeb.LoggedInTest do
       assert render(explorer_live) =~ "Not playing"
     end
 
-    test "it displays an item playing", %{conn: conn, session_id: session_id} do
-      item = pick_item()
+    property "it displays an item playing", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.item()
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
-      Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id ->
-        %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
-      end)
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 2, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id ->
+          %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
+        end)
 
-      {:ok, explorer_live, disconnected_html} = live(conn, "/")
+        {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-      assert disconnected_html =~ item.name
-      assert render(explorer_live) =~ item.name
+        assert disconnected_html =~ item.name
+        assert render(explorer_live) =~ item.name
+      end
     end
 
-    test "it updates when the item changes", %{conn: conn, session_id: session_id} do
-      item = pick_track()
-      now_playing = %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
+    property "it updates when the item changes", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.item(),
+              second_item <- Generators.item()
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+        now_playing = %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
 
-      Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> now_playing end)
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 2, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id -> now_playing end)
 
-      {:ok, explorer_live, _html} = live(conn, "/")
+        {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-      new_track = %{item | name: "Another item"}
-      now_playing = %{now_playing | item: new_track}
+        assert disconnected_html =~ item.name
+        assert render(explorer_live) =~ item.name
 
-      send(explorer_live.pid, now_playing)
+        now_playing = %{now_playing | item: second_item}
 
-      render(explorer_live) =~ "Another item"
+        send(explorer_live.pid, now_playing)
+
+        render(explorer_live) =~ second_item.name
+      end
     end
   end
 
   describe "search" do
-    test "it defaults to searching for tracks", %{conn: conn, session_id: session_id} do
-      track = pick_track()
+    property "it defaults to searching for tracks", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              tracks <- uniq_list_of(Generators.track(), min_length: 1, max_length: 32)
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
-      search_results = %{
-        tracks: [track]
-      }
+        search_results = %{
+          tracks: tracks
+        }
 
-      track_name = track.name
+        track = Enum.random(tracks)
+        track_name = track.name
 
-      Tune.Spotify.SessionMock
-      |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
-      |> expect(:search, 2, fn ^session_id, ^track_name, [types: [:track], limit: 32] ->
-        {:ok, search_results}
-      end)
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 2, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+        |> expect(:search, 2, fn ^session_id, ^track_name, [types: [:track], limit: 32] ->
+          {:ok, search_results}
+        end)
 
-      {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
-      assert html =~ track_name
-      assert html =~ track.artist.name
+        {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
+        assert html =~ track_name
+        assert html =~ track.artist.name
 
-      assert render(explorer_live) =~ track_name
-      assert render(explorer_live) =~ track.artist.name
+        assert render(explorer_live) =~ track_name
+        assert render(explorer_live) =~ track.artist.name
+      end
     end
-  end
-
-  defp pick_item do
-    Generators.item()
-    |> Enum.take(1)
-    |> hd()
-  end
-
-  defp pick_track do
-    Generators.track()
-    |> Enum.take(1)
-    |> hd()
   end
 end
