@@ -85,6 +85,26 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   describe "search" do
+    test "it suggests to perform a search", %{conn: conn} do
+      session_id = pick(Generators.session_id())
+      credentials = pick(Generators.credentials())
+      profile = pick(Generators.profile())
+
+      conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+      Tune.Spotify.SessionMock
+      |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+      |> expect(:get_profile, 2, fn ^session_id -> profile end)
+      |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+
+      {:ok, explorer_live, html} = live(conn, "/")
+      assert html =~ "Try and search for a song you love"
+      assert html =~ "Try and search for a song you love"
+
+      assert render(explorer_live) =~ "Try and search for a song you love"
+      assert render(explorer_live) =~ "Try and search for a song you love"
+    end
+
     test "it shows a notice when there are no results", %{conn: conn} do
       session_id = pick(Generators.session_id())
       credentials = pick(Generators.credentials())

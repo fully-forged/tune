@@ -31,14 +31,19 @@
   <%= if @status == :authenticated do %>
     <%= case @live_action do %>
       <% :index -> %>
-        <%= if Enum.empty?(@results) do %>
-          <div class="full-screen-notice">
-            <p>No results</p>
-          </div>
-        <% else %>
-          <div class="results">
-            <%= render_many @results, SearchView, "result.html", as: :item, socket: @socket %>
-          </div>
+        <%= case {@q, @results} do %>
+          <% {nil, _results} -> %>
+            <div class="full-screen-notice">
+              <p>Try and search for a song you love</p>
+            </div>
+          <% {_query, []} -> %>
+            <div class="full-screen-notice">
+              <p>No results</p>
+            </div>
+          <% {_query, results} -> %>
+            <div class="results">
+              <%= render_many results, SearchView, "result.html", as: :item, socket: @socket %>
+            </div>
         <% end %>
       <% action when action in [:show_artist, :show_album, :show_show] -> %>
         <div class="item-show">
