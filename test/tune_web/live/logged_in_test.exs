@@ -85,6 +85,33 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   describe "search" do
+    test "it shows a notice when there are no results", %{conn: conn} do
+      session_id = pick(Generators.session_id())
+      credentials = pick(Generators.credentials())
+      profile = pick(Generators.profile())
+
+      conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+      search_results = %{
+        tracks: []
+      }
+
+      Tune.Spotify.SessionMock
+      |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
+      |> expect(:get_profile, 2, fn ^session_id -> profile end)
+      |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+      |> expect(:search, 2, fn ^session_id, "example search", [types: [:track], limit: 32] ->
+        {:ok, search_results}
+      end)
+
+      {:ok, explorer_live, html} = live(conn, "/?q=example+search")
+      assert html =~ "No results"
+      assert html =~ "No results"
+
+      assert render(explorer_live) =~ "No results"
+      assert render(explorer_live) =~ "No results"
+    end
+
     property "it defaults to searching for tracks", %{conn: conn} do
       check all(
               credentials <- Generators.credentials(),

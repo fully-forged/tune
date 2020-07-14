@@ -31,9 +31,15 @@
   <%= if @status == :authenticated do %>
     <%= case @live_action do %>
       <% :index -> %>
-        <div class="results">
-          <%= render_many @results, SearchView, "result.html", as: :item, socket: @socket %>
-        </div>
+        <%= if Enum.empty?(@results) do %>
+          <div class="full-screen-notice">
+            <p>No results</p>
+          </div>
+        <% else %>
+          <div class="results">
+            <%= render_many @results, SearchView, "result.html", as: :item, socket: @socket %>
+          </div>
+        <% end %>
       <% action when action in [:show_artist, :show_album, :show_show] -> %>
         <div class="item-show">
           <%= render AlbumView, "show.html", album: @item %>
