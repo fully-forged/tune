@@ -4,6 +4,10 @@ defmodule Tune.Generators do
 
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
 
+  def item do
+    one_of([track(), episode()])
+  end
+
   def track do
     tuple({id(), name(), duration(), artist()})
     |> bind(fn {id, name, duration, artist} ->

@@ -43,35 +43,35 @@ defmodule TuneWeb.LoggedInTest do
       assert render(explorer_live) =~ "Not playing"
     end
 
-    test "it displays a song playing", %{conn: conn, session_id: session_id} do
-      track = pick_track()
+    test "it displays an item playing", %{conn: conn, session_id: session_id} do
+      item = pick_item()
 
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn ^session_id ->
-        %Player{status: :playing, item: track, progress_ms: track.duration_ms - 100}
+        %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
       end)
 
       {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-      assert disconnected_html =~ track.name
-      assert render(explorer_live) =~ track.name
+      assert disconnected_html =~ item.name
+      assert render(explorer_live) =~ item.name
     end
 
-    test "it updates when the song changes", %{conn: conn, session_id: session_id} do
-      track = pick_track()
-      now_playing = %Player{status: :playing, item: track, progress_ms: track.duration_ms - 100}
+    test "it updates when the item changes", %{conn: conn, session_id: session_id} do
+      item = pick_track()
+      now_playing = %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
 
       Tune.Spotify.SessionMock
       |> expect(:now_playing, 2, fn ^session_id -> now_playing end)
 
       {:ok, explorer_live, _html} = live(conn, "/")
 
-      new_track = %{track | name: "Another song"}
+      new_track = %{item | name: "Another item"}
       now_playing = %{now_playing | item: new_track}
 
       send(explorer_live.pid, now_playing)
 
-      render(explorer_live) =~ "Another song"
+      render(explorer_live) =~ "Another item"
     end
   end
 
@@ -100,11 +100,15 @@ defmodule TuneWeb.LoggedInTest do
     end
   end
 
-  defp pick_track do
-    [track] =
-      Generators.track()
-      |> Enum.take(1)
+  defp pick_item do
+    Generators.item()
+    |> Enum.take(1)
+    |> hd()
+  end
 
-    track
+  defp pick_track do
+    Generators.track()
+    |> Enum.take(1)
+    |> hd()
   end
 end
