@@ -2,7 +2,9 @@
   <%= if @status == :authenticated do %>
     <div class="search">
       <%= form_tag("/", method: :get, phx_change: "search") do %>
+        <label class="visually-hidden" for="q">Search query</label>
         <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
+        <label class="visually-hidden" for="type">Type filter</label>
         <select name="type" id="type">
           <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], to_string(@type)) %>
         </select>
