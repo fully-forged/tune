@@ -6,7 +6,7 @@ defmodule TuneWeb.AlbumView do
   @default_artwork "https://via.placeholder.com/300"
 
   defp artwork(%Album{thumbnails: thumbnails}),
-    do: Map.get(thumbnails, :large, @default_artwork)
+    do: Map.get(thumbnails, :medium, @default_artwork)
 
   defp grouped_tracks(%Album{tracks: tracks}) do
     Enum.group_by(tracks, & &1.disc_number)
