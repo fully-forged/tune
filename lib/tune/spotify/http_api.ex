@@ -258,26 +258,31 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_now_playing(data) do
-    item =
-      case get_in(data, ["item", "type"]) do
-        "track" ->
+    case Map.get(data, "currently_playing_type") do
+      # this appears when queueing a new album/show
+      "unknown" ->
+        %Player{}
+
+      "track" ->
+        item =
           data
           |> Map.get("item")
           |> parse_track()
 
-        "episode" ->
+        progress_ms = Map.get(data, "progress_ms")
+        status = if Map.get(data, "is_playing"), do: :playing, else: :paused
+        %Player{status: status, item: item, progress_ms: progress_ms}
+
+      "episode" ->
+        item =
           data
           |> Map.get("item")
           |> parse_episode_with_metadata()
 
-        nil ->
-          nil
-      end
-
-    status = if Map.get(data, "is_playing"), do: :playing, else: :paused
-    progress_ms = Map.get(data, "progress_ms")
-
-    %Player{status: status, item: item, progress_ms: progress_ms}
+        progress_ms = Map.get(data, "progress_ms")
+        status = if Map.get(data, "is_playing"), do: :playing, else: :paused
+        %Player{status: status, item: item, progress_ms: progress_ms}
+    end
   end
 
   defp parse_track(item) do
