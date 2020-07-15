@@ -1,5 +1,10 @@
 <article class="item-show">
-  <%= img_tag artwork(@album), alt: @album.name, class: "artwork" %>
+  <div class="artwork">
+    <div class="play-button" phx-click="play" phx-value-uri="<%= @album.uri %>">
+      <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+    </div>
+    <%= img_tag artwork(@album), alt: @album.name %>
+  </div>
   <div class="meta">
     <%= content_tag :h1, @album.name %>
     <%= content_tag :h2, @album.artist.name %>

@@ -145,6 +145,33 @@ header {
   }
 }
 
+.artwork {
+  position: relative;
+
+  .play-button {
+    display: none;
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 4em;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    svg {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 1rem;
+      cursor: pointer;
+    }
+  }
+
+  &:hover .play-button {
+    display: flex;
+  }
+}
+
 .results {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -154,33 +181,6 @@ header {
     display: flex;
     flex-direction: column;
     margin: 0.4em;
-  }
-
-  .artwork {
-    position: relative;
-
-    .play-button {
-      display: none;
-      position: absolute;
-      text-align: center;
-      color: white;
-      font-size: 4em;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-
-      svg {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: 50%;
-        padding: 1rem;
-        cursor: pointer;
-      }
-    }
-
-    &:hover .play-button {
-      display: flex;
-    }
   }
 
   .name, .artist-name {
@@ -339,6 +339,12 @@ header {
     margin-top: 1em;
   }
 
+  .artwork {
+    .play-button {
+      display: flex;
+    }
+  }
+
   .results {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -348,12 +354,6 @@ header {
       margin-bottom: 0;
     }
 
-    .artwork {
-      .play-button {
-        font-size: 2em;
-        display: flex;
-      }
-    }
 
     .name, .artist-name {
       font-size: 0.8em;
