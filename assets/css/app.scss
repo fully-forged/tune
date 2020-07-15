@@ -2,7 +2,7 @@
 @import "./milligram.css";
 @import "../node_modules/nprogress/nprogress.css";
 
-$accent-color: #4cb6cb;
+$accent-color: darken(#4cb6cb, 20%);
 $complementary-accent-color: darken($accent-color, 20%);
 $bg-color: #5a6a7a;
 
