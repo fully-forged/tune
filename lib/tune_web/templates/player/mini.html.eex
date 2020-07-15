@@ -6,8 +6,10 @@
   <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">
       <div class="device">&#128266;</div>
-      <%= img_tag thumbnail(item), alt: name(item) %>
-      <%= render "meta.html", item: item %>
+      <%= live_patch to: Routes.explorer_path(@socket, :show_album, item.album.id) do %>
+        <%= img_tag thumbnail(item), alt: name(item) %>
+      <% end %>
+      <%= render "meta.html", item: item, socket: @socket %>
       <%= render "progress.html", item: item, progress_ms: progress_ms %>
       <%= render "controls.html", status: status %>
     </div>

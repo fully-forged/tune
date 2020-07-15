@@ -50,7 +50,7 @@
       <% action when action in [:show_artist, :show_album, :show_show] -> %>
         <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing %>
       <% end %>
-    <%= render PlayerView, "mini.html", now_playing: @now_playing %>
+    <%= render PlayerView, "mini.html", now_playing: @now_playing, socket: @socket %>
   <% else %>
     <div class="full-screen-notice">
       <p>The application requires you to Login into your Spotify account.</p>
