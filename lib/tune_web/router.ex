@@ -14,6 +14,10 @@ defmodule TuneWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :admin do
+    plug :admin_auth
+  end
+
   scope "/auth", TuneWeb do
     pipe_through :browser
 
@@ -38,22 +42,25 @@ defmodule TuneWeb.Router do
   #   pipe_through :api
   # end
 
-  # Enables LiveDashboard only for development
-  #
-  # If you want to use the LiveDashboard in production, you should put
-  # it behind authentication and allow only admins to access it.
-  # If your application does not have an admins-only section yet,
-  # you can use Plug.BasicAuth to set up some basic authentication
-  # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
+  import Phoenix.LiveDashboard.Router
 
-    scope "/" do
-      pipe_through :browser
+  scope "/" do
+    pipe_through [:admin, :browser]
 
-      live_dashboard "/dashboard",
-        metrics: TuneWeb.Telemetry,
-        metrics_history: {TuneWeb.Telemetry.Storage, :metrics_history, []}
+    live_dashboard "/dashboard",
+      metrics: TuneWeb.Telemetry,
+      metrics_history: {TuneWeb.Telemetry.Storage, :metrics_history, []}
+  end
+
+  defp admin_auth(conn, _opts) do
+    with {user, pass} <- Plug.BasicAuth.parse_basic_auth(conn),
+         env_user <- System.get_env("ADMIN_USER"),
+         env_pass <- System.get_env("ADMIN_PASSWORD"),
+         true <- Plug.Crypto.secure_compare(user, env_user),
+         true <- Plug.Crypto.secure_compare(pass, env_pass) do
+      conn
+    else
+      _ -> conn |> Plug.BasicAuth.request_basic_auth() |> halt()
     end
   end
 end
