@@ -291,6 +291,8 @@ defmodule Tune.Spotify.HttpApi do
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       duration_ms: Map.get(item, "duration_ms"),
+      track_number: Map.get(item, "track_number"),
+      disc_number: Map.get(item, "disc_number"),
       artist:
         item
         |> get_in(["artists", Access.at(0)])
@@ -308,6 +310,8 @@ defmodule Tune.Spotify.HttpApi do
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       duration_ms: Map.get(item, "duration_ms"),
+      track_number: Map.get(item, "track_number"),
+      disc_number: Map.get(item, "disc_number"),
       artist: :not_fetched,
       album: :not_fetched
     }

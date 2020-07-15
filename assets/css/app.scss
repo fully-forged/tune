@@ -214,13 +214,23 @@ header {
     margin: 1rem;
   }
 
-  .tracks {
+  .tracklist{
     grid-area: tracks;
     margin-bottom: 10rem;
 
     li {
       display: flex;
       justify-content: space-between;
+
+      .track-number {
+        min-width: 2em;
+        text-align: right;
+      }
+
+      .name {
+        margin-left: 0.5em;
+        flex-grow: 1;
+      }
     }
   }
 }

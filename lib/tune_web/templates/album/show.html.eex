@@ -4,12 +4,14 @@
     <%= content_tag :h1, @album.name %>
     <%= content_tag :h2, @album.artist.name %>
   </div>
-  <ul class="tracks">
-    <%= for track <- @album.tracks do %>
-      <li>
-        <span class="name"><%= track.name %></span>
-        <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
-      </li>
+  <div class="tracklist">
+    <%= if has_multiple_discs?(@album) do %>
+      <%= for {disc, tracks} <- grouped_tracks(@album) do %>
+          <p>Disc <%= disc %></p>
+          <%= render "tracklist.html", tracks: tracks %>
+      <% end %>
+    <% else %>
+      <%= render "tracklist.html", tracks: @album.tracks %>
     <% end %>
-  </ul>
+  </div>
 </article>
