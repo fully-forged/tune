@@ -332,6 +332,16 @@ header {
     grid-template-columns: repeat(6, 1fr);
     justify-items: center;
   }
+
+  .item-show {
+    max-width: 80%;
+  }
+
+  .artwork {
+    .play-button {
+      display: flex;
+    }
+  }
 }
 
 @media (max-width: 768px) {
