@@ -50,7 +50,10 @@ defmodule TuneWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: TuneWeb.Telemetry
+
+      live_dashboard "/dashboard",
+        metrics: TuneWeb.Telemetry,
+        metrics_history: {TuneWeb.Telemetry.Storage, :metrics_history, []}
     end
   end
 end

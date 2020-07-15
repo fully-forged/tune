@@ -14,6 +14,7 @@ defmodule Tune.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Tune.PubSub},
       # Start the Endpoint (http/https)
+      {TuneWeb.Telemetry.Storage, TuneWeb.Telemetry.metrics()},
       TuneWeb.Endpoint,
       # Start a worker by calling: Tune.Worker.start_link(arg)
       {Finch, name: Tune.Finch},
