@@ -1,7 +1,7 @@
 defmodule TuneWeb.AlbumView do
   use TuneWeb, :view
 
-  alias Tune.Spotify.Schema.Album
+  alias Tune.Spotify.Schema.{Album, Player}
 
   @default_artwork "https://via.placeholder.com/300"
 
@@ -20,4 +20,7 @@ defmodule TuneWeb.AlbumView do
 
     MapSet.size(disc_numbers) > 1
   end
+
+  defp playing_track?(%{id: track_id}, %Player{status: :playing, item: %{id: track_id}}), do: true
+  defp playing_track?(_track, _now_playing), do: false
 end

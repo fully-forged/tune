@@ -1,9 +1,17 @@
 <ul class="tracks">
   <%= for track <- @tracks do %>
-    <li>
-      <span class="track-number"><%= track.track_number %></span>
-      <span class="name"><%= track.name %></span>
-      <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
-    </li>
+    <%= if playing_track?(track, @now_playing) do %>
+      <li class="playing">
+        <span class="track-number">&#127926;</span>
+        <span class="name"><%= track.name %></span>
+        <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
+      </li>
+    <% else %>
+      <li>
+        <span class="track-number"><%= track.track_number %></span>
+        <span class="name"><%= track.name %></span>
+        <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
+      </li>
+    <% end %>
   <% end %>
 </ul>

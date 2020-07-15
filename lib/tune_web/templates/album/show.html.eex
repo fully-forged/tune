@@ -8,10 +8,10 @@
     <%= if has_multiple_discs?(@album) do %>
       <%= for {disc, tracks} <- grouped_tracks(@album) do %>
           <p>Disc <%= disc %></p>
-          <%= render "tracklist.html", tracks: tracks %>
+          <%= render "tracklist.html", tracks: tracks, now_playing: @now_playing %>
       <% end %>
     <% else %>
-      <%= render "tracklist.html", tracks: @album.tracks %>
+      <%= render "tracklist.html", tracks: @album.tracks, now_playing: @now_playing %>
     <% end %>
   </div>
 </article>

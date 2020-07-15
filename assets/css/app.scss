@@ -231,6 +231,10 @@ header {
         margin-left: 0.5em;
         flex-grow: 1;
       }
+
+      &.playing {
+        font-weight: bold;
+      }
     }
   }
 }
