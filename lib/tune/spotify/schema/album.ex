@@ -1,4 +1,4 @@
 defmodule Tune.Spotify.Schema.Album do
   @moduledoc false
-  defstruct [:id, :uri, :name, :artist, :thumbnails]
+  defstruct [:id, :uri, :name, :artist, :thumbnails, :tracks]
 end

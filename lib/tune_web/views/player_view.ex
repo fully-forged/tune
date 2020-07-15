@@ -17,7 +17,7 @@ defmodule TuneWeb.PlayerView do
   defp author_name(%Track{artist: artist}), do: artist.name
   defp author_name(%Episode{publisher: publisher}), do: publisher.name
 
-  defp format_duration(ms) do
+  def format_duration(ms) do
     ms
     |> System.convert_time_unit(:millisecond, :second)
     |> format_seconds()

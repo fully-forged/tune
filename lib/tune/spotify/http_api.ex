@@ -297,6 +297,17 @@ defmodule Tune.Spotify.HttpApi do
     }
   end
 
+  defp parse_album_track(item) do
+    %Track{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
+      name: Map.get(item, "name"),
+      duration_ms: Map.get(item, "duration_ms"),
+      artist: :not_fetched,
+      album: :not_fetched
+    }
+  end
+
   defp parse_artist(item) do
     %Artist{
       id: Map.get(item, "id"),
@@ -325,7 +336,13 @@ defmodule Tune.Spotify.HttpApi do
       thumbnails:
         item
         |> Map.get("images")
-        |> parse_thumbnails()
+        |> parse_thumbnails(),
+      tracks:
+        if Map.has_key?(item, "tracks") do
+          item
+          |> get_in(["tracks", "items"])
+          |> Enum.map(&parse_album_track/1)
+        end
     }
   end
 

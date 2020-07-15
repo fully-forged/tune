@@ -46,9 +46,7 @@
             </div>
         <% end %>
       <% action when action in [:show_artist, :show_album, :show_show] -> %>
-        <div class="item-show">
-          <%= render AlbumView, "show.html", album: @item %>
-        </div>
+        <%= render AlbumView, "show.html", album: @item %>
       <% end %>
     <%= render PlayerView, "mini.html", now_playing: @now_playing %>
   <% else %>

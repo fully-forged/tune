@@ -81,9 +81,6 @@ header {
   }
 }
 
-
-// Navigation Header
-
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -191,8 +188,40 @@ header {
 }
 
 .item-show {
+  display: grid;
+  max-width: 40%;
+  margin: 0 auto;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas:
+    "artwork meta"
+    "tracks tracks";
+  padding: 1em;
+
+  .meta {
+    grid-area: meta;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+  }
+
   .artwork {
-    max-width: 20em;
+    grid-area: artwork;
+    max-width: 24rem;
+    margin: 1rem;
+  }
+
+  .tracks {
+    grid-area: tracks;
+    margin-bottom: 10rem;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 }
 
@@ -305,6 +334,18 @@ header {
     .name, .artist-name {
       font-size: 0.8em;
       margin-bottom: 0.2em;
+    }
+  }
+
+  .item-show {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    align-items: center;
+
+    .artwork {
+      max-width: 10em;
     }
   }
 

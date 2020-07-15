@@ -1,5 +1,15 @@
-<article>
+<article class="item-show">
   <%= img_tag artwork(@album), alt: @album.name, class: "artwork" %>
-  <%= content_tag :h1, @album.name %>
-  <%= content_tag :h2, @album.artist.name %>
+  <div class="meta">
+    <%= content_tag :h1, @album.name %>
+    <%= content_tag :h2, @album.artist.name %>
+  </div>
+  <ul class="tracks">
+    <%= for track <- @album.tracks do %>
+      <li>
+        <span class="name"><%= track.name %></span>
+        <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
+      </li>
+    <% end %>
+  </ul>
 </article>
