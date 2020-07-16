@@ -49,8 +49,13 @@ defmodule TuneWeb.LoggedInTest do
 
         {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-        assert disconnected_html =~ item.name
-        assert render(explorer_live) =~ item.name
+        escaped_item_name =
+          item.name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        assert disconnected_html =~ escaped_item_name
+        assert render(explorer_live) =~ escaped_item_name
       end
     end
 
@@ -72,14 +77,24 @@ defmodule TuneWeb.LoggedInTest do
 
         {:ok, explorer_live, disconnected_html} = live(conn, "/")
 
-        assert disconnected_html =~ item.name
-        assert render(explorer_live) =~ item.name
+        escaped_item_name =
+          item.name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        assert disconnected_html =~ escaped_item_name
+        assert render(explorer_live) =~ escaped_item_name
 
         now_playing = %{now_playing | item: second_item}
 
         send(explorer_live.pid, now_playing)
 
-        render(explorer_live) =~ second_item.name
+        escaped_item_name =
+          second_item.name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        render(explorer_live) =~ escaped_item_name
       end
     end
   end
