@@ -179,6 +179,46 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  def get_artist(token, artist_id) do
+    case json_get(
+           @base_url <> "/artists/" <> artist_id,
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        artist =
+          response.body
+          |> Jason.decode!()
+          |> parse_artist()
+
+        {:ok, artist}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  def get_show(token, show_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/shows/" <> show_id <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        show =
+          response.body
+          |> Jason.decode!()
+          |> parse_show()
+
+        {:ok, show}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end

@@ -26,6 +26,8 @@ defmodule Tune.Spotify.Session do
   @callback prev(id()) :: :ok | {:error, term()}
   @callback search(id(), q(), search_options()) :: {:ok, [map()]} | {:error, term()}
   @callback get_album(id(), item_id()) :: {:ok, %Schema.Album{}} | {:error, term()}
+  @callback get_artist(id(), item_id()) :: {:ok, %Schema.Artist{}} | {:error, term()}
+  @callback get_show(id(), item_id()) :: {:ok, %Schema.Show{}} | {:error, term()}
 
   def subscribe(session_id) do
     PubSub.subscribe(Tune.PubSub, session_id)

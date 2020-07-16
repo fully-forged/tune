@@ -65,6 +65,16 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def get_artist(session_id, artist_id) do
+    GenStateMachine.call(via(session_id), {:get_artist, artist_id})
+  end
+
+  @impl true
+  def get_show(session_id, show_id) do
+    GenStateMachine.call(via(session_id), {:get_show, show_id})
+  end
+
+  @impl true
   def init({session_id, credentials}) do
     data = %__MODULE__{session_id: session_id, credentials: credentials}
     action = {:next_event, :internal, :authenticate}
@@ -315,6 +325,62 @@ defmodule Tune.Spotify.Session.Worker do
       {:ok, album} ->
         actions = [
           {:reply, from, {:ok, album}}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        {:get_artist, artist_id},
+        :authenticated,
+        data
+      ) do
+    case HttpApi.get_artist(data.credentials.token, artist_id) do
+      {:ok, artist} ->
+        actions = [
+          {:reply, from, {:ok, artist}}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        {:get_show, show_id},
+        :authenticated,
+        data
+      ) do
+    case HttpApi.get_show(data.credentials.token, show_id) do
+      {:ok, show} ->
+        actions = [
+          {:reply, from, {:ok, show}}
         ]
 
         {:keep_state_and_data, actions}
