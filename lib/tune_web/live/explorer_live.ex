@@ -136,7 +136,7 @@ defmodule TuneWeb.ExplorerLive do
     q = Map.get(params, "q")
     type = Map.get(params, "type", "track")
 
-    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :index, q: q, type: type))}
+    {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :search, q: q, type: type))}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)

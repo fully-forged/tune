@@ -1,4 +1,4 @@
 <div class="meta">
-  <%= live_patch name(@item), to: Routes.explorer_path(@socket, :show_album, @item.album.id), class: "name reversed" %>
+  <%= live_patch name(@item), to: Routes.explorer_path(@socket, :album_details, @item.album.id), class: "name reversed" %>
   <p class="artist-name"><%= author_name(@item) %></p>
 </div>

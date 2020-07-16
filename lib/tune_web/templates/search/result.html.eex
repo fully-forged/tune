@@ -6,7 +6,7 @@
     <%= img_tag thumbnail(@item), alt: name(@item) %>
   </div>
   <div class="meta">
-    <%= live_patch to: Routes.explorer_path(@socket, :show_album, @item.id) do %>
+    <%= live_patch to: Routes.explorer_path(@socket, :album_details, @item.id) do %>
       <p class="name"><%= name(@item) %></p>
     <% end %>
     <p class="artist-name"><%= author_name(@item) %></p>

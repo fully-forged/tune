@@ -32,22 +32,9 @@
 
   <%= if @status == :authenticated do %>
     <%= case @live_action do %>
-      <% :index -> %>
-        <%= case {@q, @results} do %>
-          <% {nil, _results} -> %>
-            <div class="full-screen-notice">
-              <p>Try and search for a song you love</p>
-            </div>
-          <% {_query, []} -> %>
-            <div class="full-screen-notice">
-              <p>No results</p>
-            </div>
-          <% {_query, results} -> %>
-            <div class="results">
-              <%= render_many results, SearchView, "result.html", as: :item, socket: @socket %>
-            </div>
-        <% end %>
-      <% action when action in [:show_artist, :show_album, :show_show] -> %>
+      <% :search -> %>
+        <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
+      <% action when action in [:artist_details, :album_details, :show_details] -> %>
         <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing %>
       <% end %>
     <%= render PlayerView, "mini.html", now_playing: @now_playing, socket: @socket %>
