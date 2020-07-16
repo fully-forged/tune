@@ -449,6 +449,14 @@ header {
     .meta {
       flex-grow: 1;
       font-size: 0.8em;
+
+      .name {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 11em;
+      }
     }
 
     .device {
