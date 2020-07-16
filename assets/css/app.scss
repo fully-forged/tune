@@ -524,10 +524,10 @@ header {
   cursor: pointer;
 }
 
-
 /* Alerts and form errors */
 
 .alert {
+  display: block;
   padding: 15px;
   margin-bottom: 20px;
   border: 1px solid transparent;
@@ -548,7 +548,7 @@ header {
   background-color: #f2dede;
   border-color: #ebccd1;
 }
-.alert p {
+.alert a {
   margin-bottom: 0;
 }
 .alert:empty {

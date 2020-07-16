@@ -22,13 +22,13 @@
 </nav>
 
 <section id="explorer">
-  <p class="alert alert-info" role="alert"
+  <a href="#" class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+    phx-value-key="info"><%= live_flash(@flash, :info) %></a>
 
-  <p class="alert alert-danger" role="alert"
+  <a href="#" class="alert alert-danger" role="alert"
     phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+    phx-value-key="error"><%= live_flash(@flash, :error) %></a>
 
   <%= if @status == :authenticated do %>
     <%= case @live_action do %>
