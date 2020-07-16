@@ -422,6 +422,7 @@ defmodule Tune.Spotify.HttpApi do
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       description: Map.get(item, "description"),
+      duration_ms: Map.get(item, "duration_ms"),
       thumbnails:
         item
         |> Map.get("images")

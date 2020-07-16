@@ -9,14 +9,16 @@ defmodule Tune.Generators do
   end
 
   def track do
-    tuple({id(), name(), duration(), artist()})
-    |> bind(fn {id, name, duration, artist} ->
+    tuple({id(), name(), duration(), artist(), track_number(), disc_number()})
+    |> bind(fn {id, name, duration, artist, track_number, disc_number} ->
       bind(album(artist), fn album ->
         constant(%Track{
           id: id,
           uri: "spotify:track:" <> id,
           name: name,
           duration_ms: duration,
+          track_number: track_number,
+          disc_number: disc_number,
           album: album,
           artist: artist
         })
@@ -50,7 +52,8 @@ defmodule Tune.Generators do
         uri: "spotify:album:" <> id,
         name: name,
         artist: artist,
-        thumbnails: thumbnails
+        thumbnails: thumbnails,
+        tracks: :not_fetched
       })
     end)
   end
@@ -125,6 +128,10 @@ defmodule Tune.Generators do
 
   # 45 minutes
   def duration, do: integer(500..2_700_000)
+
+  def track_number, do: integer(1..100)
+
+  def disc_number, do: integer(1..100)
 
   def credentials do
     tuple({token(), token()})
