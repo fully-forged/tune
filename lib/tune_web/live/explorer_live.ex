@@ -109,27 +109,27 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   def handle_event("toggle_play_pause", _params, socket) do
-    spotify().toggle_play(socket.assigns.session_id)
-
-    {:noreply, socket}
+    socket.assigns.session_id
+    |> spotify().toggle_play()
+    |> handle_device_operation_result(socket)
   end
 
   def handle_event("play", %{"uri" => uri}, socket) do
-    spotify().play(socket.assigns.session_id, uri)
-
-    {:noreply, socket}
+    socket.assigns.session_id
+    |> spotify().play(uri)
+    |> handle_device_operation_result(socket)
   end
 
   def handle_event("next", _params, socket) do
-    spotify().next(socket.assigns.session_id)
-
-    {:noreply, socket}
+    socket.assigns.session_id
+    |> spotify().next()
+    |> handle_device_operation_result(socket)
   end
 
   def handle_event("prev", _params, socket) do
-    spotify().prev(socket.assigns.session_id)
-
-    {:noreply, socket}
+    socket.assigns.session_id
+    |> spotify().prev()
+    |> handle_device_operation_result(socket)
   end
 
   def handle_event("search", params, socket) do
@@ -181,4 +181,14 @@ defmodule TuneWeb.ExplorerLive do
   defp extract_results(results, :artist), do: Map.get(results, :artists)
   defp extract_results(results, :episode), do: Map.get(results, :episodes)
   defp extract_results(results, :show), do: Map.get(results, :shows)
+
+  defp handle_device_operation_result(:ok, socket), do: {:noreply, socket}
+
+  defp handle_device_operation_result({:error, 404}, socket) do
+    {:noreply, put_flash(socket, :error, "No available devices")}
+  end
+
+  defp handle_device_operation_result({:error, reason}, socket) do
+    {:noreply, put_flash(socket, :error, "Spotify error: #{inspect(reason)}")}
+  end
 end
