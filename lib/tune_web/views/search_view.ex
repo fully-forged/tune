@@ -37,4 +37,24 @@ defmodule TuneWeb.SearchView do
       if size in preferred_sizes, do: url
     end)
   end
+
+  defp result_link(%Track{album: album}, socket) do
+    Routes.explorer_path(socket, :album_details, album.id)
+  end
+
+  defp result_link(%Album{id: id}, socket) do
+    Routes.explorer_path(socket, :album_details, id)
+  end
+
+  defp result_link(%Show{id: id}, socket) do
+    Routes.explorer_path(socket, :show_details, id)
+  end
+
+  defp result_link(%Episode{show: show}, socket) do
+    Routes.explorer_path(socket, :show_details, show.id)
+  end
+
+  defp result_link(%Artist{id: id}, socket) do
+    Routes.explorer_path(socket, :artist_details, id)
+  end
 end
