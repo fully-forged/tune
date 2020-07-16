@@ -6,7 +6,7 @@
   <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">
       <div class="device">&#128266;</div>
-      <%= live_patch to: Routes.explorer_path(@socket, :album_details, item.album.id) do %>
+      <%= live_patch to: TuneWeb.SearchView.result_link(item, @socket) do %>
         <%= img_tag thumbnail(item), alt: name(item) %>
       <% end %>
       <%= render "meta.html", item: item, socket: @socket %>

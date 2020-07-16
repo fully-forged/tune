@@ -34,8 +34,12 @@
     <%= case @live_action do %>
       <% :search -> %>
         <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
-      <% action when action in [:artist_details, :album_details, :show_details] -> %>
+      <% :album_details -> %>
         <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing %>
+      <% action when action in [:artist_details, :show_details] -> %>
+        <div class="full-screen-notice">
+          <p>Cannot display this item yet.</p>
+        </div>
       <% end %>
     <%= render PlayerView, "mini.html", now_playing: @now_playing, socket: @socket %>
   <% else %>
