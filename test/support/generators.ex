@@ -45,16 +45,20 @@ defmodule Tune.Generators do
   end
 
   def album(artist) do
-    tuple({id(), name(), thumbnails()})
-    |> bind(fn {id, name, thumbnails} ->
-      constant(%Album{
-        id: id,
-        uri: "spotify:album:" <> id,
-        name: name,
-        artist: artist,
-        thumbnails: thumbnails,
-        tracks: :not_fetched
-      })
+    bind(release_date_precision(), fn release_date_precision ->
+      tuple({id(), name(), thumbnails(), release_date(release_date_precision)})
+      |> bind(fn {id, name, thumbnails, release_date} ->
+        constant(%Album{
+          id: id,
+          uri: "spotify:album:" <> id,
+          name: name,
+          artist: artist,
+          thumbnails: thumbnails,
+          release_date: release_date,
+          release_date_precision: release_date_precision,
+          tracks: :not_fetched
+        })
+      end)
     end)
   end
 
@@ -133,6 +137,28 @@ defmodule Tune.Generators do
 
   def disc_number, do: integer(1..100)
 
+  def release_date("year") do
+    release_year()
+  end
+
+  def release_date("month") do
+    tuple({release_year(), release_month()})
+    |> bind(fn {release_year, release_month} ->
+      constant("#{release_year}-#{release_month}")
+    end)
+  end
+
+  def release_date("day") do
+    tuple({release_year(), release_month(), release_day()})
+    |> bind(fn {release_year, release_month, release_day} ->
+      constant("#{release_year}-#{release_month}-#{release_day}")
+    end)
+  end
+
+  defp release_date_precision do
+    one_of([constant("year"), constant("month"), constant("day")])
+  end
+
   def credentials do
     tuple({token(), token()})
     |> bind(fn {token, refresh_token} ->
@@ -148,5 +174,19 @@ defmodule Tune.Generators do
     |> bind(fn {name, avatar_url} ->
       constant(%User{name: name, avatar_url: avatar_url})
     end)
+  end
+
+  defp release_year do
+    map(integer(1800..2020), &to_string/1)
+  end
+
+  defp release_month do
+    map(integer(1..12), &to_string/1)
+  end
+
+  defp release_day do
+    # to make things simpler, days are capped at 28 to avoid differentiating
+    # between months
+    map(integer(1..28), &to_string/1)
   end
 end

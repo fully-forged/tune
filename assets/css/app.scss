@@ -2,6 +2,7 @@
 @import "./milligram.css";
 @import "../node_modules/nprogress/nprogress.css";
 
+$text-color: #606c76;
 $accent-color: darken(#4cb6cb, 20%);
 $complementary-accent-color: darken($accent-color, 20%);
 $bg-color: #5a6a7a;
@@ -245,6 +246,12 @@ header {
       line-height: 1.3;
       margin-bottom: 1rem;
     }
+
+    h3 {
+      font-size: 2.2rem;
+      letter-spacing: -.08rem;
+      line-height: 1.35;
+    }
   }
 
   .artwork {
@@ -261,6 +268,8 @@ header {
     li {
       display: flex;
       justify-content: space-between;
+      border-bottom: 1px solid lighten($text-color, 20%);
+      padding-bottom: 1rem;
 
       .track-number {
         min-width: 2em;
@@ -275,6 +284,10 @@ header {
         overflow: hidden;
         text-overflow: ellipsis;
         min-width: 0;
+      }
+
+      .duration {
+        margin-right: 1rem;
       }
 
       &.playing {
@@ -429,6 +442,12 @@ header {
         font-size: 1.8rem;
         letter-spacing: -.05rem;
         line-height: 1.5;
+      }
+
+      h3 {
+        font-size: 1.6rem;
+        letter-spacing: 0;
+        line-height: 1.4;
       }
     }
   }

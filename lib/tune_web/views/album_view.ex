@@ -23,4 +23,15 @@ defmodule TuneWeb.AlbumView do
 
   defp playing_track?(%{id: track_id}, %Player{status: :playing, item: %{id: track_id}}), do: true
   defp playing_track?(_track, _now_playing), do: false
+
+  defp total_duration(album) do
+    formatted_duration =
+      album
+      |> Album.total_duration_ms()
+      |> TuneWeb.PlayerView.format_duration()
+
+    tracks_count = Album.tracks_count(album)
+
+    "#{tracks_count} track(s), #{formatted_duration} hh:mm:ss"
+  end
 end

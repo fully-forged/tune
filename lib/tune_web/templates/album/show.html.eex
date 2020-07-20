@@ -7,7 +7,11 @@
   </div>
   <div class="meta">
     <%= content_tag :h1, @album.name %>
-    <%= content_tag :h2, @album.artist.name %>
+    <%= live_patch to: Routes.explorer_path(@socket, :artist_details, @album.artist.id) do %>
+      <%= content_tag :h2, @album.artist.name %>
+    <% end %>
+    <%= content_tag :h3, @album.release_date %>
+    <%= content_tag :p, total_duration(@album) %>
   </div>
   <div class="tracklist">
     <%= if has_multiple_discs?(@album) do %>
