@@ -269,7 +269,13 @@ header {
       display: flex;
       justify-content: space-between;
       border-bottom: 1px solid lighten($text-color, 20%);
-      padding-bottom: 1rem;
+      padding: 1rem 0;
+      margin-bottom: 0;
+
+      &:hover {
+        background-color: $accent-color;
+        color: white;
+      }
 
       .track-number {
         min-width: 2em;
