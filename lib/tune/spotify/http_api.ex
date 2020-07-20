@@ -378,6 +378,8 @@ defmodule Tune.Spotify.HttpApi do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      release_date: Map.get(item, "release_date"),
+      release_date_precision: Map.get(item, "release_date_precision"),
       artist:
         item
         |> get_in(["artists", Access.at(0)])

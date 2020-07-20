@@ -8,6 +8,7 @@
   <div class="meta">
     <%= content_tag :h1, @album.name %>
     <%= content_tag :h2, @album.artist.name %>
+    <%= content_tag :h3, @album.release_date %>
   </div>
   <div class="tracklist">
     <%= if has_multiple_discs?(@album) do %>
