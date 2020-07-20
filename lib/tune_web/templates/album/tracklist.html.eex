@@ -1,13 +1,13 @@
 <ul class="tracks">
   <%= for track <- @tracks do %>
     <%= if playing_track?(track, @now_playing) do %>
-      <li class="playing">
+      <li class="playing" phx-click="play" phx-value-uri="<%= track.uri %>">
         <span class="track-number">&#127926;</span>
         <span class="name"><%= track.name %></span>
         <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
       </li>
     <% else %>
-      <li>
+      <li phx-click="play" phx-value-uri="<%= track.uri %>">
         <span class="track-number"><%= track.track_number %></span>
         <span class="name"><%= track.name %></span>
         <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
