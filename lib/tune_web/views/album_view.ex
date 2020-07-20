@@ -34,4 +34,13 @@ defmodule TuneWeb.AlbumView do
 
     "#{tracks_count} track(s), #{formatted_duration} hh:mm:ss"
   end
+
+  def last_fm_track_link(track, album, artist) do
+    Path.join([
+      "https://www.last.fm/music",
+      URI.encode(artist.name),
+      URI.encode(album.name),
+      URI.encode(track.name)
+    ])
+  end
 end
