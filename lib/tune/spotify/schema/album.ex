@@ -43,4 +43,15 @@ defmodule Tune.Spotify.Schema.Album do
         Enum.count(tracks)
     end
   end
+
+  def release_year(album) do
+    case album.release_date_precision do
+      "year" ->
+        album.release_date
+
+      _other ->
+        {year, _rest} = String.split_at(album.release_date, 4)
+        year
+    end
+  end
 end

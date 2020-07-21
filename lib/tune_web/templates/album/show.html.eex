@@ -10,8 +10,11 @@
     <%= live_patch to: Routes.explorer_path(@socket, :artist_details, @album.artist.id) do %>
       <%= content_tag :h2, @album.artist.name %>
     <% end %>
-    <%= content_tag :h3, @album.release_date %>
-    <%= content_tag :p, total_duration(@album) %>
+    <%= content_tag :p do %>
+      <%= content_tag :span, Album.release_year(@album), class: "release-date" %>
+      ·
+      <%= content_tag :span, total_duration(@album), class: "total-duration" %>
+    <% end %>
   </div>
   <div class="tracklist">
     <%= if has_multiple_discs?(@album) do %>
