@@ -198,6 +198,7 @@ header {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   padding: $general-padding;
+  margin-bottom: 4rem;
 
   .result {
     display: flex;
@@ -390,6 +391,7 @@ header {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     justify-items: center;
+    margin-bottom: 8rem;
   }
 
   .item-show {
@@ -440,6 +442,7 @@ header {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
+    margin-bottom: 12rem;
 
     p {
       margin-bottom: 0;
