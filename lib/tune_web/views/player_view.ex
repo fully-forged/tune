@@ -35,7 +35,7 @@ defmodule TuneWeb.PlayerView do
   end
 
   defp format_minutes(minutes, seconds) when minutes <= 59 do
-    "#{zero_pad(minutes)}:#{zero_pad(seconds)}"
+    "#{minutes}:#{zero_pad(seconds)}"
   end
 
   defp format_minutes(minutes, seconds) do
@@ -46,7 +46,7 @@ defmodule TuneWeb.PlayerView do
   end
 
   defp format_hours(hours, minutes, seconds) do
-    "#{zero_pad(hours)}:#{zero_pad(minutes)}:#{zero_pad(seconds)}"
+    "#{hours}:#{zero_pad(minutes)}:#{zero_pad(seconds)}"
   end
 
   defp zero_pad(integer) do
