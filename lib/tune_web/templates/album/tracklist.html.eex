@@ -5,14 +5,18 @@
         <span class="track-number">&#127926;</span>
         <span class="name" phx-click="play" phx-value-uri="<%= track.uri %>"><%= track.name %></span>
         <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
-        <%= link "Last.fm", to: last_fm_track_link(track, @album, @artist), target: "_blank" %>
+        <%= link to: last_fm_track_link(track, @album, @artist), class: "last-fm", target: "_blank" do %>
+          <%= render "icon_last_fm.html", [] %>
+        <% end %>
       </li>
     <% else %>
       <li>
         <span class="track-number"><%= track.track_number %></span>
         <span class="name" phx-click="play" phx-value-uri="<%= track.uri %>"><%= track.name %></span>
         <span class="duration"><%= TuneWeb.PlayerView.format_duration(track.duration_ms) %></span>
-        <%= link "Last.fm", to: last_fm_track_link(track, @album, @artist), target: "_blank" %>
+        <%= link to: last_fm_track_link(track, @album, @artist), class: "last-fm", target: "_blank" do %>
+          <%= render "icon_last_fm.html", [] %>
+        <% end %>
       </li>
     <% end %>
   <% end %>

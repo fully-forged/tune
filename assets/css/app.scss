@@ -299,6 +299,21 @@ header {
         min-width: 0;
       }
 
+      .last-fm {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+
+        svg {
+          height: 1.4em;
+          fill: #b90000;
+        }
+
+        &:hover svg {
+          fill: black;
+        }
+      }
+
       .duration {
         margin-right: 1rem;
       }
