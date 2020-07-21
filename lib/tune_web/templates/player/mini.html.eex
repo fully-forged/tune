@@ -5,7 +5,9 @@
     </div>
   <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">
-      <div class="device">&#128266;</div>
+      <div class="device">
+        <%= render "icon_device.html", [] %>
+      </div>
       <%= live_patch to: TuneWeb.SearchView.result_link(item, @socket) do %>
         <%= img_tag thumbnail(item), alt: name(item) %>
       <% end %>
