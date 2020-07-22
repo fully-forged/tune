@@ -12,26 +12,26 @@ msgstr ""
 "Plural-Forms: nplurals=2\n"
 
 #, elixir-format
-#: lib/tune/duration.ex:10
+#: lib/tune/duration.ex:51
 msgid "Less than a minute"
 msgstr "Less than a minute"
 
 #, elixir-format
-#: lib/tune/duration.ex:17 lib/tune/duration.ex:32
+#: lib/tune/duration.ex:58 lib/tune/duration.ex:73
 msgid "1 minute"
 msgid_plural "%{count} minutes"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/tune/duration.ex:31 lib/tune/duration.ex:36
+#: lib/tune/duration.ex:72 lib/tune/duration.ex:77
 msgid "1 hour"
 msgid_plural "%{count} hours"
 msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/tune/duration.ex:34
+#: lib/tune/duration.ex:75
 msgid "%{hours} and %{minutes}"
 msgstr ""
 
