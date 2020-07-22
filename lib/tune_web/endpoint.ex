@@ -7,7 +7,8 @@ defmodule TuneWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_tune_key",
-    signing_salt: "2txYZyfx"
+    signing_salt: "2txYZyfx",
+    encryption_salt: {__MODULE__, :get_encryption_salt, []}
   ]
 
   socket "/socket", TuneWeb.UserSocket,
@@ -67,5 +68,9 @@ defmodule TuneWeb.Endpoint do
       end
 
     {:ok, config}
+  end
+
+  def get_encryption_salt do
+    System.get_env("SESSION_ENCRYPTION_SALT")
   end
 end
