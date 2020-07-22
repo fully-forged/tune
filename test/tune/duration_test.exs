@@ -25,7 +25,11 @@ defmodule Tune.DurationTest do
             assert formatted =~ "minutes"
             refute formatted =~ "hour"
 
-          d when d >= @one_hour ->
+          d when d in @one_hour..(@one_hour + @one_minute) ->
+            refute formatted =~ "minute"
+            assert formatted =~ "hour"
+
+          _ ->
             assert formatted =~ "minute"
             assert formatted =~ "hour"
         end
