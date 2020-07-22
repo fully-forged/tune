@@ -79,7 +79,7 @@ defmodule Tune.Duration do
   end
 
   defp milliseconds_to_rounded_seconds(milliseconds) do
-    total_seconds = div(milliseconds, 1000)
+    total_seconds = System.convert_time_unit(milliseconds, :millisecond, :second)
     remaining_milliseconds = rem(milliseconds, 1000)
 
     if remaining_milliseconds >= 500 do
