@@ -1,6 +1,6 @@
 <div class="progress">
-  <span class="duration"><%= format_duration(@progress_ms) %></span>
+  <span class="duration"><%= Tune.Duration.hms(@progress_ms) %></span>
   <label class="visually-hidden" for="progress-bar">Current track position</label>
-  <progress id="progress-bar" value="<%= @progress_ms %>" max="<%= @item.duration_ms %>"><%= format_duration(@progress_ms) %></progress>
-  <span class="total_duration"><%= format_duration(@item.duration_ms) %></span>
+  <progress id="progress-bar" value="<%= @progress_ms %>" max="<%= @item.duration_ms %>"><%= Tune.Duration.hms(@progress_ms) %></progress>
+  <span class="total_duration"><%= Tune.Duration.hms(@item.duration_ms) %></span>
 </div>

@@ -11,6 +11,26 @@ defmodule Tune.Duration do
   @type milliseconds :: pos_integer()
 
   @doc """
+  Given a duration in milliseconds, returns a string with the duration formatted
+  as hours, minutes and seconds, omitting units where appropriate.
+
+  iex> milliseconds = :timer.seconds(5)
+  iex> Tune.Duration.hms(milliseconds)
+  "0:05"
+  iex> milliseconds = :timer.seconds(61)
+  iex> Tune.Duration.hms(milliseconds)
+  "1:01"
+  iex> milliseconds = :timer.hours(2)
+  iex> Tune.Duration.hms(milliseconds)
+  "2:00:00"
+  """
+  def hms(milliseconds) do
+    milliseconds
+    |> System.convert_time_unit(:millisecond, :second)
+    |> format_seconds()
+  end
+
+  @doc """
   Given a duration in milliseconds, returns a localized, human-readable
   representation of that duration.
 
@@ -78,5 +98,37 @@ defmodule Tune.Duration do
     else
       total_minutes
     end
+  end
+
+  defp format_seconds(seconds) when seconds <= 59 do
+    "0:#{zero_pad(seconds)}"
+  end
+
+  defp format_seconds(seconds) do
+    minutes = div(seconds, 60)
+    remaining_seconds = rem(seconds, 60)
+
+    format_minutes(minutes, remaining_seconds)
+  end
+
+  defp format_minutes(minutes, seconds) when minutes <= 59 do
+    "#{minutes}:#{zero_pad(seconds)}"
+  end
+
+  defp format_minutes(minutes, seconds) do
+    hours = div(minutes, 60)
+    remaining_minutes = rem(minutes, 60)
+
+    format_hours(hours, remaining_minutes, seconds)
+  end
+
+  defp format_hours(hours, minutes, seconds) do
+    "#{hours}:#{zero_pad(minutes)}:#{zero_pad(seconds)}"
+  end
+
+  defp zero_pad(integer) do
+    integer
+    |> to_string()
+    |> String.pad_leading(2, "0")
   end
 end
