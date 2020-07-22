@@ -38,4 +38,35 @@ defmodule Tune.DurationTest do
       end
     end
   end
+
+  describe "hms" do
+    property "it includes only meaningful units" do
+      check all(duration <- Generators.duration()) do
+        hms = Duration.hms(duration)
+
+        case duration do
+          d when d < @one_minute ->
+            assert ["0", seconds_string] = String.split(hms, ":")
+            assert {seconds, ""} = Integer.parse(seconds_string)
+            assert seconds in 0..59
+
+          d when d in @one_minute..@one_hour ->
+            assert [minutes_string, seconds_string] = String.split(hms, ":")
+            assert {minutes, ""} = Integer.parse(minutes_string)
+            assert minutes in 0..59
+            assert {seconds, ""} = Integer.parse(seconds_string)
+            assert seconds in 0..59
+
+          d when d >= @one_hour ->
+            assert [hours_string, minutes_string, seconds_string] = String.split(hms, ":")
+            assert {minutes, ""} = Integer.parse(minutes_string)
+            assert minutes in 0..59
+            assert {seconds, ""} = Integer.parse(seconds_string)
+            assert seconds in 0..59
+            assert {hours, ""} = Integer.parse(hours_string)
+            assert hours >= 1
+        end
+      end
+    end
+  end
 end
