@@ -172,11 +172,22 @@ defmodule TuneWeb.LoggedInTest do
         end)
 
         {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
-        assert html =~ track_name
-        assert html =~ track.artist.name
 
-        assert render(explorer_live) =~ track_name
-        assert render(explorer_live) =~ track.artist.name
+        escaped_track_name =
+          track_name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        escaped_artist_name =
+          track.artist.name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        assert html =~ escaped_track_name
+        assert html =~ escaped_artist_name
+
+        assert render(explorer_live) =~ escaped_track_name
+        assert render(explorer_live) =~ escaped_artist_name
       end
     end
   end
