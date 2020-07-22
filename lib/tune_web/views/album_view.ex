@@ -32,7 +32,12 @@ defmodule TuneWeb.AlbumView do
 
     tracks_count = Album.tracks_count(album)
 
-    "#{tracks_count} track(s), #{formatted_duration}"
+    ngettext(
+      "1 track, %{formatted_duration}",
+      "%{count} tracks, %{formatted_duration}",
+      tracks_count,
+      %{formatted_duration: formatted_duration}
+    )
   end
 
   def last_fm_track_link(track, album, artist) do
