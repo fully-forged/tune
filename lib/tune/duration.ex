@@ -1,4 +1,6 @@
 defmodule Tune.Duration do
+  @moduledoc false
+
   @minute :timer.minutes(1)
   @hour :timer.hours(1)
 
