@@ -1,11 +1,32 @@
 defmodule Tune.Duration do
-  @moduledoc false
+  @moduledoc """
+  Provides functions to convert millisecond durations to different formats.
+  """
 
   @minute :timer.minutes(1)
   @hour :timer.hours(1)
 
   import Tune.Gettext
 
+  @type milliseconds :: pos_integer()
+
+  @doc """
+  Given a duration in milliseconds, returns a localized, human-readable
+  representation of that duration.
+
+  iex> Tune.Duration.human(100)
+  "Less than a minute"
+
+  Durations are rounded to the minute:
+
+  iex> milliseconds = :timer.seconds(61)
+  iex> Tune.Duration.human(milliseconds)
+  "1 minute"
+  iex> milliseconds = :timer.seconds(95)
+  iex> Tune.Duration.human(milliseconds)
+  "2 minutes"
+  """
+  @spec human(milliseconds()) :: String.t()
   def human(milliseconds) when milliseconds < @minute do
     gettext("Less than a minute")
   end

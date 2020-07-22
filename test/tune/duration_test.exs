@@ -4,6 +4,8 @@ defmodule Tune.DurationTest do
 
   alias Tune.{Duration, Generators}
 
+  doctest Duration
+
   @one_minute :timer.minutes(1)
   @one_minute_thirty_seconds :timer.seconds(90)
   @one_hour :timer.hours(1)
