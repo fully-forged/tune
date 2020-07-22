@@ -11,3 +11,6 @@ config :tune,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :stream_data,
+  max_runs: if(System.get_env("CI"), do: 1_000, else: 50)
