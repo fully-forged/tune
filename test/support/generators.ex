@@ -130,8 +130,8 @@ defmodule Tune.Generators do
 
   def token, do: string(:alphanumeric, min_length: 24, max_length: 32)
 
-  # 45 minutes
-  def duration, do: integer(500..2_700_000)
+  # 90 minutes
+  def duration, do: integer(500..:timer.minutes(90))
 
   def track_number, do: integer(1..100)
 

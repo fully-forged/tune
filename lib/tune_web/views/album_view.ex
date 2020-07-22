@@ -28,11 +28,11 @@ defmodule TuneWeb.AlbumView do
     formatted_duration =
       album
       |> Album.total_duration_ms()
-      |> TuneWeb.PlayerView.format_duration()
+      |> Tune.Duration.human()
 
     tracks_count = Album.tracks_count(album)
 
-    "#{tracks_count} track(s), #{formatted_duration} hh:mm:ss"
+    "#{tracks_count} track(s), #{formatted_duration}"
   end
 
   def last_fm_track_link(track, album, artist) do
