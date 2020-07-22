@@ -82,7 +82,7 @@ defmodule Tune.Duration do
     total_seconds = System.convert_time_unit(milliseconds, :millisecond, :second)
     remaining_milliseconds = rem(milliseconds, 1000)
 
-    if remaining_milliseconds >= 500 do
+    if remaining_milliseconds > 500 do
       total_seconds + 1
     else
       total_seconds
@@ -93,7 +93,7 @@ defmodule Tune.Duration do
     total_minutes = div(seconds, 60)
     remaining_seconds = rem(seconds, 60)
 
-    if remaining_seconds >= 30 do
+    if remaining_seconds > 30 do
       total_minutes + 1
     else
       total_minutes
