@@ -2,15 +2,21 @@ defmodule Tune.Duration do
   @minute :timer.minutes(1)
   @hour :timer.hours(1)
 
+  import Tune.Gettext
+
   def human(milliseconds) when milliseconds < @minute do
-    "Less than a minute"
+    gettext("Less than a minute")
   end
 
   def human(milliseconds) when milliseconds < @hour do
     total_seconds = milliseconds_to_rounded_seconds(milliseconds)
     total_minutes = seconds_to_rounded_minutes(total_seconds)
 
-    "#{total_minutes} minute(s)"
+    ngettext(
+      "1 minute",
+      "%{count} minutes",
+      total_minutes
+    )
   end
 
   def human(milliseconds) when milliseconds >= @hour do
@@ -19,7 +25,14 @@ defmodule Tune.Duration do
     total_hours = div(total_minutes, 60)
     remaining_minutes = rem(total_minutes, 60)
 
-    "#{total_hours} hour(s) and #{remaining_minutes} minute(s)"
+    if remaining_minutes > 0 do
+      hours_fragment = ngettext("1 hour", "%{count} hours", total_hours)
+      minutes_fragment = ngettext("1 minute", "%{count} minutes", remaining_minutes)
+
+      gettext("%{hours} and %{minutes}", %{hours: hours_fragment, minutes: minutes_fragment})
+    else
+      ngettext("1 hour", "%{count} hours", total_hours)
+    end
   end
 
   defp milliseconds_to_rounded_seconds(milliseconds) do

@@ -4,8 +4,9 @@ defmodule Tune.DurationTest do
 
   alias Tune.{Duration, Generators}
 
-  @minute :timer.minutes(1)
-  @hour :timer.hours(1)
+  @one_minute :timer.minutes(1)
+  @one_minute_thirty_seconds :timer.seconds(90)
+  @one_hour :timer.hours(1)
 
   describe "human duration" do
     property "it approximates to the nearest unit" do
@@ -13,16 +14,20 @@ defmodule Tune.DurationTest do
         formatted = Duration.human(duration)
 
         case duration do
-          d when d < @minute ->
+          d when d < @one_minute ->
             assert formatted == "Less than a minute"
 
-          d when d < @hour ->
-            assert formatted =~ "minute(s)"
-            refute formatted =~ "hour(s)"
+          d when d < @one_minute_thirty_seconds ->
+            assert formatted =~ "minute"
+            refute formatted =~ "minutes"
 
-          d when d >= @hour ->
-            assert formatted =~ "minute(s)"
-            assert formatted =~ "hour(s)"
+          d when d < @one_hour ->
+            assert formatted =~ "minutes"
+            refute formatted =~ "hour"
+
+          d when d >= @one_hour ->
+            assert formatted =~ "minute"
+            assert formatted =~ "hour"
         end
       end
     end

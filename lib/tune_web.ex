@@ -22,6 +22,7 @@ defmodule TuneWeb do
       use Phoenix.Controller, namespace: TuneWeb
 
       import Plug.Conn
+      import Tune.Gettext
       alias TuneWeb.Router.Helpers, as: Routes
     end
   end
@@ -71,6 +72,7 @@ defmodule TuneWeb do
   def channel do
     quote do
       use Phoenix.Channel
+      import Tune.Gettext
     end
   end
 
@@ -86,6 +88,7 @@ defmodule TuneWeb do
       import Phoenix.View
 
       import TuneWeb.ErrorHelpers
+      import Tune.Gettext
       alias TuneWeb.Router.Helpers, as: Routes
     end
   end
