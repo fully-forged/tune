@@ -3,7 +3,7 @@ defmodule Tune.Spotify.Schema.Track do
   Represents an album track.
   """
 
-  alias Tune.Spotify.Schema
+  alias Tune.{Duration, Spotify.Schema}
   alias Schema.{Album, Artist}
 
   @enforce_keys [:id, :uri, :name, :duration_ms, :track_number, :disc_number, :artist, :album]
@@ -13,7 +13,7 @@ defmodule Tune.Spotify.Schema.Track do
           id: Schema.id(),
           uri: Schema.uri(),
           name: String.t(),
-          duration_ms: pos_integer(),
+          duration_ms: Duration.milliseconds(),
           track_number: pos_integer(),
           track_number: pos_integer(),
           artist: Artist.t(),
