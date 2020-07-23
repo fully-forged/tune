@@ -600,6 +600,10 @@ header {
     max-width: none;
     align-items: center;
 
+    > .artwork {
+      max-width: 10em;
+    }
+
     .reference-links {
       text-align: center;
     }
