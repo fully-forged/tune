@@ -14,15 +14,15 @@ defmodule Tune.Duration do
   Given a duration in milliseconds, returns a string with the duration formatted
   as hours, minutes and seconds, omitting units where appropriate.
 
-  iex> milliseconds = :timer.seconds(5)
-  iex> Tune.Duration.hms(milliseconds)
-  "0:05"
-  iex> milliseconds = :timer.seconds(61)
-  iex> Tune.Duration.hms(milliseconds)
-  "1:01"
-  iex> milliseconds = :timer.hours(2)
-  iex> Tune.Duration.hms(milliseconds)
-  "2:00:00"
+      iex> milliseconds = :timer.seconds(5)
+      iex> Tune.Duration.hms(milliseconds)
+      "0:05"
+      iex> milliseconds = :timer.seconds(61)
+      iex> Tune.Duration.hms(milliseconds)
+      "1:01"
+      iex> milliseconds = :timer.hours(2)
+      iex> Tune.Duration.hms(milliseconds)
+      "2:00:00"
   """
   def hms(milliseconds) do
     milliseconds
@@ -34,17 +34,17 @@ defmodule Tune.Duration do
   Given a duration in milliseconds, returns a localized, human-readable
   representation of that duration.
 
-  iex> Tune.Duration.human(100)
-  "Less than a minute"
+      iex> Tune.Duration.human(100)
+      "Less than a minute"
 
   Durations are rounded to the minute:
 
-  iex> milliseconds = :timer.seconds(61)
-  iex> Tune.Duration.human(milliseconds)
-  "1 minute"
-  iex> milliseconds = :timer.seconds(95)
-  iex> Tune.Duration.human(milliseconds)
-  "2 minutes"
+      iex> milliseconds = :timer.seconds(61)
+      iex> Tune.Duration.human(milliseconds)
+      "1 minute"
+      iex> milliseconds = :timer.seconds(95)
+      iex> Tune.Duration.human(milliseconds)
+      "2 minutes"
   """
   @spec human(milliseconds()) :: String.t()
   def human(milliseconds) when milliseconds < @minute do
