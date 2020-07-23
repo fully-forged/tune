@@ -5,7 +5,7 @@ defmodule Tune.Spotify.Schema.Album do
   Depending on how the album is retrieved, it may or may not include an artist or tracks.
   """
 
-  alias Tune.Spotify.Schema
+  alias Tune.{Duration, Spotify.Schema}
   alias Schema.{Artist, Track}
 
   @enforce_keys [
@@ -46,6 +46,7 @@ defmodule Tune.Spotify.Schema.Album do
           tracks: [Track.t()] | :not_fetched
         }
 
+  @spec total_duration_ms(t()) :: Duration.milliseconds() | :not_available
   def total_duration_ms(album) do
     case album.tracks do
       :not_fetched ->
@@ -58,6 +59,7 @@ defmodule Tune.Spotify.Schema.Album do
     end
   end
 
+  @spec tracks_count(t()) :: pos_integer() | :not_available
   def tracks_count(album) do
     case album.tracks do
       :not_fetched ->
@@ -68,6 +70,7 @@ defmodule Tune.Spotify.Schema.Album do
     end
   end
 
+  @spec release_year(t()) :: String.t()
   def release_year(album) do
     case album.release_date_precision do
       "year" ->
