@@ -46,12 +46,17 @@ defmodule Tune.Generators do
 
   def album(artist) do
     bind(release_date_precision(), fn release_date_precision ->
-      tuple({id(), name(), thumbnails(), release_date(release_date_precision)})
-      |> bind(fn {id, name, thumbnails, release_date} ->
+      tuple(
+        {id(), name(), thumbnails(), album_type(), album_group(),
+         release_date(release_date_precision)}
+      )
+      |> bind(fn {id, name, thumbnails, album_type, album_group, release_date} ->
         constant(%Album{
           id: id,
           uri: "spotify:album:" <> id,
           name: name,
+          album_type: album_type,
+          album_group: album_group,
           artist: artist,
           thumbnails: thumbnails,
           release_date: release_date,
@@ -174,6 +179,19 @@ defmodule Tune.Generators do
     |> bind(fn {name, avatar_url} ->
       constant(%User{name: name, avatar_url: avatar_url})
     end)
+  end
+
+  def album_type do
+    one_of([constant("album"), constant("single"), constant("compilation")])
+  end
+
+  def album_group do
+    one_of([
+      constant("album"),
+      constant("single"),
+      constant("compilation"),
+      constant("appears_on")
+    ])
   end
 
   defp release_year do

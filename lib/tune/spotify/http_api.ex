@@ -378,6 +378,8 @@ defmodule Tune.Spotify.HttpApi do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      album_type: Map.get(item, "album_type"),
+      album_group: Map.get(item, "album_group", "album"),
       release_date: Map.get(item, "release_date"),
       release_date_precision: Map.get(item, "release_date_precision"),
       artist:
