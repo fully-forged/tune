@@ -36,7 +36,9 @@
         <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
       <% :album_details -> %>
         <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
-      <% action when action in [:artist_details, :show_details] -> %>
+      <% :artist_details -> %>
+        <%= render ArtistView, "show.html", artist: @item, now_playing: @now_playing, socket: @socket %>
+      <% action when action in [:show_details] -> %>
         <div class="full-screen-notice">
           <p>Cannot display this item yet.</p>
         </div>

@@ -2,7 +2,7 @@ defmodule TuneWeb.ExplorerLive do
   @moduledoc false
   use TuneWeb, :live_view
 
-  alias TuneWeb.{AlbumView, PlayerView, SearchView}
+  alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView}
 
   @initial_state [
     status: :not_authenticated,
@@ -61,10 +61,12 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   def handle_params(%{"artist_id" => artist_id}, _url, socket) do
-    case spotify().get_artist(socket.assigns.session_id, artist_id) do
-      {:ok, artist} ->
-        {:noreply, assign(socket, :item, artist)}
+    with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
+         {:ok, albums} <- spotify().get_artist_albums(socket.assigns.session_id, artist_id) do
+      artist = %{artist | albums: albums}
 
+      {:noreply, assign(socket, :item, artist)}
+    else
       _error ->
         {:noreply, socket}
     end

@@ -16,4 +16,10 @@ defmodule TuneWeb.PlayerView do
 
   defp author_name(%Track{artist: artist}), do: artist.name
   defp author_name(%Episode{publisher: publisher}), do: publisher.name
+
+  defp author_link(%Track{artist: artist}, socket) do
+    TuneWeb.SearchView.result_link(artist, socket)
+  end
+
+  defp author_link(%Episode{}, _socket), do: nil
 end

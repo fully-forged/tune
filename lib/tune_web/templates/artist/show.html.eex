@@ -1,0 +1,28 @@
+<article class="artist-show">
+  <div class="artwork">
+    <div class="play-button" phx-click="play" phx-value-uri="<%= @artist.uri %>">
+      <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+    </div>
+    <%= img_tag artwork(@artist), alt: @artist.name %>
+  </div>
+  <div class="meta">
+    <%= content_tag :h1, @artist.name %>
+    <div class="reference-links">
+      <%= link to: wikipedia_link(@artist), target: "_blank", class: "wikipedia" do %>
+        <%= render "icon_wikipedia.html", [] %>
+        <span class="visually-hidden">
+          Open in Wikipedia
+        </span>
+      <% end %>
+      <%= link to: last_fm_link(@artist), target: "_blank", class: "last-fm" do %>
+        <%= render TuneWeb.AlbumView, "icon_last_fm.html", [] %>
+        <span class="visually-hidden">
+          Open in Last.fm
+        </span>
+      <% end %>
+    </div>
+  </div>
+  <div class="albums">
+    <%= render_many @artist.albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+  </div>
+</article>

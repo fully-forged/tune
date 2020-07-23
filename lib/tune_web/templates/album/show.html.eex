@@ -1,4 +1,4 @@
-<article class="item-show">
+<article class="album-show">
   <div class="artwork">
     <div class="play-button" phx-click="play" phx-value-uri="<%= @album.uri %>">
       <%= render TuneWeb.PlayerView, "icon_play.html", []%>
