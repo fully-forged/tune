@@ -26,10 +26,12 @@ defmodule Tune.Spotify.Session do
   @callback get_artist_albums(id(), item_id()) :: {:ok, [Schema.Album.t()]} | {:error, term()}
   @callback get_show(id(), item_id()) :: {:ok, Schema.Show.t()} | {:error, term()}
 
+  @spec subscribe(id()) :: :ok | {:error, term()}
   def subscribe(session_id) do
     PubSub.subscribe(Tune.PubSub, session_id)
   end
 
+  @spec broadcast(id(), term()) :: :ok | {:error, term()}
   def broadcast(session_id, message) do
     PubSub.broadcast(Tune.PubSub, session_id, message)
   end
