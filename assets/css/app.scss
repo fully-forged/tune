@@ -220,7 +220,7 @@ header {
   }
 }
 
-.item-show {
+.album-show {
   display: grid;
   max-width: 40%;
   margin: 0 auto;
@@ -270,6 +270,118 @@ header {
     grid-area: tracks;
     margin-bottom: 10rem;
     max-width: 100%;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid lighten($text-color, 40%);
+      margin-bottom: 0;
+
+      &:hover {
+        background-color: lighten($accent-color, 20%);
+        color: white;
+        cursor: pointer;
+      }
+
+      .track-number {
+        min-width: 2em;
+        text-align: right;
+      }
+
+      .name {
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+        margin: 0.5rem 1rem;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .last-fm {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+
+        svg {
+          height: 1.4em;
+          fill: #b90000;
+        }
+
+        &:hover svg {
+          fill: black;
+        }
+      }
+
+      .duration {
+        margin-right: 1rem;
+      }
+
+      &.playing {
+        color: $accent-color;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.artist-show {
+  display: grid;
+  max-width: 40%;
+  margin: 0 auto;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas:
+    "artwork meta"
+    "albums albums";
+  padding: 1em;
+
+  .meta {
+    grid-area: meta;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    h1 {
+      font-size: 3.6rem;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      line-height: 1.3;
+      margin-bottom: 0;
+    }
+
+    h3 {
+      font-size: 2.2rem;
+      letter-spacing: -.08rem;
+      line-height: 1.35;
+    }
+
+  }
+
+  p {
+    margin-bottom: 1rem;
+  }
+
+  .artwork {
+    grid-area: artwork;
+    max-width: 24rem;
+    margin: 1rem 1rem 1rem 0;
+  }
+
+  .albums {
+    grid-area: albums;
+    margin-bottom: 10rem;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 
     li {
       display: flex;
@@ -394,8 +506,19 @@ header {
     margin-bottom: 8rem;
   }
 
-  .item-show {
+  .album-show {
     max-width: 80%;
+  }
+
+  .artist-show {
+    max-width: 80%;
+
+    .albums {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      justify-items: center;
+      margin-bottom: 8rem;
+    }
   }
 
   .artwork {
@@ -455,7 +578,7 @@ header {
     }
   }
 
-  .item-show {
+  .album-show {
     margin: 1em;
     display: flex;
     flex-direction: column;
@@ -484,6 +607,21 @@ header {
         letter-spacing: 0;
         line-height: 1.4;
       }
+    }
+  }
+
+  .artist-show {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    align-items: center;
+
+    .albums {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      justify-items: center;
+      margin-bottom: 4rem;
     }
   }
 

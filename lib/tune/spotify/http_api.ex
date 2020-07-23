@@ -197,6 +197,29 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  def get_artist_albums(token, artist_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/artists/" <> artist_id <> "/albums" <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        albums =
+          response.body
+          |> Jason.decode!()
+          |> Map.get("items")
+          |> Enum.map(&parse_album/1)
+
+        {:ok, albums}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   def get_show(token, show_id) do
     params = %{
       market: "from_token"
@@ -362,6 +385,7 @@ defmodule Tune.Spotify.HttpApi do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      albums: :not_fetched,
       thumbnails:
         if Map.has_key?(item, "images") do
           item

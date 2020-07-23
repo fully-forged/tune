@@ -1,0 +1,14 @@
+<article class="artist-show">
+  <div class="artwork">
+    <div class="play-button" phx-click="play" phx-value-uri="<%= @artist.uri %>">
+      <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+    </div>
+    <%= img_tag artwork(@artist), alt: @artist.name %>
+  </div>
+  <div class="meta">
+    <%= content_tag :h1, @artist.name %>
+  </div>
+  <div class="albums">
+    <%= render_many @artist.albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+  </div>
+</article>

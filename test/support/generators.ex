@@ -33,6 +33,7 @@ defmodule Tune.Generators do
         id: id,
         uri: "spotify:artist:" <> id,
         name: name,
+        albums: :not_fetched,
         thumbnails: thumbnails
       })
     end)
