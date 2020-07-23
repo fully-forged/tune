@@ -222,13 +222,22 @@ header {
     margin: 0.4em;
   }
 
-  .name, .artist-name {
+  .footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .name, .artist-name, .release-date {
     font-size: 1em;
     margin-bottom: 0.2em;
   }
 
   .name {
     font-weight: bold;
+  }
+
+  .release-date {
+    font-style: italic;
   }
 
   .actions {
@@ -278,7 +287,6 @@ header {
 
   .artwork {
     grid-area: artwork;
-    max-width: 24rem;
     margin: 1rem 1rem 1rem 0;
   }
 
@@ -351,6 +359,10 @@ header {
     "albums albums";
   padding: 1em;
 
+  > .artwork {
+    margin-right: 1rem;
+  }
+
   .meta {
     grid-area: meta;
     display: flex;
@@ -375,6 +387,15 @@ header {
       line-height: 1.35;
     }
 
+    .footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .release-date {
+      font-style: italic;
+    }
+
     .reference-links {
 
       svg {
@@ -391,8 +412,6 @@ header {
 
   .artwork {
     grid-area: artwork;
-    max-width: 24rem;
-    margin: 1rem 1rem 0 0;
   }
 
   .albums {
@@ -400,64 +419,9 @@ header {
     margin-bottom: 10rem;
     max-width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid lighten($text-color, 40%);
-      margin-bottom: 0;
-
-      &:hover {
-        background-color: lighten($accent-color, 20%);
-        color: white;
-        cursor: pointer;
-      }
-
-      .track-number {
-        min-width: 2em;
-        text-align: right;
-      }
-
-      .name {
-        margin-left: 0.5em;
-        margin-right: 0.5em;
-        margin: 0.5rem 1rem;
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-      }
-
-      .last-fm {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-
-        svg {
-          height: 1.4em;
-          fill: #b90000;
-        }
-
-        &:hover svg {
-          fill: black;
-        }
-      }
-
-      .duration {
-        margin-right: 1rem;
-      }
-
-      &.playing {
-        color: $accent-color;
-
-        &:hover {
-          color: white;
-        }
-      }
-    }
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 2rem;
+    margin-top: 1rem;
   }
 }
 
@@ -590,8 +554,7 @@ header {
       margin-bottom: 0;
     }
 
-
-    .name, .artist-name {
+    .name, .artist-name, .release-date {
       font-size: 0.8em;
       margin-bottom: 0.2em;
     }
@@ -645,6 +608,15 @@ header {
       grid-template-columns: repeat(3, 1fr);
       justify-items: center;
       margin-bottom: 4rem;
+
+      .artwork, .meta {
+        max-width: 12rem;
+      }
+
+      .name, .artist-name, .release-date {
+        font-size: 0.8em;
+        margin-bottom: 0.2em;
+      }
     }
   }
 

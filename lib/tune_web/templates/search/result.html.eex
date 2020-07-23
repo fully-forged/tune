@@ -9,6 +9,9 @@
     <%= live_patch to: result_link(@item, @socket) do %>
       <p class="name"><%= name(@item) %></p>
     <% end %>
-    <p class="artist-name"><%= author_name(@item) %></p>
+    <div class="footer">
+      <p class="artist-name"><%= author_name(@item) %></p>
+      <p class="release-date"><%= release_date(@item) %></p>
+    </div>
   </div>
 </div>
