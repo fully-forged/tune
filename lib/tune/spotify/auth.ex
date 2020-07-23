@@ -1,5 +1,7 @@
 defmodule Tune.Spotify.Auth do
   @moduledoc false
+
+  @spec configure!() :: :ok
   def configure! do
     {client_id, client_secret} = get_credentials_from_env!()
 
@@ -9,6 +11,7 @@ defmodule Tune.Spotify.Auth do
     )
   end
 
+  @spec base64_encoded_credentials() :: String.t() | no_return()
   def base64_encoded_credentials do
     {client_id, client_secret} = get_credentials_from_env!()
 
