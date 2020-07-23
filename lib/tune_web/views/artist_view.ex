@@ -7,4 +7,11 @@ defmodule TuneWeb.ArtistView do
 
   defp artwork(%Artist{thumbnails: thumbnails}),
     do: Map.get(thumbnails, :medium, @default_artwork)
+
+  defp wikipedia_link(artist) do
+    Path.join([
+      "https://en.wikipedia.org/wiki",
+      artist.name <> "_(band)"
+    ])
+  end
 end

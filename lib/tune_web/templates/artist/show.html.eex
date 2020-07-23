@@ -7,6 +7,14 @@
   </div>
   <div class="meta">
     <%= content_tag :h1, @artist.name %>
+    <div class="reference-links">
+      <%= link to: wikipedia_link(@artist), target: "_blank" do %>
+        <%= render "icon_wikipedia.html", [] %>
+        <span class="visually-hidden">
+          Open in Wikipedia
+        </span>
+      <% end %>
+    </div>
   </div>
   <div class="albums">
     <%= render_many @artist.albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>

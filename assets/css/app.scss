@@ -332,7 +332,7 @@ header {
 
 .artist-show {
   display: grid;
-  max-width: 40%;
+  max-width: 60%;
   margin: 0 auto;
   grid-template-columns: 1fr 3fr;
   grid-template-areas:
@@ -364,6 +364,14 @@ header {
       line-height: 1.35;
     }
 
+    .reference-links {
+
+      svg {
+        height: 2.1rem;
+        width: 2.1rem;
+      }
+    }
+
   }
 
   p {
@@ -373,7 +381,7 @@ header {
   .artwork {
     grid-area: artwork;
     max-width: 24rem;
-    margin: 1rem 1rem 1rem 0;
+    margin: 1rem 1rem 0 0;
   }
 
   .albums {
@@ -616,6 +624,10 @@ header {
     flex-direction: column;
     max-width: none;
     align-items: center;
+
+    .reference-links {
+      text-align: center;
+    }
 
     .albums {
       display: grid;
