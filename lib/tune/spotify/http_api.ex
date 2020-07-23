@@ -18,6 +18,13 @@ defmodule Tune.Spotify.HttpApi do
   ]
 
   @type token :: String.t()
+  @type q :: String.t()
+  @type item_type :: :album | :artist | :playlist | :track | :show | :episode
+  @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
+  @type search_results :: %{
+          optional(:albums | :artists | :tracks | :shows | :episodes) =>
+            [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()]
+        }
 
   @spec get_profile(token()) :: {:ok, User.t()} | {:error, term()}
   def get_profile(token) do
@@ -141,7 +148,7 @@ defmodule Tune.Spotify.HttpApi do
   @default_limit 20
   @default_types [:track]
 
-  @spec search(String.t(), String.t(), Keyword.t()) :: {:ok, map()} | {:error, term()}
+  @spec search(token(), q(), search_options()) :: {:ok, search_results()} | {:error, term()}
   def search(token, q, opts) do
     types = Keyword.get(opts, :types, @default_types)
     types_string = Enum.join(types, ",")
@@ -169,7 +176,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @spec get_album(String.t(), String.t()) :: {:ok, Album.t()} | {:error, term()}
+  @spec get_album(token(), String.t()) :: {:ok, Album.t()} | {:error, term()}
   def get_album(token, album_id) do
     params = %{
       market: "from_token"
@@ -192,7 +199,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @spec get_artist(String.t(), String.t()) :: {:ok, Artist.t()} | {:error, term()}
+  @spec get_artist(token(), String.t()) :: {:ok, Artist.t()} | {:error, term()}
   def get_artist(token, artist_id) do
     case json_get(
            @base_url <> "/artists/" <> artist_id,
@@ -211,7 +218,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @spec get_artist_albums(String.t(), String.t()) :: {:ok, [Album.t()]} | {:error, term()}
+  @spec get_artist_albums(token(), String.t()) :: {:ok, [Album.t()]} | {:error, term()}
   def get_artist_albums(token, artist_id) do
     params = %{
       market: "from_token"
@@ -235,7 +242,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @spec get_show(String.t(), String.t()) :: {:ok, Show.t()} | {:error, term()}
+  @spec get_show(token(), String.t()) :: {:ok, Show.t()} | {:error, term()}
   def get_show(token, show_id) do
     params = %{
       market: "from_token"
