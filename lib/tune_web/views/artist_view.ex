@@ -14,4 +14,11 @@ defmodule TuneWeb.ArtistView do
       artist.name <> "_(band)"
     ])
   end
+
+  defp last_fm_link(artist) do
+    Path.join([
+      "https://www.last.fm/music",
+      URI.encode(artist.name)
+    ])
+  end
 end

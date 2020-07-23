@@ -81,6 +81,22 @@ a.reversed {
   }
 }
 
+.last-fm {
+  svg {
+    fill: #b90000;
+  }
+
+  &:hover svg {
+    fill: black;
+  }
+}
+
+.wikipedia {
+  &:hover svg {
+    fill: #36c;
+  }
+}
+
 .visually-hidden {
     position: absolute !important;
     height: 1px;
@@ -307,11 +323,6 @@ header {
 
         svg {
           height: 1.4em;
-          fill: #b90000;
-        }
-
-        &:hover svg {
-          fill: black;
         }
       }
 
