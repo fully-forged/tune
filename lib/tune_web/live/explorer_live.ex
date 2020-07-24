@@ -30,7 +30,8 @@ defmodule TuneWeb.ExplorerLive do
     user: nil,
     now_playing: %Tune.Spotify.Schema.Player{},
     item: :not_fetched,
-    results_per_page: 32,
+    per_page: 32,
+    page: 1,
     suggestions_playlist: :not_fetched,
     suggestions_top_albums: :not_fetched,
     suggestions_top_albums_time_range: @default_time_range,
@@ -242,16 +243,21 @@ defmodule TuneWeb.ExplorerLive do
   defp handle_search(params, _url, socket) do
     q = Map.get(params, "q", "")
     type = Map.get(params, "type", "track")
+    page = Map.get(params, "page", "1")
+    per_page = Map.get(params, "per_page", "32")
 
     if String.length(q) >= 1 do
       type = parse_type(type)
+      page = String.to_integer(page)
+      limit = String.to_integer(per_page)
+      offset = max(page - 1, 0) * limit
 
       socket =
         socket
         |> assign(:q, q)
         |> assign(:type, type)
 
-      search_opts = [types: [type], limit: socket.assigns.results_per_page]
+      search_opts = [types: [type], limit: limit, offset: offset]
 
       case spotify().search(socket.assigns.session_id, q, search_opts) do
         {:ok, results} ->
@@ -331,10 +337,11 @@ defmodule TuneWeb.ExplorerLive do
              types: [:playlist],
              limit: 1
            ),
-         [simplified_playlist] <- Map.get(results, :playlist) do
+         simplified_playlist when is_struct(simplified_playlist) <-
+           get_in(results, [:playlists, :items, Access.at(0)]) do
       spotify().get_playlist(session_id, simplified_playlist.id)
     else
-      [] -> {:error, :not_present}
+      nil -> {:error, :not_present}
       error -> error
     end
   end

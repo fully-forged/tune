@@ -176,11 +176,16 @@ defmodule TuneWeb.LoggedInTest do
       expect_nothing_playing(session_id)
 
       search_results = %{
-        track: []
+        track: %{
+          items: [],
+          total: 0
+        }
       }
 
       Tune.Spotify.SessionMock
-      |> expect(:search, 2, fn ^session_id, "example search", [types: [:track], limit: 32] ->
+      |> expect(:search, 2, fn ^session_id,
+                               "example search",
+                               [types: [:track], limit: 32, offset: 0] ->
         {:ok, search_results}
       end)
 
@@ -206,14 +211,19 @@ defmodule TuneWeb.LoggedInTest do
         expect_nothing_playing(session_id)
 
         search_results = %{
-          track: tracks
+          track: %{
+            items: tracks,
+            total: Enum.count(tracks)
+          }
         }
 
         track = Enum.random(tracks)
         track_name = track.name
 
         Tune.Spotify.SessionMock
-        |> expect(:search, 2, fn ^session_id, ^track_name, [types: [:track], limit: 32] ->
+        |> expect(:search, 2, fn ^session_id,
+                                 ^track_name,
+                                 [types: [:track], limit: 32, offset: 0] ->
           {:ok, search_results}
         end)
 
@@ -246,14 +256,19 @@ defmodule TuneWeb.LoggedInTest do
         expect_nothing_playing(session_id)
 
         search_results = %{
-          search_type => items
+          search_type => %{
+            items: items,
+            total: Enum.count(items)
+          }
         }
 
         item = Enum.random(items)
         item_name = TuneWeb.SearchView.name(item)
 
         Tune.Spotify.SessionMock
-        |> expect(:search, 2, fn ^session_id, ^item_name, [types: [^search_type], limit: 32] ->
+        |> expect(:search, 2, fn ^session_id,
+                                 ^item_name,
+                                 [types: [^search_type], limit: 32, offset: 0] ->
           {:ok, search_results}
         end)
 
@@ -295,7 +310,10 @@ defmodule TuneWeb.LoggedInTest do
         expect_nothing_playing(session_id)
 
         search_results = %{
-          search_type => items
+          search_type => %{
+            items: items,
+            total: Enum.count(items)
+          }
         }
 
         item = Enum.random(items)
@@ -303,7 +321,9 @@ defmodule TuneWeb.LoggedInTest do
         item_uri = item.uri
 
         Tune.Spotify.SessionMock
-        |> expect(:search, 2, fn ^session_id, ^item_name, [types: [^search_type], limit: 32] ->
+        |> expect(:search, 2, fn ^session_id,
+                                 ^item_name,
+                                 [types: [^search_type], limit: 32, offset: 0] ->
           {:ok, search_results}
         end)
         |> expect(:play, 1, fn ^session_id, ^item_uri -> :ok end)
@@ -500,7 +520,7 @@ defmodule TuneWeb.LoggedInTest do
   defp expect_no_suggestions_playlist(session_id) do
     Tune.Spotify.SessionMock
     |> expect(:search, 2, fn ^session_id, "Release Radar", [types: [:playlist], limit: 1] ->
-      {:ok, %{playlist: []}}
+      {:ok, %{playlists: %{items: [], total: 0}}}
     end)
   end
 end
