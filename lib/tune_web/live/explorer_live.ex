@@ -1,5 +1,12 @@
 defmodule TuneWeb.ExplorerLive do
-  @moduledoc false
+  @moduledoc """
+  Main view used in the application. Covers:
+
+  - search
+  - displaying details for artists, albums, etc.
+  - mini player
+  """
+
   use TuneWeb, :live_view
 
   alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView}
