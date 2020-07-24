@@ -1,5 +1,12 @@
 defmodule Tune.Spotify.Schema.Album do
-  @moduledoc false
+  @moduledoc """
+  Represents an album.
+
+  Depending on how the album is retrieved, it may or may not include an artist or tracks.
+  """
+
+  alias Tune.{Duration, Spotify.Schema}
+  alias Schema.{Artist, Track}
 
   @enforce_keys [
     :id,
@@ -26,6 +33,20 @@ defmodule Tune.Spotify.Schema.Album do
     :tracks
   ]
 
+  @type t :: %__MODULE__{
+          id: Schema.id(),
+          uri: Schema.uri(),
+          name: String.t(),
+          album_type: String.t(),
+          album_group: String.t(),
+          artist: Artist.t() | :not_fetched,
+          release_date: String.t(),
+          release_date_precision: String.t(),
+          thumbnails: Schema.thumbnails(),
+          tracks: [Track.t()] | :not_fetched
+        }
+
+  @spec total_duration_ms(t()) :: Duration.milliseconds() | :not_available
   def total_duration_ms(album) do
     case album.tracks do
       :not_fetched ->
@@ -38,6 +59,7 @@ defmodule Tune.Spotify.Schema.Album do
     end
   end
 
+  @spec tracks_count(t()) :: pos_integer() | :not_available
   def tracks_count(album) do
     case album.tracks do
       :not_fetched ->
@@ -48,6 +70,7 @@ defmodule Tune.Spotify.Schema.Album do
     end
   end
 
+  @spec release_year(t()) :: String.t()
   def release_year(album) do
     case album.release_date_precision do
       "year" ->

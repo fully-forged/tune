@@ -1,9 +1,16 @@
 defmodule Tune.Spotify.Session.Worker do
-  @moduledoc false
+  @moduledoc """
+  This module implements a worker that maps to an active user session, wrapping
+  interaction with the Spotify API.
+
+  The state machine of the worker handles authentication errors and
+  automatically refreshes credentials once expired.
+  """
+
   use GenStateMachine
   @behaviour Tune.Spotify.Session
 
-  alias Tune.Spotify.{HttpApi, SessionRegistry}
+  alias Tune.Spotify.{HttpApi, Session, SessionRegistry}
 
   defstruct session_id: nil,
             credentials: nil,
@@ -13,8 +20,10 @@ defmodule Tune.Spotify.Session.Worker do
   @now_playing_refresh_interval 1000
   @retry_interval 5000
 
+  @spec start_link({Session.id(), Session.credentials()}) :: {:ok, pid()} | {:error, term()}
   def start_link({session_id, credentials}), do: start_link(session_id, credentials)
 
+  @spec start_link(Session.id(), Session.credentials()) :: {:ok, pid()} | {:error, term()}
   def start_link(session_id, credentials) do
     GenStateMachine.start_link(__MODULE__, {session_id, credentials}, name: via(session_id))
   end
@@ -79,6 +88,7 @@ defmodule Tune.Spotify.Session.Worker do
     GenStateMachine.call(via(session_id), {:get_show, show_id})
   end
 
+  @doc false
   @impl true
   def init({session_id, credentials}) do
     data = %__MODULE__{session_id: session_id, credentials: credentials}
@@ -86,6 +96,7 @@ defmodule Tune.Spotify.Session.Worker do
     {:ok, :not_authenticated, data, action}
   end
 
+  @doc false
   @impl true
   def handle_event(event_type, :authenticate, :not_authenticated, data)
       when event_type in [:internal, :state_timeout] do

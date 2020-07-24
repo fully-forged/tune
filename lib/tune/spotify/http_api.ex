@@ -2,6 +2,7 @@ defmodule Tune.Spotify.HttpApi do
   @moduledoc false
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Publisher, Show, Track, User}
   alias Tune.Spotify.Auth
+  alias Ueberauth.Auth.Credentials
 
   require Logger
 
@@ -16,6 +17,16 @@ defmodule Tune.Spotify.HttpApi do
     {"Content-Type", "application/x-www-form-urlencoded"}
   ]
 
+  @type token :: String.t()
+  @type q :: String.t()
+  @type item_type :: :album | :artist | :playlist | :track | :show | :episode
+  @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
+  @type search_results :: %{
+          optional(:albums | :artists | :tracks | :shows | :episodes) =>
+            [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()]
+        }
+
+  @spec get_profile(token()) :: {:ok, User.t()} | {:error, term()}
   def get_profile(token) do
     case json_get(@base_url <> "/me", auth_headers(token)) do
       {:ok, %{status: 200} = response} ->
@@ -31,6 +42,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec now_playing(token()) :: {:ok, Player.t()} | {:error, term()}
   def now_playing(token) do
     case json_get(@base_url <> "/me/player?additional_types=episode", auth_headers(token)) do
       {:ok, %{status: 204}} ->
@@ -47,6 +59,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec play(token()) :: :ok | {:error, term()}
   def play(token) do
     case json_put(@base_url <> "/me/player/play", %{}, auth_headers(token)) do
       {:ok, %{status: 204}} ->
@@ -57,6 +70,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec play(token(), String.t()) :: :ok | {:error, term()}
   def play(token, uri) do
     payload =
       if uri =~ "track" do
@@ -74,6 +88,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec pause(token()) :: :ok | {:error, term()}
   def pause(token) do
     case json_put(@base_url <> "/me/player/pause", %{}, auth_headers(token)) do
       {:ok, %{status: 204}} ->
@@ -84,6 +99,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec next(token()) :: :ok | {:error, term()}
   def next(token) do
     case post(@base_url <> "/me/player/next", <<>>, auth_headers(token)) do
       {:ok, %{status: 204}} ->
@@ -94,6 +110,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec prev(token()) :: :ok | {:error, term()}
   def prev(token) do
     case post(@base_url <> "/me/player/previous", <<>>, auth_headers(token)) do
       {:ok, %{status: 204}} ->
@@ -104,6 +121,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_token(token()) :: {:ok, Credentials.t()} | {:error, term()}
   def get_token(refresh_token) do
     headers = [
       {"Authorization", "Basic #{Auth.base64_encoded_credentials()}"}
@@ -130,6 +148,7 @@ defmodule Tune.Spotify.HttpApi do
   @default_limit 20
   @default_types [:track]
 
+  @spec search(token(), q(), search_options()) :: {:ok, search_results()} | {:error, term()}
   def search(token, q, opts) do
     types = Keyword.get(opts, :types, @default_types)
     types_string = Enum.join(types, ",")
@@ -157,6 +176,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_album(token(), String.t()) :: {:ok, Album.t()} | {:error, term()}
   def get_album(token, album_id) do
     params = %{
       market: "from_token"
@@ -179,6 +199,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_artist(token(), String.t()) :: {:ok, Artist.t()} | {:error, term()}
   def get_artist(token, artist_id) do
     case json_get(
            @base_url <> "/artists/" <> artist_id,
@@ -197,6 +218,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_artist_albums(token(), String.t()) :: {:ok, [Album.t()]} | {:error, term()}
   def get_artist_albums(token, artist_id) do
     params = %{
       market: "from_token"
@@ -220,6 +242,7 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_show(token(), String.t()) :: {:ok, Show.t()} | {:error, term()}
   def get_show(token, show_id) do
     params = %{
       market: "from_token"
@@ -310,7 +333,7 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_auth_data(data, refresh_token) do
-    %Ueberauth.Auth.Credentials{
+    %Credentials{
       expires: true,
       expires_at: OAuth2.Util.unix_now() + data["expires_in"],
       refresh_token: refresh_token,
@@ -419,6 +442,8 @@ defmodule Tune.Spotify.HttpApi do
           item
           |> get_in(["tracks", "items"])
           |> Enum.map(&parse_album_track/1)
+        else
+          :not_fetched
         end
     }
   end
