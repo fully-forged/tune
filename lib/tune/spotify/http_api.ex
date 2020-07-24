@@ -33,7 +33,9 @@ defmodule Tune.Spotify.HttpApi do
   @type token :: String.t()
   @type q :: String.t()
   @type item_type :: :album | :artist | :playlist | :track | :show | :episode | :playlist
-  @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
+  @type search_options :: [
+          {:types, [item_type()]} | {:limit, pos_integer()} | {:offset, pos_integer()}
+        ]
   @type search_results :: %{
           optional(item_type()) =>
             [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()] | [Playlist.t()]
@@ -218,20 +220,21 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   @default_limit 20
+  @default_offset 0
   @default_types [:track]
 
   @spec search(token(), q(), search_options()) :: {:ok, search_results()} | {:error, term()}
   def search(token, q, opts) do
-    types = Keyword.get(opts, :types, @default_types)
-    types_string = Enum.join(types, ",")
-
     limit = Keyword.get(opts, :limit, @default_limit)
+    offset = Keyword.get(opts, :offset, @default_offset)
+    types = Keyword.get(opts, :types, @default_types)
 
     params = %{
       q: q,
-      type: types_string,
+      type: Enum.join(types, ","),
       market: "from_token",
-      limit: limit
+      limit: limit,
+      offset: offset
     }
 
     case json_get(@base_url <> "/search?" <> URI.encode_query(params), auth_headers(token)) do
