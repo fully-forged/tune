@@ -5,7 +5,8 @@ defmodule Tune.Spotify.Schema do
 
   @type id :: String.t()
   @type uri :: String.t()
+  @type thumbnail_size :: :small | :medium | :large
   @type thumbnails :: %{
-          optional(:small | :medium | :large) => String.t()
+          optional(thumbnail_size()) => String.t()
         }
 end

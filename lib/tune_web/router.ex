@@ -1,4 +1,5 @@
 defmodule TuneWeb.Router do
+  @moduledoc false
   use TuneWeb, :router
 
   pipeline :browser do

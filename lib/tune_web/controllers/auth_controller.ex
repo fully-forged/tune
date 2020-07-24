@@ -1,4 +1,7 @@
 defmodule TuneWeb.AuthController do
+  @moduledoc """
+  Controls authentication via the Spotify API.
+  """
   use TuneWeb, :controller
 
   plug Ueberauth
