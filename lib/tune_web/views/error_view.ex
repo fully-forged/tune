@@ -1,4 +1,5 @@
 defmodule TuneWeb.ErrorView do
+  @moduledoc false
   use TuneWeb, :view
 
   # If you want to customize a particular status code
