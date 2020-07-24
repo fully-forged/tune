@@ -128,7 +128,7 @@ defmodule TuneWeb.LoggedInTest do
       conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
       search_results = %{
-        tracks: []
+        track: []
       }
 
       Tune.Spotify.SessionMock
@@ -157,7 +157,7 @@ defmodule TuneWeb.LoggedInTest do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
         search_results = %{
-          tracks: tracks
+          track: tracks
         }
 
         track = Enum.random(tracks)

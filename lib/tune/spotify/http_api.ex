@@ -22,7 +22,7 @@ defmodule Tune.Spotify.HttpApi do
   @type item_type :: :album | :artist | :playlist | :track | :show | :episode
   @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
   @type search_results :: %{
-          optional(:albums | :artists | :tracks | :shows | :episodes) =>
+          optional(item_type()) =>
             [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()]
         }
 
@@ -518,7 +518,7 @@ defmodule Tune.Spotify.HttpApi do
           |> get_in(["albums", "items"])
           |> Enum.map(&parse_album/1)
 
-        Map.put(acc, :albums, albums)
+        Map.put(acc, :album, albums)
 
       :artist, acc ->
         artists =
@@ -526,7 +526,7 @@ defmodule Tune.Spotify.HttpApi do
           |> get_in(["artists", "items"])
           |> Enum.map(&parse_artist/1)
 
-        Map.put(acc, :artists, artists)
+        Map.put(acc, :artist, artists)
 
       :track, acc ->
         tracks =
@@ -534,7 +534,7 @@ defmodule Tune.Spotify.HttpApi do
           |> get_in(["tracks", "items"])
           |> Enum.map(&parse_track/1)
 
-        Map.put(acc, :tracks, tracks)
+        Map.put(acc, :track, tracks)
 
       :show, acc ->
         shows =
@@ -542,7 +542,7 @@ defmodule Tune.Spotify.HttpApi do
           |> get_in(["shows", "items"])
           |> Enum.map(&parse_show/1)
 
-        Map.put(acc, :shows, shows)
+        Map.put(acc, :show, shows)
 
       :episode, acc ->
         episodes =
@@ -550,7 +550,7 @@ defmodule Tune.Spotify.HttpApi do
           |> get_in(["episodes", "items"])
           |> Enum.map(&parse_episode/1)
 
-        Map.put(acc, :episodes, episodes)
+        Map.put(acc, :episode, episodes)
     end)
   end
 end

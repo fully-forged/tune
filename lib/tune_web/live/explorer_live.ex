@@ -53,7 +53,7 @@ defmodule TuneWeb.ExplorerLive do
 
       case spotify().search(socket.assigns.session_id, q, search_opts) do
         {:ok, results} ->
-          {:noreply, assign(socket, :results, extract_results(results, type))}
+          {:noreply, assign(socket, :results, Map.get(results, type))}
 
         _error ->
           {:noreply, socket}
@@ -184,12 +184,6 @@ defmodule TuneWeb.ExplorerLive do
   defp parse_type("artist"), do: :artist
   defp parse_type("episode"), do: :episode
   defp parse_type("show"), do: :show
-
-  defp extract_results(results, :track), do: Map.get(results, :tracks)
-  defp extract_results(results, :album), do: Map.get(results, :albums)
-  defp extract_results(results, :artist), do: Map.get(results, :artists)
-  defp extract_results(results, :episode), do: Map.get(results, :episodes)
-  defp extract_results(results, :show), do: Map.get(results, :shows)
 
   defp handle_device_operation_result(:ok, socket), do: {:noreply, socket}
 
