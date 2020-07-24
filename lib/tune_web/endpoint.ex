@@ -1,4 +1,5 @@
 defmodule TuneWeb.Endpoint do
+  @moduledoc false
   use Phoenix.Endpoint, otp_app: :tune
 
   # The session will be stored in the cookie and signed,
