@@ -1,4 +1,8 @@
 defmodule Tune.Auth do
+  @moduledoc """
+  Includes functions used to perform authentication.
+  """
+
   alias Tune.Spotify.{Schema.User, Session}
   @type http_session :: map()
 
