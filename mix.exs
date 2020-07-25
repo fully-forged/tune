@@ -35,7 +35,7 @@ defmodule Tune.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.5.3"},
-      {:phoenix_live_view, "== 0.14.1"},
+      {:phoenix_live_view, "~> 0.14.3"},
       {:phoenix_html, "~> 2.11"},
       {:gettext, "~> 0.11"},
       {:phoenix_live_dashboard, "~> 0.2.0"},
