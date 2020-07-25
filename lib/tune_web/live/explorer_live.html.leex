@@ -1,24 +1,20 @@
 <nav class="navbar">
-  <%= if @status == :authenticated do %>
-    <div class="search">
-      <%= form_tag("/", method: :get, phx_change: "search") do %>
-        <label class="visually-hidden" for="q">Search query</label>
-        <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
-        <label class="visually-hidden" for="type">Type filter</label>
-        <select name="type" id="type">
-          <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], to_string(@type)) %>
-        </select>
-        <button type="submit">Search</button>
-    <% end %>
-    </div>
-    <div class="user-mini">
-      <%= img_tag @user.avatar_url, alt: @user.name %>
-      <p><%= @user.name %></p>
-      <%= link "Logout", to: Routes.auth_path(@socket, :delete), method: :post %>
-    </div>
-  <% else %>
-    <%= link "Login via Spotify", to: Routes.auth_path(@socket, :request, :spotify) %>
+  <div class="search">
+    <%= form_tag("/", method: :get, phx_change: "search") do %>
+      <label class="visually-hidden" for="q">Search query</label>
+      <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
+      <label class="visually-hidden" for="type">Type filter</label>
+      <select name="type" id="type">
+        <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], to_string(@type)) %>
+      </select>
+      <button type="submit">Search</button>
   <% end %>
+  </div>
+  <div class="user-mini">
+    <%= img_tag @user.avatar_url, alt: @user.name %>
+    <p><%= @user.name %></p>
+    <%= link "Logout", to: Routes.auth_path(@socket, :delete), method: :post %>
+  </div>
 </nav>
 
 <section id="explorer">
@@ -30,23 +26,17 @@
     phx-click="lv:clear-flash"
     phx-value-key="error"><%= live_flash(@flash, :error) %></a>
 
-  <%= if @status == :authenticated do %>
-    <%= case @live_action do %>
-      <% :search -> %>
-        <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
-      <% :album_details -> %>
-        <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
-      <% :artist_details -> %>
-        <%= render ArtistView, "show.html", artist: @item, now_playing: @now_playing, socket: @socket %>
-      <% action when action in [:show_details] -> %>
-        <div class="full-screen-notice">
-          <p>Cannot display this item yet.</p>
-        </div>
-      <% end %>
-    <%= render PlayerView, "mini.html", now_playing: @now_playing, socket: @socket %>
-  <% else %>
-    <div class="full-screen-notice">
-      <p>The application requires you to Login into your Spotify account.</p>
-    </div>
-  <% end %>
+  <%= case @live_action do %>
+    <% :search -> %>
+      <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
+    <% :album_details -> %>
+      <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
+    <% :artist_details -> %>
+      <%= render ArtistView, "show.html", artist: @item, now_playing: @now_playing, socket: @socket %>
+    <% action when action in [:show_details] -> %>
+      <div class="full-screen-notice">
+        <p>Cannot display this item yet.</p>
+      </div>
+    <% end %>
+  <%= render PlayerView, "mini.html", now_playing: @now_playing, socket: @socket %>
 </section>

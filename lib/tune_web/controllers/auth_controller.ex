@@ -22,10 +22,32 @@ defmodule TuneWeb.AuthController do
     |> redirect(to: Routes.explorer_path(conn, :search))
   end
 
+  def new(conn, _params) do
+    render(conn, "new.html")
+  end
+
   def delete(conn, _params) do
     conn
     |> put_flash(:info, "Logged out")
     |> configure_session(drop: true)
     |> redirect(to: Routes.explorer_path(conn, :search))
+  end
+
+  def ensure_authenticated(conn, _opts) do
+    session = get_session(conn)
+
+    case Tune.Auth.load_user(session) do
+      {:authenticated, session_id, user} ->
+        conn
+        |> assign(:status, :authenticated)
+        |> assign(:user, user)
+        |> assign(:session_id, session_id)
+
+      {:error, :not_authenticated} ->
+        conn
+        |> assign(:status, :not_authenticated)
+        |> Phoenix.Controller.redirect(to: Routes.auth_path(conn, :new))
+        |> halt()
+    end
   end
 end

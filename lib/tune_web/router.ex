@@ -19,9 +19,16 @@ defmodule TuneWeb.Router do
     plug :admin_auth
   end
 
+  import TuneWeb.AuthController, only: [ensure_authenticated: 2]
+
+  pipeline :authenticated do
+    plug :ensure_authenticated
+  end
+
   scope "/auth", TuneWeb do
     pipe_through :browser
 
+    get "/login", AuthController, :new
     get "/logout", AuthController, :delete
     get "/:provider", AuthController, :request
     get "/:provider/callback", AuthController, :callback
@@ -30,7 +37,7 @@ defmodule TuneWeb.Router do
   end
 
   scope "/", TuneWeb do
-    pipe_through :browser
+    pipe_through [:browser, :authenticated]
 
     live "/", ExplorerLive, :search
     live "/artists/:artist_id", ExplorerLive, :artist_details

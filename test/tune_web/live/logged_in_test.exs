@@ -21,8 +21,8 @@ defmodule TuneWeb.LoggedInTest do
       conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
       Tune.Spotify.SessionMock
-      |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-      |> expect(:get_profile, 2, fn ^session_id -> profile end)
+      |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+      |> expect(:get_profile, 3, fn ^session_id -> profile end)
       |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
 
       {:ok, explorer_live, disconnected_html} = live(conn, "/")
@@ -41,8 +41,8 @@ defmodule TuneWeb.LoggedInTest do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
         Tune.Spotify.SessionMock
-        |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-        |> expect(:get_profile, 2, fn ^session_id -> profile end)
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
         |> expect(:now_playing, 2, fn ^session_id ->
           %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
         end)
@@ -71,8 +71,8 @@ defmodule TuneWeb.LoggedInTest do
         now_playing = %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
 
         Tune.Spotify.SessionMock
-        |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-        |> expect(:get_profile, 2, fn ^session_id -> profile end)
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
         |> expect(:now_playing, 2, fn ^session_id -> now_playing end)
 
         {:ok, explorer_live, disconnected_html} = live(conn, "/")
@@ -108,8 +108,8 @@ defmodule TuneWeb.LoggedInTest do
       conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
 
       Tune.Spotify.SessionMock
-      |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-      |> expect(:get_profile, 2, fn ^session_id -> profile end)
+      |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+      |> expect(:get_profile, 3, fn ^session_id -> profile end)
       |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
 
       {:ok, explorer_live, html} = live(conn, "/")
@@ -132,8 +132,8 @@ defmodule TuneWeb.LoggedInTest do
       }
 
       Tune.Spotify.SessionMock
-      |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-      |> expect(:get_profile, 2, fn ^session_id -> profile end)
+      |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+      |> expect(:get_profile, 3, fn ^session_id -> profile end)
       |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
       |> expect(:search, 2, fn ^session_id, "example search", [types: [:track], limit: 32] ->
         {:ok, search_results}
@@ -164,8 +164,8 @@ defmodule TuneWeb.LoggedInTest do
         track_name = track.name
 
         Tune.Spotify.SessionMock
-        |> expect(:setup, 2, fn ^session_id, ^credentials -> :ok end)
-        |> expect(:get_profile, 2, fn ^session_id -> profile end)
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
         |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
         |> expect(:search, 2, fn ^session_id, ^track_name, [types: [:track], limit: 32] ->
           {:ok, search_results}

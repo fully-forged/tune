@@ -1,0 +1,4 @@
+<div class="full-screen-notice">
+  <p>The application requires you to Login into your Spotify account.</p>
+  <%= link "Login via Spotify", to: Routes.auth_path(@conn, :request, :spotify) %>
+</div>
