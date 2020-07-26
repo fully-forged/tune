@@ -1,19 +1,24 @@
 <nav class="navbar">
   <div class="search">
     <%= form_tag("/", method: :get, phx_change: "search") do %>
-      <label class="visually-hidden" for="q">Search query</label>
-      <input type="search" placeholder="Search" aria-label="Search" autocomplete="off" id="q" name="q" value="<%= @q %>">
-      <label class="visually-hidden" for="type">Type filter</label>
+      <%= content_tag :label, gettext("Search query"), for: "q", class: "visually-hidden" %>
+      <%= tag :input, type: "search", placeholder: gettext("Search"), aria_label: gettext("Search"), autocomplete: "off", id: "q", name: "q", value: @q %>
+      <%= content_tag :label, gettext("Type filter"), for: "type", class: "visually-hidden" %>
       <select name="type" id="type">
-        <%= options_for_select(["Track": "track", "Album": "album", "Artist": "artist", "Episode": "episode", "Show": "show"], to_string(@type)) %>
+        <%= options_for_select([{gettext("Track"), "track"},
+                                {gettext("Album"), "album"},
+                                {gettext("Artist"), "artist"},
+                                {gettext("Episode"), "episode"},
+                                {gettext("Show"), "show"}],
+                                to_string(@type)) %>
       </select>
-      <button type="submit">Search</button>
+      <%= content_tag :button, gettext("Search"), type: "submit" %>
   <% end %>
   </div>
   <div class="user-mini">
     <%= img_tag @user.avatar_url, alt: @user.name %>
     <p><%= @user.name %></p>
-    <%= link "Logout", to: Routes.auth_path(@socket, :delete), method: :post %>
+    <%= link gettext("Logout"), to: Routes.auth_path(@socket, :delete), method: :post %>
   </div>
 </nav>
 

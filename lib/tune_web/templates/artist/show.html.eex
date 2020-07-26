@@ -10,15 +10,11 @@
     <div class="reference-links">
       <%= link to: wikipedia_link(@artist), target: "_blank", class: "wikipedia" do %>
         <%= render "icon_wikipedia.html", [] %>
-        <span class="visually-hidden">
-          Open in Wikipedia
-        </span>
+        <%= content_tag :span, gettext("Open in Wikipedia"), class: "visually-hidden" %>
       <% end %>
       <%= link to: last_fm_link(@artist), target: "_blank", class: "last-fm" do %>
         <%= render TuneWeb.AlbumView, "icon_last_fm.html", [] %>
-        <span class="visually-hidden">
-          Open in Last.fm
-        </span>
+        <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
       <% end %>
     </div>
   </div>
