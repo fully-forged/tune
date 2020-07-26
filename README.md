@@ -19,6 +19,8 @@ Please see the [Vapor
 docs](https://hexdocs.pm/vapor/Vapor.Provider.Dotenv.html#content) for more
 detail on the dotenv configuration provider.
 
+To create secrets, (e.g. for `SECRET_KEY_BASE`), use `mix phx.gen.secret`.
+
 Next you can install all dependencies with `mix setup`.
 
 # Workflows
