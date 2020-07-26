@@ -13,9 +13,13 @@ install the correct versions required by Ada (see the `.tool-versions` file for
 details).
 
 Next, make sure you setup the required environment variables as detailed in
-`.envrc.example`. We recommend using a program such as
-[direnv](https://direnv.net) so that they're correctly sourced in your
-environment when working on this project.
+`.env` by copying the file to `.env.local` and adjusting values as needed.
+
+Please see the [Vapor
+docs](https://hexdocs.pm/vapor/Vapor.Provider.Dotenv.html#content) for more
+detail on the dotenv configuration provider.
+
+To create secrets, (e.g. for `SECRET_KEY_BASE`), use `mix phx.gen.secret`.
 
 Next you can install all dependencies with `mix setup`.
 

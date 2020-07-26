@@ -47,6 +47,7 @@ defmodule Tune.MixProject do
       {:ueberauth_spotify, "~> 0.2.1"},
       {:finch, "~> 0.3.0"},
       {:gen_state_machine, "~> 2.1"},
+      {:vapor, "~> 0.9.0"},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, ">= 0.0.0", only: :test},

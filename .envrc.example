@@ -1,6 +1,0 @@
-export SPOTIFY_CLIENT_ID=<spotify-client-id>
-export SPOTIFY_CLIENT_SECRET=<spotify-client-secret>
-export ADMIN_USER=<admin-user>
-export ADMIN_PASSWORD=<admin-password>
-export SECRET_KEY_BASE=<secret-key-base>
-export SESSION_ENCRYPTION_SALT=<session-encryption-salt>

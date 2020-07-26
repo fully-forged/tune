@@ -6,7 +6,9 @@ defmodule Tune.Application do
   use Application
 
   def start(_type, _args) do
-    Tune.Spotify.Auth.configure!()
+    config = Vapor.load!(Tune.Config)
+
+    Tune.Spotify.Auth.configure!(config.spotify)
 
     children = [
       # Start the Telemetry supervisor
