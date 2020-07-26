@@ -1,10 +1,13 @@
 defmodule Tune.Spotify.Auth do
   @moduledoc false
 
-  @spec configure!() :: :ok
-  def configure! do
-    {client_id, client_secret} = get_credentials_from_env!()
+  @type credentials :: %{spotify_client_id: String.t(), spotify_client_secret: String.t()}
 
+  @spec configure!(credentials) :: :ok
+  def configure!(%{
+        spotify_client_id: client_id,
+        spotify_client_secret: client_secret
+      }) do
     Application.put_env(:ueberauth, Ueberauth.Strategy.Spotify.OAuth,
       client_id: client_id,
       client_secret: client_secret
@@ -13,12 +16,12 @@ defmodule Tune.Spotify.Auth do
 
   @spec base64_encoded_credentials() :: String.t() | no_return()
   def base64_encoded_credentials do
-    {client_id, client_secret} = get_credentials_from_env!()
+    ueberauth_spotify_config =
+      Application.fetch_env!(:ueberauth, Ueberauth.Strategy.Spotify.OAuth)
+
+    client_id = Keyword.fetch!(ueberauth_spotify_config, :client_id)
+    client_secret = Keyword.fetch!(ueberauth_spotify_config, :client_secret)
 
     Base.encode64(client_id <> ":" <> client_secret)
-  end
-
-  defp get_credentials_from_env! do
-    {System.get_env("SPOTIFY_CLIENT_ID"), System.get_env("SPOTIFY_CLIENT_SECRET")}
   end
 end

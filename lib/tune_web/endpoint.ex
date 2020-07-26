@@ -9,7 +9,7 @@ defmodule TuneWeb.Endpoint do
     store: :cookie,
     key: "_tune_key",
     signing_salt: "2txYZyfx",
-    encryption_salt: {__MODULE__, :get_encryption_salt, []}
+    encryption_salt: {__MODULE__, :config, [:session_encryption_salt]}
   ]
 
   socket "/socket", TuneWeb.UserSocket,
@@ -54,24 +54,26 @@ defmodule TuneWeb.Endpoint do
   plug TuneWeb.Router
 
   def init(_type, config) do
+    %{web: runtime_overrides} = Vapor.load!(Tune.Config)
+
     config =
-      case System.get_env("PORT") do
-        nil ->
-          config
+      Keyword.merge(config,
+        secret_key_base: runtime_overrides.secret_key_base,
+        admin_user: runtime_overrides.admin_user,
+        admin_password: runtime_overrides.admin_password,
+        session_encryption_salt: runtime_overrides.session_encryption_salt
+      )
 
-        port ->
-          new_config = [
-            http: [port: port, transport_options: [socket_opts: [:inet6]]],
-            secret_key_base: System.get_env("SECRET_KEY_BASE")
-          ]
-
-          Keyword.merge(config, new_config)
-      end
-
-    {:ok, config}
-  end
-
-  def get_encryption_salt do
-    System.get_env("SESSION_ENCRYPTION_SALT")
+    if runtime_overrides.port do
+      {:ok,
+       Keyword.put(
+         config,
+         :http,
+         port: runtime_overrides.port,
+         transport_options: [socket_opts: [:inet6]]
+       )}
+    else
+      {:ok, config}
+    end
   end
 end

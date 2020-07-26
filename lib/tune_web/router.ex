@@ -62,10 +62,10 @@ defmodule TuneWeb.Router do
 
   defp admin_auth(conn, _opts) do
     with {user, pass} <- Plug.BasicAuth.parse_basic_auth(conn),
-         env_user <- System.get_env("ADMIN_USER"),
-         env_pass <- System.get_env("ADMIN_PASSWORD"),
-         true <- Plug.Crypto.secure_compare(user, env_user),
-         true <- Plug.Crypto.secure_compare(pass, env_pass) do
+         admin_user <- TuneWeb.Endpoint.config(:admin_user),
+         admin_pass <- TuneWeb.Endpoint.config(:admin_password),
+         true <- Plug.Crypto.secure_compare(user, admin_user),
+         true <- Plug.Crypto.secure_compare(pass, admin_pass) do
       conn
     else
       _ -> conn |> Plug.BasicAuth.request_basic_auth() |> halt()

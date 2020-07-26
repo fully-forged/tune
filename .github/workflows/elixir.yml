@@ -48,7 +48,6 @@ jobs:
       run: mix test
       env:
         CI: "true"
-        SESSION_ENCRYPTION_SALT: "some-secret"
 
     - name: Retrieve PLT Cache
       uses: actions/cache@v1
