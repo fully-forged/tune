@@ -1,4 +1,8 @@
 defmodule Tune.Config do
+  @moduledoc """
+  This module is responsible for all runtime config resolution.
+  """
+
   use Vapor.Planner
 
   config :web,
