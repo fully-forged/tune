@@ -40,3 +40,109 @@ msgid "1 track, %{formatted_duration}"
 msgid_plural "%{count} tracks, %{formatted_duration}"
 msgstr[0] ""
 msgstr[1] ""
+
+#, elixir-format
+#: lib/tune_web/controllers/auth_controller.ex:20
+msgid "Error authenticating via Spotify"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/controllers/auth_controller.ex:31
+msgid "Logged out"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.ex:175
+msgid "No available devices"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.ex:179
+msgid "Spotify error: %{reason}"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:9
+msgid "Album"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:10
+msgid "Artist"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/player/progress.html.eex:3
+msgid "Current track position"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:11
+msgid "Episode"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/root.html.leex:8
+msgid "Ergonomic Music Management"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/auth/new.html.eex:3
+msgid "Login via Spotify"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:21
+msgid "Logout"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/search/results.html.eex:8
+msgid "No results"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/player/mini.html.eex:4
+msgid "Not playing"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/artist/show.html.eex:17
+msgid "Open in Last.fm"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/artist/show.html.eex:13
+msgid "Open in Wikipedia"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:5
+#: lib/tune_web/live/explorer_live.html.leex:5 lib/tune_web/live/explorer_live.html.leex:15
+msgid "Search"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:4
+msgid "Search query"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:12
+msgid "Show"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:8
+msgid "Track"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/search/results.html.eex:4
+msgid "Try and search for a song you love"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:6
+msgid "Type filter"
+msgstr ""

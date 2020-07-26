@@ -17,7 +17,7 @@ defmodule TuneWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_failure: _failure}} = conn, _params) do
     conn
-    |> put_flash(:error, "Error authenticating via Spotify")
+    |> put_flash(:error, gettext("Error authenticating via Spotify"))
     |> configure_session(drop: true)
     |> redirect(to: Routes.explorer_path(conn, :search))
   end
@@ -28,7 +28,7 @@ defmodule TuneWeb.AuthController do
 
   def delete(conn, _params) do
     conn
-    |> put_flash(:info, "Logged out")
+    |> put_flash(:info, gettext("Logged out"))
     |> configure_session(drop: true)
     |> redirect(to: Routes.explorer_path(conn, :search))
   end

@@ -1,6 +1,6 @@
 <div class="progress">
   <span class="duration"><%= Tune.Duration.hms(@progress_ms) %></span>
-  <label class="visually-hidden" for="progress-bar">Current track position</label>
+  <%= content_tag :label, gettext("Current track position"), for: "progress-bar", class: "visually-hidden" %>
   <progress id="progress-bar" value="<%= @progress_ms %>" max="<%= @item.duration_ms %>"><%= Tune.Duration.hms(@progress_ms) %></progress>
   <span class="total_duration"><%= Tune.Duration.hms(@item.duration_ms) %></span>
 </div>

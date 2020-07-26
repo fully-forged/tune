@@ -1,7 +1,7 @@
 <%= case @now_playing do %>
   <% %{status: :not_playing} -> %>
     <div class="mini-player">
-      <p>Not playing</p>
+      <%= content_tag :p, gettext("Not playing") %>
     </div>
   <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">

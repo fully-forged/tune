@@ -172,10 +172,11 @@ defmodule TuneWeb.ExplorerLive do
   defp handle_device_operation_result(:ok, socket), do: {:noreply, socket}
 
   defp handle_device_operation_result({:error, 404}, socket) do
-    {:noreply, put_flash(socket, :error, "No available devices")}
+    {:noreply, put_flash(socket, :error, gettext("No available devices"))}
   end
 
   defp handle_device_operation_result({:error, reason}, socket) do
-    {:noreply, put_flash(socket, :error, "Spotify error: #{inspect(reason)}")}
+    error_message = gettext("Spotify error: %{reason}", %{reason: inspect(reason)})
+    {:noreply, put_flash(socket, :error, error_message)}
   end
 end
