@@ -4,6 +4,7 @@ defmodule Tune.Spotify.Session do
   """
   alias Phoenix.PubSub
 
+  alias Tune.Duration
   alias Tune.Spotify.{HttpApi, Schema}
 
   @type id :: String.t()
@@ -18,6 +19,7 @@ defmodule Tune.Spotify.Session do
   @callback toggle_play(id()) :: :ok | {:error, term()}
   @callback play(id(), uri()) :: :ok | {:error, term()}
   @callback next(id()) :: :ok | {:error, term()}
+  @callback seek(id(), Duration.milliseconds()) :: :ok | {:error, term()}
   @callback prev(id()) :: :ok | {:error, term()}
   @callback search(id(), HttpApi.q(), HttpApi.search_options()) ::
               {:ok, HttpApi.search_results()} | {:error, term()}
