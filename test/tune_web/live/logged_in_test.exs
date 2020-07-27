@@ -238,5 +238,42 @@ defmodule TuneWeb.LoggedInTest do
         assert render(explorer_live) =~ escaped_author_name
       end
     end
+
+    property "it supports playing the searched item", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              search_type <- Generators.search_type(),
+              items <-
+                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 32)
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+        search_results = %{
+          search_type => items
+        }
+
+        item = Enum.random(items)
+        item_name = item.name
+        item_uri = item.uri
+
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+        |> expect(:search, 2, fn ^session_id, ^item_name, [types: [^search_type], limit: 32] ->
+          {:ok, search_results}
+        end)
+        |> expect(:play, 1, fn ^session_id, ^item_uri -> :ok end)
+
+        {:ok, explorer_live, _html} =
+          live(conn, "/?q=#{URI.encode(item_name)}&type=#{search_type}")
+
+        assert explorer_live
+               |> element("[data-test-id=#{item.id}] .play-button")
+               |> render_click()
+      end
+    end
   end
 end
