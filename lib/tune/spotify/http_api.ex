@@ -37,6 +37,9 @@ defmodule Tune.Spotify.HttpApi do
           optional(item_type()) =>
             [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()] | [Playlist.t()]
         }
+  @type top_tracks_options :: [
+          {:limit, pos_integer()} | {:offset, pos_integer()} | {:time_range, String.t()}
+        ]
 
   @spec get_profile(token()) :: {:ok, User.t()} | {:error, term()}
   def get_profile(token) do
@@ -199,6 +202,36 @@ defmodule Tune.Spotify.HttpApi do
           response.body
           |> Jason.decode!()
           |> parse_search_results(types)
+
+        {:ok, results}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @default_limit 20
+  @default_offset 0
+  @default_time_range "medium_term"
+  @spec top_tracks(token(), top_tracks_options()) :: {:ok, [Track.t()]} | {:error, term()}
+  def top_tracks(token, opts) do
+    limit = Keyword.get(opts, :limit, @default_limit)
+    offset = Keyword.get(opts, :offset, @default_offset)
+    time_range = Keyword.get(opts, :time_range, @default_time_range)
+
+    params = %{
+      limit: limit,
+      offset: offset,
+      time_range: time_range
+    }
+
+    case json_get(@base_url <> "/me/top/tracks?" <> URI.encode_query(params), auth_headers(token)) do
+      {:ok, %{status: 200} = response} ->
+        results =
+          response.body
+          |> Jason.decode!()
+          |> Map.get("items")
+          |> Enum.map(&parse_track/1)
 
         {:ok, results}
 

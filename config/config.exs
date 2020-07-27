@@ -27,7 +27,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 spotify_scope =
-  "user-read-email, user-read-private, user-read-playback-state, user-modify-playback-state, user-read-currently-playing"
+  "user-read-email, user-read-private, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, user-top-read"
 
 config :ueberauth, Ueberauth,
   providers: [

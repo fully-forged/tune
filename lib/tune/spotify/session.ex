@@ -23,6 +23,8 @@ defmodule Tune.Spotify.Session do
   @callback prev(id()) :: :ok | {:error, term()}
   @callback search(id(), HttpApi.q(), HttpApi.search_options()) ::
               {:ok, HttpApi.search_results()} | {:error, term()}
+  @callback top_tracks(id(), HttpApi.top_tracks_options()) ::
+              {:ok, [Schema.Track.t()]} | {:error, term()}
   @callback get_album(id(), item_id()) :: {:ok, Schema.Album.t()} | {:error, term()}
   @callback get_artist(id(), item_id()) :: {:ok, Schema.Artist.t()} | {:error, term()}
   @callback get_artist_albums(id(), item_id()) :: {:ok, [Schema.Album.t()]} | {:error, term()}
