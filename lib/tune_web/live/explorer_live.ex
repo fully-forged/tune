@@ -149,6 +149,12 @@ defmodule TuneWeb.ExplorerLive do
     |> handle_device_operation_result(socket)
   end
 
+  def handle_event("seek", %{"position_ms" => position_ms}, socket) do
+    socket.assigns.session_id
+    |> spotify().seek(position_ms)
+    |> handle_device_operation_result(socket)
+  end
+
   def handle_event("search", params, socket) do
     q = Map.get(params, "q")
     type = Map.get(params, "type", "track")

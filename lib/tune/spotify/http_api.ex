@@ -2,6 +2,7 @@ defmodule Tune.Spotify.HttpApi do
   @moduledoc false
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Publisher, Show, Track, User}
   alias Tune.Spotify.Auth
+  alias Tune.Duration
   alias Ueberauth.Auth.Credentials
 
   require Logger
@@ -113,6 +114,25 @@ defmodule Tune.Spotify.HttpApi do
   @spec prev(token()) :: :ok | {:error, term()}
   def prev(token) do
     case post(@base_url <> "/me/player/previous", <<>>, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @spec seek(token(), Duration.milliseconds()) :: :ok | {:error, term()}
+  def seek(token, position_ms) do
+    params = %{
+      position_ms: position_ms
+    }
+
+    case put(
+           @base_url <> "/me/player/seek?" <> URI.encode_query(params),
+           <<>>,
+           auth_headers(token)
+         ) do
       {:ok, %{status: 204}} ->
         :ok
 
