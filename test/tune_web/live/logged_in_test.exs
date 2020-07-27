@@ -190,5 +190,53 @@ defmodule TuneWeb.LoggedInTest do
         assert render(explorer_live) =~ escaped_artist_name
       end
     end
+
+    property "it supports searching for other types", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              search_type <- Generators.search_type(),
+              items <-
+                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 32)
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+        search_results = %{
+          search_type => items
+        }
+
+        item = Enum.random(items)
+        item_name = TuneWeb.SearchView.name(item)
+        author_name = TuneWeb.SearchView.author_name(item)
+
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+        |> expect(:search, 2, fn ^session_id, ^item_name, [types: [^search_type], limit: 32] ->
+          {:ok, search_results}
+        end)
+
+        {:ok, explorer_live, html} =
+          live(conn, "/?q=#{URI.encode(item_name)}&type=#{search_type}")
+
+        escaped_item_name =
+          item_name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        escaped_author_name =
+          author_name
+          |> Phoenix.HTML.html_escape()
+          |> Phoenix.HTML.safe_to_string()
+
+        assert html =~ escaped_item_name
+        assert html =~ escaped_author_name
+
+        assert render(explorer_live) =~ escaped_item_name
+        assert render(explorer_live) =~ escaped_author_name
+      end
+    end
   end
 end

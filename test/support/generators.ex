@@ -4,6 +4,22 @@ defmodule Tune.Generators do
 
   alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
 
+  def search_type do
+    one_of([
+      constant(:track),
+      constant(:album),
+      constant(:artist),
+      constant(:episode),
+      constant(:show)
+    ])
+  end
+
+  def searchable(:track), do: track()
+  def searchable(:album), do: album()
+  def searchable(:artist), do: artist()
+  def searchable(:episode), do: episode()
+  def searchable(:show), do: show()
+
   def item do
     one_of([track(), episode()])
   end
