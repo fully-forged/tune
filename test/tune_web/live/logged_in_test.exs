@@ -25,9 +25,9 @@ defmodule TuneWeb.LoggedInTest do
       |> expect(:get_profile, 3, fn ^session_id -> profile end)
       |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
 
-      {:ok, explorer_live, disconnected_html} = live(conn, "/")
+      {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :search))
 
-      assert disconnected_html =~ "Not playing"
+      assert html =~ "Not playing"
       assert render(explorer_live) =~ "Not playing"
     end
 
@@ -47,14 +47,14 @@ defmodule TuneWeb.LoggedInTest do
           %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
         end)
 
-        {:ok, explorer_live, disconnected_html} = live(conn, "/")
+        {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :search))
 
         escaped_item_name =
           item.name
           |> Phoenix.HTML.html_escape()
           |> Phoenix.HTML.safe_to_string()
 
-        assert disconnected_html =~ escaped_item_name
+        assert html =~ escaped_item_name
         assert render(explorer_live) =~ escaped_item_name
       end
     end
@@ -75,14 +75,14 @@ defmodule TuneWeb.LoggedInTest do
         |> expect(:get_profile, 3, fn ^session_id -> profile end)
         |> expect(:now_playing, 2, fn ^session_id -> now_playing end)
 
-        {:ok, explorer_live, disconnected_html} = live(conn, "/")
+        {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :search))
 
         escaped_item_name =
           item.name
           |> Phoenix.HTML.html_escape()
           |> Phoenix.HTML.safe_to_string()
 
-        assert disconnected_html =~ escaped_item_name
+        assert html =~ escaped_item_name
         assert render(explorer_live) =~ escaped_item_name
 
         now_playing = %{now_playing | item: second_item}
@@ -112,7 +112,7 @@ defmodule TuneWeb.LoggedInTest do
       |> expect(:get_profile, 3, fn ^session_id -> profile end)
       |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
 
-      {:ok, explorer_live, html} = live(conn, "/")
+      {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :search))
       assert html =~ "Try and search for a song you love"
       assert html =~ "Try and search for a song you love"
 
@@ -139,7 +139,9 @@ defmodule TuneWeb.LoggedInTest do
         {:ok, search_results}
       end)
 
-      {:ok, explorer_live, html} = live(conn, "/?q=example+search")
+      {:ok, explorer_live, html} =
+        live(conn, Routes.explorer_path(conn, :search, q: "example search"))
+
       assert html =~ "No results"
       assert html =~ "No results"
 
@@ -171,7 +173,8 @@ defmodule TuneWeb.LoggedInTest do
           {:ok, search_results}
         end)
 
-        {:ok, explorer_live, html} = live(conn, "/?q=#{URI.encode(track_name)}")
+        {:ok, explorer_live, html} =
+          live(conn, Routes.explorer_path(conn, :search, q: track_name))
 
         escaped_track_name =
           track_name
@@ -219,7 +222,7 @@ defmodule TuneWeb.LoggedInTest do
         end)
 
         {:ok, explorer_live, html} =
-          live(conn, "/?q=#{URI.encode(item_name)}&type=#{search_type}")
+          live(conn, Routes.explorer_path(conn, :search, q: item_name, type: search_type))
 
         escaped_item_name =
           item_name
@@ -268,7 +271,7 @@ defmodule TuneWeb.LoggedInTest do
         |> expect(:play, 1, fn ^session_id, ^item_uri -> :ok end)
 
         {:ok, explorer_live, _html} =
-          live(conn, "/?q=#{URI.encode(item_name)}&type=#{search_type}")
+          live(conn, Routes.explorer_path(conn, :search, q: item_name, type: search_type))
 
         assert explorer_live
                |> element("[data-test-id=#{item.id}] .play-button")
