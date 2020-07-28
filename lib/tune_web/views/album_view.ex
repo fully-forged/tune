@@ -10,21 +10,6 @@ defmodule TuneWeb.AlbumView do
   defp artwork(%Album{thumbnails: thumbnails}),
     do: Map.get(thumbnails, :medium, @default_artwork)
 
-  @spec grouped_tracks(Album.t()) :: %{String.t() => [Track.t()]}
-  defp grouped_tracks(%Album{tracks: tracks}) do
-    Enum.group_by(tracks, & &1.disc_number)
-  end
-
-  @spec has_multiple_discs?(Album.t()) :: boolean()
-  defp has_multiple_discs?(%Album{tracks: tracks}) do
-    disc_numbers =
-      tracks
-      |> Enum.map(& &1.disc_number)
-      |> Enum.into(MapSet.new())
-
-    MapSet.size(disc_numbers) > 1
-  end
-
   @spec playing_track?(Track.t(), Player.t()) :: boolean()
   defp playing_track?(%Track{id: track_id}, %Player{status: :playing, item: %{id: track_id}}),
     do: true

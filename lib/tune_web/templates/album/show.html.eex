@@ -17,8 +17,8 @@
     <% end %>
   </div>
   <div class="tracklist">
-    <%= if has_multiple_discs?(@album) do %>
-      <%= for {disc, tracks} <- grouped_tracks(@album) do %>
+    <%= if Album.has_multiple_discs?(@album) do %>
+      <%= for {disc, tracks} <- Album.grouped_tracks(@album) do %>
           <p>Disc <%= disc %></p>
           <%= render "tracklist.html", tracks: tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
       <% end %>
