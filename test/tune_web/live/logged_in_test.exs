@@ -49,10 +49,7 @@ defmodule TuneWeb.LoggedInTest do
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :search))
 
-        escaped_item_name =
-          item.name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_item_name = escape(item.name)
 
         assert html =~ escaped_item_name
         assert render(explorer_live) =~ escaped_item_name
@@ -77,10 +74,7 @@ defmodule TuneWeb.LoggedInTest do
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :search))
 
-        escaped_item_name =
-          item.name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_item_name = escape(item.name)
 
         assert html =~ escaped_item_name
         assert render(explorer_live) =~ escaped_item_name
@@ -89,10 +83,7 @@ defmodule TuneWeb.LoggedInTest do
 
         send(explorer_live.pid, now_playing)
 
-        escaped_item_name =
-          second_item.name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_item_name = escape(second_item.name)
 
         render(explorer_live) =~ escaped_item_name
       end
@@ -176,15 +167,9 @@ defmodule TuneWeb.LoggedInTest do
         {:ok, explorer_live, html} =
           live(conn, Routes.explorer_path(conn, :search, q: track_name))
 
-        escaped_track_name =
-          track_name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_track_name = escape(track_name)
 
-        escaped_artist_name =
-          track.artist.name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_artist_name = escape(track.artist.name)
 
         assert html =~ escaped_track_name
         assert html =~ escaped_artist_name
@@ -224,15 +209,9 @@ defmodule TuneWeb.LoggedInTest do
         {:ok, explorer_live, html} =
           live(conn, Routes.explorer_path(conn, :search, q: item_name, type: search_type))
 
-        escaped_item_name =
-          item_name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_item_name = escape(item_name)
 
-        escaped_author_name =
-          author_name
-          |> Phoenix.HTML.html_escape()
-          |> Phoenix.HTML.safe_to_string()
+        escaped_author_name = escape(author_name)
 
         assert html =~ escaped_item_name
         assert html =~ escaped_author_name
@@ -278,5 +257,11 @@ defmodule TuneWeb.LoggedInTest do
                |> render_click()
       end
     end
+  end
+
+  defp escape(s) do
+    s
+    |> Phoenix.HTML.html_escape()
+    |> Phoenix.HTML.safe_to_string()
   end
 end
