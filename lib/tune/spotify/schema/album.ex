@@ -46,6 +46,21 @@ defmodule Tune.Spotify.Schema.Album do
           tracks: [Track.t()] | :not_fetched
         }
 
+  @spec grouped_tracks(t()) :: %{String.t() => [Track.t()]}
+  def grouped_tracks(album) do
+    Enum.group_by(album.tracks, & &1.disc_number)
+  end
+
+  @spec has_multiple_discs?(t()) :: boolean()
+  def has_multiple_discs?(album) do
+    disc_numbers =
+      album.tracks
+      |> Enum.map(& &1.disc_number)
+      |> Enum.into(MapSet.new())
+
+    MapSet.size(disc_numbers) > 1
+  end
+
   @spec total_duration_ms(t()) :: Duration.milliseconds() | :not_available
   def total_duration_ms(album) do
     case album.tracks do

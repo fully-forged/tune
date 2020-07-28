@@ -15,7 +15,7 @@ defmodule Tune.Spotify.Schema.Track do
           name: String.t(),
           duration_ms: Duration.milliseconds(),
           track_number: pos_integer(),
-          track_number: pos_integer(),
+          disc_number: pos_integer(),
           artist: Artist.t(),
           album: Album.t()
         }
