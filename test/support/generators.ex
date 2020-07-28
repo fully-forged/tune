@@ -84,6 +84,46 @@ defmodule Tune.Generators do
     end)
   end
 
+  def album_with_tracks do
+    bind(release_date_precision(), fn release_date_precision ->
+      tuple(
+        {id(), name(), thumbnails(), album_type(), album_group(),
+         release_date(release_date_precision), artist(),
+         uniq_list_of(album_track(), min_length: 1, max_length: 32)}
+      )
+      |> bind(fn {id, name, thumbnails, album_type, album_group, release_date, artist, tracks} ->
+        constant(%Album{
+          id: id,
+          uri: "spotify:album:" <> id,
+          name: name,
+          album_type: album_type,
+          album_group: album_group,
+          artist: artist,
+          thumbnails: thumbnails,
+          release_date: release_date,
+          release_date_precision: release_date_precision,
+          tracks: tracks
+        })
+      end)
+    end)
+  end
+
+  def album_track do
+    tuple({id(), name(), duration(), track_number(), disc_number()})
+    |> bind(fn {id, name, duration, track_number, disc_number} ->
+      constant(%Track{
+        id: id,
+        uri: "spotify:track:" <> id,
+        name: name,
+        duration_ms: duration,
+        track_number: track_number,
+        disc_number: disc_number,
+        album: :not_fetched,
+        artist: :not_fetched
+      })
+    end)
+  end
+
   def episode do
     tuple({id(), name(), description(), duration(), publisher(), thumbnails()})
     |> bind(fn {id, name, description, duration, publisher, thumbnails} ->

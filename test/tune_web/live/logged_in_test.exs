@@ -2,8 +2,9 @@ defmodule TuneWeb.LoggedInTest do
   use TuneWeb.ConnCase
   use ExUnitProperties
 
+  alias Tune.Duration
   alias Tune.Generators
-  alias Tune.Spotify.Schema.Player
+  alias Tune.Spotify.Schema.{Album, Player}
 
   import Phoenix.LiveViewTest
   import Mox
@@ -293,6 +294,72 @@ defmodule TuneWeb.LoggedInTest do
 
         assert html =~ escaped_artist_name
         assert render(explorer_live) =~ escaped_artist_name
+      end
+    end
+
+    property "it displays album information", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              album <- Generators.album_with_tracks()
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+        album_id = album.id
+
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+        |> expect(:get_album, 2, fn ^session_id, ^album_id -> {:ok, album} end)
+
+        {:ok, explorer_live, html} =
+          live(conn, Routes.explorer_path(conn, :album_details, album_id))
+
+        if Album.has_multiple_discs?(album) do
+          for {disc_number, tracks} <- Album.grouped_tracks(album) do
+            assert html =~ "Disc #{disc_number}"
+            assert render(explorer_live) =~ "Disc #{disc_number}"
+
+            for track <- tracks do
+              escaped_track_name = escape(track.name)
+
+              track_element =
+                explorer_live
+                |> element("[data-test-id=#{track.id}]")
+                |> render()
+
+              assert track_element =~ escaped_track_name
+              assert track_element =~ Duration.hms(track.duration_ms)
+            end
+          end
+        else
+          [%{disc_number: disc_number} | _rest] = album.tracks
+          refute html =~ "Disc #{disc_number}"
+          refute render(explorer_live) =~ "Disc #{disc_number}"
+        end
+
+        escaped_artist_name = escape(album.artist.name)
+        assert html =~ escaped_artist_name
+        assert render(explorer_live) =~ escaped_artist_name
+
+        escaped_album_name = escape(album.name)
+        assert html =~ escaped_album_name
+        assert render(explorer_live) =~ escaped_album_name
+
+        assert html =~ Album.release_year(album)
+        assert render(explorer_live) =~ Album.release_year(album)
+
+        assert html =~
+                 album
+                 |> Album.total_duration_ms()
+                 |> Duration.human()
+
+        assert render(explorer_live) =~
+                 album
+                 |> Album.total_duration_ms()
+                 |> Duration.human()
       end
     end
   end
