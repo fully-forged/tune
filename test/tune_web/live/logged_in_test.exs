@@ -261,7 +261,7 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   describe "item details" do
-    property "it displays artist information", %{conn: conn} do
+    property "for an artist", %{conn: conn} do
       check all(
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
@@ -294,6 +294,25 @@ defmodule TuneWeb.LoggedInTest do
 
         assert html =~ escaped_artist_name
         assert render(explorer_live) =~ escaped_artist_name
+
+        artist_uri = artist.uri
+
+        Tune.Spotify.SessionMock
+        |> expect(:play, 1, fn ^session_id, ^artist_uri -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-id=#{artist.id}] > .artwork .play-button")
+               |> render_click()
+
+        [album] = Enum.take_random(albums, 1)
+        album_uri = album.uri
+
+        Tune.Spotify.SessionMock
+        |> expect(:play, 1, fn ^session_id, ^album_uri -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-id=#{album.id}] .play-button")
+               |> render_click()
       end
     end
 
@@ -360,6 +379,25 @@ defmodule TuneWeb.LoggedInTest do
                  album
                  |> Album.total_duration_ms()
                  |> Duration.human()
+
+        album_uri = album.uri
+
+        Tune.Spotify.SessionMock
+        |> expect(:play, 1, fn ^session_id, ^album_uri -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-id=#{album.id}] .play-button")
+               |> render_click()
+
+        [track] = Enum.take_random(album.tracks, 1)
+        track_uri = track.uri
+
+        Tune.Spotify.SessionMock
+        |> expect(:play, 1, fn ^session_id, ^track_uri -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-id=#{track.id}] .name")
+               |> render_click()
       end
     end
   end

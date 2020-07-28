@@ -1,4 +1,4 @@
-<article class="album-show">
+<article class="album-show" data-test-id="<%= @album.id %>">
   <div class="artwork">
     <div class="play-button" phx-click="play" phx-value-uri="<%= @album.uri %>">
       <%= render TuneWeb.PlayerView, "icon_play.html", []%>
