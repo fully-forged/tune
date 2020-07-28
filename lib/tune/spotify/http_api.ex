@@ -1,6 +1,17 @@
 defmodule Tune.Spotify.HttpApi do
   @moduledoc false
-  alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Publisher, Show, Track, User}
+  alias Tune.Spotify.Schema.{
+    Album,
+    Artist,
+    Episode,
+    Player,
+    Playlist,
+    Publisher,
+    Show,
+    Track,
+    User
+  }
+
   alias Tune.Spotify.Auth
   alias Tune.Duration
   alias Ueberauth.Auth.Credentials
@@ -279,6 +290,29 @@ defmodule Tune.Spotify.HttpApi do
           |> parse_show()
 
         {:ok, show}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @spec get_playlist(token(), String.t()) :: {:ok, map()} | {:error, term()}
+  def get_playlist(token, playlist_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/playlists/" <> playlist_id <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        playlist =
+          response.body
+          |> Jason.decode!()
+          |> parse_playlist()
+
+        {:ok, playlist}
 
       other_response ->
         handle_errors(other_response)
@@ -572,5 +606,22 @@ defmodule Tune.Spotify.HttpApi do
 
         Map.put(acc, :episode, episodes)
     end)
+  end
+
+  defp parse_playlist(item) do
+    %Playlist{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
+      name: Map.get(item, "name"),
+      description: Map.get(item, "description"),
+      thumbnails:
+        item
+        |> Map.get("images")
+        |> parse_thumbnails(),
+      tracks:
+        item
+        |> get_in(["tracks", "items", Access.all(), "track"])
+        |> Enum.map(&parse_track/1)
+    }
   end
 end
