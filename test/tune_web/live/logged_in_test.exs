@@ -259,6 +259,44 @@ defmodule TuneWeb.LoggedInTest do
     end
   end
 
+  describe "item details" do
+    property "it displays artist information", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              artist <- Generators.artist(),
+              albums <- uniq_list_of(Generators.album(), min_length: 1, max_length: 32)
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+        artist_id = artist.id
+
+        Tune.Spotify.SessionMock
+        |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
+        |> expect(:get_profile, 3, fn ^session_id -> profile end)
+        |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
+        |> expect(:get_artist, 2, fn ^session_id, ^artist_id -> {:ok, artist} end)
+        |> expect(:get_artist_albums, 2, fn ^session_id, ^artist_id -> {:ok, albums} end)
+
+        {:ok, explorer_live, html} =
+          live(conn, Routes.explorer_path(conn, :artist_details, artist_id))
+
+        for album <- albums do
+          escaped_album_name = escape(album.name)
+
+          assert html =~ escaped_album_name
+          assert render(explorer_live) =~ escaped_album_name
+        end
+
+        escaped_artist_name = escape(artist.name)
+
+        assert html =~ escaped_artist_name
+        assert render(explorer_live) =~ escaped_artist_name
+      end
+    end
+  end
+
   defp escape(s) do
     s
     |> Phoenix.HTML.html_escape()
