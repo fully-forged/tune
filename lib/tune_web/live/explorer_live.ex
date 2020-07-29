@@ -131,7 +131,8 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
-  defp handle_search(%{"q" => q} = params, _url, socket) do
+  defp handle_search(params, _url, socket) do
+    q = Map.get(params, "q", "")
     type = Map.get(params, "type", "track")
 
     if String.length(q) >= 1 do
