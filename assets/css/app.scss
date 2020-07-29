@@ -26,15 +26,14 @@
 }
 
 header {
-  padding: 1.7rem 0.8rem 0;
   text-align: center;
-  float: left;
 
   $logo-dimension: 3em;
   svg {
     width: $logo-dimension;
     height: $logo-dimension;
     fill: $accent-color;
+    margin-right: 1rem;
   }
 }
 

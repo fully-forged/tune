@@ -1,0 +1,25 @@
+<nav class="navbar">
+  <%= render "logo.html", [] %>
+  <div class="search">
+    <%= form_tag("/", method: :get) do %>
+      <%= content_tag :label, gettext("Search query"), for: "q", class: "visually-hidden" %>
+      <%= tag :input, type: "search", placeholder: gettext("Search"), aria_label: gettext("Search"), autocomplete: "off", id: "q", name: "q", value: @conn.assigns.q %>
+      <%= content_tag :label, gettext("Type filter"), for: "type", class: "visually-hidden" %>
+      <select name="type" id="type">
+        <%= options_for_select([{gettext("Track"), "track"},
+                                {gettext("Album"), "album"},
+                                {gettext("Artist"), "artist"},
+                                {gettext("Episode"), "episode"},
+                                {gettext("Show"), "show"}],
+                                to_string(@conn.assigns.type)) %>
+      </select>
+      <%= content_tag :button, gettext("Search"), type: "submit" %>
+  <% end %>
+  </div>
+  <div class="user-mini">
+    <%= img_tag @conn.assigns.user.avatar_url, alt: @conn.assigns.user.name %>
+    <p><%= @conn.assigns.user.name %></p>
+    <%= link gettext("Logout"), to: Routes.auth_path(@conn, :delete), method: :post %>
+  </div>
+</nav>
+

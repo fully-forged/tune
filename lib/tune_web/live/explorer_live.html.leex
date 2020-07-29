@@ -1,27 +1,3 @@
-<nav class="navbar">
-  <div class="search">
-    <%= form_tag("/", method: :get, phx_change: "search") do %>
-      <%= content_tag :label, gettext("Search query"), for: "q", class: "visually-hidden" %>
-      <%= tag :input, type: "search", placeholder: gettext("Search"), aria_label: gettext("Search"), autocomplete: "off", id: "q", name: "q", value: @q %>
-      <%= content_tag :label, gettext("Type filter"), for: "type", class: "visually-hidden" %>
-      <select name="type" id="type">
-        <%= options_for_select([{gettext("Track"), "track"},
-                                {gettext("Album"), "album"},
-                                {gettext("Artist"), "artist"},
-                                {gettext("Episode"), "episode"},
-                                {gettext("Show"), "show"}],
-                                to_string(@type)) %>
-      </select>
-      <%= content_tag :button, gettext("Search"), type: "submit" %>
-  <% end %>
-  </div>
-  <div class="user-mini">
-    <%= img_tag @user.avatar_url, alt: @user.name %>
-    <p><%= @user.name %></p>
-    <%= link gettext("Logout"), to: Routes.auth_path(@socket, :delete), method: :post %>
-  </div>
-</nav>
-
 <section id="explorer">
   <a href="#" class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
