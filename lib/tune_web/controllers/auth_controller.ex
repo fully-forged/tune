@@ -41,6 +41,7 @@ defmodule TuneWeb.AuthController do
         conn
         |> assign(:status, :authenticated)
         |> assign(:user, user)
+        |> assign(:release_radar_playlist_id, get_release_radar_playlist_id())
         |> assign(:session_id, session_id)
 
       {:error, :not_authenticated} ->
@@ -49,5 +50,11 @@ defmodule TuneWeb.AuthController do
         |> Phoenix.Controller.redirect(to: Routes.auth_path(conn, :new))
         |> halt()
     end
+  end
+
+  defp get_release_radar_playlist_id do
+    Tune.Config
+    |> Vapor.load!()
+    |> get_in([:spotify, :release_radar_playlist_id])
   end
 end
