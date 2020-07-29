@@ -10,4 +10,8 @@ defmodule TuneWeb.SuggestionsView do
   @spec artwork(Playlist.t()) :: String.t()
   defp artwork(%Playlist{thumbnails: thumbnails}),
     do: Map.get(thumbnails, :large, @default_artwork)
+
+  defp group_label("single"), do: "Singles"
+  defp group_label("album"), do: "Albums"
+  defp group_label(other), do: other
 end

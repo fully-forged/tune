@@ -340,10 +340,11 @@ header {
   margin: 0 auto;
   margin-top: 2rem;
   padding-bottom: 8rem;
+  justify-content: flex-end;
 
   > .artwork {
     margin-right: 1rem;
-    max-width: 24rem;
+    max-width: 18rem;
   }
 
   > .meta {
@@ -355,7 +356,7 @@ header {
     h1 {
       font-size: 3.6rem;
       line-height: 1.25;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0;
     }
 
     h2 {
@@ -374,6 +375,11 @@ header {
       display: flex;
       justify-content: space-between;
     }
+  }
+
+  .group {
+    border-bottom: 1px solid lighten($text-color, 40%);
+    margin-top: 2rem;
   }
 
   p {
