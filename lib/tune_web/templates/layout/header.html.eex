@@ -1,5 +1,7 @@
 <nav class="navbar">
-  <%= render "logo.html", [] %>
+  <%= link to: Routes.explorer_path(@conn, :suggestions) do %>
+    <%= render "logo.html", [] %>
+  <% end %>
   <%= if authenticated?(@conn) do %>
     <div class="search">
       <%= form_tag(Routes.explorer_path(@conn, :search), method: :get) do %>
