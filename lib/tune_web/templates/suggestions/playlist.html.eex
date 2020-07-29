@@ -7,6 +7,7 @@
   </div>
   <div class="meta">
     <%= content_tag :h1, @playlist.name %>
+    <%= content_tag :p, @playlist.description %>
   </div>
   <div class="items">
     <%= for {type, tracks} <- Playlist.tracks_grouped_by_type(@playlist) do %>

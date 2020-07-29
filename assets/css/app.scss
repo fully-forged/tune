@@ -359,18 +359,9 @@ header {
       margin-bottom: 0;
     }
 
-    h2 {
-      font-size: 2.8rem;
-      line-height: 1.3;
+    p {
       margin-bottom: 0;
     }
-
-    h3 {
-      font-size: 2.2rem;
-      letter-spacing: -.08rem;
-      line-height: 1.35;
-    }
-
     .footer {
       display: flex;
       justify-content: space-between;
@@ -471,18 +462,24 @@ header {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       justify-items: center;
-      margin-bottom: 8rem;
     }
   }
 
   .playlist-show {
     max-width: 80%;
 
+    > .meta {
+      max-width: 75%;
+    }
+
+    .items {
+      margin-bottom: 4rem;
+    }
+
     .albums {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       justify-items: center;
-      margin-bottom: 8rem;
     }
   }
 
@@ -604,6 +601,7 @@ header {
     flex-direction: column;
     max-width: none;
     align-items: center;
+    margin: 2rem;
 
     > .artwork {
       max-width: 14rem;
