@@ -19,7 +19,7 @@ defmodule TuneWeb.ExplorerLive do
     now_playing: %Tune.Spotify.Schema.Player{},
     item: nil,
     results_per_page: 32,
-    suggestions_playlist: nil
+    suggestions_playlist: :not_fetched
   ]
 
   @impl true
@@ -114,7 +114,21 @@ defmodule TuneWeb.ExplorerLive do
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp handle_suggestions(_params, _url, socket) do
-    {:noreply, socket}
+    q = "Release Radar"
+
+    with {:ok, results} <-
+           spotify().search(socket.assigns.session_id, q, types: [:playlist], limit: 1),
+         [simplified_playlist] <- Map.get(results, :playlist),
+         {:ok, playlist} <-
+           spotify().get_playlist(socket.assigns.session_id, simplified_playlist.id) do
+      {:noreply, assign(socket, :suggestions_playlist, playlist)}
+    else
+      [] ->
+        {:noreply, assign(socket, :suggestions_playlist, :not_present)}
+
+      _error ->
+        {:noreply, socket}
+    end
   end
 
   defp handle_search(%{"q" => q} = params, _url, socket) do

@@ -31,11 +31,11 @@ defmodule Tune.Spotify.HttpApi do
 
   @type token :: String.t()
   @type q :: String.t()
-  @type item_type :: :album | :artist | :playlist | :track | :show | :episode
+  @type item_type :: :album | :artist | :playlist | :track | :show | :episode | :playlist
   @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
   @type search_results :: %{
           optional(item_type()) =>
-            [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()]
+            [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()] | [Playlist.t()]
         }
 
   @spec get_profile(token()) :: {:ok, User.t()} | {:error, term()}
@@ -605,6 +605,14 @@ defmodule Tune.Spotify.HttpApi do
           |> Enum.map(&parse_episode/1)
 
         Map.put(acc, :episode, episodes)
+
+      :playlist, acc ->
+        playlists =
+          results
+          |> get_in(["playlists", "items"])
+          |> Enum.map(&parse_playlist/1)
+
+        Map.put(acc, :playlist, playlists)
     end)
   end
 
@@ -619,9 +627,15 @@ defmodule Tune.Spotify.HttpApi do
         |> Map.get("images")
         |> parse_thumbnails(),
       tracks:
-        item
-        |> get_in(["tracks", "items", Access.all(), "track"])
-        |> Enum.map(&parse_track/1)
+        case get_in(item, ["tracks", "items"]) do
+          nil ->
+            :not_fetched
+
+          items ->
+            items
+            |> get_in([Access.all(), "track"])
+            |> Enum.map(&parse_track/1)
+        end
     }
   end
 end

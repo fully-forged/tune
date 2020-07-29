@@ -9,7 +9,7 @@
 
   <%= case @live_action do %>
     <% :suggestions -> %>
-      <p>Not implemented yet</p>
+      <%= content_tag :p, inspect(@suggestions_playlist) %>
     <% :search -> %>
       <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
     <% :album_details -> %>
