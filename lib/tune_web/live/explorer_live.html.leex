@@ -8,6 +8,8 @@
     phx-value-key="error"><%= live_flash(@flash, :error) %></a>
 
   <%= case @live_action do %>
+    <% :suggestions -> %>
+      <p>Not implemented yet</p>
     <% :search -> %>
       <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
     <% :album_details -> %>
