@@ -55,4 +55,15 @@ defmodule Tune.Spotify.Schema.Playlist do
         Enum.count(tracks)
     end
   end
+
+  @spec tracks_grouped_by_type(t()) :: map() | :not_available
+  def tracks_grouped_by_type(playlist) do
+    case playlist.tracks do
+      :not_fetched ->
+        :not_available
+
+      tracks ->
+        Enum.group_by(tracks, & &1.album.album_type)
+    end
+  end
 end

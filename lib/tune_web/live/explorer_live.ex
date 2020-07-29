@@ -9,7 +9,7 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
-  alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView}
+  alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView, SuggestionsView}
 
   @initial_state [
     q: nil,
