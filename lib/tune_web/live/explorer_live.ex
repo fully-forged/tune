@@ -9,7 +9,7 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
-  alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView}
+  alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView, SuggestionsView}
 
   @initial_state [
     q: nil,
@@ -18,7 +18,8 @@ defmodule TuneWeb.ExplorerLive do
     user: nil,
     now_playing: %Tune.Spotify.Schema.Player{},
     item: nil,
-    results_per_page: 32
+    results_per_page: 32,
+    suggestions_playlist: :not_fetched
   ]
 
   @impl true
@@ -46,72 +47,15 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @impl true
-  def handle_params(%{"q" => q} = params, _url, socket) do
-    type = Map.get(params, "type", "track")
-
-    if String.length(q) >= 1 do
-      type = parse_type(type)
-
-      socket =
-        socket
-        |> assign(:q, q)
-        |> assign(:type, type)
-
-      search_opts = [types: [type], limit: socket.assigns.results_per_page]
-
-      case spotify().search(socket.assigns.session_id, q, search_opts) do
-        {:ok, results} ->
-          {:noreply, assign(socket, :results, Map.get(results, type))}
-
-        _error ->
-          {:noreply, socket}
-      end
-    else
-      {:noreply,
-       socket
-       |> assign(:q, nil)
-       |> assign(:type, type)
-       |> assign(:results, [])}
+  def handle_params(params, url, socket) do
+    case socket.assigns.live_action do
+      :suggestions -> handle_suggestions(params, url, socket)
+      :search -> handle_search(params, url, socket)
+      :artist_details -> handle_artist_details(params, url, socket)
+      :album_details -> handle_album_details(params, url, socket)
+      :show_details -> handle_show_details(params, url, socket)
+      :episode_details -> handle_episode_details(params, url, socket)
     end
-  end
-
-  def handle_params(%{"artist_id" => artist_id}, _url, socket) do
-    with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
-         {:ok, albums} <- spotify().get_artist_albums(socket.assigns.session_id, artist_id) do
-      artist = %{artist | albums: albums}
-
-      {:noreply, assign(socket, :item, artist)}
-    else
-      _error ->
-        {:noreply, socket}
-    end
-  end
-
-  def handle_params(%{"album_id" => album_id}, _url, socket) do
-    case spotify().get_album(socket.assigns.session_id, album_id) do
-      {:ok, album} ->
-        {:noreply, assign(socket, :item, album)}
-
-      _error ->
-        {:noreply, socket}
-    end
-  end
-
-  def handle_params(%{"show_id" => show_id}, _url, socket) do
-    case spotify().get_show(socket.assigns.session_id, show_id) do
-      {:ok, show} ->
-        {:noreply, assign(socket, :item, show)}
-
-      _error ->
-        {:noreply, socket}
-    end
-  end
-
-  def handle_params(_params, _url, socket) do
-    {:noreply,
-     socket
-     |> assign(:q, nil)
-     |> assign(:results, [])}
   end
 
   @impl true
@@ -168,6 +112,90 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
+
+  defp handle_suggestions(_params, _url, socket) do
+    q = "Release Radar"
+
+    with {:ok, results} <-
+           spotify().search(socket.assigns.session_id, q, types: [:playlist], limit: 1),
+         [simplified_playlist] <- Map.get(results, :playlist),
+         {:ok, playlist} <-
+           spotify().get_playlist(socket.assigns.session_id, simplified_playlist.id) do
+      {:noreply, assign(socket, :suggestions_playlist, playlist)}
+    else
+      [] ->
+        {:noreply, assign(socket, :suggestions_playlist, :not_present)}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  defp handle_search(params, _url, socket) do
+    q = Map.get(params, "q", "")
+    type = Map.get(params, "type", "track")
+
+    if String.length(q) >= 1 do
+      type = parse_type(type)
+
+      socket =
+        socket
+        |> assign(:q, q)
+        |> assign(:type, type)
+
+      search_opts = [types: [type], limit: socket.assigns.results_per_page]
+
+      case spotify().search(socket.assigns.session_id, q, search_opts) do
+        {:ok, results} ->
+          {:noreply, assign(socket, :results, Map.get(results, type))}
+
+        _error ->
+          {:noreply, socket}
+      end
+    else
+      {:noreply,
+       socket
+       |> assign(:q, nil)
+       |> assign(:type, type)
+       |> assign(:results, [])}
+    end
+  end
+
+  defp handle_artist_details(%{"artist_id" => artist_id}, _url, socket) do
+    with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
+         {:ok, albums} <- spotify().get_artist_albums(socket.assigns.session_id, artist_id) do
+      artist = %{artist | albums: albums}
+
+      {:noreply, assign(socket, :item, artist)}
+    else
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  defp handle_album_details(%{"album_id" => album_id}, _url, socket) do
+    case spotify().get_album(socket.assigns.session_id, album_id) do
+      {:ok, album} ->
+        {:noreply, assign(socket, :item, album)}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  defp handle_show_details(%{"show_id" => show_id}, _url, socket) do
+    case spotify().get_show(socket.assigns.session_id, show_id) do
+      {:ok, show} ->
+        {:noreply, assign(socket, :item, show)}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  defp handle_episode_details(_params, _url, socket) do
+    {:noreply, socket}
+  end
 
   defp parse_type("track"), do: :track
   defp parse_type("album"), do: :album

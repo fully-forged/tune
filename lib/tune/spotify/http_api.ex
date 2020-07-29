@@ -1,6 +1,17 @@
 defmodule Tune.Spotify.HttpApi do
   @moduledoc false
-  alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Publisher, Show, Track, User}
+  alias Tune.Spotify.Schema.{
+    Album,
+    Artist,
+    Episode,
+    Player,
+    Playlist,
+    Publisher,
+    Show,
+    Track,
+    User
+  }
+
   alias Tune.Spotify.Auth
   alias Tune.Duration
   alias Ueberauth.Auth.Credentials
@@ -20,11 +31,11 @@ defmodule Tune.Spotify.HttpApi do
 
   @type token :: String.t()
   @type q :: String.t()
-  @type item_type :: :album | :artist | :playlist | :track | :show | :episode
+  @type item_type :: :album | :artist | :playlist | :track | :show | :episode | :playlist
   @type search_options :: [{:types, [item_type()]} | {:limit, pos_integer()}]
   @type search_results :: %{
           optional(item_type()) =>
-            [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()]
+            [Artist.t()] | [Album.t()] | [Track.t()] | [Show.t()] | [Episode.t()] | [Playlist.t()]
         }
 
   @spec get_profile(token()) :: {:ok, User.t()} | {:error, term()}
@@ -279,6 +290,29 @@ defmodule Tune.Spotify.HttpApi do
           |> parse_show()
 
         {:ok, show}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @spec get_playlist(token(), String.t()) :: {:ok, map()} | {:error, term()}
+  def get_playlist(token, playlist_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/playlists/" <> playlist_id <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        playlist =
+          response.body
+          |> Jason.decode!()
+          |> parse_playlist()
+
+        {:ok, playlist}
 
       other_response ->
         handle_errors(other_response)
@@ -571,6 +605,37 @@ defmodule Tune.Spotify.HttpApi do
           |> Enum.map(&parse_episode/1)
 
         Map.put(acc, :episode, episodes)
+
+      :playlist, acc ->
+        playlists =
+          results
+          |> get_in(["playlists", "items"])
+          |> Enum.map(&parse_playlist/1)
+
+        Map.put(acc, :playlist, playlists)
     end)
+  end
+
+  defp parse_playlist(item) do
+    %Playlist{
+      id: Map.get(item, "id"),
+      uri: Map.get(item, "uri"),
+      name: Map.get(item, "name"),
+      description: Map.get(item, "description"),
+      thumbnails:
+        item
+        |> Map.get("images")
+        |> parse_thumbnails(),
+      tracks:
+        case get_in(item, ["tracks", "items"]) do
+          nil ->
+            :not_fetched
+
+          items ->
+            items
+            |> get_in([Access.all(), "track"])
+            |> Enum.map(&parse_track/1)
+        end
+    }
   end
 end
