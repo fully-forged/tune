@@ -52,12 +52,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:208
+#: lib/tune_web/live/explorer_live.ex:209
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:212
+#: lib/tune_web/live/explorer_live.ex:213
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -145,4 +145,9 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/layout/header.html.eex:8
 msgid "Type filter"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:14
+msgid "Cannot display Release Radar - Make sure you have access to the playlist"
 msgstr ""

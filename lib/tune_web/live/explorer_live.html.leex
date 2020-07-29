@@ -9,7 +9,12 @@
 
   <%= case @live_action do %>
     <% :suggestions -> %>
-      <%= render SuggestionsView, "playlist.html", playlist: @suggestions_playlist, now_playing: @now_playing, socket: @socket %>
+      <%= case @suggestions_playlist do %>
+        <% :not_present -> %>
+          <%= content_tag :p, gettext("Cannot display Release Radar - Make sure you have access to the playlist") %>
+        <% playlist -> %>
+          <%= render SuggestionsView, "playlist.html", playlist: playlist, now_playing: @now_playing, socket: @socket %>
+        <% end %>
     <% :search -> %>
       <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
     <% :album_details -> %>

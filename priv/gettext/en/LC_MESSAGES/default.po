@@ -147,3 +147,8 @@ msgstr ""
 #: lib/tune_web/templates/layout/header.html.eex:8
 msgid "Type filter"
 msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/explorer_live.html.leex:14
+msgid "Cannot display Release Radar - Make sure you have access to the playlist"
+msgstr ""
