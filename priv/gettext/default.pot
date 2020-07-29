@@ -52,12 +52,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:207
+#: lib/tune_web/live/explorer_live.ex:226
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:211
+#: lib/tune_web/live/explorer_live.ex:230
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -155,4 +155,19 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/live/explorer_live.html.leex:20
 msgid "Cannot display top albums"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+msgid "Long Term"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+msgid "Medium Term"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+msgid "Short Term"
 msgstr ""

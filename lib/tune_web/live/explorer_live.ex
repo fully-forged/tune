@@ -21,7 +21,8 @@ defmodule TuneWeb.ExplorerLive do
     item: nil,
     results_per_page: 32,
     suggestions_playlist: :not_fetched,
-    suggestions_top_albums: :not_fetched
+    suggestions_top_albums: :not_fetched,
+    suggestions_top_albums_time_range: "medium_term"
   ]
 
   @impl true
@@ -108,6 +109,20 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :search, q: q, type: type))}
   end
 
+  def handle_event("set_top_albums_time_range", %{"time-range" => time_range}, socket) do
+    case get_top_albums(socket.assigns.session_id, time_range) do
+      {:ok, top_albums} ->
+        {:noreply,
+         assign(socket,
+           suggestions_top_albums: top_albums,
+           suggestions_top_albums_time_range: time_range
+         )}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
   @impl true
   def handle_info(now_playing, socket) do
     {:noreply, assign(socket, :now_playing, now_playing)}
@@ -117,7 +132,11 @@ defmodule TuneWeb.ExplorerLive do
 
   defp handle_suggestions(_params, _url, socket) do
     with {:ok, playlist} <- get_suggestions_playlist(socket.assigns.session_id),
-         {:ok, top_albums} <- get_top_albums(socket.assigns.session_id) do
+         {:ok, top_albums} <-
+           get_top_albums(
+             socket.assigns.session_id,
+             socket.assigns.suggestions_top_albums_time_range
+           ) do
       {:noreply,
        assign(socket, suggestions_playlist: playlist, suggestions_top_albums: top_albums)}
     else
@@ -228,10 +247,9 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @top_tracks_limit 32
-  @top_tracks_time_range "medium_term"
 
-  defp get_top_albums(session_id) do
-    opts = [limit: @top_tracks_limit, time_range: @top_tracks_time_range]
+  defp get_top_albums(session_id, time_range) do
+    opts = [limit: @top_tracks_limit, time_range: time_range]
 
     case spotify().top_tracks(session_id, opts) do
       {:ok, tracks} ->

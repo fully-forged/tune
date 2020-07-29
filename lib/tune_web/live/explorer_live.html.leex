@@ -19,7 +19,11 @@
         <% :not_fetched -> %>
           <%= content_tag :p, gettext("Cannot display top albums") %>
         <% albums -> %>
-          <%= render SuggestionsView, "top_albums.html", albums: albums, now_playing: @now_playing, socket: @socket %>
+          <%= render SuggestionsView, "top_albums.html",
+            albums: albums,
+            suggestions_top_albums_time_range: @suggestions_top_albums_time_range,
+            now_playing: @now_playing,
+            socket: @socket %>
         <% end %>
     <% :search -> %>
       <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>

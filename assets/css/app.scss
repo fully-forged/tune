@@ -388,6 +388,15 @@ header {
 .top-albums {
   max-width: 60%;
   margin: 0 auto;
+
+  .filter {
+    h1 {
+      margin-right: 1rem;
+    }
+
+    display: flex;
+    align-items: center;
+  }
 }
 
 .mini-player {
