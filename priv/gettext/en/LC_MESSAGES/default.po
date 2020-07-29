@@ -63,12 +63,12 @@ msgid "Spotify error: %{reason}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:10
+#: lib/tune_web/templates/layout/header.html.eex:11
 msgid "Album"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:11
+#: lib/tune_web/templates/layout/header.html.eex:12
 msgid "Artist"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgid "Current track position"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:12
+#: lib/tune_web/templates/layout/header.html.eex:13
 msgid "Episode"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgid "Login via Spotify"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:22
+#: lib/tune_web/templates/layout/header.html.eex:23
 msgid "Logout"
 msgstr ""
 
@@ -118,23 +118,23 @@ msgid "Open in Wikipedia"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:6
-#: lib/tune_web/templates/layout/header.html.eex:6 lib/tune_web/templates/layout/header.html.eex:16
+#: lib/tune_web/templates/layout/header.html.eex:7
+#: lib/tune_web/templates/layout/header.html.eex:7 lib/tune_web/templates/layout/header.html.eex:17
 msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:5
+#: lib/tune_web/templates/layout/header.html.eex:6
 msgid "Search query"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:13
+#: lib/tune_web/templates/layout/header.html.eex:14
 msgid "Show"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:9
+#: lib/tune_web/templates/layout/header.html.eex:10
 msgid "Track"
 msgstr ""
 
@@ -144,6 +144,6 @@ msgid "Try and search for a song you love"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:7
+#: lib/tune_web/templates/layout/header.html.eex:8
 msgid "Type filter"
 msgstr ""
