@@ -339,7 +339,6 @@ header {
   max-width: 60%;
   margin: 0 auto;
   margin-top: 2rem;
-  padding-bottom: 8rem;
   justify-content: flex-end;
 
   > .artwork {
@@ -384,6 +383,11 @@ header {
     column-gap: 2rem;
     margin-top: 1rem;
   }
+}
+
+.top-albums {
+  max-width: 60%;
+  margin: 0 auto;
 }
 
 .mini-player {
@@ -472,15 +476,16 @@ header {
       max-width: 75%;
     }
 
-    .items {
-      margin-bottom: 4rem;
-    }
-
     .albums {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       justify-items: center;
     }
+  }
+
+  .top-albums {
+    max-width: 80%;
+      margin-bottom: 4rem;
   }
 
   .artwork {
@@ -623,6 +628,10 @@ header {
         margin-bottom: 0.2rem;
       }
     }
+  }
+
+  .top-albums {
+    max-width: none;
   }
 
   .mini-player {
