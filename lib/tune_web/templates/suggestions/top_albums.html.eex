@@ -1,0 +1,14 @@
+<div class="top-albums">
+  <div class="filter">
+    <h1>Top Albums</h1>
+    <div class="controls button-group">
+      <%= for {time_range, label} <- [{"short_term", gettext("Short Term")}, {"medium_term", gettext("Medium Term")}, {"long_term", gettext("Long Term")}] do %>
+        <% active_class = if @suggestions_top_albums_time_range == time_range, do: "active" %>
+        <%= link label, to: "#", class: "button button-small reversed #{active_class}", phx_click: "set_top_albums_time_range", phx_value_time_range: time_range %>
+      <% end %>
+    </div>
+  </div>
+  <div class="results">
+    <%= render_many @albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+  </div>
+</div>

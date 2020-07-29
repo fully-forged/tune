@@ -13,8 +13,9 @@ body {
 button, .button {
   background-color: $accent-color;
   border-color: $accent-color;
+  color: white;
 
-  &:hover {
+  &:hover, &.active {
     background-color: $complementary-accent-color;
     border-color: $complementary-accent-color;
   }
@@ -31,7 +32,7 @@ a {
     color: $accent-color;
   }
 
-  &:hover {
+  &:hover, &.active {
     color: $complementary-accent-color;
   }
 }
@@ -43,7 +44,7 @@ a.reversed {
     color: white;
   }
 
-  &:hover {
+  &:hover, &.active {
     color: darken(white, 20%);
   }
 }

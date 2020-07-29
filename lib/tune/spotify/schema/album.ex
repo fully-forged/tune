@@ -96,4 +96,11 @@ defmodule Tune.Spotify.Schema.Album do
         year
     end
   end
+
+  @spec from_tracks([Track.t()]) :: [t()]
+  def from_tracks(tracks) do
+    tracks
+    |> Enum.map(& &1.album)
+    |> Enum.uniq()
+  end
 end

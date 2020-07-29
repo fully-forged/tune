@@ -9,6 +9,7 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
+  alias Tune.Spotify.Schema.Album
   alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView, SuggestionsView}
 
   @initial_state [
@@ -19,7 +20,9 @@ defmodule TuneWeb.ExplorerLive do
     now_playing: %Tune.Spotify.Schema.Player{},
     item: nil,
     results_per_page: 32,
-    suggestions_playlist: :not_fetched
+    suggestions_playlist: :not_fetched,
+    suggestions_top_albums: :not_fetched,
+    suggestions_top_albums_time_range: "medium_term"
   ]
 
   @impl true
@@ -106,6 +109,20 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply, push_patch(socket, to: Routes.explorer_path(socket, :search, q: q, type: type))}
   end
 
+  def handle_event("set_top_albums_time_range", %{"time-range" => time_range}, socket) do
+    case get_top_albums(socket.assigns.session_id, time_range) do
+      {:ok, top_albums} ->
+        {:noreply,
+         assign(socket,
+           suggestions_top_albums: top_albums,
+           suggestions_top_albums_time_range: time_range
+         )}
+
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
   @impl true
   def handle_info(now_playing, socket) do
     {:noreply, assign(socket, :now_playing, now_playing)}
@@ -114,16 +131,16 @@ defmodule TuneWeb.ExplorerLive do
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp handle_suggestions(_params, _url, socket) do
-    q = "Release Radar"
-
-    with {:ok, results} <-
-           spotify().search(socket.assigns.session_id, q, types: [:playlist], limit: 1),
-         [simplified_playlist] <- Map.get(results, :playlist),
-         {:ok, playlist} <-
-           spotify().get_playlist(socket.assigns.session_id, simplified_playlist.id) do
-      {:noreply, assign(socket, :suggestions_playlist, playlist)}
+    with {:ok, playlist} <- get_suggestions_playlist(socket.assigns.session_id),
+         {:ok, top_albums} <-
+           get_top_albums(
+             socket.assigns.session_id,
+             socket.assigns.suggestions_top_albums_time_range
+           ) do
+      {:noreply,
+       assign(socket, suggestions_playlist: playlist, suggestions_top_albums: top_albums)}
     else
-      [] ->
+      {:error, :not_present} ->
         {:noreply, assign(socket, :suggestions_playlist, :not_present)}
 
       _error ->
@@ -212,5 +229,34 @@ defmodule TuneWeb.ExplorerLive do
   defp handle_device_operation_result({:error, reason}, socket) do
     error_message = gettext("Spotify error: %{reason}", %{reason: inspect(reason)})
     {:noreply, put_flash(socket, :error, error_message)}
+  end
+
+  @suggestions_playlist_name "Release Radar"
+  defp get_suggestions_playlist(session_id) do
+    with {:ok, results} <-
+           spotify().search(session_id, @suggestions_playlist_name,
+             types: [:playlist],
+             limit: 1
+           ),
+         [simplified_playlist] <- Map.get(results, :playlist) do
+      spotify().get_playlist(session_id, simplified_playlist.id)
+    else
+      [] -> {:error, :not_present}
+      error -> error
+    end
+  end
+
+  @top_tracks_limit 32
+
+  defp get_top_albums(session_id, time_range) do
+    opts = [limit: @top_tracks_limit, time_range: time_range]
+
+    case spotify().top_tracks(session_id, opts) do
+      {:ok, tracks} ->
+        {:ok, Album.from_tracks(tracks)}
+
+      error ->
+        error
+    end
   end
 end
