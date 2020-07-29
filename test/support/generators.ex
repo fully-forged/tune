@@ -171,9 +171,9 @@ defmodule Tune.Generators do
 
   def id, do: string(:alphanumeric, min_length: 6, max_length: 12)
 
-  def name, do: string(:printable, min_length: 1, max_length: 128)
+  def name, do: string(:alphanumeric, min_length: 1, max_length: 128)
 
-  def description, do: string(:printable, min_length: 1, max_length: 128)
+  def description, do: string(:alphanumeric, min_length: 1, max_length: 128)
 
   def thumbnails do
     map_of(
