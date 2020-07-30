@@ -44,6 +44,18 @@ defmodule TuneWeb.SearchView do
     Routes.explorer_path(socket, :artist_details, id)
   end
 
+  def can_link_to_author?(%Track{}), do: true
+  def can_link_to_author?(%Album{}), do: true
+  def can_link_to_author?(_other), do: false
+
+  def author_link(%Track{artist: artist}, socket) do
+    result_link(artist, socket)
+  end
+
+  def author_link(%Album{artist: artist}, socket) do
+    result_link(artist, socket)
+  end
+
   def release_date(%Track{album: album}) do
     Album.release_year(album)
   end
