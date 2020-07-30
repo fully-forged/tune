@@ -74,6 +74,14 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .mini-player {
+    .meta, .progress span {
+      font-size: 0.8em;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .mini-player {
     justify-content: space-between;
