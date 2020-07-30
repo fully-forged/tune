@@ -1,6 +1,11 @@
 .artwork {
   position: relative;
 
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
   .play-button {
     display: none;
     position: absolute;
