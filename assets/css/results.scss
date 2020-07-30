@@ -1,0 +1,36 @@
+.results {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  column-gap: 2rem;
+
+  .name, .artist-name, .release-date {
+    margin-bottom: 0.4rem;
+  }
+
+  .name {
+    font-weight: bold;
+  }
+
+  .release-date {
+    font-style: italic;
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 1024px) {
+  .results {
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .results {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+

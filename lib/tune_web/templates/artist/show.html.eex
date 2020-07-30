@@ -21,7 +21,7 @@
     </div>
   </section>
   <section class="items">
-    <div class="albums">
+    <div class="results">
       <%= render_many @artist.albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
     </div>
   </section>
