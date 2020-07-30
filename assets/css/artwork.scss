@@ -1,0 +1,45 @@
+.artwork {
+  position: relative;
+
+  .play-button {
+    display: none;
+    position: absolute;
+    text-align: center;
+    color: white;
+    font-size: 6rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    svg {
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 1rem;
+      cursor: pointer;
+      width: 1em;
+      height: 1em;
+    }
+  }
+
+  &:hover {
+    img {
+      filter: brightness(0.6);
+    }
+
+    .play-button {
+      display: flex;
+      filter: none;
+      z-index: 1;
+    }
+
+  }
+}
+
+@media (max-width: 768px) {
+  .artwork {
+    .play-button {
+      display: flex;
+    }
+  }
+}

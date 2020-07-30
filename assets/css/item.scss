@@ -1,0 +1,57 @@
+.item {
+  margin-top: 2rem;
+
+  .details {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-areas:
+      "artwork meta";
+    column-gap: 2rem;
+    margin-bottom: 2rem;
+
+    .artwork {
+      grid-area: artwork;
+
+      img {
+        height: 100%;
+      }
+    }
+
+    .meta {
+      grid-area: meta;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      p, h1, h2, h3 {
+        margin-bottom: 0;
+      }
+
+      .reference-links {
+        display: flex;
+        align-items: flex-end;
+
+        svg {
+          width: 3rem;
+          height: 3rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .item {
+    .details {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+      "artwork"
+      "meta";
+      text-align: center;
+
+      .artwork {
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}

@@ -107,12 +107,12 @@ msgid "Not playing"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:17
+#: lib/tune_web/templates/artist/show.html.eex:18
 msgid "Open in Last.fm"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:13
+#: lib/tune_web/templates/artist/show.html.eex:14
 msgid "Open in Wikipedia"
 msgstr ""
 

@@ -73,6 +73,15 @@ a.reversed {
   }
 }
 
+svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.svg-link {
+  display: inline-flex;
+}
+
 .visually-hidden {
   position: absolute !important;
   height: 1px;

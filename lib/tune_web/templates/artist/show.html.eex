@@ -1,24 +1,28 @@
-<article class="artist-show" data-test-id="<%= @artist.id %>">
-  <div class="artwork">
-    <div class="play-button" phx-click="play" phx-value-uri="<%= @artist.uri %>">
-      <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+<article class="item" data-test-id="<%= @artist.id %>">
+  <section class="details">
+    <div class="artwork">
+      <div class="play-button" phx-click="play" phx-value-uri="<%= @artist.uri %>">
+        <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+      </div>
+      <%= img_tag artwork(@artist), alt: @artist.name %>
     </div>
-    <%= img_tag artwork(@artist), alt: @artist.name %>
-  </div>
-  <div class="meta">
-    <%= content_tag :h1, @artist.name %>
-    <div class="reference-links">
-      <%= link to: wikipedia_link(@artist), target: "_blank", class: "wikipedia" do %>
-        <%= render "icon_wikipedia.html", [] %>
-        <%= content_tag :span, gettext("Open in Wikipedia"), class: "visually-hidden" %>
-      <% end %>
-      <%= link to: last_fm_link(@artist), target: "_blank", class: "last-fm" do %>
-        <%= render TuneWeb.AlbumView, "icon_last_fm.html", [] %>
-        <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
-      <% end %>
+    <div class="meta">
+      <%= content_tag :h1, @artist.name %>
+      <div class="reference-links">
+        <%= link to: wikipedia_link(@artist), target: "_blank", class: "svg-link wikipedia" do %>
+          <%= render "icon_wikipedia.html", [] %>
+          <%= content_tag :span, gettext("Open in Wikipedia"), class: "visually-hidden" %>
+        <% end %>
+        <%= link to: last_fm_link(@artist), target: "_blank", class: "svg-link last-fm" do %>
+          <%= render TuneWeb.AlbumView, "icon_last_fm.html", [] %>
+          <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="albums">
-    <%= render_many @artist.albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
-  </div>
+  </section>
+  <section class="items">
+    <div class="albums">
+      <%= render_many @artist.albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+    </div>
+  </section>
 </article>
