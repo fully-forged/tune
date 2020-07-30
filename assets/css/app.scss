@@ -449,6 +449,13 @@ header {
     font-size: 3rem;
     display: flex;
     margin-right: 1.5rem;
+    align-items: center;
+
+    select {
+      margin-bottom: 0;
+      background-color: white;
+      margin-left: 1rem;
+    }
   }
 
   .controls a {
@@ -669,7 +676,8 @@ header {
     }
 
     .device {
-      display: none;
+      order: 5;
+      margin: 1rem auto;
     }
   }
 }

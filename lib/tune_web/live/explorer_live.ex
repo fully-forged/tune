@@ -31,6 +31,15 @@ defmodule TuneWeb.ExplorerLive do
       {:authenticated, session_id, user} ->
         now_playing = spotify().now_playing(session_id)
 
+        socket =
+          case spotify().get_devices(session_id) do
+            {:ok, devices} ->
+              assign(socket, :devices, devices)
+
+            _error ->
+              socket
+          end
+
         if connected?(socket) do
           Tune.Spotify.Session.subscribe(session_id)
         end
