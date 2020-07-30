@@ -1,0 +1,54 @@
+@import "./colors";
+
+.tracklist{
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid lighten($text-color, 40%);
+      margin-bottom: 0;
+
+      &:hover {
+        background-color: lighten($accent-color, 20%);
+        color: white;
+        cursor: pointer;
+      }
+
+      .track-number {
+        min-width: 2rem;
+        text-align: right;
+      }
+
+      .name {
+        margin: 0.5rem 1rem;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+      }
+
+      .duration {
+        margin-right: 1rem;
+      }
+
+      .last-fm {
+        display: flex;
+        align-items: center;
+        margin-right: 1rem;
+
+        svg {
+          height: 2rem;
+          width: 2rem;
+        }
+      }
+
+      &.playing {
+        color: $accent-color;
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+}
