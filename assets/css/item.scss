@@ -1,3 +1,5 @@
+@import "./colors";
+
 .item {
   margin-top: 2rem;
 
@@ -37,6 +39,11 @@
         }
       }
     }
+  }
+
+  .group {
+    border-bottom: 1px solid lighten($text-color, 40%);
+    margin-top: 2rem;
   }
 }
 
