@@ -132,6 +132,16 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
+  def handle_event("transfer_playback", %{"device" => device_id}, socket) do
+    with :ok <- spotify().transfer_playback(socket.assigns.session_id, device_id),
+         {:ok, devices} <- spotify().get_devices(socket.assigns.session_id) do
+      {:noreply, assign(socket, :devices, devices)}
+    else
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
   @impl true
   def handle_info(now_playing, socket) do
     {:noreply, assign(socket, :now_playing, now_playing)}

@@ -5,6 +5,8 @@ defmodule Tune.Spotify.Schema.Device do
 
   alias Tune.Spotify.Schema
 
+  @type id :: Schema.id()
+
   @enforce_keys [
     :id,
     :is_active,

@@ -31,6 +31,7 @@ defmodule Tune.Spotify.Session do
   @callback get_show(id(), item_id()) :: {:ok, Schema.Show.t()} | {:error, term()}
   @callback get_playlist(id(), item_id()) :: {:ok, map()} | {:error, term()}
   @callback get_devices(id()) :: {:ok, [Schema.Device.t()]} | {:error, term()}
+  @callback transfer_playback(id(), Schema.Device.id()) :: :ok | {:error, term()}
 
   @spec subscribe(id()) :: :ok | {:error, term()}
   def subscribe(session_id) do

@@ -399,6 +399,7 @@ defmodule TuneWeb.LoggedInTest do
     Tune.Spotify.SessionMock
     |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
     |> expect(:get_profile, 3, fn ^session_id -> profile end)
+    |> expect(:get_devices, 2, fn ^session_id -> {:ok, []} end)
   end
 
   defp expect_nothing_playing(session_id) do

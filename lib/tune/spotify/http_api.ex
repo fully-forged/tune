@@ -370,6 +370,21 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec transfer_playback(token(), Device.id()) :: :ok | {:error, term()}
+  def transfer_playback(token, device_id) do
+    params = %{
+      device_ids: [device_id]
+    }
+
+    case json_put(@base_url <> "/me/player", params, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end
