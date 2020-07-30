@@ -62,12 +62,12 @@ msgid "Spotify error: %{reason}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:13
+#: lib/tune_web/templates/layout/header.html.eex:15
 msgid "Album"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:14
+#: lib/tune_web/templates/layout/header.html.eex:16
 msgid "Artist"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgid "Current track position"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:15
+#: lib/tune_web/templates/layout/header.html.eex:17
 msgid "Episode"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgid "Login via Spotify"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:25
+#: lib/tune_web/templates/layout/header.html.eex:27
 msgid "Logout"
 msgstr ""
 
@@ -107,33 +107,33 @@ msgid "Not playing"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:17
+#: lib/tune_web/templates/artist/show.html.eex:18
 msgid "Open in Last.fm"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:13
+#: lib/tune_web/templates/artist/show.html.eex:14
 msgid "Open in Wikipedia"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:9
-#: lib/tune_web/templates/layout/header.html.eex:9 lib/tune_web/templates/layout/header.html.eex:19
+#: lib/tune_web/templates/layout/header.html.eex:11
+#: lib/tune_web/templates/layout/header.html.eex:11 lib/tune_web/templates/layout/header.html.eex:21
 msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:8
+#: lib/tune_web/templates/layout/header.html.eex:10
 msgid "Search query"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:16
+#: lib/tune_web/templates/layout/header.html.eex:18
 msgid "Show"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:12
+#: lib/tune_web/templates/layout/header.html.eex:14
 msgid "Track"
 msgstr ""
 
@@ -143,7 +143,7 @@ msgid "Try and search for a song you love"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:10
+#: lib/tune_web/templates/layout/header.html.eex:12
 msgid "Type filter"
 msgstr ""
 

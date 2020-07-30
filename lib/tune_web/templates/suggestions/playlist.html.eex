@@ -1,21 +1,22 @@
-<article class="playlist-show" data-test-id="<%= @playlist.id %>">
-  <div class="artwork">
-    <div class="play-button" phx-click="play" phx-value-uri="<%= @playlist.uri %>">
-      <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+<article class="item" data-test-id="<%= @playlist.id %>">
+  <section class="details">
+    <div class="artwork">
+      <div class="play-button" phx-click="play" phx-value-uri="<%= @playlist.uri %>">
+        <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+      </div>
+      <%= img_tag artwork(@playlist), alt: @playlist.name %>
     </div>
-    <%= img_tag artwork(@playlist), alt: @playlist.name %>
-  </div>
-  <div class="meta">
-    <%= content_tag :h1, @playlist.name %>
-    <%= content_tag :p, @playlist.description %>
-  </div>
-  <div class="items">
+    <div class="meta">
+      <%= content_tag :h1, @playlist.name %>
+      <%= content_tag :p, @playlist.description %>
+    </div>
+  </section>
+  <section class="items">
     <%= for {type, tracks} <- Playlist.tracks_grouped_by_type(@playlist) do %>
       <%= content_tag :h3, group_label(type), class: "group" %>
-      <div class="albums">
+      <div class="results">
         <%= render_many tracks, SearchView, "result.html", as: :item, socket: @socket %>
       </div>
     <% end %>
-  </div>
+  </section>
 </article>
-

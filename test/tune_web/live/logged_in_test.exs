@@ -289,7 +289,7 @@ defmodule TuneWeb.LoggedInTest do
         |> expect(:play, 1, fn ^session_id, ^artist_uri -> :ok end)
 
         assert explorer_live
-               |> element("[data-test-id=#{artist.id}] > .artwork .play-button")
+               |> element("[data-test-id=#{artist.id}] > .details .play-button")
                |> render_click()
 
         [album] = Enum.take_random(albums, 1)

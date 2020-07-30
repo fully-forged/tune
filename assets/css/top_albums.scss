@@ -1,0 +1,19 @@
+.top-albums {
+  margin-top: 2rem;
+
+  .filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-albums {
+    .filter {
+      flex-direction: column;
+      margin-bottom: 2rem;
+    }
+  }
+}
+

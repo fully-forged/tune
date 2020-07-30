@@ -1,0 +1,15 @@
+.last-fm {
+  svg {
+    fill: #b90000;
+  }
+
+  &:hover svg {
+    fill: black;
+  }
+}
+
+.wikipedia {
+  &:hover svg {
+    fill: #36c;
+  }
+}
