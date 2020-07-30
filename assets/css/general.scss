@@ -96,3 +96,12 @@ svg {
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap; /* added line */
 }
+
+.full-screen-notice {
+  text-align: center;
+  padding: 3em;
+
+  p {
+    font-size: 1.4em;
+  }
+}
