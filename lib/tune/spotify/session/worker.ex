@@ -103,6 +103,11 @@ defmodule Tune.Spotify.Session.Worker do
     GenStateMachine.call(via(session_id), {:get_playlist, playlist_id})
   end
 
+  @impl true
+  def get_devices(session_id) do
+    GenStateMachine.call(via(session_id), :get_devices)
+  end
+
   @doc false
   @impl true
   def init({session_id, credentials}) do
@@ -522,6 +527,29 @@ defmodule Tune.Spotify.Session.Worker do
       {:ok, playlist} ->
         actions = [
           {:reply, from, {:ok, playlist}}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      # abnormal http error
+      error ->
+        action = {:reply, from, error}
+        {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event({:call, from}, :get_devices, :authenticated, data) do
+    case HttpApi.get_devices(data.credentials.token) do
+      {:ok, devices} ->
+        actions = [
+          {:reply, from, {:ok, devices}}
         ]
 
         {:keep_state_and_data, actions}
