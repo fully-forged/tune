@@ -4,687 +4,688 @@
 @import "./colors";
 @import "./general";
 @import "./phoenix";
-
-.last-fm {
-  svg {
-    fill: #b90000;
-  }
-
-  &:hover svg {
-    fill: black;
-  }
-}
-
-.wikipedia {
-  &:hover svg {
-    fill: #36c;
-  }
-}
-
-.logged-out {
-  clear: both;
-}
-
-header {
-  text-align: center;
-
-  $logo-dimension: 3em;
-  svg {
-    width: $logo-dimension;
-    height: $logo-dimension;
-    fill: $accent-color;
-    margin-right: 1rem;
-  }
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  padding: 1rem;
-  min-height: 8rem;
-
-  .search {
-    flex-grow: 1;
-
-    form {
-      display: flex;
-      margin-bottom: 0;
-
-      input, select, button {
-        margin: 1rem 0.5rem 1rem 0;
-      }
-
-      input {
-        max-width: 24rem;
-      }
-
-      select {
-        max-width: 10rem;
-      }
-    }
-  }
-
-  .user-mini {
-    display: flex;
-    align-items: center;
-
-    img {
-      width: 3rem;
-      border-radius: 50%;
-    }
-
-    p {
-      margin: 0 1rem;
-    }
-
-  }
-}
-
-.full-screen-notice {
-  text-align: center;
-  padding: 3em;
-
-  p {
-    font-size: 1.4em;
-  }
-}
-
-.artwork {
-  position: relative;
-
-  .play-button {
-    display: none;
-    position: absolute;
-    text-align: center;
-    color: white;
-    font-size: 6rem;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-
-    svg {
-      background-color: rgba(0, 0, 0, 0.5);
-      border-radius: 50%;
-      padding: 1rem;
-      cursor: pointer;
-    }
-  }
-
-  &:hover {
-    img {
-    filter: brightness(0.6);
-  }
-
-    .play-button {
-      display: flex;
-      filter: none;
-      z-index: 1;
-    }
-
-  }
-}
-
-.results {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  column-gap: 1rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-
-  .footer {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .name, .artist-name, .release-date {
-    margin-bottom: 0.4rem;
-  }
-
-  .name {
-    font-weight: bold;
-  }
-
-  .release-date {
-    font-style: italic;
-  }
-
-  .actions {
-    text-align: center;
-  }
-}
-
-.album-show {
-  display: grid;
-  max-width: 40%;
-  margin: 2rem auto;
-  grid-template-columns: 1fr 3fr;
-  grid-template-areas:
-    "artwork meta"
-    "tracks tracks";
-
-  .meta {
-    grid-area: meta;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    h1 {
-      font-size: 3.6rem;
-      line-height: 1.25;
-      margin-bottom: 0.5rem;
-    }
-
-    h2 {
-      font-size: 2.8rem;
-      line-height: 1.3;
-      margin-bottom: 0;
-    }
-
-    h3 {
-      font-size: 2.2rem;
-      letter-spacing: -.08rem;
-      line-height: 1.35;
-    }
-
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  .artwork {
-    grid-area: artwork;
-    margin: 1rem 1rem 1rem 0;
-  }
-
-  .tracklist{
-    grid-area: tracks;
-    margin-bottom: 10rem;
-    max-width: 100%;
-
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid lighten($text-color, 40%);
-      margin-bottom: 0;
-
-      &:hover {
-        background-color: lighten($accent-color, 20%);
-        color: white;
-        cursor: pointer;
-      }
-
-      .track-number {
-        min-width: 2rem;
-        text-align: right;
-      }
-
-      .name {
-        margin: 0.5rem 1rem;
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-      }
-
-      .last-fm {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-
-        svg {
-          height: 2rem;
-        }
-      }
-
-      .duration {
-        margin-right: 1rem;
-      }
-
-      &.playing {
-        color: $accent-color;
-
-        &:hover {
-          color: white;
-        }
-      }
-    }
-  }
-}
-
-.artist-show {
-  display: grid;
-  max-width: 60%;
-  margin: 0 auto;
-  grid-template-columns: 1fr 3fr;
-  grid-template-areas:
-    "artwork meta"
-    "albums albums";
-  margin-top: 2rem;
-
-  > .artwork {
-    margin-right: 1rem;
-  }
-
-  .meta {
-    grid-area: meta;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    h1 {
-      font-size: 3.6rem;
-      line-height: 1.25;
-      margin-bottom: 0.5rem;
-    }
-
-    h2 {
-      font-size: 2.8rem;
-      line-height: 1.3;
-      margin-bottom: 0;
-    }
-
-    h3 {
-      font-size: 2.2rem;
-      letter-spacing: -.08rem;
-      line-height: 1.35;
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .release-date {
-      font-style: italic;
-    }
-
-    .reference-links {
-
-      svg {
-        height: 2.1rem;
-        width: 2.1rem;
-      }
-    }
-
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  .artwork {
-    grid-area: artwork;
-  }
-
-  .albums {
-    grid-area: albums;
-    margin-bottom: 10rem;
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-.playlist-show {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 60%;
-  margin: 0 auto;
-  margin-top: 2rem;
-  justify-content: flex-end;
-
-  > .artwork {
-    margin-right: 1rem;
-    max-width: 18rem;
-  }
-
-  > .meta {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    justify-content: flex-end;
-
-    h1 {
-      font-size: 3.6rem;
-      line-height: 1.25;
-      margin-bottom: 0;
-    }
-
-    p {
-      margin-bottom: 0;
-    }
-    .footer {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-
-  .group {
-    border-bottom: 1px solid lighten($text-color, 40%);
-    margin-top: 2rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  .albums {
-    max-width: 100%;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 2rem;
-    margin-top: 1rem;
-  }
-}
-
-.top-albums {
-  max-width: 60%;
-  margin: 0 auto;
-
-  .filter {
-    h1 {
-      margin-right: 1rem;
-    }
-
-    display: flex;
-    align-items: center;
-  }
-}
-
-.mini-player {
-  background-color: $bg-color;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: fixed;
-  z-index: 2;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: 1.5rem 2rem;
-
-  img {
-    max-width: 48px;
-  }
-
-  p {
-    margin-bottom: 0;
-  }
-
-  .progress {
-    flex-grow: 1;
-    margin: 0 4rem;
-    display: flex;
-    align-items: center;
-
-    progress {
-      margin: 1rem;
-      flex-grow: 1;
-    }
-  }
-
-  .meta {
-    margin: 0 1.2rem;
-  }
-
-  .name, .artist-name, .button {
-    display: block;
-    margin-bottom: 0;
-  }
-
-  .name {
-    font-weight: bold;
-  }
-
-  .device {
-    font-size: 3rem;
-    display: flex;
-    margin-right: 1.5rem;
-    align-items: center;
-
-    form {
-      margin-bottom: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    select {
-      margin-bottom: 0;
-      background-color: white;
-      margin-left: 1rem;
-    }
-  }
-
-  .controls a {
-    font-size: 1.2em;
-  }
-}
-
-@media (max-width: 1024px) {
-  .results {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    justify-items: center;
-    margin-bottom: 8rem;
-  }
-
-  .album-show {
-    max-width: 80%;
-  }
-
-  .artist-show {
-    max-width: 80%;
-
-    .albums {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      justify-items: center;
-    }
-  }
-
-  .playlist-show {
-    max-width: 80%;
-
-    > .meta {
-      max-width: 75%;
-    }
-
-    .albums {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      justify-items: center;
-    }
-  }
-
-  .top-albums {
-    max-width: 80%;
-      margin-bottom: 4rem;
-  }
-
-  .artwork {
-    .play-button {
-      display: flex;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  header {
-    float: none;
-    margin-bottom: 1rem;
-  }
-
-  .navbar {
-    flex-direction: column;
-
-    $font-size: 1.5rem;
-    .search form input {
-      width: 8.4em;
-      font-size: $font-size;
-    }
-
-    select {
-      font-size: $font-size;
-    }
-  }
-
-  .artwork {
-    .play-button {
-      display: flex;
-    }
-  }
-
-  .results {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
-    margin-bottom: 12rem;
-
-    p {
-      margin-bottom: 0;
-    }
-
-    .name, .artist-name, .release-date {
-      font-size: 1.2rem;
-    }
-  }
-
-  .album-show {
-    margin: 2rem;
-    display: flex;
-    flex-direction: column;
-    max-width: none;
-    align-items: center;
-
-    .artwork {
-      max-width: 14rem;
-    }
-
-    .meta {
-      h1 {
-        font-size: 2.2rem;
-        letter-spacing: -.08rem;
-        line-height: 1.35;
-      }
-
-      h2 {
-        font-size: 1.8rem;
-        letter-spacing: -.05rem;
-        line-height: 1.5;
-      }
-
-      h3 {
-        font-size: 1.6rem;
-        letter-spacing: 0;
-        line-height: 1.4;
-      }
-    }
-  }
-
-  .artist-show {
-    display: flex;
-    flex-direction: column;
-    max-width: none;
-    align-items: center;
-
-    > .artwork {
-      max-width: 14rem;
-    }
-
-    .reference-links {
-      text-align: center;
-    }
-
-    .albums {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      justify-items: center;
-      margin-bottom: 4rem;
-      column-gap: 0.5rem;
-      padding: 1rem;
-
-      .artwork, .meta {
-        max-width: 12rem;
-      }
-
-      .name, .artist-name, .release-date {
-        font-size: 1.2rem;
-        margin-bottom: 0.2rem;
-      }
-    }
-  }
-
-  .playlist-show {
-    display: flex;
-    flex-direction: column;
-    max-width: none;
-    align-items: center;
-    margin: 2rem;
-
-    > .artwork {
-      max-width: 14rem;
-    }
-
-    .albums {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      justify-items: center;
-      margin-bottom: 4rem;
-      column-gap: 0.5rem;
-
-      .artwork, .meta {
-        max-width: 12rem;
-      }
-
-      .name, .artist-name, .release-date {
-        font-size: 1.2rem;
-        margin-bottom: 0.2rem;
-      }
-    }
-  }
-
-  .top-albums {
-    max-width: none;
-  }
-
-  .mini-player {
-    width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    .progress {
-      flex-grow: 0;
-      width: 100%;
-      order: -1;
-      margin: 0 1rem 1rem 1rem;
-    }
-
-    .meta {
-      flex-grow: 1;
-      font-size: 1.2rem;
-
-      .name {
-        display: inline-block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        max-width: 11rem;
-      }
-    }
-
-    .device {
-      order: 5;
-      margin: 1rem auto;
-    }
-  }
-}
-
+@import "./header";
+
+// .last-fm {
+//   svg {
+//     fill: #b90000;
+//   }
+//
+//   &:hover svg {
+//     fill: black;
+//   }
+// }
+//
+// .wikipedia {
+//   &:hover svg {
+//     fill: #36c;
+//   }
+// }
+//
+// .logged-out {
+//   clear: both;
+// }
+//
+// header {
+//   text-align: center;
+//
+//   $logo-dimension: 3em;
+//   svg {
+//     width: $logo-dimension;
+//     height: $logo-dimension;
+//     fill: $accent-color;
+//     margin-right: 1rem;
+//   }
+// }
+//
+// .navbar {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   background-color: white;
+//   padding: 1rem;
+//   min-height: 8rem;
+//
+//   .search {
+//     flex-grow: 1;
+//
+//     form {
+//       display: flex;
+//       margin-bottom: 0;
+//
+//       input, select, button {
+//         margin: 1rem 0.5rem 1rem 0;
+//       }
+//
+//       input {
+//         max-width: 24rem;
+//       }
+//
+//       select {
+//         max-width: 10rem;
+//       }
+//     }
+//   }
+//
+//   .user-mini {
+//     display: flex;
+//     align-items: center;
+//
+//     img {
+//       width: 3rem;
+//       border-radius: 50%;
+//     }
+//
+//     p {
+//       margin: 0 1rem;
+//     }
+//
+//   }
+// }
+//
+// .full-screen-notice {
+//   text-align: center;
+//   padding: 3em;
+//
+//   p {
+//     font-size: 1.4em;
+//   }
+// }
+//
+// .artwork {
+//   position: relative;
+//
+//   .play-button {
+//     display: none;
+//     position: absolute;
+//     text-align: center;
+//     color: white;
+//     font-size: 6rem;
+//     justify-content: center;
+//     align-items: center;
+//     width: 100%;
+//     height: 100%;
+//
+//     svg {
+//       background-color: rgba(0, 0, 0, 0.5);
+//       border-radius: 50%;
+//       padding: 1rem;
+//       cursor: pointer;
+//     }
+//   }
+//
+//   &:hover {
+//     img {
+//     filter: brightness(0.6);
+//   }
+//
+//     .play-button {
+//       display: flex;
+//       filter: none;
+//       z-index: 1;
+//     }
+//
+//   }
+// }
+//
+// .results {
+//   display: grid;
+//   grid-template-columns: repeat(8, 1fr);
+//   column-gap: 1rem;
+//   margin-bottom: 2rem;
+//   padding: 1rem;
+//
+//   .footer {
+//     display: flex;
+//     justify-content: space-between;
+//   }
+//
+//   .name, .artist-name, .release-date {
+//     margin-bottom: 0.4rem;
+//   }
+//
+//   .name {
+//     font-weight: bold;
+//   }
+//
+//   .release-date {
+//     font-style: italic;
+//   }
+//
+//   .actions {
+//     text-align: center;
+//   }
+// }
+//
+// .album-show {
+//   display: grid;
+//   max-width: 40%;
+//   margin: 2rem auto;
+//   grid-template-columns: 1fr 3fr;
+//   grid-template-areas:
+//     "artwork meta"
+//     "tracks tracks";
+//
+//   .meta {
+//     grid-area: meta;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-end;
+//
+//     h1 {
+//       font-size: 3.6rem;
+//       line-height: 1.25;
+//       margin-bottom: 0.5rem;
+//     }
+//
+//     h2 {
+//       font-size: 2.8rem;
+//       line-height: 1.3;
+//       margin-bottom: 0;
+//     }
+//
+//     h3 {
+//       font-size: 2.2rem;
+//       letter-spacing: -.08rem;
+//       line-height: 1.35;
+//     }
+//
+//   }
+//
+//   p {
+//     margin-bottom: 1rem;
+//   }
+//
+//   .artwork {
+//     grid-area: artwork;
+//     margin: 1rem 1rem 1rem 0;
+//   }
+//
+//   .tracklist{
+//     grid-area: tracks;
+//     margin-bottom: 10rem;
+//     max-width: 100%;
+//
+//     li {
+//       display: flex;
+//       justify-content: space-between;
+//       align-items: center;
+//       border-bottom: 1px solid lighten($text-color, 40%);
+//       margin-bottom: 0;
+//
+//       &:hover {
+//         background-color: lighten($accent-color, 20%);
+//         color: white;
+//         cursor: pointer;
+//       }
+//
+//       .track-number {
+//         min-width: 2rem;
+//         text-align: right;
+//       }
+//
+//       .name {
+//         margin: 0.5rem 1rem;
+//         flex: 1;
+//         white-space: nowrap;
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//         min-width: 0;
+//       }
+//
+//       .last-fm {
+//         display: flex;
+//         align-items: center;
+//         margin-right: 1rem;
+//
+//         svg {
+//           height: 2rem;
+//         }
+//       }
+//
+//       .duration {
+//         margin-right: 1rem;
+//       }
+//
+//       &.playing {
+//         color: $accent-color;
+//
+//         &:hover {
+//           color: white;
+//         }
+//       }
+//     }
+//   }
+// }
+//
+// .artist-show {
+//   display: grid;
+//   max-width: 60%;
+//   margin: 0 auto;
+//   grid-template-columns: 1fr 3fr;
+//   grid-template-areas:
+//     "artwork meta"
+//     "albums albums";
+//   margin-top: 2rem;
+//
+//   > .artwork {
+//     margin-right: 1rem;
+//   }
+//
+//   .meta {
+//     grid-area: meta;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: flex-end;
+//
+//     h1 {
+//       font-size: 3.6rem;
+//       line-height: 1.25;
+//       margin-bottom: 0.5rem;
+//     }
+//
+//     h2 {
+//       font-size: 2.8rem;
+//       line-height: 1.3;
+//       margin-bottom: 0;
+//     }
+//
+//     h3 {
+//       font-size: 2.2rem;
+//       letter-spacing: -.08rem;
+//       line-height: 1.35;
+//     }
+//
+//     .footer {
+//       display: flex;
+//       justify-content: space-between;
+//     }
+//
+//     .release-date {
+//       font-style: italic;
+//     }
+//
+//     .reference-links {
+//
+//       svg {
+//         height: 2.1rem;
+//         width: 2.1rem;
+//       }
+//     }
+//
+//   }
+//
+//   p {
+//     margin-bottom: 1rem;
+//   }
+//
+//   .artwork {
+//     grid-area: artwork;
+//   }
+//
+//   .albums {
+//     grid-area: albums;
+//     margin-bottom: 10rem;
+//     max-width: 100%;
+//     display: grid;
+//     grid-template-columns: repeat(6, 1fr);
+//     column-gap: 2rem;
+//     margin-top: 1rem;
+//   }
+// }
+//
+// .playlist-show {
+//   display: flex;
+//   flex-wrap: wrap;
+//   max-width: 60%;
+//   margin: 0 auto;
+//   margin-top: 2rem;
+//   justify-content: flex-end;
+//
+//   > .artwork {
+//     margin-right: 1rem;
+//     max-width: 18rem;
+//   }
+//
+//   > .meta {
+//     display: flex;
+//     flex-grow: 1;
+//     flex-direction: column;
+//     justify-content: flex-end;
+//
+//     h1 {
+//       font-size: 3.6rem;
+//       line-height: 1.25;
+//       margin-bottom: 0;
+//     }
+//
+//     p {
+//       margin-bottom: 0;
+//     }
+//     .footer {
+//       display: flex;
+//       justify-content: space-between;
+//     }
+//   }
+//
+//   .group {
+//     border-bottom: 1px solid lighten($text-color, 40%);
+//     margin-top: 2rem;
+//   }
+//
+//   p {
+//     margin-bottom: 1rem;
+//   }
+//
+//   .albums {
+//     max-width: 100%;
+//     display: grid;
+//     grid-template-columns: repeat(6, 1fr);
+//     column-gap: 2rem;
+//     margin-top: 1rem;
+//   }
+// }
+//
+// .top-albums {
+//   max-width: 60%;
+//   margin: 0 auto;
+//
+//   .filter {
+//     h1 {
+//       margin-right: 1rem;
+//     }
+//
+//     display: flex;
+//     align-items: center;
+//   }
+// }
+//
+// .mini-player {
+//   background-color: $bg-color;
+//   color: white;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   position: fixed;
+//   z-index: 2;
+//   bottom: 0;
+//   right: 0;
+//   left: 0;
+//   padding: 1.5rem 2rem;
+//
+//   img {
+//     max-width: 48px;
+//   }
+//
+//   p {
+//     margin-bottom: 0;
+//   }
+//
+//   .progress {
+//     flex-grow: 1;
+//     margin: 0 4rem;
+//     display: flex;
+//     align-items: center;
+//
+//     progress {
+//       margin: 1rem;
+//       flex-grow: 1;
+//     }
+//   }
+//
+//   .meta {
+//     margin: 0 1.2rem;
+//   }
+//
+//   .name, .artist-name, .button {
+//     display: block;
+//     margin-bottom: 0;
+//   }
+//
+//   .name {
+//     font-weight: bold;
+//   }
+//
+//   .device {
+//     font-size: 3rem;
+//     display: flex;
+//     margin-right: 1.5rem;
+//     align-items: center;
+//
+//     form {
+//       margin-bottom: 0;
+//       display: flex;
+//       align-items: center;
+//     }
+//
+//     select {
+//       margin-bottom: 0;
+//       background-color: white;
+//       margin-left: 1rem;
+//     }
+//   }
+//
+//   .controls a {
+//     font-size: 1.2em;
+//   }
+// }
+//
+// @media (max-width: 1024px) {
+//   .results {
+//     display: grid;
+//     grid-template-columns: repeat(6, 1fr);
+//     justify-items: center;
+//     margin-bottom: 8rem;
+//   }
+//
+//   .album-show {
+//     max-width: 80%;
+//   }
+//
+//   .artist-show {
+//     max-width: 80%;
+//
+//     .albums {
+//       display: grid;
+//       grid-template-columns: repeat(6, 1fr);
+//       justify-items: center;
+//     }
+//   }
+//
+//   .playlist-show {
+//     max-width: 80%;
+//
+//     > .meta {
+//       max-width: 75%;
+//     }
+//
+//     .albums {
+//       display: grid;
+//       grid-template-columns: repeat(6, 1fr);
+//       justify-items: center;
+//     }
+//   }
+//
+//   .top-albums {
+//     max-width: 80%;
+//       margin-bottom: 4rem;
+//   }
+//
+//   .artwork {
+//     .play-button {
+//       display: flex;
+//     }
+//   }
+// }
+//
+// @media (max-width: 768px) {
+//   header {
+//     float: none;
+//     margin-bottom: 1rem;
+//   }
+//
+//   .navbar {
+//     flex-direction: column;
+//
+//     $font-size: 1.5rem;
+//     .search form input {
+//       width: 8.4em;
+//       font-size: $font-size;
+//     }
+//
+//     select {
+//       font-size: $font-size;
+//     }
+//   }
+//
+//   .artwork {
+//     .play-button {
+//       display: flex;
+//     }
+//   }
+//
+//   .results {
+//     display: grid;
+//     grid-template-columns: repeat(3, 1fr);
+//     justify-items: center;
+//     margin-bottom: 12rem;
+//
+//     p {
+//       margin-bottom: 0;
+//     }
+//
+//     .name, .artist-name, .release-date {
+//       font-size: 1.2rem;
+//     }
+//   }
+//
+//   .album-show {
+//     margin: 2rem;
+//     display: flex;
+//     flex-direction: column;
+//     max-width: none;
+//     align-items: center;
+//
+//     .artwork {
+//       max-width: 14rem;
+//     }
+//
+//     .meta {
+//       h1 {
+//         font-size: 2.2rem;
+//         letter-spacing: -.08rem;
+//         line-height: 1.35;
+//       }
+//
+//       h2 {
+//         font-size: 1.8rem;
+//         letter-spacing: -.05rem;
+//         line-height: 1.5;
+//       }
+//
+//       h3 {
+//         font-size: 1.6rem;
+//         letter-spacing: 0;
+//         line-height: 1.4;
+//       }
+//     }
+//   }
+//
+//   .artist-show {
+//     display: flex;
+//     flex-direction: column;
+//     max-width: none;
+//     align-items: center;
+//
+//     > .artwork {
+//       max-width: 14rem;
+//     }
+//
+//     .reference-links {
+//       text-align: center;
+//     }
+//
+//     .albums {
+//       display: grid;
+//       grid-template-columns: repeat(3, 1fr);
+//       justify-items: center;
+//       margin-bottom: 4rem;
+//       column-gap: 0.5rem;
+//       padding: 1rem;
+//
+//       .artwork, .meta {
+//         max-width: 12rem;
+//       }
+//
+//       .name, .artist-name, .release-date {
+//         font-size: 1.2rem;
+//         margin-bottom: 0.2rem;
+//       }
+//     }
+//   }
+//
+//   .playlist-show {
+//     display: flex;
+//     flex-direction: column;
+//     max-width: none;
+//     align-items: center;
+//     margin: 2rem;
+//
+//     > .artwork {
+//       max-width: 14rem;
+//     }
+//
+//     .albums {
+//       display: grid;
+//       grid-template-columns: repeat(3, 1fr);
+//       justify-items: center;
+//       margin-bottom: 4rem;
+//       column-gap: 0.5rem;
+//
+//       .artwork, .meta {
+//         max-width: 12rem;
+//       }
+//
+//       .name, .artist-name, .release-date {
+//         font-size: 1.2rem;
+//         margin-bottom: 0.2rem;
+//       }
+//     }
+//   }
+//
+//   .top-albums {
+//     max-width: none;
+//   }
+//
+//   .mini-player {
+//     width: 100%;
+//     justify-content: space-between;
+//     flex-wrap: wrap;
+//
+//     .progress {
+//       flex-grow: 0;
+//       width: 100%;
+//       order: -1;
+//       margin: 0 1rem 1rem 1rem;
+//     }
+//
+//     .meta {
+//       flex-grow: 1;
+//       font-size: 1.2rem;
+//
+//       .name {
+//         display: inline-block;
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//         white-space: nowrap;
+//         max-width: 11rem;
+//       }
+//     }
+//
+//     .device {
+//       order: 5;
+//       margin: 1rem auto;
+//     }
+//   }
+// }
+//
