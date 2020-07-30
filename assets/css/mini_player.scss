@@ -1,0 +1,118 @@
+.mini-player {
+  background-color: $bg-color;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 1.5rem 2rem;
+
+  img {
+    max-width: 5rem;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  .progress {
+    flex-grow: 1;
+    margin: 0 4rem;
+    display: flex;
+    align-items: center;
+
+    progress {
+      margin: 1rem;
+      flex-grow: 1;
+    }
+  }
+
+  .meta {
+    margin: 0 1.2rem;
+  }
+
+  .name, .artist-name, .button {
+    display: block;
+    margin-bottom: 0;
+  }
+
+  .name {
+    font-weight: bold;
+  }
+
+  .device {
+    font-size: 3rem;
+    display: flex;
+    margin-right: 1.5rem;
+    align-items: center;
+
+    svg {
+      height: 3rem;
+      width: 3rem;
+    }
+
+    form {
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    select {
+      margin-bottom: 0;
+      background-color: white;
+      margin-left: 1rem;
+      width: 12rem;
+    }
+  }
+
+  .controls a {
+    font-size: 1.2em;
+  }
+}
+
+@media (max-width: 768px) {
+  .mini-player {
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .progress {
+      flex-grow: 0;
+      width: 100%;
+      order: -1;
+      margin: 0 1rem 1rem 1rem;
+    }
+
+    .meta {
+      flex-grow: 1;
+      font-size: 1.2rem;
+
+      .name {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 11rem;
+      }
+    }
+
+    .device {
+      margin: 1rem auto;
+
+      select {
+        margin-right: 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .mini-player {
+    .device {
+      order: 5;
+    }
+  }
+}

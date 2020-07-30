@@ -12,6 +12,7 @@
 @import "./tracklist";
 @import "./results";
 @import "./top_albums";
+@import "./mini_player";
 
 // .logged-out {
 //   clear: both;
@@ -391,75 +392,6 @@
 //   }
 // }
 //
-// .mini-player {
-//   background-color: $bg-color;
-//   color: white;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   position: fixed;
-//   z-index: 2;
-//   bottom: 0;
-//   right: 0;
-//   left: 0;
-//   padding: 1.5rem 2rem;
-//
-//   img {
-//     max-width: 48px;
-//   }
-//
-//   p {
-//     margin-bottom: 0;
-//   }
-//
-//   .progress {
-//     flex-grow: 1;
-//     margin: 0 4rem;
-//     display: flex;
-//     align-items: center;
-//
-//     progress {
-//       margin: 1rem;
-//       flex-grow: 1;
-//     }
-//   }
-//
-//   .meta {
-//     margin: 0 1.2rem;
-//   }
-//
-//   .name, .artist-name, .button {
-//     display: block;
-//     margin-bottom: 0;
-//   }
-//
-//   .name {
-//     font-weight: bold;
-//   }
-//
-//   .device {
-//     font-size: 3rem;
-//     display: flex;
-//     margin-right: 1.5rem;
-//     align-items: center;
-//
-//     form {
-//       margin-bottom: 0;
-//       display: flex;
-//       align-items: center;
-//     }
-//
-//     select {
-//       margin-bottom: 0;
-//       background-color: white;
-//       margin-left: 1rem;
-//     }
-//   }
-//
-//   .controls a {
-//     font-size: 1.2em;
-//   }
-// }
 //
 // @media (max-width: 1024px) {
 //   .results {

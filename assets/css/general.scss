@@ -61,6 +61,11 @@ a.reversed {
   button, .button {
     border-radius: 0;
 
+    svg {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
+
     &:first-child {
       border-top-left-radius: .4rem;
       border-bottom-left-radius: .4rem;
