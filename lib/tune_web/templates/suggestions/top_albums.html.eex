@@ -1,4 +1,4 @@
-<div class="top-albums">
+<article class="top-albums">
   <div class="filter">
     <h1>Top Albums</h1>
     <div class="controls button-group">
@@ -11,4 +11,4 @@
   <div class="results">
     <%= render_many @albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
   </div>
-</div>
+</article>
