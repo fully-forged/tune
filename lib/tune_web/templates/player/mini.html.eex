@@ -7,6 +7,11 @@
     <div class="mini-player">
       <div class="device">
         <%= render "icon_device.html", [] %>
+        <form action="#" method="get" phx-change="transfer_playback">
+          <select name="device" id="device" phx-change="transfer_playback">
+            <%= devices_options(@devices) %>
+          </select>
+        </form>
       </div>
       <%= live_patch to: TuneWeb.SearchView.result_link(item, @socket) do %>
         <%= img_tag thumbnail(item), alt: name(item) %>

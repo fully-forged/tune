@@ -27,4 +27,16 @@ defmodule TuneWeb.PlayerView do
   end
 
   defp author_link(%Episode{}, _socket), do: nil
+
+  defp devices_options([]), do: nil
+
+  defp devices_options(devices) do
+    active_device = Enum.find(devices, fn d -> d.is_active end)
+
+    devices
+    |> Enum.map(fn d ->
+      {d.name, d.id}
+    end)
+    |> options_for_select(active_device.id)
+  end
 end

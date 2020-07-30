@@ -3,6 +3,7 @@ defmodule Tune.Spotify.HttpApi do
   alias Tune.Spotify.Schema.{
     Album,
     Artist,
+    Device,
     Episode,
     Player,
     Playlist,
@@ -352,6 +353,38 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_devices(token()) :: {:ok, [Device.t()]} | {:error, term()}
+  def get_devices(token) do
+    case json_get(@base_url <> "/me/player/devices", auth_headers(token)) do
+      {:ok, %{status: 200} = response} ->
+        devices =
+          response.body
+          |> Jason.decode!()
+          |> Map.get("devices")
+          |> Enum.map(&parse_device/1)
+
+        {:ok, devices}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @spec transfer_playback(token(), Device.id()) :: :ok | {:error, term()}
+  def transfer_playback(token, device_id) do
+    params = %{
+      device_ids: [device_id]
+    }
+
+    case json_put(@base_url <> "/me/player", params, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end
@@ -669,6 +702,18 @@ defmodule Tune.Spotify.HttpApi do
             |> get_in([Access.all(), "track"])
             |> Enum.map(&parse_track/1)
         end
+    }
+  end
+
+  defp parse_device(device) do
+    %Device{
+      id: Map.get(device, "id"),
+      is_active: Map.get(device, "is_active"),
+      is_private_session: Map.get(device, "is_private_session"),
+      is_restricted: Map.get(device, "is_restricted"),
+      name: Map.get(device, "name"),
+      type: Map.get(device, "type"),
+      volume_percent: Map.get(device, "volume_percent")
     }
   end
 end

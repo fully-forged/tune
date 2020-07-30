@@ -31,6 +31,15 @@ defmodule TuneWeb.ExplorerLive do
       {:authenticated, session_id, user} ->
         now_playing = spotify().now_playing(session_id)
 
+        socket =
+          case spotify().get_devices(session_id) do
+            {:ok, devices} ->
+              assign(socket, :devices, devices)
+
+            _error ->
+              socket
+          end
+
         if connected?(socket) do
           Tune.Spotify.Session.subscribe(session_id)
         end
@@ -118,6 +127,16 @@ defmodule TuneWeb.ExplorerLive do
            suggestions_top_albums_time_range: time_range
          )}
 
+      _error ->
+        {:noreply, socket}
+    end
+  end
+
+  def handle_event("transfer_playback", %{"device" => device_id}, socket) do
+    with :ok <- spotify().transfer_playback(socket.assigns.session_id, device_id),
+         {:ok, devices} <- spotify().get_devices(socket.assigns.session_id) do
+      {:noreply, assign(socket, :devices, devices)}
+    else
       _error ->
         {:noreply, socket}
     end
