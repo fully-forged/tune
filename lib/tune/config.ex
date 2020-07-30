@@ -5,6 +5,8 @@ defmodule Tune.Config do
 
   use Vapor.Planner
 
+  dotenv()
+
   config :web,
          env([
            {:port, "PORT", map: &String.to_integer/1, required: false},
@@ -19,6 +21,4 @@ defmodule Tune.Config do
            spotify_client_id: "SPOTIFY_CLIENT_ID",
            spotify_client_secret: "SPOTIFY_CLIENT_SECRET"
          )
-
-  dotenv()
 end
