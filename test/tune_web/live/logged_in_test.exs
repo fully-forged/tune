@@ -250,7 +250,7 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   describe "item details" do
-    property "for an artist", %{conn: conn} do
+    property "it displays artist information", %{conn: conn} do
       check all(
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
@@ -275,7 +275,9 @@ defmodule TuneWeb.LoggedInTest do
           escaped_album_name = escape(album.name)
 
           assert html =~ escaped_album_name
+          assert html =~ Album.release_year(album)
           assert render(explorer_live) =~ escaped_album_name
+          assert render(explorer_live) =~ Album.release_year(album)
         end
 
         escaped_artist_name = escape(artist.name)

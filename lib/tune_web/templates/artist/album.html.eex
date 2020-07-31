@@ -1,0 +1,16 @@
+<div class="result" data-test-id="<%= @album.id %>">
+  <div class="artwork">
+    <div class="play-button" phx-click="play" phx-value-uri="<%= @album.uri %>">
+      <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+    </div>
+    <%= img_tag thumbnail(@album), alt: @album.name %>
+  </div>
+  <div class="meta">
+    <%= live_patch to: Routes.explorer_path(@socket, :album_details, @album.id) do %>
+      <p class="name"><%= @album.name %></p>
+    <% end %>
+    <div class="footer">
+      <p class="release-date"><%= Album.release_year(@album) %></p>
+    </div>
+  </div>
+</div>

@@ -3,8 +3,9 @@ defmodule TuneWeb.ArtistView do
   use TuneWeb, :view
 
   @default_artwork "https://via.placeholder.com/300"
+  @default_medium_thumbnail "https://via.placeholder.com/150"
 
-  alias Tune.Spotify.Schema.Artist
+  alias Tune.Spotify.Schema.{Album, Artist}
 
   @spec artwork(Artist.t()) :: String.t()
   defp artwork(%Artist{thumbnails: thumbnails}),
@@ -24,5 +25,12 @@ defmodule TuneWeb.ArtistView do
       "https://www.last.fm/music",
       URI.encode(artist.name)
     ])
+  end
+
+  @spec thumbnail(Album.t()) :: String.t()
+  defp thumbnail(%Album{thumbnails: thumbnails}) do
+    Enum.find_value(thumbnails, @default_medium_thumbnail, fn {size, url} ->
+      if size in [:medium, :large], do: url
+    end)
   end
 end
