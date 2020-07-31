@@ -17,7 +17,6 @@
       <% else %>
         <p class="artist-name"><%= author_name(@item) %></p>
       <% end %>
-      <p class="release-date"><%= release_date(@item) %></p>
     </div>
   </div>
 </div>
