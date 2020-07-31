@@ -1,6 +1,6 @@
 <nav class="navbar">
   <div class="logo">
-    <%= link to: Routes.explorer_path(@conn, :suggestions) do %>
+    <%= link to: Routes.explorer_path(@conn, :suggestions), aria_label: gettext("Go to Suggestions") do %>
       <%= render "logo.html", [] %>
     <% end %>
   </div>

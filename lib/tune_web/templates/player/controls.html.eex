@@ -1,8 +1,8 @@
 <div class="controls button-group">
-  <a class="button button-small" href="#" phx-click="prev">
+  <a class="button button-small" href="#" phx-click="prev" aria-label="Previous">
     <%= render "icon_prev.html", [] %>
   </a>
-  <a class="button button-small" href="#" phx-click="toggle_play_pause">
+  <a class="button button-small" href="#" phx-click="toggle_play_pause" aria-label="Play or Pause">
     <%= case @status do %>
       <% :playing -> %>
         <%= render "icon_pause.html", [] %>
@@ -10,7 +10,7 @@
         <%= render "icon_play.html", [] %>
       <% end %>
   </a>
-  <a class="button button-small" href="#" phx-click="next">
+  <a class="button button-small" href="#" phx-click="next" aria-label="Next">
     <%= render "icon_next.html", [] %>
   </a>
 </div>

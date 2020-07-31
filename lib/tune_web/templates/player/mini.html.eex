@@ -8,6 +8,7 @@
       <div class="device">
         <%= render "icon_device.html", [] %>
         <form action="#" method="get" phx-change="transfer_playback">
+          <%= content_tag :label, gettext("Switch playback device"), for: "device", class: "visually-hidden" %>
           <select name="device" id="device" phx-change="transfer_playback">
             <%= devices_options(@devices) %>
           </select>

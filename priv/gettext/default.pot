@@ -171,3 +171,13 @@ msgstr ""
 #: lib/tune_web/templates/suggestions/top_albums.html.eex:5
 msgid "Short Term"
 msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/header.html.eex:3
+msgid "Go to Suggestions"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/player/mini.html.eex:11
+msgid "Switch playback device"
+msgstr ""
