@@ -1,6 +1,6 @@
 .results {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   column-gap: 2rem;
 
   .name, .artist-name, .release-date {
@@ -23,14 +23,14 @@
 
 @media (max-width: 1024px) {
   .results {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     column-gap: 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .results {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
