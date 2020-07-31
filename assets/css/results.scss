@@ -31,6 +31,7 @@
 @media (max-width: 768px) {
   .results {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    font-size: 0.9em;
   }
 }
 
