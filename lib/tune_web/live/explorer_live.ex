@@ -143,8 +143,8 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @impl true
-  def handle_info(now_playing, socket) do
-    {:noreply, assign(socket, :now_playing, now_playing)}
+  def handle_info({:now_playing, player}, socket) do
+    {:noreply, assign(socket, :now_playing, player)}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)

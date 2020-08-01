@@ -72,13 +72,13 @@ defmodule TuneWeb.LoggedInTest do
         assert html =~ escaped_item_name
         assert render(explorer_live) =~ escaped_item_name
 
-        now_playing = %Player{
+        player = %Player{
           status: :playing,
           item: second_item,
           progress_ms: second_item.duration_ms - 100
         }
 
-        send(explorer_live.pid, now_playing)
+        send(explorer_live.pid, {:now_playing, player})
 
         escaped_item_name = escape(second_item.name)
 
