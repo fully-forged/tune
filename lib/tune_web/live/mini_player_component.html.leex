@@ -6,7 +6,7 @@
   <% %{status: status, item: item, progress_ms: progress_ms} -> %>
     <div class="mini-player">
       <div class="device">
-        <%= render "icon_device.html", [] %>
+        <%= render PlayerView, "icon_device.html", [] %>
         <form action="#" method="get" phx-change="transfer_playback">
           <%= content_tag :label, gettext("Switch playback device"), for: "device", class: "visually-hidden" %>
           <select name="device" id="device" phx-change="transfer_playback">
@@ -17,8 +17,8 @@
       <%= live_patch to: TuneWeb.SearchView.result_link(item, @socket) do %>
         <%= img_tag thumbnail(item), alt: name(item) %>
       <% end %>
-      <%= render "meta.html", item: item, socket: @socket %>
-      <%= render "progress.html", item: item, progress_ms: progress_ms %>
-      <%= render "controls.html", status: status %>
+      <%= render PlayerView, "meta.html", item: item, socket: @socket %>
+      <%= live_component @socket, ProgressBarComponent, id: :progress_bar, progress_ms: progress_ms, total_duration_ms: item.duration_ms %>
+      <%= render PlayerView, "controls.html", status: status %>
     </div>
 <% end %>

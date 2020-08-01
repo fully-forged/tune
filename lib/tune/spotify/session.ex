@@ -13,6 +13,8 @@ defmodule Tune.Spotify.Session do
   @type uri :: String.t()
   @type item_id :: String.t()
 
+  @type message :: {:now_playing, Schema.Player.t()}
+
   @callback setup(id(), credentials()) :: :ok | {:error, term()}
   @callback get_profile(id()) :: {:ok, Schema.User.t()} | {:error, term()}
   @callback now_playing(id()) :: Schema.Player.t() | {:error, term()}
@@ -38,7 +40,7 @@ defmodule Tune.Spotify.Session do
     PubSub.subscribe(Tune.PubSub, session_id)
   end
 
-  @spec broadcast(id(), term()) :: :ok | {:error, term()}
+  @spec broadcast(id(), message()) :: :ok | {:error, term()}
   def broadcast(session_id, message) do
     PubSub.broadcast(Tune.PubSub, session_id, message)
   end

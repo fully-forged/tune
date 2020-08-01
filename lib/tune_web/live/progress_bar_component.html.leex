@@ -5,11 +5,11 @@
     id="progress-bar"
     value="<%= @progress_ms %>"
     aria-valuenow="<%= @progress_ms %>"
-    max="<%= @item.duration_ms %>"
-    aria-valuemax="<%= @item.duration_ms %>"
+    max="<%= @total_duration_ms %>"
+    aria-valuemax="<%= @total_duration_ms %>"
     phx-hook="ProgressBar"
     tabindex="0">
     <%= Tune.Duration.hms(@progress_ms) %>
   </progress>
-  <span class="total_duration"><%= Tune.Duration.hms(@item.duration_ms) %></span>
+  <span class="total_duration"><%= Tune.Duration.hms(@total_duration_ms) %></span>
 </div>

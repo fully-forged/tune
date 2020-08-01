@@ -14,4 +14,19 @@ defmodule Tune.Spotify.Schema.Player do
           item: Schema.Track.t() | Schema.Episode.t(),
           progress_ms: Duration.milliseconds()
         }
+
+  def changes(%__MODULE__{status: status1}, %__MODULE__{status: status2})
+      when status1 !== status2 do
+    :status_changed
+  end
+
+  def changes(%__MODULE__{item: item1}, %__MODULE__{item: item2})
+      when item1 !== item2 do
+    :item_changed
+  end
+
+  def changes(%__MODULE__{progress_ms: progress_ms1}, %__MODULE__{progress_ms: progress_ms2})
+      when progress_ms1 !== progress_ms2 do
+    :progress_changed
+  end
 end

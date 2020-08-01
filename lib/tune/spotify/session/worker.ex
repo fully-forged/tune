@@ -180,7 +180,7 @@ defmodule Tune.Spotify.Session.Worker do
 
       {:ok, now_playing} ->
         if data.now_playing !== now_playing do
-          Tune.Spotify.Session.broadcast(data.session_id, now_playing)
+          Tune.Spotify.Session.broadcast(data.session_id, {:now_playing, now_playing})
         end
 
         data = %{data | now_playing: now_playing}

@@ -9,8 +9,16 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
-  alias Tune.Spotify.Schema.Album
-  alias TuneWeb.{AlbumView, ArtistView, PlayerView, SearchView, SuggestionsView}
+  alias Tune.Spotify.Schema.{Album, Player}
+
+  alias TuneWeb.{
+    AlbumView,
+    ArtistView,
+    MiniPlayerComponent,
+    ProgressBarComponent,
+    SearchView,
+    SuggestionsView
+  }
 
   @initial_state [
     q: nil,
@@ -143,8 +151,15 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   @impl true
-  def handle_info(now_playing, socket) do
-    {:noreply, assign(socket, :now_playing, now_playing)}
+  def handle_info({:now_playing, player}, socket) do
+    case Player.changes(socket.assigns.now_playing, player) do
+      :progress_changed ->
+        send_update(ProgressBarComponent, id: :progress_bar, progress_ms: player.progress_ms)
+        {:noreply, socket}
+
+      _status_or_item_changed ->
+        {:noreply, assign(socket, :now_playing, player)}
+    end
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
