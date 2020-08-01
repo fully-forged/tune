@@ -36,5 +36,5 @@
         <p>Cannot display this item yet.</p>
       </div>
     <% end %>
-  <%= render PlayerView, "mini.html", now_playing: @now_playing, devices: @devices, socket: @socket %>
+  <%= live_component @socket, MiniPlayerComponent, now_playing: @now_playing, devices: @devices, id: :mini_player %>
 </section>
