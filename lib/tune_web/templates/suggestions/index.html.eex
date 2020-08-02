@@ -2,7 +2,7 @@
   <% :not_present -> %>
     <%= content_tag :p, gettext("Cannot display Release Radar - Make sure you have access to the playlist") %>
   <% playlist -> %>
-    <%= render "playlist.html", playlist: playlist, now_playing: @now_playing, socket: @socket %>
+    <%= render PlaylistView, "show.html", playlist: playlist, now_playing: @now_playing, socket: @socket %>
   <% end %>
 <%= case @suggestions_top_albums do %>
   <% :not_fetched -> %>
