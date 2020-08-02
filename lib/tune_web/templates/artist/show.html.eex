@@ -14,7 +14,7 @@
           <%= content_tag :span, gettext("Open in Wikipedia"), class: "visually-hidden" %>
         <% end %>
         <%= link to: last_fm_link(@artist), target: "_blank", class: "svg-link last-fm" do %>
-          <%= render TuneWeb.AlbumView, "icon_last_fm.html", [] %>
+          <%= render TuneWeb.TrackView, "icon_last_fm.html", [] %>
           <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
         <% end %>
       </div>

@@ -23,10 +23,10 @@
       <%= if Album.has_multiple_discs?(@album) do %>
         <%= for {disc, tracks} <- Album.grouped_tracks(@album) do %>
             <p>Disc <%= disc %></p>
-            <%= render "tracklist.html", tracks: tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
+            <%= render TrackView, "list.html", tracks: tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
         <% end %>
       <% else %>
-        <%= render "tracklist.html", tracks: @album.tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
+        <%= render TrackView, "list.html", tracks: @album.tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
       <% end %>
     </div>
   </section>
