@@ -150,12 +150,12 @@ msgid "Type filter"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.html.leex:14
+#: lib/tune_web/templates/suggestions/index.html.eex:3
 msgid "Cannot display Release Radar - Make sure you have access to the playlist"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.html.leex:20
+#: lib/tune_web/templates/suggestions/index.html.eex:9
 msgid "Cannot display top albums"
 msgstr ""
 
