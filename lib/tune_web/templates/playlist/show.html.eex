@@ -9,6 +9,7 @@
     <div class="meta">
       <%= content_tag :h1, @playlist.name %>
       <%= content_tag :p, @playlist.description %>
+      <%= content_tag :p, total_duration(@playlist), class: "total-duration" %>
     </div>
   </section>
   <section class="items">
