@@ -22,12 +22,16 @@ defmodule TuneWeb.MiniPlayerComponent do
   defp devices_options([]), do: nil
 
   defp devices_options(devices) do
-    active_device = Enum.find(devices, fn d -> d.is_active end)
+    active_device_id =
+      case Enum.find(devices, fn d -> d.is_active end) do
+        nil -> nil
+        active_device -> active_device.id
+      end
 
     devices
     |> Enum.map(fn d ->
       {d.name, d.id}
     end)
-    |> options_for_select(active_device.id)
+    |> options_for_select(active_device_id)
   end
 end
