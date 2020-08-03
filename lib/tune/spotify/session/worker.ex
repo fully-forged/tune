@@ -128,8 +128,13 @@ defmodule Tune.Spotify.Session.Worker do
     case HttpApi.get_profile(data.credentials.token) do
       {:ok, user} ->
         data = %{data | user: user}
-        action = {:next_event, :internal, :get_now_playing}
-        {:next_state, :authenticated, data, action}
+
+        actions = [
+          {:next_event, :internal, :get_now_playing},
+          {:state_timeout, @now_playing_refresh_interval, :get_now_playing}
+        ]
+
+        {:next_state, :authenticated, data, actions}
 
       {:error, :invalid_token} ->
         {:stop, :invalid_token}
@@ -255,17 +260,8 @@ defmodule Tune.Spotify.Session.Worker do
         action = {:reply, from, {:ok, results}}
         {:keep_state_and_data, action}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -280,17 +276,8 @@ defmodule Tune.Spotify.Session.Worker do
         action = {:reply, from, {:ok, tracks}}
         {:keep_state_and_data, action}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -309,17 +296,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -338,17 +316,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -367,17 +336,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -396,17 +356,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -424,17 +375,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -452,17 +394,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -480,17 +413,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -508,17 +432,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -536,17 +451,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -559,17 +465,8 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
-      {:error, :expired_token} ->
-        action = {:next_event, :internal, :refresh}
-        {:next_state, :expired, data, action}
-
-      {:error, :invalid_token} ->
-        {:stop, :invalid_token}
-
-      # abnormal http error
       error ->
-        action = {:reply, from, error}
-        {:keep_state_and_data, action}
+        handle_common_errors(error, data, from)
     end
   end
 
@@ -582,6 +479,18 @@ defmodule Tune.Spotify.Session.Worker do
 
         {:keep_state_and_data, actions}
 
+      error ->
+        handle_common_errors(error, data, from)
+    end
+  end
+
+  def handle_event({:call, from}, _request, _state, _data) do
+    action = {:reply, from, {:error, :not_authenticated}}
+    {:keep_state_and_data, action}
+  end
+
+  defp handle_common_errors(error, data, from) do
+    case error do
       {:error, :expired_token} ->
         action = {:next_event, :internal, :refresh}
         {:next_state, :expired, data, action}
@@ -590,15 +499,10 @@ defmodule Tune.Spotify.Session.Worker do
         {:stop, :invalid_token}
 
       # abnormal http error
-      error ->
-        action = {:reply, from, error}
+      other ->
+        action = {:reply, from, other}
         {:keep_state_and_data, action}
     end
-  end
-
-  def handle_event({:call, from}, _request, _state, _data) do
-    action = {:reply, from, {:error, :not_authenticated}}
-    {:keep_state_and_data, action}
   end
 
   defp via(token) do
