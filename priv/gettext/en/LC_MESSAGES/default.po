@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:285
+#: lib/tune_web/live/explorer_live.ex:284
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:289
+#: lib/tune_web/live/explorer_live.ex:288
 msgid "Spotify error: %{reason}"
 msgstr ""
 

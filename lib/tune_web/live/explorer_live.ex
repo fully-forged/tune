@@ -201,8 +201,7 @@ defmodule TuneWeb.ExplorerLive do
       {:error, :not_present} ->
         {:noreply, assign(socket, :suggestions_playlist, :not_present)}
 
-      error ->
-        error |> IO.inspect()
+      _error ->
         {:noreply, socket}
     end
   end
