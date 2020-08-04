@@ -11,8 +11,10 @@ defmodule Tune.Spotify.Schema.Artist do
   @enforce_keys [:id, :uri, :name, :albums, :thumbnails]
   defstruct [:id, :uri, :name, :albums, :thumbnails]
 
+  @type id :: Schema.id()
+
   @type t :: %__MODULE__{
-          id: Schema.id(),
+          id: id(),
           uri: Schema.uri(),
           name: String.t(),
           albums: [Album.t()] | :not_fetched,
