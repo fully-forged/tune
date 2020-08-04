@@ -52,12 +52,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:260
+#: lib/tune_web/live/explorer_live.ex:285
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:264
+#: lib/tune_web/live/explorer_live.ex:289
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -155,21 +155,25 @@ msgstr ""
 
 #, elixir-format
 #: lib/tune_web/templates/suggestions/index.html.eex:9
+#: lib/tune_web/templates/suggestions/index.html.eex:20
 msgid "Cannot display top albums"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+#: lib/tune_web/templates/suggestions/recommended_tracks.html.eex:8
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:8
 msgid "Long Term"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+#: lib/tune_web/templates/suggestions/recommended_tracks.html.eex:8
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:8
 msgid "Medium Term"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+#: lib/tune_web/templates/suggestions/recommended_tracks.html.eex:8
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:8
 msgid "Short Term"
 msgstr ""
 
@@ -181,4 +185,24 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/live/mini_player_component.html.leex:11
 msgid "Switch playback device"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:5
+msgid "Generated from Top Tracks."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/recommended_tracks.html.eex:5
+msgid "Generated from Top Tracks. Setting the time range generates a new recommendation list every time."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/recommended_tracks.html.eex:4
+msgid "Recommended Tracks"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/top_albums.html.eex:4
+msgid "Top Albums"
 msgstr ""

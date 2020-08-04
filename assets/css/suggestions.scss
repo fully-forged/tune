@@ -1,18 +1,23 @@
-.top-albums {
+.top-albums, .recommended-tracks {
   margin-top: 2rem;
 
   .filter {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    h1 {
+      margin-bottom: 0;
+    }
   }
 }
 
 @media (max-width: 768px) {
-  .top-albums {
+  .top-albums, .recommended-tracks {
     .filter {
       flex-direction: column;
       margin-bottom: 2rem;
+      text-align: center;
     }
   }
 }
