@@ -385,6 +385,32 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec get_recommendations_from_artists(token(), [Artist.id()]) ::
+          {:ok, [Track.t()]} | {:error, term()}
+  def get_recommendations_from_artists(token, artist_ids) do
+    params = %{
+      seed_artists: Enum.join(artist_ids, ","),
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/recommendations" <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        tracks =
+          response.body
+          |> Jason.decode!()
+          |> Map.get("tracks")
+          |> Enum.map(&parse_track/1)
+
+        {:ok, tracks}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   defp auth_headers(token) do
     [{"Authorization", "Bearer #{token}"}]
   end

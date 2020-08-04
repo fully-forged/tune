@@ -1,0 +1,17 @@
+<article class="recommended-tracks">
+  <div class="filter">
+    <div class="meta">
+      <%= content_tag :h1, gettext("Recommended Tracks") %>
+      <%= content_tag :p, gettext("Generated from Top Tracks. Setting the time range generates a new recommendation list every time.") %>
+    </div>
+    <div class="controls button-group">
+      <%= for {time_range, label} <- [{"short_term", gettext("Short Term")}, {"medium_term", gettext("Medium Term")}, {"long_term", gettext("Long Term")}] do %>
+        <% active_class = if @suggestions_recommended_tracks_time_range == time_range, do: "active" %>
+        <%= link label, to: "#", class: "button button-small reversed #{active_class}", phx_click: "set_recommended_tracks_time_range", phx_value_time_range: time_range %>
+      <% end %>
+    </div>
+  </div>
+  <div class="results">
+    <%= render_many @tracks, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+  </div>
+</article>

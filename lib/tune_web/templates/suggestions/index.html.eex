@@ -14,3 +14,14 @@
       now_playing: @now_playing,
       socket: @socket %>
   <% end %>
+
+<%= case @suggestions_recommended_tracks do %>
+  <% :not_fetched -> %>
+    <%= content_tag :p, gettext("Cannot display top albums") %>
+  <% tracks -> %>
+    <%= render "recommended_tracks.html",
+      tracks: tracks,
+      suggestions_recommended_tracks_time_range: @suggestions_recommended_tracks_time_range,
+      now_playing: @now_playing,
+      socket: @socket %>
+  <% end %>
