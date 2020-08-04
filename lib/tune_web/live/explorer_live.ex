@@ -30,7 +30,7 @@ defmodule TuneWeb.ExplorerLive do
     results_per_page: 32,
     suggestions_playlist: :not_fetched,
     suggestions_top_albums: :not_fetched,
-    suggestions_top_albums_time_range: "medium_term"
+    suggestions_top_albums_time_range: "short_term"
   ]
 
   @impl true
