@@ -109,6 +109,11 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def get_recommendations_from_artists(session_id, artist_ids) do
+    GenStateMachine.call(via(session_id), {:get_recommendations_from_artists, artist_ids})
+  end
+
+  @impl true
   def transfer_playback(session_id, device_id) do
     GenStateMachine.call(via(session_id), {:transfer_playback, device_id})
   end
@@ -461,6 +466,25 @@ defmodule Tune.Spotify.Session.Worker do
       {:ok, devices} ->
         actions = [
           {:reply, from, {:ok, devices}}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      error ->
+        handle_common_errors(error, data, from)
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        {:get_recommendations_from_artists, artist_ids},
+        :authenticated,
+        data
+      ) do
+    case HttpApi.get_recommendations_from_artists(data.credentials.token, artist_ids) do
+      {:ok, tracks} ->
+        actions = [
+          {:reply, from, {:ok, tracks}}
         ]
 
         {:keep_state_and_data, actions}
