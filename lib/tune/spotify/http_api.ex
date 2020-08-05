@@ -104,6 +104,24 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec play(token(), String.t(), String.t()) :: :ok | {:error, term()}
+  def play(token, uri, context_uri) do
+    payload = %{
+      context_uri: context_uri,
+      offset: %{
+        uri: uri
+      }
+    }
+
+    case json_put(@base_url <> "/me/player/play", payload, auth_headers(token)) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   @spec pause(token()) :: :ok | {:error, term()}
   def pause(token) do
     case json_put(@base_url <> "/me/player/pause", %{}, auth_headers(token)) do

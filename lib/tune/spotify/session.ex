@@ -11,6 +11,7 @@ defmodule Tune.Spotify.Session do
   @type credentials :: Ueberauth.Auth.Credentials.t()
 
   @type uri :: String.t()
+  @type context_uri :: String.t()
   @type item_id :: String.t()
 
   @type message :: {:now_playing, Schema.Player.t()}
@@ -20,6 +21,7 @@ defmodule Tune.Spotify.Session do
   @callback now_playing(id()) :: Schema.Player.t() | {:error, term()}
   @callback toggle_play(id()) :: :ok | {:error, term()}
   @callback play(id(), uri()) :: :ok | {:error, term()}
+  @callback play(id(), uri(), context_uri()) :: :ok | {:error, term()}
   @callback next(id()) :: :ok | {:error, term()}
   @callback seek(id(), Duration.milliseconds()) :: :ok | {:error, term()}
   @callback prev(id()) :: :ok | {:error, term()}

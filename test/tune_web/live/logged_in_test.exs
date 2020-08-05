@@ -382,7 +382,7 @@ defmodule TuneWeb.LoggedInTest do
         track_uri = track.uri
 
         Tune.Spotify.SessionMock
-        |> expect(:play, 1, fn ^session_id, ^track_uri -> :ok end)
+        |> expect(:play, 1, fn ^session_id, ^track_uri, ^album_uri -> :ok end)
 
         assert explorer_live
                |> element("[data-test-id=#{track.id}] .name")

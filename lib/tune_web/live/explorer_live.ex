@@ -100,6 +100,12 @@ defmodule TuneWeb.ExplorerLive do
     |> handle_device_operation_result(socket)
   end
 
+  def handle_event("play", %{"uri" => uri, "context-uri" => context_uri}, socket) do
+    socket.assigns.session_id
+    |> spotify().play(uri, context_uri)
+    |> handle_device_operation_result(socket)
+  end
+
   def handle_event("play", %{"uri" => uri}, socket) do
     socket.assigns.session_id
     |> spotify().play(uri)
