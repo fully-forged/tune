@@ -1,12 +1,14 @@
 <%= case @suggestions_playlist do %>
+  <% :not_fetched -> %>
+    <%= content_tag :p, gettext("Cannot display Release Radar.") %>
   <% :not_present -> %>
-    <%= content_tag :p, gettext("Cannot display Release Radar - Make sure you have access to the playlist") %>
+    <%= content_tag :p, gettext("Cannot display Release Radar - Make sure you have access to the playlist.") %>
   <% playlist -> %>
     <%= render PlaylistView, "show.html", playlist: playlist, now_playing: @now_playing, socket: @socket %>
   <% end %>
 <%= case @suggestions_top_albums do %>
   <% :not_fetched -> %>
-    <%= content_tag :p, gettext("Cannot display top albums") %>
+    <%= content_tag :p, gettext("Cannot display top albums.") %>
   <% albums -> %>
     <%= render "top_albums.html",
       albums: albums,
@@ -17,7 +19,7 @@
 
 <%= case @suggestions_recommended_tracks do %>
   <% :not_fetched -> %>
-    <%= content_tag :p, gettext("Cannot display top albums") %>
+    <%= content_tag :p, gettext("Cannot display top albums.") %>
   <% tracks -> %>
     <%= render "recommended_tracks.html",
       tracks: tracks,

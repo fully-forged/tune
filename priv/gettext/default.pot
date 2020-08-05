@@ -108,12 +108,12 @@ msgid "Not playing"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:18
+#: lib/tune_web/templates/artist/show.html.eex:24
 msgid "Open in Last.fm"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:14
+#: lib/tune_web/templates/artist/show.html.eex:20
 msgid "Open in Wikipedia"
 msgstr ""
 
@@ -146,17 +146,6 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/header/search.html.eex:5
 msgid "Type filter"
-msgstr ""
-
-#, elixir-format
-#: lib/tune_web/templates/suggestions/index.html.eex:3
-msgid "Cannot display Release Radar - Make sure you have access to the playlist"
-msgstr ""
-
-#, elixir-format
-#: lib/tune_web/templates/suggestions/index.html.eex:9
-#: lib/tune_web/templates/suggestions/index.html.eex:20
-msgid "Cannot display top albums"
 msgstr ""
 
 #, elixir-format
@@ -213,3 +202,19 @@ msgid "1 episode"
 msgid_plural "%{count} episodes"
 msgstr[0] ""
 msgstr[1] ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/index.html.eex:5
+msgid "Cannot display Release Radar - Make sure you have access to the playlist."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/index.html.eex:3
+msgid "Cannot display Release Radar."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/index.html.eex:11
+#: lib/tune_web/templates/suggestions/index.html.eex:22
+msgid "Cannot display top albums."
+msgstr ""
