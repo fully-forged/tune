@@ -17,6 +17,7 @@ defmodule TuneWeb.ExplorerLive do
     MiniPlayerComponent,
     ProgressBarComponent,
     SearchView,
+    ShowView,
     SuggestionsView
   }
 

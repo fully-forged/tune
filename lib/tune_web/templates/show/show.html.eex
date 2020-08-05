@@ -1,0 +1,21 @@
+<article class="item" data-test-id="<%= @show.id %>">
+  <section class="details">
+    <div class="artwork">
+      <div class="play-button" phx-click="play" phx-value-uri="<%= @show.uri %>">
+        <%= render TuneWeb.PlayerView, "icon_play.html", []%>
+      </div>
+      <%= img_tag artwork(@show), alt: @show.name %>
+    </div>
+    <div class="meta">
+      <%= content_tag :h1, @show.name %>
+      <%= content_tag :p, @show.description %>
+      <%= content_tag :p do %>
+        <%= content_tag :span, @show.publisher.name, class: "publisher" %>
+        ·
+        <%= content_tag :span, total_episodes(@show.total_episodes), class: "total-episodes" %>
+      <% end %>
+    </div>
+  </section>
+  <section class="items">
+  </section>
+</article>
