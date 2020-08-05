@@ -508,9 +508,9 @@ defmodule Tune.Spotify.HttpApi do
           {:error, :invalid_token}
         end
 
-      {:ok, %{status: status}} ->
+      {:ok, %{status: status, body: body}} ->
         Logger.warn(fn ->
-          "Spotify HTTP Api error: #{status}"
+          "Spotify HTTP Api error: #{status}, #{body}"
         end)
 
         {:error, status}
