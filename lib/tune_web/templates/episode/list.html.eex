@@ -1,0 +1,19 @@
+<ul class="episodes">
+  <%= for episode <- @episodes do %>
+    <%= if playing?(episode, @now_playing) do %>
+      <li class="playing" data-test-id="<%= episode.id %>">
+        <span class="playing-indicator">&#127926;</span>
+        <span class="name" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= episode.name %></span>
+        <span class="duration"><%= Tune.Duration.hms(episode.duration_ms) %></span>
+        <p class="description" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= episode.description %></p>
+      </li>
+    <% else %>
+      <li data-test-id="<%= episode.id %>">
+        <span class="playing-indicator">&nbsp;</span>
+        <span class="name" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= episode.name %></span>
+        <span class="duration"><%= Tune.Duration.hms(episode.duration_ms) %></span>
+        <p class="description" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= episode.description %></p>
+      </li>
+    <% end %>
+  <% end %>
+</ul>

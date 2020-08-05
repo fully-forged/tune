@@ -260,10 +260,11 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp handle_show_details(%{"show_id" => show_id}, _url, socket) do
-    case spotify().get_show(socket.assigns.session_id, show_id) do
-      {:ok, show} ->
-        {:noreply, assign(socket, :item, show)}
-
+    with {:ok, show} <- spotify().get_show(socket.assigns.session_id, show_id),
+         {:ok, episodes} <- spotify().get_episodes(socket.assigns.session_id, show_id) do
+      show = %{show | episodes: episodes}
+      {:noreply, assign(socket, :item, show)}
+    else
       _error ->
         {:noreply, socket}
     end

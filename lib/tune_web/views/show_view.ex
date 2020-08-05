@@ -3,6 +3,7 @@ defmodule TuneWeb.ShowView do
   use TuneWeb, :view
 
   alias Tune.Spotify.Schema.Show
+  alias TuneWeb.EpisodeView
 
   @default_artwork "https://via.placeholder.com/300"
 

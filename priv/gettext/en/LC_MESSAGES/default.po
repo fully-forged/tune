@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:285
+#: lib/tune_web/live/explorer_live.ex:286
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:289
+#: lib/tune_web/live/explorer_live.ex:290
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -208,8 +208,8 @@ msgstr ""
 msgid "Top Albums"
 msgstr ""
 
-#, elixir-format, fuzzy
-#: lib/tune_web/views/show_view.ex:15
+#, elixir-format
+#: lib/tune_web/views/show_view.ex:16
 msgid "1 episode"
 msgid_plural "%{count} episodes"
 msgstr[0] ""

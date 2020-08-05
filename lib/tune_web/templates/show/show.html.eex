@@ -17,5 +17,8 @@
     </div>
   </section>
   <section class="items">
+    <div class="episode-list">
+      <%= render EpisodeView, "list.html", episodes: @show.episodes, now_playing: @now_playing %>
+    </div>
   </section>
 </article>

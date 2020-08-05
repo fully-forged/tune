@@ -156,6 +156,7 @@ defmodule Tune.Generators do
         uri: "spotify:show:" <> id,
         name: name,
         description: description,
+        episodes: :not_fetched,
         publisher: publisher,
         thumbnails: thumbnails,
         total_episodes: total_episodes
