@@ -63,12 +63,12 @@ msgid "Spotify error: %{reason}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:15
+#: lib/tune_web/templates/header/search.html.eex:8
 msgid "Album"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:16
+#: lib/tune_web/templates/header/search.html.eex:9
 msgid "Artist"
 msgstr ""
 
@@ -79,7 +79,7 @@ msgid "Current track position"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:17
+#: lib/tune_web/templates/header/search.html.eex:10
 msgid "Episode"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgid "Login via Spotify"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:27
+#: lib/tune_web/templates/header/profile.html.eex:4
 msgid "Logout"
 msgstr ""
 
@@ -119,23 +119,23 @@ msgid "Open in Wikipedia"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:11
-#: lib/tune_web/templates/layout/header.html.eex:11 lib/tune_web/templates/layout/header.html.eex:21
+#: lib/tune_web/templates/header/search.html.eex:4
+#: lib/tune_web/templates/header/search.html.eex:4 lib/tune_web/templates/header/search.html.eex:14
 msgid "Search"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:10
+#: lib/tune_web/templates/header/search.html.eex:3
 msgid "Search query"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:18
+#: lib/tune_web/templates/header/search.html.eex:11
 msgid "Show"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:14
+#: lib/tune_web/templates/header/search.html.eex:7
 msgid "Track"
 msgstr ""
 
@@ -145,7 +145,7 @@ msgid "Try and search for a song you love"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:12
+#: lib/tune_web/templates/header/search.html.eex:5
 msgid "Type filter"
 msgstr ""
 
@@ -179,7 +179,7 @@ msgid "Short Term"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/header.html.eex:3
+#: lib/tune_web/templates/header/logo.html.eex:2
 msgid "Go to Suggestions"
 msgstr ""
 
