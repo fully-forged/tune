@@ -89,7 +89,7 @@ defmodule Tune.Spotify.HttpApi do
   @spec play(token(), String.t()) :: :ok | {:error, term()}
   def play(token, uri) do
     payload =
-      if uri =~ "track" do
+      if uri =~ "track" or uri =~ "episode" do
         %{uris: [uri]}
       else
         %{context_uri: uri}
@@ -324,6 +324,30 @@ defmodule Tune.Spotify.HttpApi do
           |> parse_show()
 
         {:ok, show}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @spec get_episodes(token(), String.t()) :: {:ok, [Episode.t()]} | {:error, term()}
+  def get_episodes(token, show_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/shows/" <> show_id <> "/episodes" <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        episodes =
+          response.body
+          |> Jason.decode!()
+          |> Map.get("items")
+          |> Enum.map(&parse_episode/1)
+
+        {:ok, episodes}
 
       other_response ->
         handle_errors(other_response)
@@ -637,6 +661,7 @@ defmodule Tune.Spotify.HttpApi do
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       description: Map.get(item, "description"),
+      episodes: :not_fetched,
       publisher: %Publisher{
         name: Map.get(item, "publisher")
       },

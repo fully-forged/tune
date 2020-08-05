@@ -99,6 +99,11 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def get_episodes(session_id, show_id) do
+    GenStateMachine.call(via(session_id), {:get_episodes, show_id})
+  end
+
+  @impl true
   def get_playlist(session_id, playlist_id) do
     GenStateMachine.call(via(session_id), {:get_playlist, playlist_id})
   end
@@ -433,6 +438,25 @@ defmodule Tune.Spotify.Session.Worker do
       {:ok, show} ->
         actions = [
           {:reply, from, {:ok, show}}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      error ->
+        handle_common_errors(error, data, from)
+    end
+  end
+
+  def handle_event(
+        {:call, from},
+        {:get_episodes, show_id},
+        :authenticated,
+        data
+      ) do
+    case HttpApi.get_episodes(data.credentials.token, show_id) do
+      {:ok, episodes} ->
+        actions = [
+          {:reply, from, {:ok, episodes}}
         ]
 
         {:keep_state_and_data, actions}

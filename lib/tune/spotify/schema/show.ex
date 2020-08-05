@@ -6,14 +6,24 @@ defmodule Tune.Spotify.Schema.Show do
   alias Tune.Spotify.Schema
   alias Schema.Publisher
 
-  @enforce_keys [:id, :uri, :name, :description, :publisher, :thumbnails, :total_episodes]
-  defstruct [:id, :uri, :name, :description, :publisher, :thumbnails, :total_episodes]
+  @enforce_keys [
+    :id,
+    :uri,
+    :name,
+    :description,
+    :episodes,
+    :publisher,
+    :thumbnails,
+    :total_episodes
+  ]
+  defstruct [:id, :uri, :name, :description, :episodes, :publisher, :thumbnails, :total_episodes]
 
   @type t :: %__MODULE__{
           id: Schema.id(),
           uri: Schema.uri(),
           name: String.t(),
           description: String.t(),
+          episodes: :not_fetched | [Schema.Episode.t()],
           publisher: Publisher.t(),
           thumbnails: Schema.thumbnails(),
           total_episodes: pos_integer()

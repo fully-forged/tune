@@ -1,12 +1,13 @@
 @import "./colors";
 
-.tracklist {
+.episode-list {
     li {
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid lighten($text-color, 40%);
       margin-bottom: 0;
+      flex-wrap: wrap;
 
       &:hover {
         background-color: lighten($accent-color, 20%);
@@ -14,7 +15,7 @@
         cursor: pointer;
       }
 
-      .track-number {
+      .playing-indicator {
         min-width: 2rem;
         text-align: right;
       }
@@ -32,15 +33,10 @@
         margin-right: 1rem;
       }
 
-      .last-fm {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-
-        svg {
-          height: 2rem;
-          width: 2rem;
-        }
+      .description {
+        flex-grow: 1;
+        margin: 0 3rem 1rem 3rem;
+        font-size: 1.2rem;
       }
 
       &.playing {
@@ -50,7 +46,7 @@
           color: white;
         }
 
-        .track-number, .name, .duration {
+        .playing-indicator .name, .duration {
           font-weight: normal;
         }
       }

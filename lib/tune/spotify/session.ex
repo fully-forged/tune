@@ -31,6 +31,7 @@ defmodule Tune.Spotify.Session do
   @callback get_artist(id(), item_id()) :: {:ok, Schema.Artist.t()} | {:error, term()}
   @callback get_artist_albums(id(), item_id()) :: {:ok, [Schema.Album.t()]} | {:error, term()}
   @callback get_show(id(), item_id()) :: {:ok, Schema.Show.t()} | {:error, term()}
+  @callback get_episodes(id(), item_id()) :: {:ok, [Schema.Episode.t()]} | {:error, term()}
   @callback get_playlist(id(), item_id()) :: {:ok, map()} | {:error, term()}
   @callback get_devices(id()) :: {:ok, [Schema.Device.t()]} | {:error, term()}
   @callback get_recommendations_from_artists(id(), [Schema.Artist.id()]) ::
