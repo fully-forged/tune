@@ -1,4 +1,4 @@
-defmodule TuneWeb.LayoutView do
+defmodule TuneWeb.HeaderView do
   @moduledoc false
   use TuneWeb, :view
 end

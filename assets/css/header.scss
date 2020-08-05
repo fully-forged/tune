@@ -1,3 +1,5 @@
+@import "./colors";
+
 $logo-dimension: 4rem;
 
 .navbar {
@@ -17,6 +19,7 @@ $logo-dimension: 4rem;
       width: $logo-dimension;
       height: $logo-dimension;
       margin-top: .4rem;
+      fill: $accent-color;
     }
   }
 

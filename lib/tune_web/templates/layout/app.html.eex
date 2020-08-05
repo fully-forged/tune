@@ -1,3 +1,10 @@
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <%= render TuneWeb.HeaderView, "icon_logo.html" %>
+    </div>
+  </nav>
+</header>
 <main role="main" class="logged-out">
   <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
   <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>

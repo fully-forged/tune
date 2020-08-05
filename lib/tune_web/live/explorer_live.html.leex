@@ -1,32 +1,41 @@
-<section id="explorer">
-  <a href="#" class="alert alert-info" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></a>
+<header>
+  <nav class="navbar">
+    <%= render TuneWeb.HeaderView, "logo.html", socket: @socket %>
+    <%= render TuneWeb.HeaderView, "search.html", socket: @socket, q: @q, type: @type %>
+    <%= render TuneWeb.HeaderView, "profile.html", socket: @socket, user: @user %>
+  </nav>
+</header>
+<main role="main">
+  <section id="explorer">
+    <a href="#" class="alert alert-info" role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="info"><%= live_flash(@flash, :info) %></a>
 
-  <a href="#" class="alert alert-danger" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></a>
+    <a href="#" class="alert alert-danger" role="alert"
+      phx-click="lv:clear-flash"
+      phx-value-key="error"><%= live_flash(@flash, :error) %></a>
 
-  <%= case @live_action do %>
-    <% :suggestions -> %>
-      <%= render SuggestionsView, "index.html",
-        suggestions_playlist: @suggestions_playlist,
-        suggestions_top_albums: @suggestions_top_albums,
-        suggestions_top_albums_time_range: @suggestions_top_albums_time_range,
-        suggestions_recommended_tracks: @suggestions_recommended_tracks,
-        suggestions_recommended_tracks_time_range: @suggestions_recommended_tracks_time_range,
-        now_playing: @now_playing,
-        socket: @socket %>
-    <% :search -> %>
-      <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
-    <% :album_details -> %>
-      <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
-    <% :artist_details -> %>
-      <%= render ArtistView, "show.html", artist: @item, now_playing: @now_playing, socket: @socket %>
-    <% action when action in [:show_details] -> %>
-      <div class="full-screen-notice">
-        <p>Cannot display this item yet.</p>
-      </div>
-    <% end %>
-  <%= live_component @socket, MiniPlayerComponent, now_playing: @now_playing, devices: @devices, id: :mini_player %>
-</section>
+    <%= case @live_action do %>
+      <% :suggestions -> %>
+        <%= render SuggestionsView, "index.html",
+          suggestions_playlist: @suggestions_playlist,
+          suggestions_top_albums: @suggestions_top_albums,
+          suggestions_top_albums_time_range: @suggestions_top_albums_time_range,
+          suggestions_recommended_tracks: @suggestions_recommended_tracks,
+          suggestions_recommended_tracks_time_range: @suggestions_recommended_tracks_time_range,
+          now_playing: @now_playing,
+          socket: @socket %>
+      <% :search -> %>
+        <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
+      <% :album_details -> %>
+        <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
+      <% :artist_details -> %>
+        <%= render ArtistView, "show.html", artist: @item, now_playing: @now_playing, socket: @socket %>
+      <% action when action in [:show_details] -> %>
+        <div class="full-screen-notice">
+          <p>Cannot display this item yet.</p>
+        </div>
+      <% end %>
+    <%= live_component @socket, MiniPlayerComponent, now_playing: @now_playing, devices: @devices, id: :mini_player %>
+  </section>
+</main>

@@ -1,0 +1,5 @@
+<div class="logo">
+  <%= live_patch to: Routes.explorer_path(@socket, :suggestions), aria_label: gettext("Go to Suggestions") do %>
+    <%= render "icon_logo.html", [] %>
+  <% end %>
+</div>
