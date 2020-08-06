@@ -1,54 +1,55 @@
 @import "./colors";
 
 .episode-list {
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid lighten($text-color, 40%);
-      margin-bottom: 0;
-      flex-wrap: wrap;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid lighten($text-color, 40%);
+    margin-bottom: 0;
+    flex-wrap: wrap;
+
+    &:hover {
+      background-color: lighten($accent-color, 20%);
+      color: white;
+      cursor: pointer;
+    }
+
+    .playing-indicator {
+      min-width: 2rem;
+      text-align: right;
+    }
+
+    .name {
+      margin: 0.5rem 1rem;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
+    }
+
+    .duration {
+      margin-right: 1rem;
+    }
+
+    .description {
+      flex-grow: 1;
+      margin: 0 3rem 1rem 3rem;
+      font-size: 1.2rem;
+    }
+
+    &.playing {
+      color: $accent-color;
 
       &:hover {
-        background-color: lighten($accent-color, 20%);
         color: white;
-        cursor: pointer;
       }
 
-      .playing-indicator {
-        min-width: 2rem;
-        text-align: right;
-      }
-
-      .name {
-        margin: 0.5rem 1rem;
-        flex: 1;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        min-width: 0;
-      }
-
+      .playing-indicator .name,
       .duration {
-        margin-right: 1rem;
-      }
-
-      .description {
-        flex-grow: 1;
-        margin: 0 3rem 1rem 3rem;
-        font-size: 1.2rem;
-      }
-
-      &.playing {
-        color: $accent-color;
-
-        &:hover {
-          color: white;
-        }
-
-        .playing-indicator .name, .duration {
-          font-weight: normal;
-        }
+        font-weight: normal;
       }
     }
+  }
 }

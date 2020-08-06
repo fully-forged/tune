@@ -3,7 +3,9 @@
   grid-template-columns: repeat(8, minmax(0, 1fr));
   column-gap: 2rem;
 
-  .name, .artist-name, .release-date {
+  .name,
+  .artist-name,
+  .release-date {
     margin-bottom: 0.4rem;
   }
 
@@ -30,4 +32,3 @@
     font-size: 0.9em;
   }
 }
-

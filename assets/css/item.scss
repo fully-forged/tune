@@ -6,8 +6,7 @@
   .details {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-areas:
-      "artwork meta";
+    grid-template-areas: "artwork meta";
     column-gap: 2rem;
     margin-bottom: 2rem;
 
@@ -25,7 +24,10 @@
       flex-direction: column;
       justify-content: flex-end;
 
-      p, h1, h2, h3 {
+      p,
+      h1,
+      h2,
+      h3 {
         margin-bottom: 0;
       }
 
@@ -52,8 +54,8 @@
     .details {
       grid-template-columns: 1fr;
       grid-template-areas:
-      "artwork"
-      "meta";
+        "artwork"
+        "meta";
       text-align: center;
 
       .artwork {

@@ -1,4 +1,5 @@
-.top-albums, .recommended-tracks {
+.top-albums,
+.recommended-tracks {
   margin-top: 2rem;
 
   .filter {
@@ -13,7 +14,8 @@
 }
 
 @media (max-width: 768px) {
-  .top-albums, .recommended-tracks {
+  .top-albums,
+  .recommended-tracks {
     .filter {
       flex-direction: column;
       margin-bottom: 2rem;
@@ -21,4 +23,3 @@
     }
   }
 }
-

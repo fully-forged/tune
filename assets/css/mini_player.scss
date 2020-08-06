@@ -35,7 +35,9 @@
     margin: 0 1.2rem;
   }
 
-  .name, .artist-name, .button {
+  .name,
+  .artist-name,
+  .button {
     display: block;
     margin-bottom: 0;
   }
@@ -76,7 +78,8 @@
 
 @media (max-width: 1024px) {
   .mini-player {
-    .meta, .progress span {
+    .meta,
+    .progress span {
       font-size: 0.8em;
     }
   }

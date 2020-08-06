@@ -5,17 +5,19 @@ html {
 }
 
 body {
-  font-family: 'IBM Plex Sans', sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   font-size: 14px;
   margin: 0;
 }
 
-button, .button {
+button,
+.button {
   background-color: $accent-color;
   border-color: $accent-color;
   color: white;
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     background-color: $complementary-accent-color;
     border-color: $complementary-accent-color;
   }
@@ -32,7 +34,8 @@ a {
     color: $accent-color;
   }
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     color: $complementary-accent-color;
   }
 }
@@ -44,7 +47,8 @@ a.reversed {
     color: white;
   }
 
-  &:hover, &.active {
+  &:hover,
+  &.active {
     color: darken(white, 20%);
   }
 }
@@ -58,7 +62,8 @@ a.reversed {
 .button-group {
   display: flex;
 
-  button, .button {
+  button,
+  .button {
     border-radius: 0;
 
     svg {
@@ -67,13 +72,13 @@ a.reversed {
     }
 
     &:first-child {
-      border-top-left-radius: .4rem;
-      border-bottom-left-radius: .4rem;
+      border-top-left-radius: 0.4rem;
+      border-bottom-left-radius: 0.4rem;
     }
 
     &:last-child {
-      border-top-right-radius: .4rem;
-      border-bottom-right-radius: .4rem;
+      border-top-right-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
     }
   }
 }
