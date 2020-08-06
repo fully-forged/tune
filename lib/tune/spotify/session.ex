@@ -9,6 +9,7 @@ defmodule Tune.Spotify.Session do
 
   @type id :: String.t()
   @type credentials :: Ueberauth.Auth.Credentials.t()
+  @type player_token :: binary() | nil
 
   @type uri :: String.t()
   @type context_uri :: String.t()
@@ -38,6 +39,7 @@ defmodule Tune.Spotify.Session do
   @callback get_devices(id()) :: {:ok, [Schema.Device.t()]} | {:error, term()}
   @callback get_recommendations_from_artists(id(), [Schema.Artist.id()]) ::
               {:ok, [Schema.Track.t()]} | {:error, term()}
+  @callback get_player_token(id()) :: {:ok, player_token()} | {:error, term()}
   @callback transfer_playback(id(), Schema.Device.id()) :: :ok | {:error, term()}
 
   @spec subscribe(id()) :: :ok | {:error, term()}

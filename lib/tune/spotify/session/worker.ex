@@ -128,6 +128,11 @@ defmodule Tune.Spotify.Session.Worker do
     GenStateMachine.call(via(session_id), {:transfer_playback, device_id})
   end
 
+  @impl true
+  def get_player_token(session_id) do
+    GenStateMachine.call(via(session_id), :get_player_token)
+  end
+
   @doc false
   @impl true
   def init({session_id, credentials}) do
@@ -541,6 +546,14 @@ defmodule Tune.Spotify.Session.Worker do
       error ->
         handle_common_errors(error, data, from)
     end
+  end
+
+  def handle_event({:call, from}, :get_player_token, :authenticated, data) do
+    actions = [
+      {:reply, from, {:ok, data.credentials.token}}
+    ]
+
+    {:keep_state_and_data, actions}
   end
 
   def handle_event({:call, from}, {:transfer_playback, device_id}, :authenticated, data) do
