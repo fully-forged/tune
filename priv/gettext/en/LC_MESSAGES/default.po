@@ -104,7 +104,7 @@ msgid "No results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:4
+#: lib/tune_web/live/mini_player_component.html.leex:14
 msgid "Not playing"
 msgstr ""
 
@@ -173,7 +173,7 @@ msgid "Go to Suggestions"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:11
+#: lib/tune_web/live/mini_player_component.html.leex:5
 msgid "Switch playback device"
 msgstr ""
 
@@ -223,4 +223,9 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/live/mini_player_component.ex:34
 msgid "this device"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/mini_player_component.html.leex:9
+msgid "Select"
 msgstr ""
