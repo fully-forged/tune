@@ -19,9 +19,9 @@ defmodule TuneWeb.MiniPlayerComponent do
   defp name(%Episode{name: name}), do: name
   defp name(%Track{name: name}), do: name
 
-  defp devices_options([]), do: nil
+  defp devices_options([], _player_id), do: nil
 
-  defp devices_options(devices) do
+  defp devices_options(devices, player_name) do
     active_device_id =
       case Enum.find(devices, fn d -> d.is_active end) do
         nil -> nil
@@ -30,7 +30,11 @@ defmodule TuneWeb.MiniPlayerComponent do
 
     devices
     |> Enum.map(fn d ->
-      {d.name, d.id}
+      if d.name == player_name do
+        {d.name <> " (" <> gettext("this device") <> ")", d.id}
+      else
+        {d.name, d.id}
+      end
     end)
     |> options_for_select(active_device_id)
   end

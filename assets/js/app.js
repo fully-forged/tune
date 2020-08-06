@@ -36,7 +36,7 @@ Hooks.AudioPlayer = {
   player: null,
   initPlayer() {
     this.player = new Spotify.Player({
-      name: "Tune Player",
+      name: this.playerName(),
       getOAuthToken: (cb) => {
         cb(this.token());
       },
@@ -57,6 +57,9 @@ Hooks.AudioPlayer = {
   },
   token() {
     return this.el.dataset.token;
+  },
+  playerName() {
+    return this.el.dataset.playerId;
   },
   mounted() {
     if (spotifySDKReady) {

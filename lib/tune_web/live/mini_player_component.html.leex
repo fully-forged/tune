@@ -10,7 +10,7 @@
         <form action="#" method="get" phx-change="transfer_playback">
           <%= content_tag :label, gettext("Switch playback device"), for: "device", class: "visually-hidden" %>
           <select name="device" id="device" phx-change="transfer_playback">
-            <%= devices_options(@devices) %>
+            <%= devices_options(@devices, @player_id) %>
           </select>
         </form>
       </div>

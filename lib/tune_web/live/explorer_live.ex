@@ -69,6 +69,7 @@ defmodule TuneWeb.ExplorerLive do
         {:ok,
          socket
          |> assign(@initial_state)
+         |> assign_new(:player_id, &generate_player_id/0)
          |> assign(
            session_id: session_id,
            user: user,
@@ -350,5 +351,9 @@ defmodule TuneWeb.ExplorerLive do
       |> Enum.take(5)
 
     spotify().get_recommendations_from_artists(session_id, artist_ids)
+  end
+
+  defp generate_player_id do
+    "Tune " <> AnonymousNameGenerator.generate_random()
   end
 end
