@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:292
+#: lib/tune_web/live/explorer_live.ex:326
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:296
+#: lib/tune_web/live/explorer_live.ex:330
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgid "No results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:4
+#: lib/tune_web/live/mini_player_component.html.leex:14
 msgid "Not playing"
 msgstr ""
 
@@ -173,7 +173,7 @@ msgid "Go to Suggestions"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:11
+#: lib/tune_web/live/mini_player_component.html.leex:5
 msgid "Switch playback device"
 msgstr ""
 
@@ -204,7 +204,7 @@ msgid_plural "%{count} episodes"
 msgstr[0] ""
 msgstr[1] ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/tune_web/templates/suggestions/index.html.eex:5
 msgid "Cannot display Release Radar - Make sure you have access to the playlist."
 msgstr ""
@@ -214,8 +214,23 @@ msgstr ""
 msgid "Cannot display Release Radar."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/tune_web/templates/suggestions/index.html.eex:11
 #: lib/tune_web/templates/suggestions/index.html.eex:22
 msgid "Cannot display top albums."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/mini_player_component.ex:34
+msgid "this device"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/live/mini_player_component.html.leex:9
+msgid "Select"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/player/controls.html.eex:30
+msgid "Set volume"
 msgstr ""

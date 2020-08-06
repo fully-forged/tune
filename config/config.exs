@@ -27,7 +27,16 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 spotify_scope =
-  "user-read-email, user-read-private, user-read-playback-state, user-modify-playback-state, user-read-currently-playing, user-top-read"
+  ~w(
+    streaming
+    user-modify-playback-state
+    user-read-currently-playing
+    user-read-email
+    user-read-playback-state
+    user-read-private
+    user-top-read
+  )
+  |> Enum.join(",")
 
 config :ueberauth, Ueberauth,
   providers: [

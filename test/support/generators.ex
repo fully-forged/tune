@@ -2,7 +2,7 @@ defmodule Tune.Generators do
   @moduledoc false
   import StreamData
 
-  alias Tune.Spotify.Schema.{Album, Artist, Episode, Publisher, Show, Track, User}
+  alias Tune.Spotify.Schema.{Album, Artist, Device, Episode, Publisher, Show, Track, User}
 
   def search_type do
     one_of([
@@ -170,11 +170,32 @@ defmodule Tune.Generators do
     end)
   end
 
+  def device do
+    tuple({id(), boolean(), boolean(), boolean(), name(), device_type(), volume_percent()})
+    |> bind(fn {id, is_active, is_private_session, is_restricted, name, type, volume_percent} ->
+      constant(%Device{
+        id: id,
+        is_active: is_active,
+        is_private_session: is_private_session,
+        is_restricted: is_restricted,
+        name: name,
+        type: type,
+        volume_percent: volume_percent
+      })
+    end)
+  end
+
   def id, do: string(:alphanumeric, min_length: 6, max_length: 12)
 
   def name, do: string(:alphanumeric, min_length: 1, max_length: 128)
 
+  def device_type, do: string(:alphanumeric, min_length: 1, max_length: 32)
+
   def description, do: string(:alphanumeric, min_length: 1, max_length: 128)
+
+  def volume_percent do
+    one_of([constant(nil), integer(1..99)])
+  end
 
   def thumbnails do
     map_of(

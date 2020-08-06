@@ -69,10 +69,21 @@
       margin-left: 1rem;
       width: 12rem;
     }
+
+    button {
+      margin-bottom: 0;
+      margin-left: 1rem;
+    }
   }
 
-  .controls a {
-    font-size: 1.2em;
+  .controls {
+    .button-group {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      font-size: 1.2em;
+    }
   }
 }
 
@@ -113,7 +124,7 @@
     .device {
       margin: 1rem auto;
 
-      select {
+      form {
         margin-right: 2rem;
       }
     }
@@ -124,6 +135,10 @@
   .mini-player {
     .device {
       order: 5;
+
+      form {
+        margin-right: 0;
+      }
     }
   }
 }

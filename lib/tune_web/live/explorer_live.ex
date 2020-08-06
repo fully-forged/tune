@@ -53,6 +53,15 @@ defmodule TuneWeb.ExplorerLive do
               handle_spotify_result(error, socket)
           end
 
+        socket =
+          case spotify().get_player_token(session_id) do
+            {:ok, token} ->
+              assign(socket, :player_token, token)
+
+            error ->
+              handle_spotify_result(error, socket)
+          end
+
         if connected?(socket) do
           Tune.Spotify.Session.subscribe(session_id)
         end
@@ -60,6 +69,7 @@ defmodule TuneWeb.ExplorerLive do
         {:ok,
          socket
          |> assign(@initial_state)
+         |> assign_new(:player_id, &generate_player_id/0)
          |> assign(
            session_id: session_id,
            user: user,
@@ -175,6 +185,26 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
+  def handle_event("refresh_devices", _params, socket) do
+    case spotify().get_devices(socket.assigns.session_id) do
+      {:ok, devices} ->
+        {:noreply, assign(socket, :devices, devices)}
+
+      error ->
+        handle_spotify_result(error, socket)
+    end
+  end
+
+  def handle_event("set_volume", %{"volume_percent" => volume_percent}, socket) do
+    case spotify().set_volume(socket.assigns.session_id, volume_percent) do
+      :ok ->
+        {:noreply, socket}
+
+      error ->
+        handle_spotify_result(error, socket)
+    end
+  end
+
   @impl true
   def handle_info({:now_playing, player}, socket) do
     case Player.changes(socket.assigns.now_playing, player) do
@@ -185,6 +215,10 @@ defmodule TuneWeb.ExplorerLive do
       _status_or_item_changed ->
         {:noreply, assign(socket, :now_playing, player)}
     end
+  end
+
+  def handle_info({:player_token, token}, socket) do
+    {:noreply, assign(socket, :player_token, token)}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
@@ -327,5 +361,9 @@ defmodule TuneWeb.ExplorerLive do
       |> Enum.take(5)
 
     spotify().get_recommendations_from_artists(session_id, artist_ids)
+  end
+
+  defp generate_player_id do
+    "Tune " <> AnonymousNameGenerator.generate_random()
   end
 end

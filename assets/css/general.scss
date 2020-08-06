@@ -1,5 +1,19 @@
 @import "./colors";
 
+// Range input
+$track-color: $complementary-accent-color;
+$track-border-width: 0;
+$track-height: 4px;
+$track-shadow-size: 0;
+
+$thumb-color: $accent-color;
+$thumb-height: 16px;
+$thumb-width: 16px;
+$thumb-radius: 4px;
+$thumb-shadow-size: 0;
+$thumb-border-color: $light-gray;
+@import "./input-range";
+
 html {
   background-color: $light-gray;
 }

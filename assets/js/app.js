@@ -18,6 +18,7 @@ import NProgress from "nprogress";
 import { LiveSocket } from "phoenix_live_view";
 
 let Hooks = {};
+let spotifySDKReady = false;
 
 Hooks.ProgressBar = {
   mounted() {
@@ -28,6 +29,56 @@ Hooks.ProgressBar = {
 
       this.pushEvent("seek", { position_ms: positionMs });
     });
+  },
+};
+
+Hooks.VolumeSlider = {
+  mounted() {
+    this.el.addEventListener("change", (e) => {
+      this.pushEvent("set_volume", { volume_percent: e.target.valueAsNumber });
+    });
+  },
+};
+
+Hooks.AudioPlayer = {
+  player: null,
+  initPlayer() {
+    this.player = new Spotify.Player({
+      name: this.playerName(),
+      getOAuthToken: (cb) => {
+        cb(this.token());
+      },
+    });
+
+    this.player.addListener("ready", () => {
+      this.pushEvent("refresh_devices", {});
+    });
+
+    this.player.addListener("initialization_error", console.error);
+    this.player.addListener("authentication_error", console.error);
+    this.player.addListener("account_error", console.error);
+    this.player.addListener("playback_error", console.error);
+
+    this.player.addListener("not_ready", ({ device_id }) => {
+      console.warn("Device ID has gone offline", device_id);
+    });
+  },
+  token() {
+    return this.el.dataset.token;
+  },
+  playerName() {
+    return this.el.dataset.playerId;
+  },
+  mounted() {
+    if (spotifySDKReady) {
+      this.initPlayer();
+      this.player.connect();
+    } else {
+      window.addEventListener("spotify.ready", () => {
+        this.initPlayer();
+        this.player.connect();
+      });
+    }
   },
 };
 
@@ -51,3 +102,9 @@ liveSocket.connect();
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)
 window.liveSocket = liveSocket;
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const event = new Event("spotify.ready");
+  window.dispatchEvent(event);
+  spotifySDKReady = true;
+};
