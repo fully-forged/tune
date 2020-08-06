@@ -76,8 +76,14 @@
     }
   }
 
-  .controls a {
-    font-size: 1.2em;
+  .controls {
+    .button-group {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      font-size: 1.2em;
+    }
   }
 }
 
