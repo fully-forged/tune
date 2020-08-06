@@ -35,7 +35,7 @@ Hooks.ProgressBar = {
 Hooks.VolumeSlider = {
   mounted() {
     this.el.addEventListener("change", (e) => {
-      this.pushEvent("set-volume", { volume_percent: e.target.valueAsNumber });
+      this.pushEvent("set_volume", { volume_percent: e.target.valueAsNumber });
     });
   },
 };
