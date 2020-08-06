@@ -12,6 +12,7 @@ $thumb-width: 16px;
 $thumb-radius: 4px;
 $thumb-shadow-size: 0;
 $thumb-border-color: $light-gray;
+$thumb-border-width: 1px;
 @import "./input-range";
 
 html {
@@ -51,6 +52,33 @@ a {
   &:hover,
   &.active {
     color: $complementary-accent-color;
+  }
+}
+
+progress {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: $complementary-accent-color;
+  color: $accent-color;
+  border: none;
+  border-radius: 4px;
+
+  &::-moz-progress-bar {
+    background-color: $accent-color;
+    border: 1px solid $light-gray;
+    border-radius: 4px;
+  }
+
+  &::-webkit-progress-bar {
+    background-color: $complementary-accent-color;
+    border-radius: 4px;
+  }
+
+  &::-webkit-progress-value {
+    background-color: $accent-color;
+    border: 1px solid $light-gray;
+    border-radius: 4px;
   }
 }
 
