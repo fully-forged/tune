@@ -9,7 +9,8 @@ defmodule TuneWeb.Endpoint do
     store: :cookie,
     key: "_tune_key",
     signing_salt: "2txYZyfx",
-    encryption_salt: {__MODULE__, :config, [:session_encryption_salt]}
+    encryption_salt: {__MODULE__, :config, [:session_encryption_salt]},
+    same_site: "Lax"
   ]
 
   socket "/socket", TuneWeb.UserSocket,
