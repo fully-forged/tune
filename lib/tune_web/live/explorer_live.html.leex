@@ -39,5 +39,6 @@
         </div>
       <% end %>
     <%= live_component @socket, MiniPlayerComponent, now_playing: @now_playing, devices: @devices, id: :mini_player %>
+    <%= tag :div, id: "player", phx_hook: "AudioPlayer", data_token: @player_token %>
   </section>
 </main>

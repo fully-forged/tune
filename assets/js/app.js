@@ -18,6 +18,7 @@ import NProgress from "nprogress";
 import { LiveSocket } from "phoenix_live_view";
 
 let Hooks = {};
+let spotifySDKReady = false;
 
 Hooks.ProgressBar = {
   mounted() {
@@ -28,6 +29,32 @@ Hooks.ProgressBar = {
 
       this.pushEvent("seek", { position_ms: positionMs });
     });
+  },
+};
+
+Hooks.AudioPlayer = {
+  player: null,
+  initPlayer() {
+    this.player = new Spotify.Player({
+      name: "Tune Player",
+      getOAuthToken: (cb) => {
+        cb(this.token());
+      },
+    });
+  },
+  token() {
+    return this.el.dataset.token;
+  },
+  mounted() {
+    if (spotifySDKReady) {
+      this.initPlayer();
+      this.player.connect();
+    } else {
+      window.addEventListener("spotify.ready", () => {
+        this.initPlayer();
+        this.player.connect();
+      });
+    }
   },
 };
 
@@ -51,3 +78,9 @@ liveSocket.connect();
 // >> liveSocket.enableDebug()
 // >> liveSocket.enableLatencySim(1000)
 window.liveSocket = liveSocket;
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const event = new Event("spotify.ready");
+  window.dispatchEvent(event);
+  spotifySDKReady = true;
+};
