@@ -36,11 +36,12 @@ defmodule TuneWeb.LoggedInTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
-              item <- Generators.item()
+              item <- Generators.item(),
+              device <- Generators.device()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
-        expect_item_playing(session_id, item)
+        expect_item_playing(session_id, item, device)
         expect_no_suggestions_playlist(session_id)
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
@@ -58,11 +59,12 @@ defmodule TuneWeb.LoggedInTest do
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
               item <- Generators.item(),
-              second_item <- Generators.item()
+              second_item <- Generators.item(),
+              device <- Generators.device()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
-        expect_item_playing(session_id, item)
+        expect_item_playing(session_id, item, device)
         expect_no_suggestions_playlist(session_id)
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
@@ -75,7 +77,8 @@ defmodule TuneWeb.LoggedInTest do
         player = %Player{
           status: :playing,
           item: second_item,
-          progress_ms: second_item.duration_ms - 100
+          progress_ms: second_item.duration_ms - 100,
+          device: device
         }
 
         send(explorer_live.pid, {:now_playing, player})
@@ -410,10 +413,10 @@ defmodule TuneWeb.LoggedInTest do
     |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
   end
 
-  defp expect_item_playing(session_id, item) do
+  defp expect_item_playing(session_id, item, device) do
     Tune.Spotify.SessionMock
     |> expect(:now_playing, 2, fn ^session_id ->
-      %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100}
+      %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100, device: device}
     end)
   end
 

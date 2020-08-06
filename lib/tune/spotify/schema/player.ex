@@ -7,12 +7,14 @@ defmodule Tune.Spotify.Schema.Player do
 
   defstruct status: :not_playing,
             item: nil,
-            progress_ms: 0
+            progress_ms: 0,
+            device: nil
 
   @type t :: %__MODULE__{
           status: :not_playing | :paused | :playing,
           item: Schema.Track.t() | Schema.Episode.t(),
-          progress_ms: Duration.milliseconds()
+          progress_ms: Duration.milliseconds(),
+          device: Schema.Device.t()
         }
 
   def changes(%__MODULE__{status: status1}, %__MODULE__{status: status2})

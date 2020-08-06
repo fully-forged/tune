@@ -545,7 +545,13 @@ defmodule Tune.Spotify.HttpApi do
 
         progress_ms = Map.get(data, "progress_ms")
         status = if Map.get(data, "is_playing"), do: :playing, else: :paused
-        %Player{status: status, item: item, progress_ms: progress_ms}
+
+        device =
+          data
+          |> Map.get("device")
+          |> parse_device()
+
+        %Player{status: status, item: item, progress_ms: progress_ms, device: device}
 
       "episode" ->
         item =
@@ -555,7 +561,13 @@ defmodule Tune.Spotify.HttpApi do
 
         progress_ms = Map.get(data, "progress_ms")
         status = if Map.get(data, "is_playing"), do: :playing, else: :paused
-        %Player{status: status, item: item, progress_ms: progress_ms}
+
+        device =
+          data
+          |> Map.get("device")
+          |> parse_device()
+
+        %Player{status: status, item: item, progress_ms: progress_ms, device: device}
     end
   end
 
