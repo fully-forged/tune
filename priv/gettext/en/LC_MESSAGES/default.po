@@ -229,3 +229,8 @@ msgstr ""
 #: lib/tune_web/live/mini_player_component.html.leex:9
 msgid "Select"
 msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/player/controls.html.eex:30
+msgid "Set volume"
+msgstr ""

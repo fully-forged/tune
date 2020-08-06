@@ -27,11 +27,15 @@
       <%= render "icon_next.html", [] %>
     </a>
   </div>
+  <%= content_tag :label, gettext("Set volume"), for: "volume", class: "visually-hidden" %>
   <input type="range"
          id="volume"
          value="<%= @device.volume_percent %>"
          min="0"
          max="100"
+         aria-valuenow="<%= @device.volume_percent %>"
+         aria-valuemin="0"
+         aria-valuemax="100"
          step="1"
          phx-hook="VolumeSlider" />
 </div>
