@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:292
+#: lib/tune_web/live/explorer_live.ex:305
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:296
+#: lib/tune_web/live/explorer_live.ex:309
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -204,7 +204,7 @@ msgid_plural "%{count} episodes"
 msgstr[0] ""
 msgstr[1] ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/tune_web/templates/suggestions/index.html.eex:5
 msgid "Cannot display Release Radar - Make sure you have access to the playlist."
 msgstr ""
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Cannot display Release Radar."
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/tune_web/templates/suggestions/index.html.eex:11
 #: lib/tune_web/templates/suggestions/index.html.eex:22
 msgid "Cannot display top albums."

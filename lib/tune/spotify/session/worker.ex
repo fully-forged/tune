@@ -149,6 +149,8 @@ defmodule Tune.Spotify.Session.Worker do
       {:ok, user} ->
         data = %{data | user: user}
 
+        Tune.Spotify.Session.broadcast(data.session_id, {:player_token, data.credentials.token})
+
         actions = [
           {:next_event, :internal, :get_now_playing},
           {:state_timeout, @now_playing_refresh_interval, :get_now_playing}

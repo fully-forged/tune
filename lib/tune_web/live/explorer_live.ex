@@ -53,6 +53,15 @@ defmodule TuneWeb.ExplorerLive do
               handle_spotify_result(error, socket)
           end
 
+        socket =
+          case spotify().get_player_token(session_id) do
+            {:ok, token} ->
+              assign(socket, :player_token, token)
+
+            error ->
+              handle_spotify_result(error, socket)
+          end
+
         if connected?(socket) do
           Tune.Spotify.Session.subscribe(session_id)
         end
@@ -185,6 +194,10 @@ defmodule TuneWeb.ExplorerLive do
       _status_or_item_changed ->
         {:noreply, assign(socket, :now_playing, player)}
     end
+  end
+
+  def handle_info({:player_token, token}, socket) do
+    {:noreply, assign(socket, :player_token, token)}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)
