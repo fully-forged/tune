@@ -41,6 +41,10 @@ Hooks.AudioPlayer = {
         cb(this.token());
       },
     });
+
+    this.player.addListener("ready", () => {
+      this.pushEvent("refresh_devices", {});
+    });
   },
   token() {
     return this.el.dataset.token;
