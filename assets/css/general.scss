@@ -79,6 +79,7 @@ progress {
     background-color: $accent-color;
     border: 1px solid $light-gray;
     border-radius: 4px;
+    transition: width 0.1s;
   }
 }
 

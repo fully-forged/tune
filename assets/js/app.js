@@ -27,6 +27,9 @@ Hooks.ProgressBar = {
         (e.target.max * e.offsetX) / e.target.offsetWidth
       );
 
+      // Optimistic update
+      this.el.value = positionMs;
+
       this.pushEvent("seek", { position_ms: positionMs });
     });
   },
