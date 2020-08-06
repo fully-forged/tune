@@ -41,6 +41,7 @@ defmodule Tune.Spotify.Session do
               {:ok, [Schema.Track.t()]} | {:error, term()}
   @callback get_player_token(id()) :: {:ok, player_token()} | {:error, term()}
   @callback transfer_playback(id(), Schema.Device.id()) :: :ok | {:error, term()}
+  @callback set_volume(id(), Schema.Device.volume_percent()) :: :ok | {:error, term()}
 
   @spec subscribe(id()) :: :ok | {:error, term()}
   def subscribe(session_id) do

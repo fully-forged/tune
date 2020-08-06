@@ -195,6 +195,16 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
+  def handle_event("set-volume", %{"volume_percent" => volume_percent}, socket) do
+    case spotify().set_volume(socket.assigns.session_id, volume_percent) do
+      :ok ->
+        {:noreply, socket}
+
+      error ->
+        handle_spotify_result(error, socket)
+    end
+  end
+
   @impl true
   def handle_info({:now_playing, player}, socket) do
     case Player.changes(socket.assigns.now_playing, player) do

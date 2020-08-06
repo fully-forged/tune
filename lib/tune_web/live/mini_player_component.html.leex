@@ -12,12 +12,12 @@
   <%= case @now_playing do %>
     <% %{status: :not_playing} -> %>
       <%= content_tag :p, gettext("Not playing") %>
-    <% %{status: status, item: item, progress_ms: progress_ms} -> %>
+    <% %{status: status, item: item, progress_ms: progress_ms, device: device} -> %>
       <%= live_patch to: TuneWeb.SearchView.result_link(item, @socket) do %>
         <%= img_tag thumbnail(item), alt: name(item) %>
       <% end %>
       <%= render PlayerView, "meta.html", item: item, socket: @socket %>
       <%= live_component @socket, ProgressBarComponent, id: :progress_bar, progress_ms: progress_ms, total_duration_ms: item.duration_ms %>
-      <%= render PlayerView, "controls.html", status: status %>
+      <%= render PlayerView, "controls.html", status: status, device: device %>
   <% end %>
 </div>

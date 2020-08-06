@@ -174,6 +174,25 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
+  @spec set_volume(token(), Device.volume_percent()) :: :ok | {:error, term()}
+  def set_volume(token, volume_percent) do
+    params = %{
+      volume_percent: volume_percent
+    }
+
+    case put(
+           @base_url <> "/me/player/volume?" <> URI.encode_query(params),
+           <<>>,
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 204}} ->
+        :ok
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   @spec get_token(token()) :: {:ok, Credentials.t()} | {:error, term()}
   def get_token(refresh_token) do
     headers = [

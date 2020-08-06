@@ -32,6 +32,14 @@ Hooks.ProgressBar = {
   },
 };
 
+Hooks.VolumeSlider = {
+  mounted() {
+    this.el.addEventListener("change", (e) => {
+      this.pushEvent("set-volume", { volume_percent: e.target.valueAsNumber });
+    });
+  },
+};
+
 Hooks.AudioPlayer = {
   player: null,
   initPlayer() {

@@ -129,6 +129,11 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def set_volume(session_id, volume_percent) do
+    GenStateMachine.call(via(session_id), {:set_volume, volume_percent})
+  end
+
+  @impl true
   def get_player_token(session_id) do
     GenStateMachine.call(via(session_id), :get_player_token)
   end
@@ -562,6 +567,21 @@ defmodule Tune.Spotify.Session.Worker do
     case HttpApi.transfer_playback(data.credentials.token, device_id) do
       :ok ->
         actions = [
+          {:reply, from, :ok}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      error ->
+        handle_common_errors(error, data, from)
+    end
+  end
+
+  def handle_event({:call, from}, {:set_volume, volume_percent}, :authenticated, data) do
+    case HttpApi.set_volume(data.credentials.token, volume_percent) do
+      :ok ->
+        actions = [
+          {:next_event, :internal, :get_now_playing},
           {:reply, from, :ok}
         ]
 

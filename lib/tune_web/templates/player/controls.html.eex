@@ -1,28 +1,37 @@
-<div class="controls button-group">
-  <a class="button button-small"
-     href="#"
-     phx-click="prev"
-     phx-throttle="200"
-     aria-label="Previous">
-    <%= render "icon_prev.html", [] %>
-  </a>
-  <a class="button button-small"
-     href="#"
-     phx-click="toggle_play_pause"
-     phx-throttle="200"
-     aria-label="Play or Pause">
-    <%= case @status do %>
-      <% :playing -> %>
-        <%= render "icon_pause.html", [] %>
-      <% :paused -> %>
-        <%= render "icon_play.html", [] %>
-      <% end %>
-  </a>
-  <a class="button button-small"
-     href="#"
-     phx-click="next"
-     phx-throttle="200"
-     aria-label="Next">
-    <%= render "icon_next.html", [] %>
-  </a>
+<div class="controls">
+  <div class="button-group">
+    <a class="button button-small"
+       href="#"
+       phx-click="prev"
+       phx-throttle="200"
+       aria-label="Previous">
+      <%= render "icon_prev.html", [] %>
+    </a>
+    <a class="button button-small"
+       href="#"
+       phx-click="toggle_play_pause"
+       phx-throttle="200"
+       aria-label="Play or Pause">
+      <%= case @status do %>
+        <% :playing -> %>
+          <%= render "icon_pause.html", [] %>
+        <% :paused -> %>
+          <%= render "icon_play.html", [] %>
+        <% end %>
+    </a>
+    <a class="button button-small"
+       href="#"
+       phx-click="next"
+       phx-throttle="200"
+       aria-label="Next">
+      <%= render "icon_next.html", [] %>
+    </a>
+  </div>
+  <input type="range"
+         id="volume"
+         value="<%= @device.volume_percent %>"
+         min="0"
+         max="100"
+         step="1"
+         phx-hook="VolumeSlider" />
 </div>

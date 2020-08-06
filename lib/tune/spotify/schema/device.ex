@@ -6,6 +6,7 @@ defmodule Tune.Spotify.Schema.Device do
   alias Tune.Spotify.Schema
 
   @type id :: Schema.id()
+  @type volume_percent :: nil | 0..100
 
   @enforce_keys [
     :id,
@@ -33,6 +34,6 @@ defmodule Tune.Spotify.Schema.Device do
           is_restricted: boolean(),
           name: String.t(),
           type: String.t(),
-          volume_percent: nil | 0..100
+          volume_percent: volume_percent()
         }
 end
