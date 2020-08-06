@@ -11,10 +11,11 @@ for albums, artists, etc. are tightly based on the equivalent sections in the
 Spotify application. This is an intentional choice aimed at reducing friction
 between applications.
 
+It can be used as a standalone player by selecting the appropriate option in
+the device switch section in the mini player.
+
 The key differences between the two applications are:
 
-- Tune does not (for the time being) include an audio player: it acts as a
-  remote for one or more other players.
 - Performance: Tune is extremely light, as for the most part is a
   server-rendered application, which makes it suitable to use on a wide range
   of devices and operating systems (think Linux on a Raspberry PI). Most of its
