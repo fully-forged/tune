@@ -15,7 +15,10 @@ defmodule Tune.Spotify.Session do
   @type context_uri :: String.t()
   @type item_id :: String.t()
 
-  @type message :: {:now_playing, Schema.Player.t()} | {:player_token, player_token()}
+  @type message ::
+          {:now_playing, Schema.Player.t()}
+          | {:player_token, player_token()}
+          | {:devices, [Schema.Device.t()]}
 
   @callback setup(id(), credentials()) :: :ok | {:error, term()}
   @callback get_profile(id()) :: {:ok, Schema.User.t()} | {:error, term()}

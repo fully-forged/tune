@@ -43,15 +43,7 @@ defmodule TuneWeb.ExplorerLive do
     case Tune.Auth.load_user(session) do
       {:authenticated, session_id, user} ->
         now_playing = spotify().now_playing(session_id)
-
-        socket =
-          case spotify().get_devices(session_id) do
-            {:ok, devices} ->
-              assign(socket, :devices, devices)
-
-            error ->
-              handle_spotify_result(error, socket)
-          end
+        devices = spotify().get_devices(session_id)
 
         socket =
           case spotify().get_player_token(session_id) do
@@ -73,7 +65,8 @@ defmodule TuneWeb.ExplorerLive do
          |> assign(
            session_id: session_id,
            user: user,
-           now_playing: now_playing
+           now_playing: now_playing,
+           devices: devices
          )}
 
       _error ->
@@ -176,19 +169,9 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   def handle_event("transfer_playback", %{"device" => device_id}, socket) do
-    with :ok <- spotify().transfer_playback(socket.assigns.session_id, device_id),
-         {:ok, devices} <- spotify().get_devices(socket.assigns.session_id) do
-      {:noreply, assign(socket, :devices, devices)}
-    else
-      error ->
-        handle_spotify_result(error, socket)
-    end
-  end
-
-  def handle_event("refresh_devices", _params, socket) do
-    case spotify().get_devices(socket.assigns.session_id) do
-      {:ok, devices} ->
-        {:noreply, assign(socket, :devices, devices)}
+    case spotify().transfer_playback(socket.assigns.session_id, device_id) do
+      :ok ->
+        {:noreply, socket}
 
       error ->
         handle_spotify_result(error, socket)
@@ -219,6 +202,10 @@ defmodule TuneWeb.ExplorerLive do
 
   def handle_info({:player_token, token}, socket) do
     {:noreply, assign(socket, :player_token, token)}
+  end
+
+  def handle_info({:devices, devices}, socket) do
+    {:noreply, assign(socket, :devices, devices)}
   end
 
   defp spotify, do: Application.get_env(:tune, :spotify)

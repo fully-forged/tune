@@ -15,9 +15,11 @@ defmodule Tune.Spotify.Session.Worker do
   defstruct session_id: nil,
             credentials: nil,
             user: nil,
-            now_playing: :not_playing
+            now_playing: :not_playing,
+            devices: []
 
   @now_playing_refresh_interval 1000
+  @devices_refresh_interval 15000
   @retry_interval 5000
 
   @spec start_link({Session.id(), Session.credentials()}) :: {:ok, pid()} | {:error, term()}
@@ -158,6 +160,7 @@ defmodule Tune.Spotify.Session.Worker do
 
         actions = [
           {:next_event, :internal, :get_now_playing},
+          {:next_event, :internal, :get_devices},
           {:state_timeout, @now_playing_refresh_interval, :get_now_playing}
         ]
 
@@ -218,6 +221,33 @@ defmodule Tune.Spotify.Session.Worker do
         data = %{data | now_playing: now_playing}
 
         action = {:state_timeout, @now_playing_refresh_interval, :get_now_playing}
+        {:keep_state, data, action}
+    end
+  end
+
+  def handle_event(event_type, :get_devices, :authenticated, data)
+      when event_type in [:internal, :state_timeout] do
+    case HttpApi.get_devices(data.credentials.token) do
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      # abnormal http error, retry in 5 seconds
+      {:error, _reason} ->
+        action = {:state_timeout, @retry_interval, :get_devices}
+        {:keep_state_and_data, action}
+
+      {:ok, devices} ->
+        if data.devices !== devices do
+          Tune.Spotify.Session.broadcast(data.session_id, {:devices, devices})
+        end
+
+        data = %{data | devices: devices}
+
+        action = {:state_timeout, @devices_refresh_interval, :get_devices}
         {:keep_state, data, action}
     end
   end
@@ -523,17 +553,8 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   def handle_event({:call, from}, :get_devices, :authenticated, data) do
-    case HttpApi.get_devices(data.credentials.token) do
-      {:ok, devices} ->
-        actions = [
-          {:reply, from, {:ok, devices}}
-        ]
-
-        {:keep_state_and_data, actions}
-
-      error ->
-        handle_common_errors(error, data, from)
-    end
+    action = {:reply, from, data.devices}
+    {:keep_state_and_data, action}
   end
 
   def handle_event(
