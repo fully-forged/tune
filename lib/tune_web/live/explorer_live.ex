@@ -279,8 +279,9 @@ defmodule TuneWeb.ExplorerLive do
 
   defp handle_artist_details(%{"artist_id" => artist_id}, _url, socket) do
     with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
-         {:ok, albums} <- spotify().get_artist_albums(socket.assigns.session_id, artist_id) do
-      artist = %{artist | albums: albums}
+         {:ok, %{albums: albums, total: total_albums}} <-
+           spotify().get_artist_albums(socket.assigns.session_id, artist_id) do
+      artist = %{artist | albums: albums, total_albums: total_albums}
 
       {:noreply, assign(socket, :item, artist)}
     else

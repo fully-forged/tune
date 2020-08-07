@@ -320,7 +320,8 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @spec get_artist_albums(token(), String.t()) :: {:ok, [Album.t()]} | {:error, term()}
+  @spec get_artist_albums(token(), String.t()) ::
+          {:ok, %{albums: [Album.t()], total: pos_integer()}} | {:error, term()}
   def get_artist_albums(token, artist_id) do
     params = %{
       market: "from_token"
@@ -334,8 +335,7 @@ defmodule Tune.Spotify.HttpApi do
         albums =
           response.body
           |> Jason.decode!()
-          |> Map.get("items")
-          |> Enum.map(&parse_album/1)
+          |> parse_artist_albums()
 
         {:ok, albums}
 
@@ -628,6 +628,7 @@ defmodule Tune.Spotify.HttpApi do
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
       albums: :not_fetched,
+      total_albums: :not_fetched,
       thumbnails:
         if Map.has_key?(item, "images") do
           item
@@ -665,6 +666,17 @@ defmodule Tune.Spotify.HttpApi do
           :not_fetched
         end
     }
+  end
+
+  defp parse_artist_albums(results) do
+    total = Map.get(results, "total")
+
+    albums =
+      results
+      |> Map.get("items")
+      |> Enum.map(&parse_album/1)
+
+    %{albums: albums, total: total}
   end
 
   defp parse_episode_with_metadata(item) do

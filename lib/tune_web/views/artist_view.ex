@@ -33,4 +33,9 @@ defmodule TuneWeb.ArtistView do
       if size in [:medium, :large], do: url
     end)
   end
+
+  @spec total_albums(Artist.t()) :: String.t()
+  defp total_albums(artist) do
+    ngettext("1 album", "%{count} albums", artist.total_albums)
+  end
 end

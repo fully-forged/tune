@@ -269,7 +269,9 @@ defmodule TuneWeb.LoggedInTest do
 
         Tune.Spotify.SessionMock
         |> expect(:get_artist, 2, fn ^session_id, ^artist_id -> {:ok, artist} end)
-        |> expect(:get_artist_albums, 2, fn ^session_id, ^artist_id -> {:ok, albums} end)
+        |> expect(:get_artist_albums, 2, fn ^session_id, ^artist_id ->
+          {:ok, %{albums: albums, total: Enum.count(albums)}}
+        end)
 
         {:ok, explorer_live, html} =
           live(conn, Routes.explorer_path(conn, :artist_details, artist_id))

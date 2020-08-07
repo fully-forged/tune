@@ -27,4 +27,13 @@ defmodule TuneWeb.AlbumView do
       %{formatted_duration: formatted_duration}
     )
   end
+
+  @spec last_fm_link(Album.t()) :: String.t()
+  defp last_fm_link(album) do
+    Path.join([
+      "https://www.last.fm/music",
+      URI.encode(album.artist.name),
+      URI.encode(album.name)
+    ])
+  end
 end

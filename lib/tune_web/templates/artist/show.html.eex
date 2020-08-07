@@ -14,6 +14,7 @@
         </div>
         <div class="meta">
           <%= content_tag :h1, @artist.name %>
+          <%= content_tag :p, total_albums(@artist) %>
           <div class="reference-links">
             <%= link to: wikipedia_link(@artist), target: "_blank", class: "svg-link wikipedia" do %>
               <%= render "icon_wikipedia.html", [] %>
