@@ -54,7 +54,7 @@ Hooks.AudioPlayer = {
     });
 
     this.player.addListener("ready", () => {
-      this.pushEvent("refresh_devices", {});
+      console.log("Device is ready");
     });
 
     this.player.addListener("initialization_error", console.error);

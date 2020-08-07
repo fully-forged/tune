@@ -406,7 +406,7 @@ defmodule TuneWeb.LoggedInTest do
     Tune.Spotify.SessionMock
     |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
     |> expect(:get_profile, 3, fn ^session_id -> profile end)
-    |> expect(:get_devices, 2, fn ^session_id -> {:ok, []} end)
+    |> expect(:get_devices, 2, fn ^session_id -> [] end)
     |> expect(:get_player_token, 2, fn ^session_id -> {:ok, credentials.token} end)
   end
 
