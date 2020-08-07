@@ -19,7 +19,7 @@ defmodule Tune.Spotify.Session.Worker do
             devices: []
 
   @now_playing_refresh_interval 1000
-  @devices_refresh_interval 15000
+  @devices_refresh_interval 15_000
   @retry_interval 5000
 
   @spec start_link({Session.id(), Session.credentials()}) :: {:ok, pid()} | {:error, term()}
