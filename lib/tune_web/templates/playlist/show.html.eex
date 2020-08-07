@@ -13,7 +13,7 @@
     </div>
   </section>
   <section class="items">
-    <%= for {type, tracks} <- Playlist.tracks_grouped_by_type(@playlist) do %>
+    <%= for {type, tracks} <- Playlist.albums_grouped_by_type(@playlist) do %>
       <%= content_tag :h3, group_label(type), class: "group" %>
       <div class="results">
         <%= render_many tracks, SearchView, "result.html", as: :item, socket: @socket %>
