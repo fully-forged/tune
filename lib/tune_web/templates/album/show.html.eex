@@ -22,6 +22,12 @@
             ·
             <%= content_tag :span, total_duration(@album), class: "total-duration" %>
           <% end %>
+          <div class="reference-links">
+            <%= link to: last_fm_link(@album), target: "_blank", class: "svg-link last-fm" do %>
+              <%= render TuneWeb.TrackView, "icon_last_fm.html", [] %>
+              <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
+            <% end %>
+          </div>
         </div>
       </section>
       <section class="items">

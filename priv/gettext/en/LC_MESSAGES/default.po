@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:326
+#: lib/tune_web/live/explorer_live.ex:327
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:330
+#: lib/tune_web/live/explorer_live.ex:331
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -109,12 +109,13 @@ msgid "Not playing"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:24
+#: lib/tune_web/templates/album/show.html.eex:28
+#: lib/tune_web/templates/artist/show.html.eex:25
 msgid "Open in Last.fm"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:20
+#: lib/tune_web/templates/artist/show.html.eex:21
 msgid "Open in Wikipedia"
 msgstr ""
 
@@ -234,3 +235,10 @@ msgstr ""
 #: lib/tune_web/templates/player/controls.html.eex:30
 msgid "Set volume"
 msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/artist_view.ex:39
+msgid "1 album"
+msgid_plural "%{count} albums"
+msgstr[0] ""
+msgstr[1] ""
