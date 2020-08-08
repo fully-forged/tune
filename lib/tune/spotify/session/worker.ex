@@ -121,6 +121,11 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
+  def refresh_devices(session_id) do
+    GenStateMachine.call(via(session_id), :refresh_devices)
+  end
+
+  @impl true
   def get_recommendations_from_artists(session_id, artist_ids) do
     GenStateMachine.call(via(session_id), {:get_recommendations_from_artists, artist_ids})
   end
@@ -555,6 +560,11 @@ defmodule Tune.Spotify.Session.Worker do
   def handle_event({:call, from}, :get_devices, :authenticated, data) do
     action = {:reply, from, data.devices}
     {:keep_state_and_data, action}
+  end
+
+  def handle_event({:call, from}, :refresh_devices, :authenticated, _data) do
+    actions = [{:next_event, :internal, :get_devices}, {:reply, from, :ok}]
+    {:keep_state_and_data, actions}
   end
 
   def handle_event(

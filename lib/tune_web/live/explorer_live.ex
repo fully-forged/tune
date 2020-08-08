@@ -188,6 +188,11 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
+  def handle_event("refresh_devices", _params, socket) do
+    :ok = spotify().refresh_devices(socket.assigns.session_id)
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_info({:now_playing, player}, socket) do
     case Player.changes(socket.assigns.now_playing, player) do

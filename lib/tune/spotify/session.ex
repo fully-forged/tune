@@ -41,6 +41,7 @@ defmodule Tune.Spotify.Session do
   @callback get_episodes(id(), item_id()) :: {:ok, [Schema.Episode.t()]} | {:error, term()}
   @callback get_playlist(id(), item_id()) :: {:ok, map()} | {:error, term()}
   @callback get_devices(id()) :: {:ok, [Schema.Device.t()]} | {:error, term()}
+  @callback refresh_devices(id()) :: :ok | {:error, term()}
   @callback get_recommendations_from_artists(id(), [Schema.Artist.id()]) ::
               {:ok, [Schema.Track.t()]} | {:error, term()}
   @callback get_player_token(id()) :: {:ok, player_token()} | {:error, term()}
