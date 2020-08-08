@@ -1,6 +1,7 @@
 # Tune
 
-Tune is a Spotify browser and remote application with a focus on performance and integration with other services.
+Tune is a Spotify browser and remote application with a focus on performance
+and integration with other services.
 
 It's available at <https://tune.fullyforged.com>.
 
@@ -12,7 +13,9 @@ Spotify application. This is an intentional choice aimed at reducing friction
 between applications.
 
 It can be used as a standalone player by selecting the appropriate option in
-the device switch section in the mini player.
+the device switch section in the mini player (note that it requires a Spotify
+Premium subscription and [only some browsers are
+supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers).
 
 The key differences between the two applications are:
 
