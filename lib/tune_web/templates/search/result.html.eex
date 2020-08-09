@@ -3,7 +3,7 @@
     <div class="play-button" phx-click="play" phx-value-uri="<%= @item.uri %>">
       <%= render TuneWeb.PlayerView, "icon_play.html", []%>
     </div>
-    <%= img_tag thumbnail(@item), alt: name(@item) %>
+    <%= img_tag thumbnail(@item), alt: name(@item), loading: "lazy" %>
   </div>
   <div class="meta">
     <%= live_patch to: result_link(@item, @socket) do %>
