@@ -4,7 +4,7 @@ defmodule TuneWeb.LoggedInTest do
 
   alias Tune.Duration
   alias Tune.Generators
-  alias Tune.Spotify.Schema.{Album, Player}
+  alias Tune.Spotify.Schema.{Album, Artist, Episode, Player, Show, Track}
 
   import Phoenix.LiveViewTest
   import Mox
@@ -163,14 +163,14 @@ defmodule TuneWeb.LoggedInTest do
           live(conn, Routes.explorer_path(conn, :search, q: track_name))
 
         escaped_track_name = escape(track_name)
-
-        escaped_artist_name = escape(track.artist.name)
-
         assert html =~ escaped_track_name
-        assert html =~ escaped_artist_name
-
         assert render(explorer_live) =~ escaped_track_name
-        assert render(explorer_live) =~ escaped_artist_name
+
+        for artist <- track.artists do
+          escaped_artist_name = escape(artist.name)
+          assert html =~ escaped_artist_name
+          assert render(explorer_live) =~ escaped_artist_name
+        end
       end
     end
 
@@ -193,7 +193,6 @@ defmodule TuneWeb.LoggedInTest do
 
         item = Enum.random(items)
         item_name = TuneWeb.SearchView.name(item)
-        author_name = TuneWeb.SearchView.author_name(item)
 
         Tune.Spotify.SessionMock
         |> expect(:search, 2, fn ^session_id, ^item_name, [types: [^search_type], limit: 32] ->
@@ -204,14 +203,23 @@ defmodule TuneWeb.LoggedInTest do
           live(conn, Routes.explorer_path(conn, :search, q: item_name, type: search_type))
 
         escaped_item_name = escape(item_name)
-
-        escaped_author_name = escape(author_name)
-
         assert html =~ escaped_item_name
-        assert html =~ escaped_author_name
-
         assert render(explorer_live) =~ escaped_item_name
-        assert render(explorer_live) =~ escaped_author_name
+
+        author_names =
+          case item do
+            %Artist{name: name} -> [name]
+            %Album{artists: artists} -> Enum.map(artists, & &1.name)
+            %Track{artists: artists} -> Enum.map(artists, & &1.name)
+            %Episode{publisher: publisher} -> [publisher.name]
+            %Show{publisher: publisher} -> [publisher.name]
+          end
+
+        for author_name <- author_names do
+          escaped_author_name = escape(author_name)
+          assert html =~ escaped_author_name
+          assert render(explorer_live) =~ escaped_author_name
+        end
       end
     end
 
@@ -353,9 +361,11 @@ defmodule TuneWeb.LoggedInTest do
           refute render(explorer_live) =~ "Disc #{disc_number}"
         end
 
-        escaped_artist_name = escape(album.artist.name)
-        assert html =~ escaped_artist_name
-        assert render(explorer_live) =~ escaped_artist_name
+        for artist <- album.artists do
+          escaped_artist_name = escape(artist.name)
+          assert html =~ escaped_artist_name
+          assert render(explorer_live) =~ escaped_artist_name
+        end
 
         escaped_album_name = escape(album.name)
         assert html =~ escaped_album_name

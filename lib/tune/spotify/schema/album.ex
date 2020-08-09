@@ -2,7 +2,7 @@ defmodule Tune.Spotify.Schema.Album do
   @moduledoc """
   Represents an album.
 
-  Depending on how the album is retrieved, it may or may not include an artist or tracks.
+  Depending on how the album is retrieved, it may or may not include artists or tracks.
   """
 
   alias Tune.{Duration, Spotify.Schema}
@@ -14,7 +14,7 @@ defmodule Tune.Spotify.Schema.Album do
     :name,
     :album_type,
     :album_group,
-    :artist,
+    :artists,
     :release_date,
     :release_date_precision,
     :thumbnails,
@@ -26,7 +26,7 @@ defmodule Tune.Spotify.Schema.Album do
     :name,
     :album_type,
     :album_group,
-    :artist,
+    :artists,
     :release_date,
     :release_date_precision,
     :thumbnails,
@@ -40,12 +40,17 @@ defmodule Tune.Spotify.Schema.Album do
           name: String.t(),
           album_type: album_type(),
           album_group: String.t(),
-          artist: Artist.t() | :not_fetched,
+          artists: [Artist.t()] | :not_fetched,
           release_date: String.t(),
           release_date_precision: String.t(),
           thumbnails: Schema.thumbnails(),
           tracks: [Track.t()] | :not_fetched
         }
+
+  @spec main_artist(t()) :: Artist.t()
+  def main_artist(album) do
+    List.first(album.artists)
+  end
 
   @spec grouped_tracks(t()) :: %{String.t() => [Track.t()]}
   def grouped_tracks(album) do

@@ -1,4 +1,6 @@
 <div class="meta">
   <%= live_patch name(@item), to: TuneWeb.SearchView.result_link(@item, @socket), class: "name reversed" %>
-  <%= live_patch author_name(@item), to: author_link(@item, @socket), class: "artist-name reversed" %>
+  <p>
+    <%= authors(@item, @socket) %>
+  </p>
 </div>

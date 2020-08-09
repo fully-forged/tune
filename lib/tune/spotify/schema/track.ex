@@ -6,8 +6,8 @@ defmodule Tune.Spotify.Schema.Track do
   alias Tune.{Duration, Spotify.Schema}
   alias Schema.{Album, Artist}
 
-  @enforce_keys [:id, :uri, :name, :duration_ms, :track_number, :disc_number, :artist, :album]
-  defstruct [:id, :uri, :name, :duration_ms, :track_number, :disc_number, :artist, :album]
+  @enforce_keys [:id, :uri, :name, :duration_ms, :track_number, :disc_number, :artists, :album]
+  defstruct [:id, :uri, :name, :duration_ms, :track_number, :disc_number, :artists, :album]
 
   @type t :: %__MODULE__{
           id: Schema.id(),
@@ -16,7 +16,16 @@ defmodule Tune.Spotify.Schema.Track do
           duration_ms: Duration.milliseconds(),
           track_number: pos_integer(),
           disc_number: pos_integer(),
-          artist: Artist.t(),
+          artists: [Artist.t()],
           album: Album.t()
         }
+
+  @spec artist_ids([t()]) :: [Schema.id()]
+  def artist_ids(tracks) do
+    tracks
+    |> Enum.flat_map(fn t ->
+      Enum.map(t.artists, & &1.id)
+    end)
+    |> Enum.uniq()
+  end
 end
