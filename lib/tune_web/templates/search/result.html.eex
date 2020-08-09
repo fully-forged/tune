@@ -10,13 +10,7 @@
       <p class="name"><%= name(@item) %></p>
     <% end %>
     <div class="footer">
-      <%= if can_link_to_author?(@item) do %>
-        <%= live_patch to: author_link(@item, @socket) do %>
-          <p class="artist-name"><%= author_name(@item) %></p>
-        <% end %>
-      <% else %>
-        <p class="artist-name"><%= author_name(@item) %></p>
-      <% end %>
+      <%= content_tag :p, authors(@item, @socket), class: "artist-name" %>
     </div>
   </div>
 </div>

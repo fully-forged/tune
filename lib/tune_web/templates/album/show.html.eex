@@ -13,8 +13,8 @@
           <%= img_tag artwork(@album), alt: @album.name %>
         </div>
         <div class="meta">
-          <%= live_patch to: Routes.explorer_path(@socket, :artist_details, @album.artist.id) do %>
-            <%= content_tag :h2, @album.artist.name %>
+          <%= content_tag :h2 do %>
+            <%= authors(@album, @socket) %>
           <% end %>
           <%= content_tag :h1, @album.name %>
           <%= content_tag :p do %>
@@ -35,10 +35,10 @@
           <%= if Album.has_multiple_discs?(@album) do %>
             <%= for {disc, tracks} <- Album.grouped_tracks(@album) do %>
                 <p>Disc <%= disc %></p>
-                <%= render TrackView, "list.html", tracks: tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
+                <%= render TrackView, "list.html", tracks: tracks, artist: Album.main_artist(@album), album: @album, now_playing: @now_playing %>
             <% end %>
           <% else %>
-            <%= render TrackView, "list.html", tracks: @album.tracks, artist: @album.artist, album: @album, now_playing: @now_playing %>
+            <%= render TrackView, "list.html", tracks: @album.tracks, artist: Album.main_artist(@album), album: @album, now_playing: @now_playing %>
           <% end %>
         </div>
       </section>

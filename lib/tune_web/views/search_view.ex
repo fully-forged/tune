@@ -16,12 +16,32 @@ defmodule TuneWeb.SearchView do
   def name(%Artist{name: name}), do: name
   def name(%Episode{name: name}), do: name
 
-  @spec author_name(result_item()) :: String.t()
-  def author_name(%Track{artist: artist}), do: artist.name
-  def author_name(%Album{artist: artist}), do: artist.name
-  def author_name(%Show{publisher: publisher}), do: publisher.name
-  def author_name(%Artist{}), do: ""
-  def author_name(%Episode{}), do: ""
+  @spec authors(result_item(), Phoenix.Socket.t()) :: [{String.t(), nil | String.t()}]
+  defp authors(%Episode{publisher: publisher}, _socket) do
+    publisher.name
+  end
+
+  defp authors(%Track{artists: artists}, socket) do
+    artists
+    |> Enum.map(fn artist ->
+      live_patch(artist.name, to: Routes.explorer_path(socket, :artist_details, artist.id))
+    end)
+    |> Enum.intersperse(", ")
+  end
+
+  defp authors(%Album{artists: artists}, socket) do
+    artists
+    |> Enum.map(fn artist ->
+      live_patch(artist.name, to: Routes.explorer_path(socket, :artist_details, artist.id))
+    end)
+    |> Enum.intersperse(", ")
+  end
+
+  defp authors(%Show{publisher: publisher}, _socket) do
+    publisher.name
+  end
+
+  defp authors(%Artist{}, _socket), do: nil
 
   @spec result_link(result_item(), Phoenix.Socket.t()) :: String.t()
   def result_link(%Track{album: album}, socket) do
@@ -47,14 +67,6 @@ defmodule TuneWeb.SearchView do
   def can_link_to_author?(%Track{}), do: true
   def can_link_to_author?(%Album{}), do: true
   def can_link_to_author?(_other), do: false
-
-  def author_link(%Track{artist: artist}, socket) do
-    result_link(artist, socket)
-  end
-
-  def author_link(%Album{artist: artist}, socket) do
-    result_link(artist, socket)
-  end
 
   def release_date(%Track{album: album}) do
     Album.release_year(album)

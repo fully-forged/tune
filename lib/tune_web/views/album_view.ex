@@ -7,6 +7,14 @@ defmodule TuneWeb.AlbumView do
 
   @default_artwork "https://via.placeholder.com/300"
 
+  defp authors(%Album{artists: artists}, socket) do
+    artists
+    |> Enum.map(fn artist ->
+      live_patch(artist.name, to: Routes.explorer_path(socket, :artist_details, artist.id))
+    end)
+    |> Enum.intersperse(", ")
+  end
+
   @spec artwork(Album.t()) :: String.t()
   defp artwork(%Album{thumbnails: thumbnails}),
     do: Map.get(thumbnails, :medium, @default_artwork)
@@ -30,9 +38,14 @@ defmodule TuneWeb.AlbumView do
 
   @spec last_fm_link(Album.t()) :: String.t()
   defp last_fm_link(album) do
+    artist_name =
+      album
+      |> Album.main_artist()
+      |> Map.fetch!(:name)
+
     Path.join([
       "https://www.last.fm/music",
-      URI.encode(album.artist.name),
+      URI.encode(artist_name),
       URI.encode(album.name)
     ])
   end

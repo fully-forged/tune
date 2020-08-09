@@ -9,7 +9,7 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
-  alias Tune.Spotify.Schema.{Album, Player}
+  alias Tune.Spotify.Schema.{Album, Player, Track}
 
   alias TuneWeb.{
     AlbumView,
@@ -349,7 +349,7 @@ defmodule TuneWeb.ExplorerLive do
   defp get_recommendations(session_id, tracks) do
     artist_ids =
       tracks
-      |> Enum.map(& &1.artist.id)
+      |> Track.artist_ids()
       |> Enum.shuffle()
       |> Enum.take(5)
 

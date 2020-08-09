@@ -598,10 +598,10 @@ defmodule Tune.Spotify.HttpApi do
       duration_ms: Map.get(item, "duration_ms"),
       track_number: Map.get(item, "track_number"),
       disc_number: Map.get(item, "disc_number"),
-      artist:
+      artists:
         item
-        |> get_in(["artists", Access.at(0)])
-        |> parse_artist(),
+        |> Map.get("artists")
+        |> Enum.map(&parse_artist/1),
       album:
         item
         |> Map.get("album")
@@ -617,7 +617,7 @@ defmodule Tune.Spotify.HttpApi do
       duration_ms: Map.get(item, "duration_ms"),
       track_number: Map.get(item, "track_number"),
       disc_number: Map.get(item, "disc_number"),
-      artist: :not_fetched,
+      artists: :not_fetched,
       album: :not_fetched
     }
   end
@@ -649,10 +649,10 @@ defmodule Tune.Spotify.HttpApi do
       album_group: Map.get(item, "album_group", "album"),
       release_date: Map.get(item, "release_date"),
       release_date_precision: Map.get(item, "release_date_precision"),
-      artist:
+      artists:
         item
-        |> get_in(["artists", Access.at(0)])
-        |> parse_artist(),
+        |> Map.get("artists")
+        |> Enum.map(&parse_artist/1),
       thumbnails:
         item
         |> Map.get("images")
