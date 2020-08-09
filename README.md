@@ -7,17 +7,12 @@ It's available at <https://tune.fullyforged.com>.
 
 # Scope and features
 
-In many ways Tune copies the official Spotify application: search, detail views
-for albums, artists, etc. are tightly based on the equivalent sections in the
-Spotify application. This is an intentional choice aimed at reducing friction
-between applications.
+In many ways Tune copies the official Spotify application: many views (e.g.
+search or details for artists and albums) are tightly based on the equivalent
+sections in the Spotify application. This is an intentional choice aimed at
+reducing friction between applications.
 
-It can be used as a standalone player by selecting the appropriate option in
-the device switch section in the mini player (note that it requires a Spotify
-Premium subscription and [only some browsers are
-supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers).
-
-The key differences between the two applications are:
+Tune differs in these areas:
 
 - Performance: Tune is extremely light, as for the most part is a
   server-rendered application, which makes it suitable to use on a wide range
@@ -30,6 +25,11 @@ The key differences between the two applications are:
   provided by Spotify and some custom logic (loosely based on what you've been
   listening in a specific time period). The logic is an almost direct porting of
   how I search for new music, so it might not work for you.
+
+Tune can be used as a standalone player by selecting the appropriate option in
+the device switch section in the mini player (note that it requires a Spotify
+Premium subscription and [only some browsers are
+supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers)).
 
 # Initial setup
 
