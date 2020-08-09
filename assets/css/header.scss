@@ -4,8 +4,8 @@ $logo-dimension: 4rem;
 
 .navbar {
   display: grid;
-  grid-template-columns: $logo-dimension 5fr 1fr;
-  grid-template-areas: "logo search profile";
+  grid-template-columns: $logo-dimension 4fr 2fr;
+  grid-template-areas: "logo search profile-and-links";
   padding: 1rem;
   background-color: white;
 
@@ -41,8 +41,15 @@ $logo-dimension: 4rem;
     }
   }
 
+  .links {
+    grid-area: profile-and-links;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
   .profile {
-    grid-area: profile;
+    grid-area: profile-and-links;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -54,8 +61,7 @@ $logo-dimension: 4rem;
     }
 
     img,
-    p,
-    a {
+    p {
       margin-right: 0.5rem;
       margin-bottom: 0;
     }
@@ -74,7 +80,7 @@ $logo-dimension: 4rem;
     grid-template-areas:
       "logo"
       "search"
-      "profile";
+      "profile-and-links";
 
     .search {
       padding: 1rem 0;
@@ -82,7 +88,8 @@ $logo-dimension: 4rem;
 
     .logo,
     .search,
-    .profile {
+    .profile,
+    .links {
       justify-content: center;
     }
 

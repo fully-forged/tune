@@ -2,4 +2,8 @@
   <%= img_tag @user.avatar_url, alt: @user.name %>
   <p><%= @user.name %></p>
   <%= link gettext("Logout"), to: Routes.auth_path(@socket, :delete), method: :post %>
+  &nbsp;·&nbsp;
+  <%= link gettext("Credits"), to: "https://github.com/fully-forged/tune#credits", target: "_blank" %>
+  &nbsp;·&nbsp;
+  <%= link gettext("Source"), to: "https://github.com/fully-forged/tune", target: "_blank" %>
 </div>

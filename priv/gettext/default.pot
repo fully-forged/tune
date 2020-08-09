@@ -241,3 +241,15 @@ msgid "1 album"
 msgid_plural "%{count} albums"
 msgstr[0] ""
 msgstr[1] ""
+
+#, elixir-format
+#: lib/tune_web/templates/header/profile.html.eex:6
+#: lib/tune_web/templates/layout/app.html.eex:7
+msgid "Credits"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/header/profile.html.eex:8
+#: lib/tune_web/templates/layout/app.html.eex:9
+msgid "Source"
+msgstr ""

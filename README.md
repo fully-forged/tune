@@ -69,3 +69,12 @@ The project is setup to deploy on Heroku, please make sure you:
 
 - configure environment variables
 - add the buildpacks detailed at <https://hexdocs.pm/phoenix/heroku.html>
+
+# Credits
+
+- Mini player icons from [Bootstrap Icons](https://icons.getbootstrap.com/)
+- Wikipedia icon made by [Freepik](https://www.flaticon.com/authors/freepik
+  "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+- Last.fm icon made by [Pixel
+  perfect](https://www.flaticon.com/authors/pixel-perfect "Pixel perfect") from
+  [www.flaticon.com](https://www.flaticon.com/ "Flaticon")

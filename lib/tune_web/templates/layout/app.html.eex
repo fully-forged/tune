@@ -3,6 +3,11 @@
     <div class="logo">
       <%= render TuneWeb.HeaderView, "icon_logo.html" %>
     </div>
+    <div class="links">
+      <%= link gettext("Credits"), to: "https://github.com/fully-forged/tune#credits", target: "_blank" %>
+      &nbsp;·&nbsp;
+      <%= link gettext("Source"), to: "https://github.com/fully-forged/tune", target: "_blank" %>
+    </div>
   </nav>
 </header>
 <main role="main" class="logged-out">
