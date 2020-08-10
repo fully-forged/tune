@@ -34,6 +34,7 @@
   <%= content_tag :label, gettext("Set volume"), for: "volume", class: "visually-hidden" %>
   <input type="range"
          id="volume"
+         data-test-control="volume"
          value="<%= @device.volume_percent %>"
          min="0"
          max="100"

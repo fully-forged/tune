@@ -90,7 +90,8 @@ defmodule TuneWeb.LoggedInTest do
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
               item <- Generators.item(),
-              device <- Generators.device()
+              device <- Generators.device(),
+              volume_percent <- Generators.volume_percent()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
@@ -127,6 +128,13 @@ defmodule TuneWeb.LoggedInTest do
         assert explorer_live
                |> element("[data-test-control=prev]")
                |> render_click()
+
+        Tune.Spotify.SessionMock
+        |> expect(:set_volume, 1, fn ^session_id, ^volume_percent -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-control=volume]")
+               |> render_hook("set_volume", %{"volume_percent" => volume_percent})
       end
     end
   end
