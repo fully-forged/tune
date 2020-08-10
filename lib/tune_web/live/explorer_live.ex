@@ -15,6 +15,7 @@ defmodule TuneWeb.ExplorerLive do
     AlbumView,
     ArtistView,
     MiniPlayerComponent,
+    PaginationView,
     ProgressBarComponent,
     SearchView,
     ShowView,
@@ -30,7 +31,7 @@ defmodule TuneWeb.ExplorerLive do
     user: nil,
     now_playing: %Tune.Spotify.Schema.Player{},
     item: :not_fetched,
-    per_page: 32,
+    per_page: 24,
     page: 1,
     suggestions_playlist: :not_fetched,
     suggestions_top_albums: :not_fetched,
@@ -244,7 +245,7 @@ defmodule TuneWeb.ExplorerLive do
     q = Map.get(params, "q", "")
     type = Map.get(params, "type", "track")
     page = Map.get(params, "page", "1")
-    per_page = Map.get(params, "per_page", "32")
+    per_page = Map.get(params, "per_page", "24")
 
     if String.length(q) >= 1 do
       type = parse_type(type)
@@ -256,6 +257,8 @@ defmodule TuneWeb.ExplorerLive do
         socket
         |> assign(:q, q)
         |> assign(:type, type)
+        |> assign(:page, page)
+        |> assign(:per_page, limit)
 
       search_opts = [types: [type], limit: limit, offset: offset]
 
@@ -346,7 +349,7 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
-  @top_tracks_limit 32
+  @top_tracks_limit 24
 
   defp get_top_tracks(session_id, time_range) do
     opts = [limit: @top_tracks_limit, time_range: time_range]

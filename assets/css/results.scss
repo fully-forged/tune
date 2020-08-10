@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: repeat(8, minmax(0, 1fr));
   column-gap: 2rem;
+  margin-top: 2rem;
 
   .name,
   .artist-name,

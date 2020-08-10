@@ -1,0 +1,7 @@
+<ul class="pagination">
+  <%= prev_page(@pagination_opts, @url_fn) %>
+  <%= for page <- @pagination_opts.pages do %>
+    <%= numbered_page(page, @pagination_opts, @url_fn) %>
+  <% end %>
+  <%= next_page(@pagination_opts, @url_fn) %>
+</ul>
