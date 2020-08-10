@@ -74,7 +74,6 @@ msgstr ""
 
 #, elixir-format
 #: lib/tune_web/live/progress_bar_component.html.leex:3
-#: lib/tune_web/templates/player/progress.html.eex:3
 msgid "Current track position"
 msgstr ""
 
@@ -232,7 +231,7 @@ msgid "Select"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/player/controls.html.eex:30
+#: lib/tune_web/templates/player/controls.html.eex:34
 msgid "Set volume"
 msgstr ""
 
