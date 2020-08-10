@@ -135,6 +135,15 @@ defmodule TuneWeb.LoggedInTest do
         assert explorer_live
                |> element("[data-test-control=volume]")
                |> render_hook("set_volume", %{"volume_percent" => volume_percent})
+
+        new_position_ms = max(player.progress_ms + 100, player.item.duration_ms - 100)
+
+        Tune.Spotify.SessionMock
+        |> expect(:seek, 1, fn ^session_id, ^new_position_ms -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-control=progress]")
+               |> render_hook("seek", %{"position_ms" => new_position_ms})
       end
     end
   end
