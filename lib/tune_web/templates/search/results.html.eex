@@ -3,12 +3,12 @@
     <div class="full-screen-notice">
       <%= content_tag :p, gettext("Try and search for a song you love") %>
     </div>
-  <% {_query, []} -> %>
+  <% {_query, %{total: 0}} -> %>
     <div class="full-screen-notice">
       <%= content_tag :p, gettext("No results") %>
     </div>
   <% {_query, results} -> %>
     <div class="results">
-      <%= render_many results, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+      <%= render_many results.items, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
     </div>
 <% end %>
