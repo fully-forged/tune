@@ -64,7 +64,7 @@ defmodule TuneWeb.LoggedInTest do
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
-        expect_item_playing(session_id, item, device)
+        player = expect_item_playing(session_id, item, device)
         expect_no_suggestions_playlist(session_id)
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
@@ -74,18 +74,59 @@ defmodule TuneWeb.LoggedInTest do
         assert html =~ escaped_item_name
         assert render(explorer_live) =~ escaped_item_name
 
-        player = %Player{
-          status: :playing,
-          item: second_item,
-          progress_ms: second_item.duration_ms - 100,
-          device: device
-        }
+        new_player = %{player | item: second_item, progress_ms: second_item.duration_ms - 100}
 
-        send(explorer_live.pid, {:now_playing, player})
+        send(explorer_live.pid, {:now_playing, new_player})
 
         escaped_item_name = escape(second_item.name)
 
         render(explorer_live) =~ escaped_item_name
+      end
+    end
+
+    property "it supports control operations", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.item(),
+              device <- Generators.device()
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+        expect_successful_authentication(session_id, credentials, profile)
+        player = expect_item_playing(session_id, item, device)
+        expect_no_suggestions_playlist(session_id)
+
+        {:ok, explorer_live, _html} = live(conn, Routes.explorer_path(conn, :suggestions))
+
+        assert has_element?(explorer_live, "[data-test-status=playing]")
+
+        Tune.Spotify.SessionMock
+        |> expect(:toggle_play, 1, fn ^session_id ->
+          new_player = %{player | status: :paused}
+          send(explorer_live.pid, {:now_playing, new_player})
+          :ok
+        end)
+
+        assert explorer_live
+               |> element("[data-test-control=play-pause]")
+               |> render_click()
+
+        assert has_element?(explorer_live, "[data-test-status=paused]")
+
+        Tune.Spotify.SessionMock
+        |> expect(:next, 1, fn ^session_id -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-control=next]")
+               |> render_click()
+
+        Tune.Spotify.SessionMock
+        |> expect(:prev, 1, fn ^session_id -> :ok end)
+
+        assert explorer_live
+               |> element("[data-test-control=prev]")
+               |> render_click()
       end
     end
   end
@@ -426,10 +467,17 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   defp expect_item_playing(session_id, item, device) do
+    player = %Player{
+      status: :playing,
+      item: item,
+      progress_ms: item.duration_ms - 100,
+      device: device
+    }
+
     Tune.Spotify.SessionMock
-    |> expect(:now_playing, 2, fn ^session_id ->
-      %Player{status: :playing, item: item, progress_ms: item.duration_ms - 100, device: device}
-    end)
+    |> expect(:now_playing, 2, fn ^session_id -> player end)
+
+    player
   end
 
   defp expect_no_suggestions_playlist(session_id) do

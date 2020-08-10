@@ -1,6 +1,7 @@
 <div class="controls">
   <div class="button-group">
     <a class="button button-small"
+       data-test-control="prev"
        href="#"
        phx-click="prev"
        phx-throttle="200"
@@ -8,6 +9,8 @@
       <%= render "icon_prev.html", [] %>
     </a>
     <a class="button button-small"
+       data-test-control="play-pause"
+       data-test-status="<%= @status %>"
        href="#"
        phx-click="toggle_play_pause"
        phx-throttle="200"
@@ -20,6 +23,7 @@
         <% end %>
     </a>
     <a class="button button-small"
+       data-test-control="next"
        href="#"
        phx-click="next"
        phx-throttle="200"
