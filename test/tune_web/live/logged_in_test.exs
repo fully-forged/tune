@@ -185,7 +185,7 @@ defmodule TuneWeb.LoggedInTest do
       Tune.Spotify.SessionMock
       |> expect(:search, 2, fn ^session_id,
                                "example search",
-                               [types: [:track], limit: 32, offset: 0] ->
+                               [types: [:track], limit: 24, offset: 0] ->
         {:ok, search_results}
       end)
 
@@ -204,7 +204,7 @@ defmodule TuneWeb.LoggedInTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
-              tracks <- uniq_list_of(Generators.track(), min_length: 1, max_length: 32)
+              tracks <- uniq_list_of(Generators.track(), min_length: 1, max_length: 24)
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
@@ -223,7 +223,7 @@ defmodule TuneWeb.LoggedInTest do
         Tune.Spotify.SessionMock
         |> expect(:search, 2, fn ^session_id,
                                  ^track_name,
-                                 [types: [:track], limit: 32, offset: 0] ->
+                                 [types: [:track], limit: 24, offset: 0] ->
           {:ok, search_results}
         end)
 
@@ -249,7 +249,7 @@ defmodule TuneWeb.LoggedInTest do
               profile <- Generators.profile(),
               search_type <- Generators.search_type(),
               items <-
-                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 32)
+                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 24)
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
@@ -268,7 +268,7 @@ defmodule TuneWeb.LoggedInTest do
         Tune.Spotify.SessionMock
         |> expect(:search, 2, fn ^session_id,
                                  ^item_name,
-                                 [types: [^search_type], limit: 32, offset: 0] ->
+                                 [types: [^search_type], limit: 24, offset: 0] ->
           {:ok, search_results}
         end)
 
@@ -303,7 +303,7 @@ defmodule TuneWeb.LoggedInTest do
               profile <- Generators.profile(),
               search_type <- Generators.search_type(),
               items <-
-                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 32)
+                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 24)
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
@@ -323,7 +323,7 @@ defmodule TuneWeb.LoggedInTest do
         Tune.Spotify.SessionMock
         |> expect(:search, 2, fn ^session_id,
                                  ^item_name,
-                                 [types: [^search_type], limit: 32, offset: 0] ->
+                                 [types: [^search_type], limit: 24, offset: 0] ->
           {:ok, search_results}
         end)
         |> expect(:play, 1, fn ^session_id, ^item_uri -> :ok end)
@@ -345,7 +345,7 @@ defmodule TuneWeb.LoggedInTest do
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
               artist <- Generators.artist(),
-              albums <- uniq_list_of(Generators.album(), min_length: 1, max_length: 32)
+              albums <- uniq_list_of(Generators.album(), min_length: 1, max_length: 24)
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)

@@ -27,7 +27,7 @@ defmodule TuneWeb.ExplorerLive do
   @initial_state [
     q: nil,
     type: :track,
-    results: [],
+    results: %{items: [], total: 0},
     user: nil,
     now_playing: %Tune.Spotify.Schema.Player{},
     item: :not_fetched,
@@ -274,7 +274,7 @@ defmodule TuneWeb.ExplorerLive do
        socket
        |> assign(:q, nil)
        |> assign(:type, type)
-       |> assign(:results, [])}
+       |> assign(:results, %{items: [], total: 0})}
     end
   end
 
