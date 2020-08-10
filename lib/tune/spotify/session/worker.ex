@@ -18,8 +18,7 @@ defmodule Tune.Spotify.Session.Worker do
             now_playing: :not_playing,
             devices: []
 
-  @now_playing_refresh_interval 1000
-  @devices_refresh_interval 15_000
+  @refresh_interval 1000
   @retry_interval 5000
 
   @spec start_link({Session.id(), Session.credentials()}) :: {:ok, pid()} | {:error, term()}
@@ -166,7 +165,7 @@ defmodule Tune.Spotify.Session.Worker do
         actions = [
           {:next_event, :internal, :get_now_playing},
           {:next_event, :internal, :get_devices},
-          {:state_timeout, @now_playing_refresh_interval, :get_now_playing}
+          {:state_timeout, 0, :refresh_data}
         ]
 
         {:next_state, :authenticated, data, actions}
@@ -203,8 +202,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(event_type, :get_now_playing, :authenticated, data)
-      when event_type in [:internal, :state_timeout] do
+  def handle_event(:internal, :get_now_playing, :authenticated, data) do
     case HttpApi.now_playing(data.credentials.token) do
       {:error, :invalid_token} ->
         {:stop, :invalid_token}
@@ -225,13 +223,11 @@ defmodule Tune.Spotify.Session.Worker do
 
         data = %{data | now_playing: now_playing}
 
-        action = {:state_timeout, @now_playing_refresh_interval, :get_now_playing}
-        {:keep_state, data, action}
+        {:keep_state, data}
     end
   end
 
-  def handle_event(event_type, :get_devices, :authenticated, data)
-      when event_type in [:internal, :state_timeout] do
+  def handle_event(:internal, :get_devices, :authenticated, data) do
     case HttpApi.get_devices(data.credentials.token) do
       {:error, :invalid_token} ->
         {:stop, :invalid_token}
@@ -252,8 +248,38 @@ defmodule Tune.Spotify.Session.Worker do
 
         data = %{data | devices: devices}
 
-        action = {:state_timeout, @devices_refresh_interval, :get_devices}
-        {:keep_state, data, action}
+        {:keep_state, data}
+    end
+  end
+
+  def handle_event(:state_timeout, :refresh_data, :authenticated, data) do
+    with {:ok, now_playing} <- HttpApi.now_playing(data.credentials.token),
+         {:ok, devices} <- HttpApi.get_devices(data.credentials.token) do
+      if data.now_playing !== now_playing do
+        Tune.Spotify.Session.broadcast(data.session_id, {:now_playing, now_playing})
+      end
+
+      if data.devices !== devices do
+        Tune.Spotify.Session.broadcast(data.session_id, {:devices, devices})
+      end
+
+      data = %{data | now_playing: now_playing, devices: devices}
+
+      action = {:state_timeout, @refresh_interval, :refresh_data}
+
+      {:keep_state, data, action}
+    else
+      {:error, :invalid_token} ->
+        {:stop, :invalid_token}
+
+      {:error, :expired_token} ->
+        action = {:next_event, :internal, :refresh}
+        {:next_state, :expired, data, action}
+
+      # abnormal http error, retry in 5 seconds
+      {:error, _reason} ->
+        action = {:state_timeout, @retry_interval, :refresh_data}
+        {:keep_state_and_data, action}
     end
   end
 
