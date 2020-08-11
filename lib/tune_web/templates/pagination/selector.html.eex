@@ -1,4 +1,4 @@
-<% if @pagination_opts.total_pages > 0 do %>
+<%= if @pagination_opts.total_pages > 0 do %>
   <ul class="pagination">
     <%= prev_page(@pagination_opts, @url_fn) %>
     <%= for page <- @pagination_opts.pages do %>
