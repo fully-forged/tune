@@ -35,7 +35,7 @@ defmodule Tune.Spotify.Session do
               {:ok, [Schema.Track.t()]} | {:error, term()}
   @callback get_album(id(), item_id()) :: {:ok, Schema.Album.t()} | {:error, term()}
   @callback get_artist(id(), item_id()) :: {:ok, Schema.Artist.t()} | {:error, term()}
-  @callback get_artist_albums(id(), item_id()) ::
+  @callback get_artist_albums(id(), item_id(), HttpApi.pagination_options()) ::
               {:ok, %{albums: [Schema.Album.t()], total: pos_integer()}} | {:error, term()}
   @callback get_show(id(), item_id()) :: {:ok, Schema.Show.t()} | {:error, term()}
   @callback get_episodes(id(), item_id()) :: {:ok, [Schema.Episode.t()]} | {:error, term()}
