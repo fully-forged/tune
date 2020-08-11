@@ -29,13 +29,15 @@ defmodule Tune.Spotify.HttpApi do
   @form_headers [
     {"Content-Type", "application/x-www-form-urlencoded"}
   ]
+  @default_limit 20
+  @default_offset 0
 
   @type token :: String.t()
   @type q :: String.t()
   @type item_type :: :album | :artist | :playlist | :track | :show | :episode | :playlist
-  @type search_options :: [
-          {:types, [item_type()]} | {:limit, pos_integer()} | {:offset, pos_integer()}
-        ]
+  @type pagination_option :: {:limit, pos_integer()} | {:offset, pos_integer()}
+  @type pagination_options :: [pagination_option()]
+  @type search_options :: [{:types, [item_type()]} | pagination_option()]
   @type search_results :: %{
           optional(item_type()) => %{
             total: pos_integer(),
@@ -48,9 +50,7 @@ defmodule Tune.Spotify.HttpApi do
               | [Playlist.t()]
           }
         }
-  @type top_tracks_options :: [
-          {:limit, pos_integer()} | {:offset, pos_integer()} | {:time_range, String.t()}
-        ]
+  @type top_tracks_options :: [{:time_range, String.t()} | pagination_option()]
 
   @spec get_profile(token()) :: {:ok, User.t()} | {:error, term()}
   def get_profile(token) do
@@ -227,8 +227,6 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @default_limit 20
-  @default_offset 0
   @default_types [:track]
 
   @spec search(token(), q(), search_options()) :: {:ok, search_results()} | {:error, term()}
@@ -259,8 +257,6 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @default_limit 20
-  @default_offset 0
   @default_time_range "medium_term"
   @spec top_tracks(token(), top_tracks_options()) :: {:ok, [Track.t()]} | {:error, term()}
   def top_tracks(token, opts) do
@@ -331,11 +327,16 @@ defmodule Tune.Spotify.HttpApi do
     end
   end
 
-  @spec get_artist_albums(token(), String.t()) ::
+  @spec get_artist_albums(token(), String.t(), pagination_options()) ::
           {:ok, %{albums: [Album.t()], total: pos_integer()}} | {:error, term()}
-  def get_artist_albums(token, artist_id) do
+  def get_artist_albums(token, artist_id, opts) do
+    limit = Keyword.get(opts, :limit, @default_limit)
+    offset = Keyword.get(opts, :offset, @default_offset)
+
     params = %{
-      market: "from_token"
+      market: "from_token",
+      limit: limit,
+      offset: offset
     }
 
     case json_get(

@@ -278,13 +278,28 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
-  defp handle_artist_details(%{"artist_id" => artist_id}, _url, socket) do
+  defp handle_artist_details(%{"artist_id" => artist_id} = params, _url, socket) do
+    page =
+      params
+      |> Map.get("page", "1")
+      |> String.to_integer()
+
+    limit =
+      params
+      |> Map.get("per_page", "24")
+      |> String.to_integer()
+
+    offset = max(page - 1, 0) * limit
+
     with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
          {:ok, %{albums: albums, total: total_albums}} <-
-           spotify().get_artist_albums(socket.assigns.session_id, artist_id) do
+           spotify().get_artist_albums(socket.assigns.session_id, artist_id,
+             limit: limit,
+             offset: offset
+           ) do
       artist = %{artist | albums: albums, total_albums: total_albums}
 
-      {:noreply, assign(socket, :item, artist)}
+      {:noreply, assign(socket, %{item: artist, page: page, per_page: limit})}
     else
       error ->
         handle_spotify_result(error, socket)

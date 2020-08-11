@@ -6,6 +6,7 @@ defmodule TuneWeb.ArtistView do
   @default_medium_thumbnail "https://via.placeholder.com/150"
 
   alias Tune.Spotify.Schema.{Album, Artist}
+  alias TuneWeb.PaginationView
 
   @spec artwork(Artist.t()) :: String.t()
   defp artwork(%Artist{thumbnails: thumbnails}),

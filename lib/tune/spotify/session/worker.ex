@@ -95,8 +95,8 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   @impl true
-  def get_artist_albums(session_id, artist_id) do
-    GenStateMachine.call(via(session_id), {:get_artist_albums, artist_id})
+  def get_artist_albums(session_id, artist_id, opts) do
+    GenStateMachine.call(via(session_id), {:get_artist_albums, artist_id, opts})
   end
 
   @impl true
@@ -509,11 +509,11 @@ defmodule Tune.Spotify.Session.Worker do
 
   def handle_event(
         {:call, from},
-        {:get_artist_albums, artist_id},
+        {:get_artist_albums, artist_id, opts},
         :authenticated,
         data
       ) do
-    case HttpApi.get_artist_albums(data.credentials.token, artist_id) do
+    case HttpApi.get_artist_albums(data.credentials.token, artist_id, opts) do
       {:ok, albums} ->
         actions = [
           {:reply, from, {:ok, albums}}
