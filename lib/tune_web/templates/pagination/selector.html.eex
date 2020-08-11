@@ -1,9 +1,19 @@
-<%= if @pagination_opts.total_pages > 0 do %>
+<%= if @pagination_opts.total_pages > 1 do %>
   <ul class="pagination">
     <%= prev_page(@pagination_opts, @url_fn) %>
-    <%= for page <- @pagination_opts.pages do %>
-      <%= numbered_page(page, @pagination_opts, @url_fn) %>
-    <% end %>
+    <%= case @pagination_opts.mode do %>
+      <% :continuous -> %>
+        <%= for page <- @pagination_opts.pages do %>
+          <%= numbered_page(page, @pagination_opts, @url_fn) %>
+        <% end %>
+      <% :split -> %>
+        <%= for page <- @pagination_opts.left_pages do %>
+          <%= numbered_page(page, @pagination_opts, @url_fn) %>
+        <% end %>
+        <%= for page <- @pagination_opts.right_pages do %>
+          <%= numbered_page(page, @pagination_opts, @url_fn) %>
+        <% end %>
+      <% end %>
     <%= next_page(@pagination_opts, @url_fn) %>
   </ul>
 <% end %>
