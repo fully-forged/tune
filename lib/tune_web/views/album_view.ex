@@ -50,7 +50,7 @@ defmodule TuneWeb.AlbumView do
     ])
   end
 
-  @spec youtube_link(Albumt.t()) :: String.t()
+  @spec youtube_link(Album.t()) :: String.t()
   defp youtube_link(album) do
     artist_name =
       album
