@@ -8,6 +8,9 @@
         <%= link to: last_fm_link(track, @album, @artist), class: "last-fm", target: "_blank" do %>
           <%= render "icon_last_fm.html", [] %>
         <% end %>
+        <%= link to: youtube_link(track, @artist), class: "youtube", target: "_blank" do %>
+          <%= render "icon_youtube.html", [] %>
+        <% end %>
       </li>
     <% else %>
       <li data-test-id="<%= track.id %>">
@@ -16,6 +19,9 @@
         <span class="duration"><%= Tune.Duration.hms(track.duration_ms) %></span>
         <%= link to: last_fm_link(track, @album, @artist), class: "last-fm", target: "_blank" do %>
           <%= render "icon_last_fm.html", [] %>
+        <% end %>
+        <%= link to: youtube_link(track, @artist), class: "youtube", target: "_blank" do %>
+          <%= render "icon_youtube.html", [] %>
         <% end %>
       </li>
     <% end %>

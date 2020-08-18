@@ -236,7 +236,7 @@ msgid "Set volume"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/views/artist_view.ex:40
+#: lib/tune_web/views/artist_view.ex:46
 msgid "1 album"
 msgid_plural "%{count} albums"
 msgstr[0] ""
@@ -252,4 +252,10 @@ msgstr ""
 #: lib/tune_web/templates/header/profile.html.eex:8
 #: lib/tune_web/templates/layout/app.html.eex:9
 msgid "Source"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/album/show.html.eex:32
+#: lib/tune_web/templates/artist/show.html.eex:29
+msgid "Open in YouTube"
 msgstr ""

@@ -28,6 +28,12 @@ defmodule TuneWeb.ArtistView do
     ])
   end
 
+  @spec youtube_link(Artist.t()) :: String.t()
+  defp youtube_link(artist) do
+    q = [search_query: artist.name]
+    "https://www.youtube.com/results?" <> URI.encode_query(q)
+  end
+
   @spec thumbnail(Album.t()) :: String.t()
   defp thumbnail(%Album{thumbnails: thumbnails}) do
     Enum.find_value(thumbnails, @default_medium_thumbnail, fn {size, url} ->
