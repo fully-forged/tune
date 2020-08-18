@@ -19,4 +19,10 @@ defmodule TuneWeb.TrackView do
       URI.encode(track.name)
     ])
   end
+
+  @spec youtube_link(Track.t(), Artist.t()) :: String.t()
+  def youtube_link(track, artist) do
+    q = [search_query: artist.name <> " " <> track.name]
+    "https://www.youtube.com/results?" <> URI.encode_query(q)
+  end
 end

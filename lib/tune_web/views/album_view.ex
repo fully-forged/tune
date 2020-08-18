@@ -49,4 +49,15 @@ defmodule TuneWeb.AlbumView do
       URI.encode(album.name)
     ])
   end
+
+  @spec youtube_link(Album.t()) :: String.t()
+  defp youtube_link(album) do
+    artist_name =
+      album
+      |> Album.main_artist()
+      |> Map.fetch!(:name)
+
+    q = [search_query: artist_name <> " " <> album.name]
+    "https://www.youtube.com/results?" <> URI.encode_query(q)
+  end
 end

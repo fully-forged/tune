@@ -13,3 +13,13 @@
     fill: #36c;
   }
 }
+
+.youtube {
+  svg {
+    fill: #ff0000;
+  }
+
+  &:hover svg {
+    fill: black;
+  }
+}
