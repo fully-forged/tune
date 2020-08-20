@@ -31,6 +31,38 @@ the device switch section in the mini player (note that it requires a Spotify
 Premium subscription and [only some browsers are
 supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers)).
 
+# Screenshots
+
+## Album details
+
+<p align="center">
+  <img width="800" src="https://raw.githubusercontent.com/cloud8421/tune/main/screenshots/album-details.png">
+</p>
+
+## Search
+
+<p align="center">
+  <img width="800" src="https://raw.githubusercontent.com/cloud8421/tune/main/screenshots/search.jpg">
+</p>
+
+## Artist details
+
+<p align="center">
+  <img width="800" src="https://raw.githubusercontent.com/cloud8421/tune/main/screenshots/artist-details.jpg">
+</p>
+
+## Top albums and recommendations
+
+<p align="center">
+  <img width="800" src="https://raw.githubusercontent.com/cloud8421/tune/main/screenshots/top-albums-and-recommendations.png">
+</p>
+
+## Release radar
+
+<p align="center">
+  <img width="800" src="https://raw.githubusercontent.com/cloud8421/tune/main/screenshots/release-radar.png">
+</p>
+
 # Initial setup
 
 First of all, we need working installations of Elixir and Erlang. The
