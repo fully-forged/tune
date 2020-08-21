@@ -63,6 +63,7 @@ defmodule TuneWeb.ExplorerLive do
         {:ok,
          socket
          |> assign(@initial_state)
+         |> assign(:static_changed, static_changed?(socket))
          |> assign_new(:player_id, &generate_player_id/0)
          |> assign(
            session_id: session_id,

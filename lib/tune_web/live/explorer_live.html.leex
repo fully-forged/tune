@@ -15,6 +15,12 @@
       phx-click="lv:clear-flash"
       phx-value-key="error"><%= live_flash(@flash, :error) %></a>
 
+    <%= if @static_changed do %>
+      <div class="alert alert-warning" role="alert">
+        <%= gettext("The app has been updated.") %> <a href="#" onclick="window.location.reload()"><%= gettext("Click here to reload") %></a>.
+      </div>
+    <% end %>
+
     <%= case @live_action do %>
       <% :suggestions -> %>
         <%= render SuggestionsView, "index.html",
