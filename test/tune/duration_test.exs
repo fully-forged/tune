@@ -20,7 +20,7 @@ defmodule Tune.DurationTest do
           d when d < @one_minute ->
             assert formatted == "Less than a minute"
 
-          d when d < @one_minute + @thirty_seconds ->
+          d when d <= @one_minute + @thirty_seconds ->
             assert formatted =~ "minute"
             refute formatted =~ "minutes"
 
