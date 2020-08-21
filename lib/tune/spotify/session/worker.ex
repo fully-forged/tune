@@ -173,7 +173,7 @@ defmodule Tune.Spotify.Session.Worker do
         actions = [
           {:next_event, :internal, :get_now_playing},
           {:next_event, :internal, :get_devices},
-          {:state_timeout, 0, :refresh_data}
+          {:state_timeout, @refresh_interval, :refresh_data}
         ]
 
         {:next_state, :authenticated, data, actions}
