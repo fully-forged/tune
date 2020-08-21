@@ -57,7 +57,7 @@ defmodule TuneWeb.ExplorerLive do
           end
 
         if connected?(socket) do
-          Tune.Spotify.Session.subscribe(session_id)
+          spotify().subscribe(session_id)
         end
 
         {:ok,
