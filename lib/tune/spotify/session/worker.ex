@@ -21,6 +21,10 @@ defmodule Tune.Spotify.Session.Worker do
   @refresh_interval 1000
   @retry_interval 5000
 
+  ################################################################################
+  ################################## PUBLIC API ##################################
+  ################################################################################
+
   @spec start_link({Session.id(), Session.credentials()}) :: {:ok, pid()} | {:error, term()}
   def start_link({session_id, credentials}), do: start_link(session_id, credentials)
 
@@ -143,6 +147,10 @@ defmodule Tune.Spotify.Session.Worker do
   def get_player_token(session_id) do
     GenStateMachine.call(via(session_id), :get_player_token)
   end
+
+  ################################################################################
+  ################################## CALLBACKS ###################################
+  ################################################################################
 
   @doc false
   @impl true
@@ -283,22 +291,30 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event({:call, from}, :get_profile, :authenticated, data) do
+  def handle_event({:call, from}, msg, :authenticated, data) do
+    handle_authenticated_call(from, msg, data)
+  end
+
+  def handle_event({:call, from}, _request, _state, _data) do
+    action = {:reply, from, {:error, :not_authenticated}}
+    {:keep_state_and_data, action}
+  end
+
+  ################################################################################
+  ########################### INTERNAL IMPLEMENTATION ############################
+  ################################################################################
+
+  defp handle_authenticated_call(from, :get_profile, data) do
     action = {:reply, from, data.user}
     {:keep_state_and_data, action}
   end
 
-  def handle_event({:call, from}, :now_playing, :authenticated, data) do
+  defp handle_authenticated_call(from, :now_playing, data) do
     action = {:reply, from, data.now_playing}
     {:keep_state_and_data, action}
   end
 
-  def handle_event(
-        {:call, from},
-        :toggle_play,
-        :authenticated,
-        %{now_playing: %{status: :playing}} = data
-      ) do
+  defp handle_authenticated_call(from, :toggle_play, %{now_playing: %{status: :playing}} = data) do
     case HttpApi.pause(data.credentials.token) do
       :ok ->
         actions = [
@@ -307,15 +323,13 @@ defmodule Tune.Spotify.Session.Worker do
         ]
 
         {:keep_state_and_data, actions}
+
+      error ->
+        handle_common_errors(error, data, from)
     end
   end
 
-  def handle_event(
-        {:call, from},
-        :toggle_play,
-        :authenticated,
-        %{now_playing: %{status: :paused}} = data
-      ) do
+  defp handle_authenticated_call(from, :toggle_play, %{now_playing: %{status: :paused}} = data) do
     case HttpApi.play(data.credentials.token) do
       :ok ->
         actions = [
@@ -324,25 +338,18 @@ defmodule Tune.Spotify.Session.Worker do
         ]
 
         {:keep_state_and_data, actions}
+
+      error ->
+        handle_common_errors(error, data, from)
     end
   end
 
-  def handle_event(
-        {:call, from},
-        :toggle_play,
-        :authenticated,
-        _data
-      ) do
+  defp handle_authenticated_call(from, :toggle_play, _data) do
     action = {:reply, from, :ok}
     {:keep_state_and_data, action}
   end
 
-  def handle_event(
-        {:call, from},
-        {:search, q, opts},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:search, q, opts}, data) do
     case HttpApi.search(data.credentials.token, q, opts) do
       {:ok, results} ->
         action = {:reply, from, {:ok, results}}
@@ -353,12 +360,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:top_tracks, opts},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:top_tracks, opts}, data) do
     case HttpApi.top_tracks(data.credentials.token, opts) do
       {:ok, tracks} ->
         action = {:reply, from, {:ok, tracks}}
@@ -369,12 +371,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:play, uri},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:play, uri}, data) do
     case HttpApi.play(data.credentials.token, uri) do
       :ok ->
         actions = [
@@ -389,12 +386,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:play, uri, context_uri},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:play, uri, context_uri}, data) do
     case HttpApi.play(data.credentials.token, uri, context_uri) do
       :ok ->
         actions = [
@@ -409,12 +401,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        :next,
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, :next, data) do
     case HttpApi.next(data.credentials.token) do
       :ok ->
         actions = [
@@ -429,12 +416,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        :prev,
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, :prev, data) do
     case HttpApi.prev(data.credentials.token) do
       :ok ->
         actions = [
@@ -449,12 +431,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:seek, position_ms},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:seek, position_ms}, data) do
     case HttpApi.seek(data.credentials.token, position_ms) do
       :ok ->
         actions = [
@@ -469,12 +446,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_album, album_id},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_album, album_id}, data) do
     case HttpApi.get_album(data.credentials.token, album_id) do
       {:ok, album} ->
         actions = [
@@ -488,12 +460,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_artist, artist_id},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_artist, artist_id}, data) do
     case HttpApi.get_artist(data.credentials.token, artist_id) do
       {:ok, artist} ->
         actions = [
@@ -507,12 +474,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_artist_albums, artist_id, opts},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_artist_albums, artist_id, opts}, data) do
     case HttpApi.get_artist_albums(data.credentials.token, artist_id, opts) do
       {:ok, albums} ->
         actions = [
@@ -526,12 +488,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_show, show_id},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_show, show_id}, data) do
     case HttpApi.get_show(data.credentials.token, show_id) do
       {:ok, show} ->
         actions = [
@@ -545,12 +502,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_episodes, show_id},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_episodes, show_id}, data) do
     case HttpApi.get_episodes(data.credentials.token, show_id) do
       {:ok, episodes} ->
         actions = [
@@ -564,12 +516,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_playlist, playlist_id},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_playlist, playlist_id}, data) do
     case HttpApi.get_playlist(data.credentials.token, playlist_id) do
       {:ok, playlist} ->
         actions = [
@@ -583,22 +530,17 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event({:call, from}, :get_devices, :authenticated, data) do
+  defp handle_authenticated_call(from, :get_devices, data) do
     action = {:reply, from, data.devices}
     {:keep_state_and_data, action}
   end
 
-  def handle_event({:call, from}, :refresh_devices, :authenticated, _data) do
+  defp handle_authenticated_call(from, :refresh_devices, _data) do
     actions = [{:next_event, :internal, :get_devices}, {:reply, from, :ok}]
     {:keep_state_and_data, actions}
   end
 
-  def handle_event(
-        {:call, from},
-        {:get_recommendations_from_artists, artist_ids},
-        :authenticated,
-        data
-      ) do
+  defp handle_authenticated_call(from, {:get_recommendations_from_artists, artist_ids}, data) do
     case HttpApi.get_recommendations_from_artists(data.credentials.token, artist_ids) do
       {:ok, tracks} ->
         actions = [
@@ -612,7 +554,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event({:call, from}, :get_player_token, :authenticated, data) do
+  defp handle_authenticated_call(from, :get_player_token, data) do
     actions = [
       {:reply, from, {:ok, data.credentials.token}}
     ]
@@ -620,7 +562,7 @@ defmodule Tune.Spotify.Session.Worker do
     {:keep_state_and_data, actions}
   end
 
-  def handle_event({:call, from}, {:transfer_playback, device_id}, :authenticated, data) do
+  defp handle_authenticated_call(from, {:transfer_playback, device_id}, data) do
     case HttpApi.transfer_playback(data.credentials.token, device_id) do
       :ok ->
         actions = [
@@ -634,7 +576,7 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
-  def handle_event({:call, from}, {:set_volume, volume_percent}, :authenticated, data) do
+  defp handle_authenticated_call(from, {:set_volume, volume_percent}, data) do
     case HttpApi.set_volume(data.credentials.token, volume_percent) do
       :ok ->
         actions = [
@@ -647,11 +589,6 @@ defmodule Tune.Spotify.Session.Worker do
       error ->
         handle_common_errors(error, data, from)
     end
-  end
-
-  def handle_event({:call, from}, _request, _state, _data) do
-    action = {:reply, from, {:error, :not_authenticated}}
-    {:keep_state_and_data, action}
   end
 
   defp handle_common_errors(error, data, from) do
