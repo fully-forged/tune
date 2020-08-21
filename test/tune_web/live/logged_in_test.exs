@@ -496,6 +496,7 @@ defmodule TuneWeb.LoggedInTest do
     |> expect(:get_profile, 3, fn ^session_id -> profile end)
     |> expect(:get_devices, 2, fn ^session_id -> [] end)
     |> expect(:get_player_token, 2, fn ^session_id -> {:ok, credentials.token} end)
+    |> expect(:subscribe, 1, fn ^session_id -> :ok end)
   end
 
   defp expect_nothing_playing(session_id) do

@@ -2,8 +2,6 @@ defmodule Tune.Spotify.Session do
   @moduledoc """
   Defines a behaviour that can be used to model an active user session against the Spotify API.
   """
-  alias Phoenix.PubSub
-
   alias Tune.Duration
   alias Tune.Spotify.{HttpApi, Schema}
 
@@ -47,14 +45,6 @@ defmodule Tune.Spotify.Session do
   @callback get_player_token(id()) :: {:ok, player_token()} | {:error, term()}
   @callback transfer_playback(id(), Schema.Device.id()) :: :ok | {:error, term()}
   @callback set_volume(id(), Schema.Device.volume_percent()) :: :ok | {:error, term()}
-
-  @spec subscribe(id()) :: :ok | {:error, term()}
-  def subscribe(session_id) do
-    PubSub.subscribe(Tune.PubSub, session_id)
-  end
-
-  @spec broadcast(id(), message()) :: :ok | {:error, term()}
-  def broadcast(session_id, message) do
-    PubSub.broadcast(Tune.PubSub, session_id, message)
-  end
+  @callback subscribe(id()) :: :ok | {:error, term()}
+  @callback broadcast(id(), message()) :: :ok | {:error, term()}
 end

@@ -7,19 +7,22 @@ defmodule Tune.Spotify.Session.Worker do
   automatically refreshes credentials once expired.
   """
 
-  use GenStateMachine
+  use GenStateMachine, restart: :transient
   @behaviour Tune.Spotify.Session
 
   alias Tune.Spotify.{HttpApi, Session, SessionRegistry}
+  alias Phoenix.PubSub
 
   defstruct session_id: nil,
             credentials: nil,
             user: nil,
             now_playing: :not_playing,
-            devices: []
+            devices: [],
+            subscribers: MapSet.new()
 
   @refresh_interval 1000
   @retry_interval 5000
+  @inactivity_timeout 30_000
 
   ################################################################################
   ################################## PUBLIC API ##################################
@@ -36,6 +39,18 @@ defmodule Tune.Spotify.Session.Worker do
   @impl true
   def setup(session_id, credentials) do
     Tune.Spotify.Supervisor.ensure_session(session_id, credentials)
+  end
+
+  @impl true
+  def subscribe(session_id) do
+    PubSub.subscribe(Tune.PubSub, session_id)
+    caller = self()
+    GenStateMachine.call(via(session_id), {:subscribe, caller})
+  end
+
+  @impl true
+  def broadcast(session_id, message) do
+    PubSub.broadcast(Tune.PubSub, session_id, message)
   end
 
   @impl true
@@ -168,12 +183,13 @@ defmodule Tune.Spotify.Session.Worker do
       {:ok, user} ->
         data = %{data | user: user}
 
-        Tune.Spotify.Session.broadcast(data.session_id, {:player_token, data.credentials.token})
+        broadcast(data.session_id, {:player_token, data.credentials.token})
 
         actions = [
           {:next_event, :internal, :get_now_playing},
           {:next_event, :internal, :get_devices},
-          {:state_timeout, @refresh_interval, :refresh_data}
+          {:state_timeout, @refresh_interval, :refresh_data},
+          {{:timeout, :inactivity}, @inactivity_timeout, :expired}
         ]
 
         {:next_state, :authenticated, data, actions}
@@ -226,7 +242,7 @@ defmodule Tune.Spotify.Session.Worker do
 
       {:ok, now_playing} ->
         if data.now_playing !== now_playing do
-          Tune.Spotify.Session.broadcast(data.session_id, {:now_playing, now_playing})
+          broadcast(data.session_id, {:now_playing, now_playing})
         end
 
         data = %{data | now_playing: now_playing}
@@ -251,7 +267,7 @@ defmodule Tune.Spotify.Session.Worker do
 
       {:ok, devices} ->
         if data.devices !== devices do
-          Tune.Spotify.Session.broadcast(data.session_id, {:devices, devices})
+          broadcast(data.session_id, {:devices, devices})
         end
 
         data = %{data | devices: devices}
@@ -264,11 +280,11 @@ defmodule Tune.Spotify.Session.Worker do
     with {:ok, now_playing} <- HttpApi.now_playing(data.credentials.token),
          {:ok, devices} <- HttpApi.get_devices(data.credentials.token) do
       if data.now_playing !== now_playing do
-        Tune.Spotify.Session.broadcast(data.session_id, {:now_playing, now_playing})
+        broadcast(data.session_id, {:now_playing, now_playing})
       end
 
       if data.devices !== devices do
-        Tune.Spotify.Session.broadcast(data.session_id, {:devices, devices})
+        broadcast(data.session_id, {:devices, devices})
       end
 
       data = %{data | now_playing: now_playing, devices: devices}
@@ -291,6 +307,13 @@ defmodule Tune.Spotify.Session.Worker do
     end
   end
 
+  def handle_event({:call, from}, {:subscribe, pid}, _state, data) do
+    new_subscribers = MapSet.put(data.subscribers, pid)
+    Process.monitor(pid)
+    action = {:reply, from, :ok}
+    {:keep_state, %{data | subscribers: new_subscribers}, action}
+  end
+
   def handle_event({:call, from}, msg, :authenticated, data) do
     handle_authenticated_call(from, msg, data)
   end
@@ -298,6 +321,21 @@ defmodule Tune.Spotify.Session.Worker do
   def handle_event({:call, from}, _request, _state, _data) do
     action = {:reply, from, {:error, :not_authenticated}}
     {:keep_state_and_data, action}
+  end
+
+  def handle_event({:timeout, :inactivity}, :expired, _state, data) do
+    if MapSet.size(data.subscribers) == 0 do
+      {:stop, :normal}
+    else
+      action = {{:timeout, :inactivity}, @inactivity_timeout, :expired}
+      {:keep_state_and_data, action}
+    end
+  end
+
+  def handle_event(:info, {:DOWN, _ref, :process, pid, _reason}, _state, data) do
+    new_subscribers = MapSet.delete(data.subscribers, pid)
+
+    {:keep_state, %{data | subscribers: new_subscribers}}
   end
 
   ################################################################################
