@@ -4,10 +4,13 @@
   img {
     max-height: 100%;
     max-width: 100%;
+    transition: all 0.2s ease-in-out;
   }
 
   .play-button {
-    display: none;
+    display: flex;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
     position: absolute;
     text-align: center;
     color: white;
@@ -29,13 +32,22 @@
 
   &:hover {
     img {
-      filter: brightness(0.6);
+      filter: brightness(0.8);
+      transform: scale(1.1);
     }
 
     .play-button {
-      display: flex;
+      opacity: 1;
       filter: none;
       z-index: 1;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .artwork {
+    .play-button {
+      opacity: 1;
     }
   }
 }
@@ -43,7 +55,7 @@
 @media (max-width: 768px) {
   .artwork {
     .play-button {
-      display: flex;
+      font-size: 5rem;
     }
   }
 }
