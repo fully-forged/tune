@@ -219,6 +219,8 @@ defmodule TuneWeb.ExplorerLive do
   defp spotify, do: Application.get_env(:tune, :spotify)
 
   defp handle_suggestions(_params, _url, socket) do
+    socket = assign(socket, :page_title, gettext("Suggestions"))
+
     with {:ok, playlist} <- get_suggestions_playlist(socket.assigns.session_id),
          {:ok, top_tracks} <-
            get_top_tracks(
@@ -247,6 +249,7 @@ defmodule TuneWeb.ExplorerLive do
     type = Map.get(params, "type", "track")
     page = Map.get(params, "page", "1")
     per_page = Map.get(params, "per_page", "24")
+    socket = assign(socket, :page_title, gettext("Search results"))
 
     if String.length(q) >= 1 do
       type = parse_type(type)
@@ -260,6 +263,7 @@ defmodule TuneWeb.ExplorerLive do
         |> assign(:type, type)
         |> assign(:page, page)
         |> assign(:per_page, limit)
+        |> assign(:page_title, gettext("Search results for %{q}", %{q: q}))
 
       search_opts = [types: [type], limit: limit, offset: offset]
 
@@ -292,6 +296,8 @@ defmodule TuneWeb.ExplorerLive do
 
     offset = max(page - 1, 0) * limit
 
+    socket = assign(socket, :page_title, gettext("Artist details"))
+
     with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
          {:ok, %{albums: albums, total: total_albums}} <-
            spotify().get_artist_albums(socket.assigns.session_id, artist_id,
@@ -300,7 +306,13 @@ defmodule TuneWeb.ExplorerLive do
            ) do
       artist = %{artist | albums: albums, total_albums: total_albums}
 
-      {:noreply, assign(socket, %{item: artist, page: page, per_page: limit})}
+      {:noreply,
+       assign(socket, %{
+         item: artist,
+         page: page,
+         per_page: limit,
+         page_title: gettext("Artist details for %{name}", %{name: artist.name})
+       })}
     else
       error ->
         handle_spotify_result(error, socket)
@@ -308,9 +320,15 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp handle_album_details(%{"album_id" => album_id}, _url, socket) do
+    socket = assign(socket, :page_title, gettext("Album details"))
+
     case spotify().get_album(socket.assigns.session_id, album_id) do
       {:ok, album} ->
-        {:noreply, assign(socket, :item, album)}
+        {:noreply,
+         assign(socket,
+           item: album,
+           page_title: gettext("Album details for %{name}", %{name: album.name})
+         )}
 
       error ->
         handle_spotify_result(error, socket)
@@ -318,10 +336,17 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp handle_show_details(%{"show_id" => show_id}, _url, socket) do
+    socket = assign(socket, :page_title, gettext("Show details"))
+
     with {:ok, show} <- spotify().get_show(socket.assigns.session_id, show_id),
          {:ok, episodes} <- spotify().get_episodes(socket.assigns.session_id, show_id) do
       show = %{show | episodes: episodes}
-      {:noreply, assign(socket, :item, show)}
+
+      {:noreply,
+       assign(socket,
+         item: show,
+         page_title: gettext("Show details for %{name}", %{name: show.name})
+       )}
     else
       error ->
         handle_spotify_result(error, socket)
@@ -329,6 +354,7 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp handle_episode_details(_params, _url, socket) do
+    socket = assign(socket, :page_title, gettext("Episode details"))
     {:noreply, socket}
   end
 
