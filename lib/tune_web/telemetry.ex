@@ -22,6 +22,9 @@ defmodule TuneWeb.Telemetry do
 
   def metrics do
     [
+      # Tune Metrics
+      summary("tune.session.count.active"),
+
       # Phoenix Metrics
       summary("phoenix.endpoint.stop.duration",
         unit: {:native, :millisecond}
@@ -57,7 +60,7 @@ defmodule TuneWeb.Telemetry do
     [
       # A module, function and arguments to be invoked periodically.
       # This function must call :telemetry.execute/3 and a metric must be added above.
-      # {TuneWeb, :count_users, []}
+      {Tune.Spotify.Supervisor, :count_sessions, []}
     ]
   end
 end

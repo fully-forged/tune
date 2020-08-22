@@ -30,4 +30,9 @@ defmodule Tune.Spotify.Supervisor do
       {Tune.Spotify.Session.Worker, {id, credentials}}
     )
   end
+
+  def count_sessions do
+    count = DynamicSupervisor.count_children(Tune.Spotify.SessionSupervisor)
+    :telemetry.execute([:tune, :session, :count], count)
+  end
 end

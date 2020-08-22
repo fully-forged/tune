@@ -11,16 +11,16 @@ defmodule Tune.Application do
     Tune.Spotify.Auth.configure!(config.spotify)
 
     children = [
-      # Start the Telemetry supervisor
-      TuneWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Tune.PubSub},
       # Start the Endpoint (http/https)
-      {TuneWeb.Telemetry.Storage, TuneWeb.Telemetry.metrics()},
       TuneWeb.Endpoint,
       # Start a worker by calling: Tune.Worker.start_link(arg)
       {Finch, name: Tune.Finch},
-      Tune.Spotify.Supervisor
+      Tune.Spotify.Supervisor,
+      # Start the Telemetry supervisor
+      TuneWeb.Telemetry,
+      {TuneWeb.Telemetry.Storage, TuneWeb.Telemetry.metrics()}
       # {Tune.Worker, arg}
     ]
 
