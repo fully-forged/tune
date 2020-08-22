@@ -35,33 +35,23 @@ supported](https://developer.spotify.com/documentation/web-playback-sdk/#support
 
 ## Album details
 
-<p align="center">
-  <img width="844" src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/album-details.jpg">
-</p>
+![Album details](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/album-details.jpg "Album details")
 
-## Search
+## Global Search
 
-<p align="center">
-  <img width="844" src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/search.jpg">
-</p>
+![Search](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/search.jpg "Search")
 
 ## Artist details
 
-<p align="center">
-  <img width="844" src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/artist-details.jpg">
-</p>
+![Artist details](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/artist-details.jpg "Artist details")
 
 ## Top albums and recommendations
 
-<p align="center">
-  <img width="844" src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/top-albums-and-recommendations.jpg">
-</p>
+![Top albums and recommendations](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/top-albums-and-recommendations.jpg "Top albums and recommendations")
 
 ## Release radar
 
-<p align="center">
-  <img width="844" src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/release-radar.jpg">
-</p>
+![Release radar](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/release-radar.jpg "Release radar")
 
 # Initial setup
 
