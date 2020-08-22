@@ -11,7 +11,8 @@ defmodule Tune.MixProject do
       dialyzer: dialyzer(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      docs: docs()
     ]
   end
 
@@ -77,4 +78,20 @@ defmodule Tune.MixProject do
       plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
     ]
   end
+
+  defp docs do
+    [main: "readme", extras: ["README.md"], before_closing_body_tag: &monospace_stylesheet/1]
+  end
+
+  defp monospace_stylesheet(:html) do
+    """
+    <style>
+      .content-inner code {
+        font-family: IBM Plex Mono, Fira Code, Inconsolata,Menlo,Courier,monospace;
+      }
+    </style>
+    """
+  end
+
+  defp monospace_stylesheet(:epub), do: nil
 end
