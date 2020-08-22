@@ -3,7 +3,7 @@
 Tune is a Spotify browser and remote application with a focus on performance
 and integration with other services.
 
-It's available at <https://tune.fullyforged.com>.
+You can see it in action at <https://tune.fullyforged.com>.
 
 # Scope and features
 
@@ -68,7 +68,7 @@ supported](https://developer.spotify.com/documentation/web-playback-sdk/#support
 First of all, we need working installations of Elixir and Erlang. The
 recommended way to achieve this is via [asdf](https://asdf-vm.com/#/). Once
 it's installed and working, you can run `asdf install` from the project root to
-install the correct versions required by Ada (see the `.tool-versions` file for
+install the correct versions required (see the `.tool-versions` file for
 details).
 
 Next, make sure you setup the required environment variables as detailed in
