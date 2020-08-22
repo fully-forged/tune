@@ -794,7 +794,7 @@ defmodule Tune.Spotify.HttpApi do
 
         total = get_in(results, ["shows", "total"])
 
-        Map.put(acc, :shows, %{items: shows, total: total})
+        Map.put(acc, :show, %{items: shows, total: total})
 
       :episode, acc ->
         episodes =
@@ -804,7 +804,7 @@ defmodule Tune.Spotify.HttpApi do
 
         total = get_in(results, ["episodes", "total"])
 
-        Map.put(acc, :episodes, %{items: episodes, total: total})
+        Map.put(acc, :episode, %{items: episodes, total: total})
 
       :playlist, acc ->
         playlists =
