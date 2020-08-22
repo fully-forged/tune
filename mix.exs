@@ -80,7 +80,20 @@ defmodule Tune.MixProject do
   end
 
   defp docs do
-    [main: "readme", extras: ["README.md"], before_closing_body_tag: &monospace_stylesheet/1]
+    [
+      main: "readme",
+      extras: ["README.md"],
+      before_closing_body_tag: &monospace_stylesheet/1,
+      nest_modules_by_prefix: [Tune.Spotify.Schema, Tune.Spotify.Session],
+      groups_for_modules: [
+        "Spotify Schemas": ~r/Schema/,
+        "Spotify Session": ~r/Session/,
+        Authentication: ~r/Auth/,
+        UI: TuneWeb.ExplorerLive,
+        Routing: TuneWeb.Router.Helpers,
+        Core: [Tune.Config, Tune.Gettext, Tune.Duration]
+      ]
+    ]
   end
 
   defp monospace_stylesheet(:html) do

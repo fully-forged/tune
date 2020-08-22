@@ -1,10 +1,10 @@
 defmodule TuneWeb.Telemetry.Storage do
-  @moduledoc """
-  Lifted directly from
-  https://github.com/phoenixframework/phoenix_live_dashboard/blob/master/guides/metrics_history.md,
-  this module is responsible to keep an in-memory copy of recent telemetry
-  data.
-  """
+  # Lifted directly from
+  # https://github.com/phoenixframework/phoenix_live_dashboard/blob/master/guides/metrics_history.md,
+  # this module is responsible to keep an in-memory copy of recent telemetry
+  # data.
+
+  @moduledoc false
   use GenServer
 
   @history_buffer_size 500
