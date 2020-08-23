@@ -92,6 +92,43 @@ The project is setup to deploy on Heroku, please make sure you:
 - configure environment variables
 - add the buildpacks detailed at <https://hexdocs.pm/phoenix/heroku.html>
 
+# Application structure
+
+The `Tune` namespace defines the domain logic responsible to interact with the
+Spotify API and maintain running sessions for each logged-in user.
+
+The `TuneWeb` namespace defines authentication endpoints and the main
+`LiveView` (`TuneWeb.ExplorerLive`) that powers the entire user interface.
+
+Tune assumes multiple browser sessions for the same user, which is why it
+defines a `Tune.Spotify.Session` behaviour with `Tune.Spotify.Session.Worker`
+as its main runtime implementation.
+
+Each worker is responsible to proxy interaction with the Spotify API, 
+periodically poll for data changes, and broadcast corresponding events.
+
+When a user opens a browser session, `TuneWeb.ExplorerLive` either starts or
+simply reuses a worker named with the same session ID.
+
+Each worker monitors its subscribers, so that it can shutdown when a user
+closes their last browser window.
+
+This architecture ensures that:
+
+- The amount of automatic API calls against the Spotify API for a given user is
+  constant and independent from the number of user sessions for the same user.
+- Credential renewal happens in the background
+- The explorer implementation remains entirely focused on UI interaction 
+
+# Telemetry
+
+The application exposes `TuneWeb.Telemetry` module with definitions for relevant metrics.
+
+An instance of
+[Phoenix.LiveDashboard](https://github.com/phoenixframework/phoenix_live_dashboard/)
+is mounted at `/dashboard`. In production, the endpoint is protected by basic
+auth (see `.env` for relevant environment variables).
+
 # Credits
 
 - Mini player icons from [Bootstrap Icons](https://icons.getbootstrap.com/)
