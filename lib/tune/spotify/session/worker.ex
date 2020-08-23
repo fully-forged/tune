@@ -1,10 +1,103 @@
 defmodule Tune.Spotify.Session.Worker do
   @moduledoc """
-  This module implements a worker that maps to an active user session, wrapping
+  This module implements a worker mapped to a user session, wrapping
   interaction with the Spotify API.
 
-  The state machine of the worker handles authentication errors and
-  automatically refreshes credentials once expired.
+  ## General structure
+
+  The worker implements the `Tune.Spotify.Session` behaviour for its public API
+  and uses `GenStateMachine` to model its lifecycle.
+
+  If you're not familiar with the `gen_statem` behaviour (which powers
+  `GenStateMachine`), it's beneficial to read
+  <http://erlang.org/doc/design_principles/statem.html> before proceeding
+  further.
+
+  The state machine uses the `handle_event_function` callback mode and has 3
+  states: `:not_authenticated`, `:authenticated` and `:expired`.
+
+  ```
+                                ┌─────────────────┐
+                                │Not authenticated│
+                                └─────────────────┘
+                                         │
+                                         │
+                                         ▼
+                               ┌ ─ ─ ─ ─ ─ ─ ─ ─ ─
+                      ┌────────    Authenticate   │─────────┐
+                      │        └ ─ ─ ─ ─ ─ ─ ─ ─ ─          │
+                      │                  │                  │
+                  Success             Token             Invalid
+                      │              expired             token
+                      │                  │                  │
+                      │                  │                  │
+                      ▼                  ▼                  ▼
+               ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+               │Authenticated│    │   Expired   │    │    Stop     │
+               └─────────────┘    └─────────────┘    └─────────────┘
+                      ▲                  │                  ▲
+                      │              Get new                │
+                  Success             token                 │
+                      │    ┌ ─ ─ ─ ─     │                  │
+                      └──── Refresh │◀───┘                  │
+                           └ ─ ─ ─ ─                        │
+                                │                           │
+                                │          Invalid          │
+                                └──────────refresh ─────────┘
+                                            token
+  ```
+
+  When the process starts, it tries to authenticate against the Spotify API
+  using the provided credentials. If successful, it enters the authenticated
+  state, where all API functions can be executed correctly.
+
+  If authentication fails because the authentication token has expired, the
+  process tries to get a new token using the refresh token supplied by the
+  Spotify API. This process effectively extends the duration of the session.
+
+  Any error that indicates that credentials are invalid causes the process to
+  stop. Any transient network error automatically triggers a delayed retry,
+  which guarantees that _eventually_ the state machine reaches the
+  authenticated state.
+
+  ## Data lifecycle
+
+  Aside from acting as an API client for on-demand operations (e.g. search,
+  play/pause, etc.), the worker also regularly polls the Spotify API for
+  current player status and connected devices. Both pieces of information are
+  kept in the state machine data for fast read and corresponding events are
+  broadcasted when they change.
+
+  Automatic data fetch is performed after successful authentication (via an
+  `internal` event) and then scheduled via a `state_timeout` event. Once
+  handled, the scheduled event requeues itself via the same `state_timeout` events.
+
+  Usage of `state_timeout` events complies with the general state machine: if
+  at any point the machine enters the expired state, any queued `state_timeout`
+  event is automatically expired.
+
+  Automatic fetching will resume once the machine enters the authenticated state.
+
+  ## Subscriptions
+
+  Multiple processes are able to subscribe to the events keyed by the session id.
+
+  Broadcast and subscribe are implemented via `Phoenix.PubSub`, however the
+  Worker maintains its own set of monitored processes subscribed to the session
+  id.
+
+  Subscription tracking is necessary to implementing automatic termination of a
+  worker after a period of inactivity. Without that, the worker would
+  indefinitely poll the Spotify API, even when no client is interested into the
+  topic, until a crash error or a node reboot.
+
+  Every 30 seconds, the worker fires a named `timeout` event, checking if
+  there's any subscribed process. If not, it terminates. Subscribed processes
+  are monitored, so when they terminate, their exit is handled by the worker,
+  which removes them from its data.
+
+  Usage of named `timeout` events is necessary, as they're guaranteed to fire
+  irrespectively of state changes.
   """
 
   use GenStateMachine, restart: :transient

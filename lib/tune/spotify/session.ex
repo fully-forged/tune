@@ -1,6 +1,19 @@
 defmodule Tune.Spotify.Session do
   @moduledoc """
   Defines a behaviour that can be used to model an active user session against the Spotify API.
+
+  Implementations should be stateful: given an initial session id and
+  authentication credentials, the implementation should perform authentication
+  in `c:setup/2`. If successful, a session should be opened and used for any
+  other function keyed by the same session id.
+
+  Most of the behaviour functions cover the Spotify HTTP Api and return structs
+  defined under `Tune.Spotify.Schema`.
+
+  Two extra functions, `c:subscribe/1` and `c:broadcast/2`, are used to define
+  the mechanism used to notify other processes of changes in the session state.
+
+  For a working implementation, see `Tune.Spotify.Session.Worker`.
   """
   alias Tune.Duration
   alias Tune.Spotify.{HttpApi, Schema}
