@@ -229,6 +229,9 @@ defmodule TuneWeb.ExplorerLive do
   @impl true
   def handle_info({:now_playing, player}, socket) do
     case Player.changes(socket.assigns.now_playing, player) do
+      :unchanged ->
+        {:noreply, socket}
+
       :progress_changed ->
         send_update(ProgressBarComponent, id: :progress_bar, progress_ms: player.progress_ms)
         {:noreply, socket}

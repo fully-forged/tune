@@ -31,4 +31,6 @@ defmodule Tune.Spotify.Schema.Player do
       when progress_ms1 !== progress_ms2 do
     :progress_changed
   end
+
+  def changes(_p1, _p2), do: :unchanged
 end

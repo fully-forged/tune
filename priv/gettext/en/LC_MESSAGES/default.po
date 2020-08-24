@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:400
+#: lib/tune_web/live/explorer_live.ex:403
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:404
+#: lib/tune_web/live/explorer_live.ex:407
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -266,27 +266,27 @@ msgid "The app has been updated."
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:353
+#: lib/tune_web/live/explorer_live.ex:356
 msgid "Album details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:360
+#: lib/tune_web/live/explorer_live.ex:363
 msgid "Album details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:329
+#: lib/tune_web/live/explorer_live.ex:332
 msgid "Artist details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:344
+#: lib/tune_web/live/explorer_live.ex:347
 msgid "Artist details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:387
+#: lib/tune_web/live/explorer_live.ex:390
 msgid "Episode details"
 msgstr ""
 
@@ -296,31 +296,31 @@ msgid "Home"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:282
+#: lib/tune_web/live/explorer_live.ex:285
 msgid "Search results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:296
+#: lib/tune_web/live/explorer_live.ex:299
 msgid "Search results for %{q}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:369
+#: lib/tune_web/live/explorer_live.ex:372
 msgid "Show details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:378
+#: lib/tune_web/live/explorer_live.ex:381
 msgid "Show details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:252
+#: lib/tune_web/live/explorer_live.ex:255
 msgid "Suggestions"
 msgstr ""
 
-#, elixir-format, fuzzy
+#, elixir-format
 #: lib/tune_web/live/mini_player_component.html.leex:4
 msgid "No devices available"
 msgstr ""
