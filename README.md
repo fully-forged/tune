@@ -91,6 +91,7 @@ The project is setup to deploy on Heroku, please make sure you:
 
 - configure environment variables
 - add the buildpacks detailed at <https://hexdocs.pm/phoenix/heroku.html>
+- to enable exception tracking via [Sentry](https://sentry.io), make sure you define a `SENTRY_DSN` environment variable
 
 # Application structure
 

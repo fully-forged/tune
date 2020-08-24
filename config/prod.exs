@@ -14,7 +14,19 @@ config :tune, TuneWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger,
+  level: :info,
+  backends: [:console, Sentry.LoggerBackend]
+
+config :sentry,
+  dsn: {:system, "SENTRY_DSN"},
+  environment_name: :prod,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  tags: %{
+    env: "production"
+  },
+  included_environments: [:prod]
 
 # ## SSL Support
 #
