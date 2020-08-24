@@ -1,5 +1,5 @@
 <div class="profile">
-  <%= img_tag @user.avatar_url, alt: @user.name %>
+  <%= img_tag user_avatar(@user), alt: @user.name %>
   <p><%= @user.name %></p>
   <%= link gettext("Logout"), to: Routes.auth_path(@socket, :delete), method: :post %>
   &nbsp;·&nbsp;
