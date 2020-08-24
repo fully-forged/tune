@@ -129,6 +129,22 @@ An instance of
 is mounted at `/dashboard`. In production, the endpoint is protected by basic
 auth (see `.env` for relevant environment variables).
 
+# Limitations
+
+- If you use Tune in combination with official Spotify clients, you will notice
+  that if nothing is playing, after a while the miniplayer controls stop
+  responding and you can't even play any song. This is due to a quirk in the
+  Spotify devices API, which reports client devices as still connected.
+
+  If you're running Tune on a platform where it can load the built-in audio
+  player, you can just refresh the page for the player to reload, which has the
+  side effect of "waking up" all other clients as well. At that point, you can
+  select them from the device switcher and resume normal operation.
+
+  If you're running Tune on a mobile device, your only option is to open the
+  dormant client application, do a quick play/pause to wake it up and go back
+  to Tune.
+
 # Credits
 
 - Mini player icons from [Bootstrap Icons](https://icons.getbootstrap.com/)
