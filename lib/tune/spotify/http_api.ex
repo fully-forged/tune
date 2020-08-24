@@ -836,6 +836,7 @@ defmodule Tune.Spotify.HttpApi do
           items ->
             items
             |> get_in([Access.all(), "track"])
+            |> Enum.reject(&is_nil/1)
             |> Enum.map(&parse_track/1)
         end
     }
