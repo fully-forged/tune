@@ -19,7 +19,7 @@ config :logger,
   backends: [:console, Sentry.LoggerBackend]
 
 config :sentry,
-  dsn: "https://10342a10e9cc4a80b156fa9ef7b40bc6@o438260.ingest.sentry.io/5402651",
+  dsn: {:system, "SENTRY_DSN"},
   environment_name: :prod,
   enable_source_code_context: true,
   root_source_code_path: File.cwd!(),
