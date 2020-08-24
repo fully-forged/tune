@@ -51,6 +51,10 @@
     margin-right: 1.5rem;
     align-items: center;
 
+    .notice {
+      font-size: 1.4rem;
+    }
+
     svg {
       height: 3rem;
       width: 3rem;
@@ -122,6 +126,10 @@
 
     .device {
       margin: 1rem auto;
+
+      .notice {
+        margin-right: 1rem;
+      }
 
       form {
         margin-right: 2rem;
