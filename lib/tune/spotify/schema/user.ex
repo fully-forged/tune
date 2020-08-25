@@ -13,5 +13,5 @@ defmodule Tune.Spotify.Schema.User do
         }
 
   @spec premium?(t()) :: boolean()
-  def premium?(user), do: user.product == "premium"
+  def premium?(%__MODULE__{product: product}), do: product == "premium"
 end

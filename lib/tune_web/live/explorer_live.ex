@@ -39,7 +39,7 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
-  alias Tune.Spotify.Schema.{Album, Player, Track}
+  alias Tune.Spotify.Schema.{Album, Player, Track, User}
 
   alias TuneWeb.{
     AlbumView,
@@ -59,7 +59,7 @@ defmodule TuneWeb.ExplorerLive do
     type: :track,
     results: %{items: [], total: 0},
     user: nil,
-    now_playing: %Tune.Spotify.Schema.Player{},
+    now_playing: %Player{},
     item: :not_fetched,
     per_page: 24,
     page: 1,
@@ -98,6 +98,7 @@ defmodule TuneWeb.ExplorerLive do
          |> assign(
            session_id: session_id,
            user: user,
+           premium?: User.premium?(user),
            now_playing: now_playing,
            devices: devices
          )}

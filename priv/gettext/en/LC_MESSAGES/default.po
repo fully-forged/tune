@@ -43,22 +43,22 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/tune_web/controllers/auth_controller.ex:20
+#: lib/tune_web/controllers/auth_controller.ex:31
 msgid "Error authenticating via Spotify"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/controllers/auth_controller.ex:31
+#: lib/tune_web/controllers/auth_controller.ex:42
 msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:403
+#: lib/tune_web/live/explorer_live.ex:404
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:407
+#: lib/tune_web/live/explorer_live.ex:408
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgid "No results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:18
+#: lib/tune_web/live/mini_player_component.html.leex:20
 msgid "Not playing"
 msgstr ""
 
@@ -168,7 +168,7 @@ msgid "Go to Suggestions"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:8
+#: lib/tune_web/live/mini_player_component.html.leex:9
 msgid "Switch playback device"
 msgstr ""
 
@@ -221,7 +221,7 @@ msgid "this device"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:12
+#: lib/tune_web/live/mini_player_component.html.leex:13
 msgid "Select"
 msgstr ""
 
@@ -256,37 +256,37 @@ msgid "Open in YouTube"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.html.leex:20
+#: lib/tune_web/live/explorer_live.html.leex:24
 msgid "Click here to reload"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.html.leex:20
+#: lib/tune_web/live/explorer_live.html.leex:24
 msgid "The app has been updated."
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:356
+#: lib/tune_web/live/explorer_live.ex:357
 msgid "Album details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:363
+#: lib/tune_web/live/explorer_live.ex:364
 msgid "Album details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:332
+#: lib/tune_web/live/explorer_live.ex:333
 msgid "Artist details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:347
+#: lib/tune_web/live/explorer_live.ex:348
 msgid "Artist details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:390
+#: lib/tune_web/live/explorer_live.ex:391
 msgid "Episode details"
 msgstr ""
 
@@ -296,31 +296,31 @@ msgid "Home"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:285
+#: lib/tune_web/live/explorer_live.ex:286
 msgid "Search results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:299
+#: lib/tune_web/live/explorer_live.ex:300
 msgid "Search results for %{q}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:372
+#: lib/tune_web/live/explorer_live.ex:373
 msgid "Show details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:381
+#: lib/tune_web/live/explorer_live.ex:382
 msgid "Show details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:255
+#: lib/tune_web/live/explorer_live.ex:256
 msgid "Suggestions"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/mini_player_component.html.leex:4
+#: lib/tune_web/live/mini_player_component.html.leex:5
 msgid "No devices available"
 msgstr ""
