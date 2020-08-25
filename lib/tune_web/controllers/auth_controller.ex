@@ -7,8 +7,19 @@ defmodule TuneWeb.AuthController do
   plug Ueberauth
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
+    premium? = get_in(auth.extra.raw_info, [:user, "product"]) == "premium"
+
+    conn =
+      if premium? do
+        put_flash(conn, :info, "Hello #{auth.info.name}!")
+      else
+        put_flash(conn, :warning, """
+        Hello #{auth.info.name}!
+        As you don't have a premium account, the embedded audio player and all audio controls are disabled.
+        """)
+      end
+
     conn
-    |> put_flash(:info, "Hello #{auth.info.name}!")
     |> put_session(:spotify_credentials, auth.credentials)
     |> put_session(:spotify_id, auth.info.nickname)
     |> configure_session(renew: true)

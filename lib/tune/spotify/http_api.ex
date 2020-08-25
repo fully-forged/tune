@@ -516,10 +516,11 @@ defmodule Tune.Spotify.HttpApi do
   end
 
   defp parse_profile(data) do
-    name = Map.get(data, "display_name")
-    avatar_url = get_in(data, ["images", Access.at(0), "url"])
-
-    %User{name: name, avatar_url: avatar_url}
+    %User{
+      name: Map.get(data, "display_name"),
+      avatar_url: get_in(data, ["images", Access.at(0), "url"]),
+      product: Map.get(data, "product")
+    }
   end
 
   defp handle_errors(response) do

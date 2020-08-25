@@ -1,18 +1,20 @@
 <div class="mini-player">
-  <div class="device">
-    <%= if Enum.empty?(@devices) do %>
-      <%= content_tag :p, gettext("No devices available"), class: "notice" %>
-    <% else %>
-      <%= render PlayerView, "icon_device.html", [] %>
-      <form action="#" method="get" phx-submit="transfer_playback">
-        <%= content_tag :label, gettext("Switch playback device"), for: "device", class: "visually-hidden" %>
-        <select name="device" id="device" phx-change="transfer_playback">
-          <%= devices_options(@devices, @player_id) %>
-        </select>
-        <%= content_tag :button, gettext("Select"), type: "submit" %>
-      </form>
-    <% end %>
-  </div>
+  <%= if @premium? do %>
+    <div class="device">
+      <%= if Enum.empty?(@devices) do %>
+        <%= content_tag :p, gettext("No devices available"), class: "notice" %>
+      <% else %>
+        <%= render PlayerView, "icon_device.html", [] %>
+        <form action="#" method="get" phx-submit="transfer_playback">
+          <%= content_tag :label, gettext("Switch playback device"), for: "device", class: "visually-hidden" %>
+          <select name="device" id="device" phx-change="transfer_playback">
+            <%= devices_options(@devices, @player_id) %>
+          </select>
+          <%= content_tag :button, gettext("Select"), type: "submit" %>
+        </form>
+      <% end %>
+    </div>
+  <% end %>
   <%= case @now_playing do %>
     <% %{status: :not_playing} -> %>
       <%= content_tag :p, gettext("Not playing") %>
@@ -21,7 +23,9 @@
         <%= img_tag thumbnail(item), alt: name(item) %>
       <% end %>
       <%= render PlayerView, "meta.html", item: item, socket: @socket %>
-      <%= live_component @socket, ProgressBarComponent, id: :progress_bar, progress_ms: progress_ms, total_duration_ms: item.duration_ms %>
-      <%= render PlayerView, "controls.html", status: status, device: device %>
+      <%= live_component @socket, ProgressBarComponent, id: :progress_bar, premium?: @premium?, progress_ms: progress_ms, total_duration_ms: item.duration_ms %>
+      <%= if @premium? do %>
+        <%= render PlayerView, "controls.html", status: status, device: device %>
+      <% end %>
   <% end %>
 </div>
