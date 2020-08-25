@@ -568,6 +568,9 @@ defmodule Tune.Spotify.HttpApi do
       "unknown" ->
         %Player{}
 
+      "ad" ->
+        %Player{}
+
       "track" ->
         item =
           data
