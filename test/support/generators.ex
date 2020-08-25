@@ -259,10 +259,14 @@ defmodule Tune.Generators do
   end
 
   def profile do
-    tuple({name(), image_url()})
-    |> bind(fn {name, avatar_url} ->
-      constant(%User{name: name, avatar_url: avatar_url})
+    tuple({name(), image_url(), product()})
+    |> bind(fn {name, avatar_url, product} ->
+      constant(%User{name: name, avatar_url: avatar_url, product: product})
     end)
+  end
+
+  def product do
+    one_of([constant("premium")])
   end
 
   def album_type do
