@@ -25,10 +25,15 @@ Tune differs in these areas:
   provided by Spotify and some custom logic (loosely based on what you've been
   listening in a specific time period). The logic is an almost direct porting of
   how I search for new music, so it might not work for you.
+  
+# Free subscription limitations
 
-Tune can be used as a standalone player by selecting the appropriate option in
-the device switch section in the mini player (note that it requires a Spotify
-Premium subscription and [only some browsers are
+Due to limitations imposed by Spotify, users with free subscriptions cannot use the embedded
+audio player, nor they can control other devices via Tune's UI. If you have a
+free subscription, those UI elements are not visible as they're ineffective.
+
+For users with Premium subscriptions, Tune can be used as a standalone player by selecting the
+appropriate option in the device switch section in the mini player (note that [only some browsers are
 supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers)).
 
 # Screenshots
