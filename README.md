@@ -146,6 +146,9 @@ auth (see `.env` for relevant environment variables).
   dormant client application, do a quick play/pause to wake it up and go back
   to Tune.
 
+  More information on the related [Spotify documentation
+  page](https://developer.spotify.com/documentation/web-api/guides/using-connect-web-api/#devices-not-appearing-on-device-list).
+
 # Credits
 
 - Mini player icons from [Bootstrap Icons](https://icons.getbootstrap.com/)
