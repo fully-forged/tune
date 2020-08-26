@@ -108,6 +108,12 @@ Hooks.GlobalShortcuts = {
         case "s":
           this.pushEvent("dec_volume", {});
           break;
+        case "/":
+          const searchInput = document.getElementById("q");
+          const navBar = document.getElementById("navbar");
+          navBar.scrollIntoView();
+          searchInput.focus();
+          break;
         default:
           break;
       }
