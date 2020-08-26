@@ -16,21 +16,16 @@ defmodule Tune.Spotify.Schema.Player do
           progress_ms: Duration.milliseconds(),
           device: Schema.Device.t()
         }
+  @type prop :: :status | :item | :progress_ms | :device
 
-  def changes(%__MODULE__{status: status1}, %__MODULE__{status: status2})
-      when status1 !== status2 do
-    :status_changed
+  @spec changes(t(), t()) :: [prop()]
+  def changes(p1, p2) do
+    Enum.reduce([:status, :item, :progress_ms, :device], [], fn prop, acc ->
+      if Map.get(p1, prop) !== Map.get(p2, prop) do
+        [prop | acc]
+      else
+        acc
+      end
+    end)
   end
-
-  def changes(%__MODULE__{item: item1}, %__MODULE__{item: item2})
-      when item1 !== item2 do
-    :item_changed
-  end
-
-  def changes(%__MODULE__{progress_ms: progress_ms1}, %__MODULE__{progress_ms: progress_ms2})
-      when progress_ms1 !== progress_ms2 do
-    :progress_changed
-  end
-
-  def changes(_p1, _p2), do: :unchanged
 end

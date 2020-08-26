@@ -1,4 +1,4 @@
-<div class="mini-player">
+<div class="mini-player" phx-hook="GlobalShortcuts">
   <%= if @premium? do %>
     <div class="device">
       <%= if Enum.empty?(@devices) do %>
