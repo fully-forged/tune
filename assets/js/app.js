@@ -115,6 +115,12 @@ Hooks.GlobalShortcuts = {
   },
 };
 
+Hooks.StopKeyDownPropagation = {
+  mounted() {
+    this.el.addEventListener("keydown", (event) => event.stopPropagation());
+  },
+};
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
