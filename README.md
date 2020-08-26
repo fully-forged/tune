@@ -25,6 +25,15 @@ Tune differs in these areas:
   provided by Spotify and some custom logic (loosely based on what you've been
   listening in a specific time period). The logic is an almost direct porting of
   how I search for new music, so it might not work for you.
+
+# Keyboard shortcuts
+
+- <kbd>Space</kbd>: Play/Pause
+- <kbd>a</kbd>: Prev
+- <kbd>d</kbd>: Next
+- <kbd>w</kbd>: Volume up
+- <kbd>s</kbd>: Volume down
+- <kbd>/</kbd>: Focus search input
   
 # Free subscription limitations
 
