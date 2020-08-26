@@ -7,7 +7,7 @@ defmodule Tune.DurationTest do
   doctest Duration
 
   @thirty_seconds :timer.seconds(30)
-  @thirty_one_seconds :timer.seconds(31)
+  @thirty_seconds_and_a_half :timer.seconds(30) + 500
   @one_minute :timer.minutes(1)
   @one_hour :timer.hours(1)
 
@@ -28,7 +28,7 @@ defmodule Tune.DurationTest do
             assert formatted =~ "minutes"
             refute formatted =~ "hour"
 
-          d when d in @one_hour..(@one_hour + @thirty_one_seconds) ->
+          d when d in @one_hour..(@one_hour + @thirty_seconds_and_a_half) ->
             refute formatted =~ "minute"
             assert formatted =~ "hour"
 
