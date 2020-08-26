@@ -2,7 +2,7 @@
 
 $logo-dimension: 4rem;
 
-.navbar {
+#navbar {
   display: grid;
   grid-template-columns: $logo-dimension 4fr 2fr;
   grid-template-areas: "logo search profile-and-links";
@@ -69,13 +69,13 @@ $logo-dimension: 4rem;
 }
 
 @media (max-width: 1024px) {
-  .navbar {
+  #navbar {
     grid-template-columns: $logo-dimension 8fr 4fr;
   }
 }
 
 @media (max-width: 768px) {
-  .navbar {
+  #navbar {
     grid-template-columns: 1fr;
     grid-template-areas:
       "logo"

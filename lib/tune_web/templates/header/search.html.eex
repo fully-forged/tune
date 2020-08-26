@@ -1,7 +1,7 @@
 <div class="search">
   <%= form_tag(Routes.explorer_path(@socket, :search), method: :get, phx_submit: "search") do %>
     <%= content_tag :label, gettext("Search query"), for: "q", class: "visually-hidden" %>
-    <%= tag :input, type: "search", placeholder: gettext("Search"), aria_label: gettext("Search"), autocomplete: "off", id: "q", name: "q", value: @q %>
+    <%= tag :input, type: "search", placeholder: gettext("Search"), aria_label: gettext("Search"), autocomplete: "off", id: "q", name: "q", value: @q, phx_hook: "StopKeyDownPropagation" %>
     <%= content_tag :label, gettext("Type filter"), for: "type", class: "visually-hidden" %>
     <select name="type" id="type">
       <%= options_for_select([{gettext("Track"), "track"},

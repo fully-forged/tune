@@ -88,6 +88,45 @@ Hooks.AudioPlayer = {
   },
 };
 
+Hooks.GlobalShortcuts = {
+  mounted() {
+    document.addEventListener("keydown", (event) => {
+      event.preventDefault();
+      switch (event.key) {
+        case " ":
+          this.pushEvent("toggle_play_pause", {});
+          break;
+        case "a":
+          this.pushEvent("prev", {});
+          break;
+        case "d":
+          this.pushEvent("next", {});
+          break;
+        case "w":
+          this.pushEvent("inc_volume", {});
+          break;
+        case "s":
+          this.pushEvent("dec_volume", {});
+          break;
+        case "/":
+          const searchInput = document.getElementById("q");
+          const navBar = document.getElementById("navbar");
+          navBar.scrollIntoView();
+          searchInput.focus();
+          break;
+        default:
+          break;
+      }
+    });
+  },
+};
+
+Hooks.StopKeyDownPropagation = {
+  mounted() {
+    this.el.addEventListener("keydown", (event) => event.stopPropagation());
+  },
+};
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");

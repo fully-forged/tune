@@ -1,5 +1,5 @@
 <header>
-  <nav class="navbar">
+  <nav id="navbar">
     <%= render TuneWeb.HeaderView, "logo.html", socket: @socket %>
     <%= render TuneWeb.HeaderView, "search.html", socket: @socket, q: @q, type: @type %>
     <%= render TuneWeb.HeaderView, "profile.html", socket: @socket, user: @user %>

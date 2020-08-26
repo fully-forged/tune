@@ -212,14 +212,30 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
-  def handle_event("set_volume", %{"volume_percent" => volume_percent}, socket) do
-    case spotify().set_volume(socket.assigns.session_id, volume_percent) do
-      :ok ->
+  def handle_event("inc_volume", %{}, socket) do
+    case socket.assigns.now_playing.device do
+      nil ->
         {:noreply, socket}
 
-      error ->
-        handle_spotify_result(error, socket)
+      device ->
+        volume_percent = min(device.volume_percent + 10, 100)
+        set_volume(volume_percent, socket)
     end
+  end
+
+  def handle_event("dec_volume", %{}, socket) do
+    case socket.assigns.now_playing.device do
+      nil ->
+        {:noreply, socket}
+
+      device ->
+        volume_percent = max(device.volume_percent - 10, 0)
+        set_volume(volume_percent, socket)
+    end
+  end
+
+  def handle_event("set_volume", %{"volume_percent" => volume_percent}, socket) do
+    set_volume(volume_percent, socket)
   end
 
   def handle_event("refresh_devices", _params, socket) do
@@ -229,15 +245,17 @@ defmodule TuneWeb.ExplorerLive do
 
   @impl true
   def handle_info({:now_playing, player}, socket) do
-    case Player.changes(socket.assigns.now_playing, player) do
-      :unchanged ->
+    changes = Player.changes(socket.assigns.now_playing, player)
+
+    cond do
+      changes == [] ->
         {:noreply, socket}
 
-      :progress_changed ->
+      [:progress_ms] == changes ->
         send_update(ProgressBarComponent, id: :progress_bar, progress_ms: player.progress_ms)
         {:noreply, socket}
 
-      _status_or_item_changed ->
+      true ->
         {:noreply, assign(socket, :now_playing, player)}
     end
   end
@@ -440,6 +458,16 @@ defmodule TuneWeb.ExplorerLive do
       |> Enum.take(5)
 
     spotify().get_recommendations_from_artists(session_id, artist_ids)
+  end
+
+  defp set_volume(volume_percent, socket) do
+    case spotify().set_volume(socket.assigns.session_id, volume_percent) do
+      :ok ->
+        {:noreply, socket}
+
+      error ->
+        handle_spotify_result(error, socket)
+    end
   end
 
   defp generate_player_id do
