@@ -259,9 +259,16 @@ defmodule Tune.Generators do
   end
 
   def profile do
-    tuple({name(), image_url(), product()})
-    |> bind(fn {name, avatar_url, product} ->
-      constant(%User{name: name, avatar_url: avatar_url, product: product})
+    tuple({name(), image_url()})
+    |> bind(fn {name, avatar_url} ->
+      constant(%User{name: name, avatar_url: avatar_url, product: "premium"})
+    end)
+  end
+
+  def free_profile do
+    tuple({name(), image_url()})
+    |> bind(fn {name, avatar_url} ->
+      constant(%User{name: name, avatar_url: avatar_url, product: "free"})
     end)
   end
 

@@ -146,6 +146,36 @@ defmodule TuneWeb.LoggedInTest do
                |> render_hook("seek", %{"position_ms" => new_position_ms})
       end
     end
+
+    property "hides controls for users with a free subscription", %{conn: conn} do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.free_profile(),
+              item <- Generators.item(),
+              device <- Generators.device()
+            ) do
+        conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+        expect_successful_authentication(session_id, credentials, profile)
+        expect_item_playing(session_id, item, device)
+        expect_no_suggestions_playlist(session_id)
+
+        {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
+
+        escaped_item_name = escape(item.name)
+        assert html =~ escaped_item_name
+
+        assert explorer_live
+               |> element("[data-test-control=progress]")
+               |> render() =~ ~s(data-premium="false")
+
+        refute has_element?(explorer_live, "[data-test-control=next]")
+        refute has_element?(explorer_live, "[data-test-control=prev]")
+        refute has_element?(explorer_live, "[data-test-control=play-pause]")
+        refute has_element?(explorer_live, "[data-test-control=volume]")
+      end
+    end
   end
 
   describe "search" do
