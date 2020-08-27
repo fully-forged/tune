@@ -127,6 +127,10 @@ Hooks.GlobalShortcuts = {
           modal.classList.toggle("closed");
           modalOverlay.classList.toggle("closed");
           break;
+        case "Escape":
+          modal.classList.add("closed");
+          modalOverlay.classList.add("closed");
+          break;
         case "/":
           const searchInput = document.getElementById("q");
           const navBar = document.getElementById("navbar");
