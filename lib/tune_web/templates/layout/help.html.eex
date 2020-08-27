@@ -3,37 +3,47 @@
   <nav>
     <a href="#" class="close-button" id="close-button">×</a>
   </nav>
-  <p>
-    <%= content_tag :strong, gettext("Keyboard shortcuts") %>
-  </p>
-  <ul>
-    <li>
-      <kbd>?</kbd>
-      <%= gettext("Hide/show this help dialog.") %>
-    </li>
-    <li>
-      <kbd>Space</kbd>
-      <%= gettext("Toggle Play/Pause") %>
-    </li>
-    <li>
-      <kbd>a</kbd>
-      <%= gettext("Previous") %>
-    </li>
-    <li>
-      <kbd>d</kbd>
-      <%= gettext("Next") %>
-    </li>
-    <li>
-      <kbd>w</kbd>
-      <%= gettext("Volume up") %>
-    </li>
-    <li>
-      <kbd>s</kbd>
-      <%= gettext("Volume down") %>
-    </li>
-    <li>
-      <kbd>/</kbd>
-      <%= gettext("Search") %>
-    </li>
-  </ul>
+  <div class="contents">
+    <div class="title">
+      <%= content_tag :h3, gettext("Keyboard shortcuts") %>
+    </div>
+    <div class="navigation-help">
+      <%= content_tag :p, gettext("General navigation") %>
+      <ul>
+        <li>
+          <kbd>?</kbd>
+          <%= gettext("Toggle help") %>
+        </li>
+        <li>
+          <kbd>/</kbd>
+          <%= gettext("Search") %>
+        </li>
+      </ul>
+    </div>
+    <div class="mini-player-help">
+      <%= content_tag :p, gettext("Audio Player") %>
+      <ul>
+        <li>
+          <kbd>Space</kbd>
+          <%= gettext("Toggle Play/Pause") %>
+        </li>
+        <li>
+          <kbd>a</kbd>
+          <%= gettext("Previous") %>
+        </li>
+        <li>
+          <kbd>d</kbd>
+          <%= gettext("Next") %>
+        </li>
+        <li>
+          <kbd>w</kbd>
+          <%= gettext("Volume up") %>
+        </li>
+        <li>
+          <kbd>s</kbd>
+          <%= gettext("Volume down") %>
+        </li>
+      </ul>
+    </div>
+  </div>
 </section>

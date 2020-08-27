@@ -116,7 +116,7 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/header/search.html.eex:4
 #: lib/tune_web/templates/header/search.html.eex:4 lib/tune_web/templates/header/search.html.eex:14
-#: lib/tune_web/templates/layout/help.html.eex:36
+#: lib/tune_web/templates/layout/help.html.eex:19
 msgid "Search"
 msgstr ""
 
@@ -327,36 +327,46 @@ msgid "No devices available"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:12
-msgid "Hide/show this help dialog."
-msgstr ""
-
-#, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:7
+#: lib/tune_web/templates/layout/help.html.eex:8
 msgid "Keyboard shortcuts"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:24
+#: lib/tune_web/templates/layout/help.html.eex:36
 msgid "Next"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:20
+#: lib/tune_web/templates/layout/help.html.eex:32
 msgid "Previous"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:16
+#: lib/tune_web/templates/layout/help.html.eex:28
 msgid "Toggle Play/Pause"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:32
+#: lib/tune_web/templates/layout/help.html.eex:44
 msgid "Volume down"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:28
+#: lib/tune_web/templates/layout/help.html.eex:40
 msgid "Volume up"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:24
+msgid "Audio Player"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:11
+msgid "General navigation"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:15
+msgid "Toggle help"
 msgstr ""

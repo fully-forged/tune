@@ -1,0 +1,24 @@
+#help .contents {
+  display: grid;
+  grid-template-areas:
+    "title title"
+    "navigation-help mini-player-help";
+  grid-column-gap: 2rem;
+
+  p {
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+}
+
+.title {
+  grid-area: title;
+}
+
+.navigation-help {
+  grid-area: navigation-help;
+}
+
+.mini-player-help {
+  grid-area: mini-player-help;
+}
