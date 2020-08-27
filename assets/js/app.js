@@ -90,6 +90,21 @@ Hooks.AudioPlayer = {
 
 Hooks.GlobalShortcuts = {
   mounted() {
+    const modal = document.querySelector("#help");
+    const modalOverlay = document.querySelector("#modal-overlay");
+    const closeButton = document.querySelector("#close-button");
+    const openButton = document.querySelector("#open-button");
+
+    closeButton.addEventListener("click", function () {
+      modal.classList.toggle("closed");
+      modalOverlay.classList.toggle("closed");
+    });
+
+    openButton.addEventListener("click", function () {
+      modal.classList.toggle("closed");
+      modalOverlay.classList.toggle("closed");
+    });
+
     document.addEventListener("keydown", (event) => {
       event.preventDefault();
       switch (event.key) {
@@ -107,6 +122,10 @@ Hooks.GlobalShortcuts = {
           break;
         case "s":
           this.pushEvent("dec_volume", {});
+          break;
+        case "?":
+          modal.classList.toggle("closed");
+          modalOverlay.classList.toggle("closed");
           break;
         case "/":
           const searchInput = document.getElementById("q");

@@ -1,0 +1,39 @@
+<section class="modal-overlay closed" id="modal-overlay"></section>
+<section id="help" class="modal closed">
+  <nav>
+    <a href="#" class="close-button" id="close-button">×</a>
+  </nav>
+  <p>
+    <%= content_tag :strong, gettext("Keyboard shortcuts") %>
+  </p>
+  <ul>
+    <li>
+      <kbd>?</kbd>
+      <%= gettext("Hide/show this help dialog.") %>
+    </li>
+    <li>
+      <kbd>Space</kbd>
+      <%= gettext("Toggle Play/Pause") %>
+    </li>
+    <li>
+      <kbd>a</kbd>
+      <%= gettext("Previous") %>
+    </li>
+    <li>
+      <kbd>d</kbd>
+      <%= gettext("Next") %>
+    </li>
+    <li>
+      <kbd>w</kbd>
+      <%= gettext("Volume up") %>
+    </li>
+    <li>
+      <kbd>s</kbd>
+      <%= gettext("Volume down") %>
+    </li>
+    <li>
+      <kbd>/</kbd>
+      <%= gettext("Search") %>
+    </li>
+  </ul>
+</section>

@@ -39,6 +39,11 @@ $logo-dimension: 4rem;
       margin-bottom: 0;
       margin-right: 1rem;
     }
+
+    .help {
+      display: flex;
+      align-items: center;
+    }
   }
 
   .links {
@@ -84,6 +89,10 @@ $logo-dimension: 4rem;
 
     .search {
       padding: 1rem 0;
+
+      .help {
+        display: none;
+      }
     }
 
     .logo,
