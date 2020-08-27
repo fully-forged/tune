@@ -12,5 +12,8 @@
                               to_string(@type)) %>
     </select>
     <%= content_tag :button, gettext("Search"), type: "submit" %>
-<% end %>
+    <div class="help">
+      <a href="#" id="open-button">Help</a>
+    </div>
+  <% end %>
 </div>

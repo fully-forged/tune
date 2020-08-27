@@ -1,0 +1,36 @@
+@import "./colors";
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  background-color: white;
+  outline: 1px solid $accent-color;
+  padding: 1rem 2rem;
+  min-width: 30rem;
+
+  nav {
+    text-align: right;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.close-button {
+  font-size: 2rem;
+}
+
+.closed {
+  display: none;
+}
+

@@ -116,6 +116,7 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/header/search.html.eex:4
 #: lib/tune_web/templates/header/search.html.eex:4 lib/tune_web/templates/header/search.html.eex:14
+#: lib/tune_web/templates/layout/help.html.eex:36
 msgid "Search"
 msgstr ""
 
@@ -323,4 +324,39 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/live/mini_player_component.html.leex:5
 msgid "No devices available"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:12
+msgid "Hide/show this help dialog."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:7
+msgid "Keyboard shortcuts"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:24
+msgid "Next"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:20
+msgid "Previous"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:16
+msgid "Toggle Play/Pause"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:32
+msgid "Volume down"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:28
+msgid "Volume up"
 msgstr ""
