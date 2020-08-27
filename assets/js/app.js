@@ -106,9 +106,9 @@ Hooks.GlobalShortcuts = {
     });
 
     document.addEventListener("keydown", (event) => {
-      event.preventDefault();
       switch (event.key) {
         case " ":
+          event.preventDefault();
           this.pushEvent("toggle_play_pause", {});
           break;
         case "a":
