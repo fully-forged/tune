@@ -94,6 +94,8 @@ Hooks.GlobalShortcuts = {
     const modalOverlay = document.querySelector("#modal-overlay");
     const closeButton = document.querySelector("#close-button");
     const openButton = document.querySelector("#open-button");
+    const searchInput = document.getElementById("q");
+    const navBar = document.getElementById("navbar");
 
     closeButton.addEventListener("click", function () {
       modal.classList.toggle("closed");
@@ -132,8 +134,7 @@ Hooks.GlobalShortcuts = {
           modalOverlay.classList.add("closed");
           break;
         case "/":
-          const searchInput = document.getElementById("q");
-          const navBar = document.getElementById("navbar");
+          event.preventDefault();
           navBar.scrollIntoView();
           searchInput.focus();
           break;
@@ -146,7 +147,13 @@ Hooks.GlobalShortcuts = {
 
 Hooks.StopKeyDownPropagation = {
   mounted() {
-    this.el.addEventListener("keydown", (event) => event.stopPropagation());
+    this.el.addEventListener("keydown", (event) => {
+      if (event.key == "Escape") {
+        this.el.blur();
+      } else {
+        event.stopPropagation();
+      }
+    });
   },
 };
 
