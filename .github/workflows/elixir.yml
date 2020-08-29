@@ -17,6 +17,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
 
     - name: Setup elixir
       uses: actions/setup-elixir@v1
@@ -64,3 +66,13 @@ jobs:
 
     - name: Run dialyzer
       run: mix dialyzer --no-check
+
+    - name: Build docs
+      run: mix docs
+
+    - name: Deploy dpcs
+        uses: JamesIves/github-pages-deploy-action@3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: docs
