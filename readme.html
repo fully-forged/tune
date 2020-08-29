@@ -8,7 +8,7 @@
     <meta name="project" content="tune v0.1.0">
     <title>Tune — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-d678dad126d82ddc061f.css" />
-    <script src="dist/sidebar_items-1055432d0d.js"></script>
+    <script src="dist/sidebar_items-8e887f5965.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-0103364119015b97e56c.js"></script>
   </head>
@@ -62,8 +62,40 @@ tune      </a>
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>Tune</h1><p>Tune is a Spotify browser and remote application with a focus on performance
-and integration with other services.</p><p>You can see it in action at <a href="https://tune.fullyforged.com">https://tune.fullyforged.com</a>.</p><h1>Scope and features</h1><p>In many ways Tune copies the official Spotify application: many views (e.g.
+<h1>Tune</h1><p><img src="https://github.com/fully-forged/tune/workflows/Elixir%20CI/badge.svg" alt="CI Status"></img></p><ul><li><a href="#tune">Tune</a><ul><li><a href="#about">About</a><ul><li><a href="#album-details">Album details</a></li><li><a href="#global-search">Global Search</a></li><li><a href="#artist-details">Artist details</a></li><li><a href="#top-albums-and-recommendations">Top albums and recommendations</a></li><li><a href="#release-radar">Release radar</a></li></ul></li><li><a href="#usage">Usage</a><ul><li><a href="#scope-and-features">Scope and features</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li><li><a href="#free-vs-premium-subscriptions">Free vs. Premium Subscriptions</a></li><li><a href="#data-retention-and-privacy">Data retention and privacy</a></li><li><a href="#issues-with-devices-and-playback">Issues with devices and playback</a></li></ul></li><li><a href="#development">Development</a><ul><li><a href="#setup">Setup</a></li><li><a href="#running-the-application">Running the application</a></li><li><a href="#tests--dialyzer-and-credo">Tests, dialyzer and credo</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#application-structure">Application structure</a></li><li><a href="#telemetry">Telemetry</a></li></ul></li><li><a href="#deployment">Deployment</a></li><li><a href="#credits">Credits</a></li><li><a href="#code-of-conduct">Code of Conduct</a></li><li><a href="#license">License</a></li></ul></li></ul><h2 id="about" class="section-heading">
+  <a href="#about" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  About
+</h2>
+<p>Tune is a Spotify browser and remote application with a focus on performance
+and integration with other services.</p><p>You can see it in action at <a href="https://tune.fullyforged.com">https://tune.fullyforged.com</a>.</p><h3 id="album-details" class="section-heading">
+  <a href="#album-details" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Album details
+</h3>
+<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/album-details.jpg" alt="Album details" title="Album details"></img></p><h3 id="global-search" class="section-heading">
+  <a href="#global-search" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Global Search
+</h3>
+<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/search.jpg" alt="Search" title="Search"></img></p><h3 id="artist-details" class="section-heading">
+  <a href="#artist-details" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Artist details
+</h3>
+<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/artist-details.jpg" alt="Artist details" title="Artist details"></img></p><h3 id="top-albums-and-recommendations" class="section-heading">
+  <a href="#top-albums-and-recommendations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Top albums and recommendations
+</h3>
+<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/top-albums-and-recommendations.jpg" alt="Top albums and recommendations" title="Top albums and recommendations"></img></p><h3 id="release-radar" class="section-heading">
+  <a href="#release-radar" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Release radar
+</h3>
+<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/release-radar.jpg" alt="Release radar" title="Release radar"></img></p><h2 id="usage" class="section-heading">
+  <a href="#usage" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Usage
+</h2>
+<h3 id="scope-and-features" class="section-heading">
+  <a href="#scope-and-features" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Scope and features
+</h3>
+<p>In many ways Tune copies the official Spotify application: many views (e.g.
 search or details for artists and albums) are tightly based on the equivalent
 sections in the Spotify application. This is an intentional choice aimed at
 reducing friction between applications.</p><p>Tune differs in these areas:</p><ul><li>Performance: Tune is extremely light, as for the most part is a
@@ -74,50 +106,70 @@ other sources of information, so that for example you can use convenient
 links to read the history of a band on Wikipedia.</li><li>Recommendations: Tune offers suggestions based on a combination of what's
 provided by Spotify and some custom logic (loosely based on what you've been
 listening in a specific time period). The logic is an almost direct porting of
-how I search for new music, so it might not work for you.</li></ul><h1>Keyboard shortcuts</h1><ul><li>&lt;kbd&gt;Space&lt;/kbd&gt;: Play/Pause</li><li>&lt;kbd&gt;a&lt;/kbd&gt;: Prev</li><li>&lt;kbd&gt;d&lt;/kbd&gt;: Next</li><li>&lt;kbd&gt;w&lt;/kbd&gt;: Volume up</li><li>&lt;kbd&gt;s&lt;/kbd&gt;: Volume down</li><li>&lt;kbd&gt;/&lt;/kbd&gt;: Focus search input</li></ul><h1>Free subscription limitations</h1><p>Due to limitations imposed by Spotify, users with free subscriptions cannot use the embedded
+how I search for new music, so it might not work for you.</li></ul><h3 id="keyboard-shortcuts" class="section-heading">
+  <a href="#keyboard-shortcuts" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Keyboard shortcuts
+</h3>
+<ul><li>&lt;kbd&gt;Space&lt;/kbd&gt;: Play/Pause</li><li>&lt;kbd&gt;a&lt;/kbd&gt;: Prev</li><li>&lt;kbd&gt;d&lt;/kbd&gt;: Next</li><li>&lt;kbd&gt;w&lt;/kbd&gt;: Volume up</li><li>&lt;kbd&gt;s&lt;/kbd&gt;: Volume down</li><li>&lt;kbd&gt;/&lt;/kbd&gt;: Focus search input</li></ul><h3 id="free-vs-premium-subscriptions" class="section-heading">
+  <a href="#free-vs-premium-subscriptions" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Free vs. Premium Subscriptions
+</h3>
+<table><thead><tr><th style="text-align: left;">Feature</th><th style="text-align: center;">Free subscription</th><th style="text-align: center;">Premium Subscription</th></tr></thead><tbody><tr><td style="text-align: left;">Search</td><td style="text-align: center;">✅</td><td style="text-align: center;">✅</td></tr><tr><td style="text-align: left;">Artist/Album/etc. details</td><td style="text-align: center;">✅</td><td style="text-align: center;">✅</td></tr><tr><td style="text-align: left;">Suggestions</td><td style="text-align: center;">✅</td><td style="text-align: center;">✅</td></tr><tr><td style="text-align: left;">Release radar</td><td style="text-align: center;">✅</td><td style="text-align: center;">✅</td></tr><tr><td style="text-align: left;">Miniplayer controls</td><td style="text-align: center;">❌</td><td style="text-align: center;">✅</td></tr><tr><td style="text-align: left;">Device chooser</td><td style="text-align: center;">❌</td><td style="text-align: center;">✅</td></tr><tr><td style="text-align: left;">Embedded audio player</td><td style="text-align: center;">❌</td><td style="text-align: center;">✅ (on some browsers)</td></tr></tbody></table><p>Due to limitations imposed by Spotify, users with free subscriptions cannot use the embedded
 audio player, nor they can control other devices via Tune's UI. If you have a
 free subscription, those UI elements are not visible as they're ineffective.</p><p>For users with Premium subscriptions, Tune can be used as a standalone player by selecting the
 appropriate option in the device switch section in the mini player (note that <a href="https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers">only some browsers are
-supported</a>).</p><h1>Screenshots</h1><h2 id="album-details" class="section-heading">
-  <a href="#album-details" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Album details
+supported</a>).</p><h3 id="data-retention-and-privacy" class="section-heading">
+  <a href="#data-retention-and-privacy" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Data retention and privacy
+</h3>
+<p>Tune doesn't have any persistent storage: upon successful authentication,
+credentials are only stored in your browser's cookies and kept in memory in the application.</p><p>Credentials are cleared at most 30 seconds after you close the last browser
+session, even if you don't explicitly logout.</p><p>At this point in time, credentials may be printed in logs and/or crash reports.</p><h3 id="issues-with-devices-and-playback" class="section-heading">
+  <a href="#issues-with-devices-and-playback" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Issues with devices and playback
+</h3>
+<p>If you use Tune in combination with official Spotify clients, you will notice
+that if nothing is playing, after a while the miniplayer controls stop
+responding and you can't even play any song. This is due to a quirk in the
+Spotify devices API, which reports client devices as still connected.</p><p>If you're running Tune on a platform where it can load the built-in audio
+player, you can just refresh the page for the player to reload, which has the
+side effect of &quot;waking up&quot; all other clients as well. At that point, you can
+select them from the device switcher and resume normal operation.</p><p>If you're running Tune on a mobile device, your only option is to open the
+dormant client application, do a quick play/pause to wake it up and go back
+to Tune.</p><p>More information on the related <a href="https://developer.spotify.com/documentation/web-api/guides/using-connect-web-api/#devices-not-appearing-on-device-list">Spotify documentation
+page</a>.</p><h2 id="development" class="section-heading">
+  <a href="#development" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Development
 </h2>
-<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/album-details.jpg" alt="Album details" title="Album details"></img></p><h2 id="global-search" class="section-heading">
-  <a href="#global-search" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Global Search
-</h2>
-<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/search.jpg" alt="Search" title="Search"></img></p><h2 id="artist-details" class="section-heading">
-  <a href="#artist-details" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Artist details
-</h2>
-<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/artist-details.jpg" alt="Artist details" title="Artist details"></img></p><h2 id="top-albums-and-recommendations" class="section-heading">
-  <a href="#top-albums-and-recommendations" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Top albums and recommendations
-</h2>
-<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/top-albums-and-recommendations.jpg" alt="Top albums and recommendations" title="Top albums and recommendations"></img></p><h2 id="release-radar" class="section-heading">
-  <a href="#release-radar" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Release radar
-</h2>
-<p><img src="https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/release-radar.jpg" alt="Release radar" title="Release radar"></img></p><h1>Initial setup</h1><p>First of all, we need working installations of Elixir and Erlang. The
+<h3 id="setup" class="section-heading">
+  <a href="#setup" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Setup
+</h3>
+<p>First of all, we need working installations of Elixir and Erlang. The
 recommended way to achieve this is via <a href="https://asdf-vm.com/#/">asdf</a>. Once
 it's installed and working, you can run <code class="inline">asdf install</code> from the project root to
 install the correct versions required (see the <code class="inline">.tool-versions</code> file for
 details).</p><p>Next, make sure you setup the required environment variables as detailed in
 <code class="inline">.env</code> by copying the file to <code class="inline">.env.local</code> and adjusting values as needed.</p><p>Please see the <a href="https://hexdocs.pm/vapor/Vapor.Provider.Dotenv.html#content">Vapor
 docs</a> for more
-detail on the dotenv configuration provider.</p><p>To create secrets, (e.g. for <code class="inline">SECRET_KEY_BASE</code>), use <a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Secret.html"><code class="inline">mix phx.gen.secret</code></a>.</p><p>Next you can install all dependencies with <code class="inline">mix setup</code>.</p><h1>Workflows</h1><h2 id="development" class="section-heading">
-  <a href="#development" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Development
-</h2>
-<ul><li>Start the application with <a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Server.html"><code class="inline">mix phx.server</code></a></li><li>To start the application and an IEx console connected to it, use <code class="inline">iex -S mix phx.server</code></li></ul><p>Now you can visit <a href="http://localhost:4000"><code class="inline">localhost:4000</code></a> from your browser.</p><h2 id="tests-dialyzer-and-credo" class="section-heading">
+detail on the dotenv configuration provider.</p><p>To create secrets, (e.g. for <code class="inline">SECRET_KEY_BASE</code>), use <a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Secret.html"><code class="inline">mix phx.gen.secret</code></a>.</p><p>Next you can install all dependencies with <code class="inline">mix setup</code>.</p><h3 id="running-the-application" class="section-heading">
+  <a href="#running-the-application" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Running the application
+</h3>
+<ul><li>Start the application with <a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Server.html"><code class="inline">mix phx.server</code></a></li><li>To start the application and an IEx console connected to it, use <code class="inline">iex -S mix phx.server</code></li></ul><p>Now you can visit <a href="http://localhost:4000"><code class="inline">localhost:4000</code></a> from your browser.</p><h3 id="tests-dialyzer-and-credo" class="section-heading">
   <a href="#tests-dialyzer-and-credo" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Tests, dialyzer and credo
-</h2>
-<p>You can run tests with <a href="https://hexdocs.pm/mix/Mix.Tasks.Test.html"><code class="inline">mix test</code></a>, dialyzer with <a href="https://hexdocs.pm/dialyxir/Mix.Tasks.Dialyzer.html"><code class="inline">mix dialyzer</code></a> and Credo with <a href="https://hexdocs.pm/credo/Mix.Tasks.Credo.html"><code class="inline">mix credo</code></a>.</p><h2 id="deployment" class="section-heading">
-  <a href="#deployment" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Deployment
-</h2>
-<p>The project is setup to deploy on Heroku, please make sure you:</p><ul><li>configure environment variables</li><li>add the buildpacks detailed at <a href="https://hexdocs.pm/phoenix/heroku.html">https://hexdocs.pm/phoenix/heroku.html</a></li><li>to enable exception tracking via <a href="https://sentry.io">Sentry</a>, make sure you define a <code class="inline">SENTRY_DSN</code> environment variable</li></ul><h1>Application structure</h1><p>The <code class="inline">Tune</code> namespace defines the domain logic responsible to interact with the
+</h3>
+<p>You can run tests with <a href="https://hexdocs.pm/mix/Mix.Tasks.Test.html"><code class="inline">mix test</code></a>, dialyzer with <a href="https://hexdocs.pm/dialyxir/Mix.Tasks.Dialyzer.html"><code class="inline">mix dialyzer</code></a> and Credo with <a href="https://hexdocs.pm/credo/Mix.Tasks.Credo.html"><code class="inline">mix credo</code></a>.</p><h3 id="documentation" class="section-heading">
+  <a href="#documentation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Documentation
+</h3>
+<p>Available at <a href="https://tune-docs.fullyforged.com">https://tune-docs.fullyforged.com</a>, gets automatically updated
+with every push on the <code class="inline">main</code> branch.</p><h3 id="application-structure" class="section-heading">
+  <a href="#application-structure" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Application structure
+</h3>
+<p>The <code class="inline">Tune</code> namespace defines the domain logic responsible to interact with the
 Spotify API and maintain running sessions for each logged-in user.</p><p>The <code class="inline">TuneWeb</code> namespace defines authentication endpoints and the main
 <code class="inline">LiveView</code> (<a href="TuneWeb.ExplorerLive.html"><code class="inline">TuneWeb.ExplorerLive</code></a>) that powers the entire user interface.</p><p>Tune assumes multiple browser sessions for the same user, which is why it
 defines a <a href="Tune.Spotify.Session.html"><code class="inline">Tune.Spotify.Session</code></a> behaviour with <a href="Tune.Spotify.Session.Worker.html"><code class="inline">Tune.Spotify.Session.Worker</code></a>
@@ -125,26 +177,34 @@ as its main runtime implementation.</p><p>Each worker is responsible to proxy in
 periodically poll for data changes, and broadcast corresponding events.</p><p>When a user opens a browser session, <a href="TuneWeb.ExplorerLive.html"><code class="inline">TuneWeb.ExplorerLive</code></a> either starts or
 simply reuses a worker named with the same session ID.</p><p>Each worker monitors its subscribers, so that it can shutdown when a user
 closes their last browser window.</p><p>This architecture ensures that:</p><ul><li>The amount of automatic API calls against the Spotify API for a given user is
-constant and independent from the number of user sessions for the same user.</li><li>Credential renewal happens in the background</li><li>The explorer implementation remains entirely focused on UI interaction </li></ul><h1>Telemetry</h1><p>The application exposes <code class="inline">TuneWeb.Telemetry</code> module with definitions for relevant metrics.</p><p>An instance of
+constant and independent from the number of user sessions for the same user.</li><li>Credential renewal happens in the background</li><li>The explorer implementation remains entirely focused on UI interaction </li></ul><h3 id="telemetry" class="section-heading">
+  <a href="#telemetry" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Telemetry
+</h3>
+<p>The application exposes <code class="inline">TuneWeb.Telemetry</code> module with definitions for relevant metrics.</p><p>An instance of
 <a href="https://github.com/phoenixframework/phoenix_live_dashboard/">Phoenix.LiveDashboard</a>
 is mounted at <code class="inline">/dashboard</code>. In production, the endpoint is protected by basic
-auth (see <code class="inline">.env</code> for relevant environment variables).</p><h1>Code documentation</h1><p>Available at <a href="https://tune-docs.fullyforged.com">https://tune-docs.fullyforged.com</a>, gets automatically updated
-with every push on the <code class="inline">main</code> branch.</p><h1>Limitations</h1><ul><li><p>If you use Tune in combination with official Spotify clients, you will notice
-that if nothing is playing, after a while the miniplayer controls stop
-responding and you can't even play any song. This is due to a quirk in the
-Spotify devices API, which reports client devices as still connected.</p><p>If you're running Tune on a platform where it can load the built-in audio
-player, you can just refresh the page for the player to reload, which has the
-side effect of &quot;waking up&quot; all other clients as well. At that point, you can
-select them from the device switcher and resume normal operation.
-If you're running Tune on a mobile device, your only option is to open the
-dormant client application, do a quick play/pause to wake it up and go back
-to Tune.
-More information on the related <a href="https://developer.spotify.com/documentation/web-api/guides/using-connect-web-api/#devices-not-appearing-on-device-list">Spotify documentation
-page</a>.</p></li></ul><h1>Credits</h1><ul><li>Mini player icons from <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a></li><li>Wikipedia icon made by <a href="https://www.flaticon.com/authors/freepik
+auth (see <code class="inline">.env</code> for relevant environment variables).</p><h2 id="deployment" class="section-heading">
+  <a href="#deployment" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Deployment
+</h2>
+<p>The project is setup to deploy on Heroku, please make sure you:</p><ul><li>configure environment variables</li><li>add the buildpacks detailed at <a href="https://hexdocs.pm/phoenix/heroku.html">https://hexdocs.pm/phoenix/heroku.html</a></li><li>to enable exception tracking via <a href="https://sentry.io">Sentry</a>, make sure you define a <code class="inline">SENTRY_DSN</code> environment variable</li></ul><h2 id="credits" class="section-heading">
+  <a href="#credits" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Credits
+</h2>
+<ul><li>Mini player icons from <a href="https://icons.getbootstrap.com/">Bootstrap Icons</a></li><li>Wikipedia icon made by <a href="https://www.flaticon.com/authors/freepik
 "Freepik"">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></li><li>Last.fm icon made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel
 perfect</a> from
 <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></li><li>YouTube icon made by <a href="https://www.flaticon.com/authors/freepik
-"Freepik"">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></li></ul>      <footer class="footer">
+"Freepik"">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></li></ul><h2 id="code-of-conduct" class="section-heading">
+  <a href="#code-of-conduct" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Code of Conduct
+</h2>
+<p>Available at <a href="https://github.com/fully-forged/tune/blob/main/CODE_OF_CONDUCT.md">https://github.com/fully-forged/tune/blob/main/CODE_OF_CONDUCT.md</a>.</p><h2 id="license" class="section-heading">
+  <a href="#license" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  License
+</h2>
+<p>Available at <a href="https://github.com/fully-forged/tune/blob/main/LICENSE">https://github.com/fully-forged/tune/blob/main/LICENSE</a>.</p>      <footer class="footer">
         <p>
           <span class="line">
             Built using
