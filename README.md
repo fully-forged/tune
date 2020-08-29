@@ -23,6 +23,8 @@
     + [Telemetry](#telemetry)
   * [Deployment](#deployment)
   * [Credits](#credits)
+  * [Code of Conduct](#code-of-conduct)
+  * [License](#license)
 
 ## About
 
@@ -204,3 +206,11 @@ The project is setup to deploy on Heroku, please make sure you:
   [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 - YouTube icon made by [Freepik](https://www.flaticon.com/authors/freepik
   "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
+## Code of Conduct
+
+Available at <https://github.com/fully-forged/tune/blob/main/CODE_OF_CONDUCT.md>.
+
+## License
+
+Available at <https://github.com/fully-forged/tune/blob/main/LICENSE>.
