@@ -68,9 +68,11 @@ jobs:
       run: mix dialyzer --no-check
 
     - name: Build docs
+      if: github.ref == 'refs/heads/master'
       run: mix docs
 
     - name: Deploy dpcs
+      if: success() && github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.5.9
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
