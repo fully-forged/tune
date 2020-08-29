@@ -128,7 +128,8 @@ closes their last browser window.</p><p>This architecture ensures that:</p><ul><
 constant and independent from the number of user sessions for the same user.</li><li>Credential renewal happens in the background</li><li>The explorer implementation remains entirely focused on UI interaction </li></ul><h1>Telemetry</h1><p>The application exposes <code class="inline">TuneWeb.Telemetry</code> module with definitions for relevant metrics.</p><p>An instance of
 <a href="https://github.com/phoenixframework/phoenix_live_dashboard/">Phoenix.LiveDashboard</a>
 is mounted at <code class="inline">/dashboard</code>. In production, the endpoint is protected by basic
-auth (see <code class="inline">.env</code> for relevant environment variables).</p><h1>Limitations</h1><ul><li><p>If you use Tune in combination with official Spotify clients, you will notice
+auth (see <code class="inline">.env</code> for relevant environment variables).</p><h1>Code documentation</h1><p>Available at <a href="https://tune-docs.fullyforged.com">https://tune-docs.fullyforged.com</a>, gets automatically updated
+with every push on the <code class="inline">main</code> branch.</p><h1>Limitations</h1><ul><li><p>If you use Tune in combination with official Spotify clients, you will notice
 that if nothing is playing, after a while the miniplayer controls stop
 responding and you can't even play any song. This is due to a quirk in the
 Spotify devices API, which reports client devices as still connected.</p><p>If you're running Tune on a platform where it can load the built-in audio
