@@ -13,6 +13,7 @@
     + [Scope and features](#scope-and-features)
     + [Keyboard shortcuts](#keyboard-shortcuts)
     + [Free subscription limitations](#free-subscription-limitations)
+    + [Data retention and privacy](#data-retention-and-privacy)
     + [Issues with devices and playback](#issues-with-devices-and-playback)
   * [Development](#development)
     + [Setup](#setup)
@@ -94,6 +95,16 @@ free subscription, those UI elements are not visible as they're ineffective.
 For users with Premium subscriptions, Tune can be used as a standalone player by selecting the
 appropriate option in the device switch section in the mini player (note that [only some browsers are
 supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers)).
+
+### Data retention and privacy
+
+Tune doesn't have any persistent storage: upon successful authentication,
+credentials are only stored in your browser's cookies and kept in memory in the application.
+
+Credentials are cleared at most 30 seconds after you close the last browser
+session, even if you don't explicitly logout.
+
+At this point in time, credentials may be printed in logs and/or crash reports.
 
 ### Issues with devices and playback
 
