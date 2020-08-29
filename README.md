@@ -1,5 +1,7 @@
 # Tune
 
+![CI Status](https://github.com/fully-forged/tune/workflows/Elixir%20CI/badge.svg)
+
 - [Tune](#tune)
   * [About](#about)
     + [Album details](#album-details)
