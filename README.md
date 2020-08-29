@@ -12,7 +12,7 @@
   * [Usage](#usage)
     + [Scope and features](#scope-and-features)
     + [Keyboard shortcuts](#keyboard-shortcuts)
-    + [Free subscription limitations](#free-subscription-limitations)
+    + [Free vs. Premium Subscriptions](#free-vs-premium-subscriptions)
     + [Data retention and privacy](#data-retention-and-privacy)
     + [Issues with devices and playback](#issues-with-devices-and-playback)
   * [Development](#development)
@@ -86,7 +86,17 @@ Tune differs in these areas:
 - <kbd>s</kbd>: Volume down
 - <kbd>/</kbd>: Focus search input
   
-### Free subscription limitations
+### Free vs. Premium Subscriptions
+
+| Feature                   | Free subscription | Premium Subscription |
+|---------------------------|:-----------------:|:--------------------:|
+| Search                    |         ✅         |           ✅          |
+| Artist/Album/etc. details |         ✅         |           ✅          |
+| Suggestions               |         ✅         |           ✅          |
+| Release radar             |         ✅         |           ✅          |
+| Miniplayer controls       |         ❌         |           ✅          |
+| Device chooser            |         ❌         |           ✅          |
+| Embedded audio player     |         ❌         | ✅ (on some browsers) |
 
 Due to limitations imposed by Spotify, users with free subscriptions cannot use the embedded
 audio player, nor they can control other devices via Tune's UI. If you have a
