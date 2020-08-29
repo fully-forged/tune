@@ -71,7 +71,7 @@ jobs:
       run: mix docs
 
     - name: Deploy dpcs
-      uses: JamesIves/github-pages-deploy-action@3
+      uses: JamesIves/github-pages-deploy-action@3.5.9
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         BRANCH: gh-pages
