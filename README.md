@@ -1,11 +1,62 @@
 # Tune
 
+![CI Status](https://github.com/fully-forged/tune/workflows/Elixir%20CI/badge.svg)
+
+- [Tune](#tune)
+  * [About](#about)
+    + [Album details](#album-details)
+    + [Global Search](#global-search)
+    + [Artist details](#artist-details)
+    + [Top albums and recommendations](#top-albums-and-recommendations)
+    + [Release radar](#release-radar)
+  * [Usage](#usage)
+    + [Scope and features](#scope-and-features)
+    + [Keyboard shortcuts](#keyboard-shortcuts)
+    + [Free vs. Premium Subscriptions](#free-vs-premium-subscriptions)
+    + [Data retention and privacy](#data-retention-and-privacy)
+    + [Issues with devices and playback](#issues-with-devices-and-playback)
+  * [Development](#development)
+    + [Setup](#setup)
+    + [Running the application](#running-the-application)
+    + [Tests, dialyzer and credo](#tests--dialyzer-and-credo)
+    + [Documentation](#documentation)
+    + [Application structure](#application-structure)
+    + [Telemetry](#telemetry)
+  * [Deployment](#deployment)
+  * [Credits](#credits)
+  * [Code of Conduct](#code-of-conduct)
+  * [License](#license)
+
+## About
+
 Tune is a Spotify browser and remote application with a focus on performance
 and integration with other services.
 
 You can see it in action at <https://tune.fullyforged.com>.
 
-# Scope and features
+### Album details
+
+![Album details](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/album-details.jpg "Album details")
+
+### Global Search
+
+![Search](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/search.jpg "Search")
+
+### Artist details
+
+![Artist details](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/artist-details.jpg "Artist details")
+
+### Top albums and recommendations
+
+![Top albums and recommendations](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/top-albums-and-recommendations.jpg "Top albums and recommendations")
+
+### Release radar
+
+![Release radar](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/release-radar.jpg "Release radar")
+
+## Usage
+
+### Scope and features
 
 In many ways Tune copies the official Spotify application: many views (e.g.
 search or details for artists and albums) are tightly based on the equivalent
@@ -26,7 +77,7 @@ Tune differs in these areas:
   listening in a specific time period). The logic is an almost direct porting of
   how I search for new music, so it might not work for you.
 
-# Keyboard shortcuts
+### Keyboard shortcuts
 
 - <kbd>Space</kbd>: Play/Pause
 - <kbd>a</kbd>: Prev
@@ -35,7 +86,17 @@ Tune differs in these areas:
 - <kbd>s</kbd>: Volume down
 - <kbd>/</kbd>: Focus search input
   
-# Free subscription limitations
+### Free vs. Premium Subscriptions
+
+| Feature                   | Free subscription | Premium Subscription |
+|---------------------------|:-----------------:|:--------------------:|
+| Search                    |         ✅         |           ✅          |
+| Artist/Album/etc. details |         ✅         |           ✅          |
+| Suggestions               |         ✅         |           ✅          |
+| Release radar             |         ✅         |           ✅          |
+| Miniplayer controls       |         ❌         |           ✅          |
+| Device chooser            |         ❌         |           ✅          |
+| Embedded audio player     |         ❌         | ✅ (on some browsers) |
 
 Due to limitations imposed by Spotify, users with free subscriptions cannot use the embedded
 audio player, nor they can control other devices via Tune's UI. If you have a
@@ -45,29 +106,38 @@ For users with Premium subscriptions, Tune can be used as a standalone player by
 appropriate option in the device switch section in the mini player (note that [only some browsers are
 supported](https://developer.spotify.com/documentation/web-playback-sdk/#supported-browsers)).
 
-# Screenshots
+### Data retention and privacy
 
-## Album details
+Tune doesn't have any persistent storage: upon successful authentication,
+credentials are only stored in your browser's cookies and kept in memory in the application.
 
-![Album details](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/album-details.jpg "Album details")
+Credentials are cleared at most 30 seconds after you close the last browser
+session, even if you don't explicitly logout.
 
-## Global Search
+At this point in time, credentials may be printed in logs and/or crash reports.
 
-![Search](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/search.jpg "Search")
+### Issues with devices and playback
 
-## Artist details
+If you use Tune in combination with official Spotify clients, you will notice
+that if nothing is playing, after a while the miniplayer controls stop
+responding and you can't even play any song. This is due to a quirk in the
+Spotify devices API, which reports client devices as still connected.
 
-![Artist details](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/artist-details.jpg "Artist details")
+If you're running Tune on a platform where it can load the built-in audio
+player, you can just refresh the page for the player to reload, which has the
+side effect of "waking up" all other clients as well. At that point, you can
+select them from the device switcher and resume normal operation.
 
-## Top albums and recommendations
+If you're running Tune on a mobile device, your only option is to open the
+dormant client application, do a quick play/pause to wake it up and go back
+to Tune.
 
-![Top albums and recommendations](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/top-albums-and-recommendations.jpg "Top albums and recommendations")
+More information on the related [Spotify documentation
+page](https://developer.spotify.com/documentation/web-api/guides/using-connect-web-api/#devices-not-appearing-on-device-list).
 
-## Release radar
+## Development
 
-![Release radar](https://raw.githubusercontent.com/fully-forged/tune/main/screenshots/release-radar.jpg "Release radar")
-
-# Initial setup
+### Setup
 
 First of all, we need working installations of Elixir and Erlang. The
 recommended way to achieve this is via [asdf](https://asdf-vm.com/#/). Once
@@ -86,28 +156,23 @@ To create secrets, (e.g. for `SECRET_KEY_BASE`), use `mix phx.gen.secret`.
 
 Next you can install all dependencies with `mix setup`.
 
-# Workflows
-
-## Development
+### Running the application
 
 - Start the application with `mix phx.server`
 - To start the application and an IEx console connected to it, use `iex -S mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-## Tests, dialyzer and credo
+### Tests, dialyzer and credo
 
 You can run tests with `mix test`, dialyzer with `mix dialyzer` and Credo with `mix credo`.
 
-## Deployment
+### Documentation
 
-The project is setup to deploy on Heroku, please make sure you:
+Available at <https://tune-docs.fullyforged.com>, gets automatically updated
+with every push on the `main` branch.
 
-- configure environment variables
-- add the buildpacks detailed at <https://hexdocs.pm/phoenix/heroku.html>
-- to enable exception tracking via [Sentry](https://sentry.io), make sure you define a `SENTRY_DSN` environment variable
-
-# Application structure
+### Application structure
 
 The `Tune` namespace defines the domain logic responsible to interact with the
 Spotify API and maintain running sessions for each logged-in user.
@@ -135,7 +200,7 @@ This architecture ensures that:
 - Credential renewal happens in the background
 - The explorer implementation remains entirely focused on UI interaction 
 
-# Telemetry
+### Telemetry
 
 The application exposes `TuneWeb.Telemetry` module with definitions for relevant metrics.
 
@@ -144,31 +209,15 @@ An instance of
 is mounted at `/dashboard`. In production, the endpoint is protected by basic
 auth (see `.env` for relevant environment variables).
 
-# Code documentation
+## Deployment
 
-Available at <https://tune-docs.fullyforged.com>, gets automatically updated
-with every push on the `main` branch.
+The project is setup to deploy on Heroku, please make sure you:
 
-# Limitations
+- configure environment variables
+- add the buildpacks detailed at <https://hexdocs.pm/phoenix/heroku.html>
+- to enable exception tracking via [Sentry](https://sentry.io), make sure you define a `SENTRY_DSN` environment variable
 
-- If you use Tune in combination with official Spotify clients, you will notice
-  that if nothing is playing, after a while the miniplayer controls stop
-  responding and you can't even play any song. This is due to a quirk in the
-  Spotify devices API, which reports client devices as still connected.
-
-  If you're running Tune on a platform where it can load the built-in audio
-  player, you can just refresh the page for the player to reload, which has the
-  side effect of "waking up" all other clients as well. At that point, you can
-  select them from the device switcher and resume normal operation.
-
-  If you're running Tune on a mobile device, your only option is to open the
-  dormant client application, do a quick play/pause to wake it up and go back
-  to Tune.
-
-  More information on the related [Spotify documentation
-  page](https://developer.spotify.com/documentation/web-api/guides/using-connect-web-api/#devices-not-appearing-on-device-list).
-
-# Credits
+## Credits
 
 - Mini player icons from [Bootstrap Icons](https://icons.getbootstrap.com/)
 - Wikipedia icon made by [Freepik](https://www.flaticon.com/authors/freepik
@@ -178,3 +227,11 @@ with every push on the `main` branch.
   [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 - YouTube icon made by [Freepik](https://www.flaticon.com/authors/freepik
   "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+
+## Code of Conduct
+
+Available at <https://github.com/fully-forged/tune/blob/main/CODE_OF_CONDUCT.md>.
+
+## License
+
+Available at <https://github.com/fully-forged/tune/blob/main/LICENSE>.
