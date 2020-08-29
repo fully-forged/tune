@@ -71,7 +71,7 @@ jobs:
       if: github.ref == 'refs/heads/master'
       run: mix docs
 
-    - name: Deploy dpcs
+    - name: Deploy docs
       if: success() && github.ref == 'refs/heads/master'
       uses: JamesIves/github-pages-deploy-action@3.5.9
       with:
