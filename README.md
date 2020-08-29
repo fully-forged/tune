@@ -144,6 +144,11 @@ An instance of
 is mounted at `/dashboard`. In production, the endpoint is protected by basic
 auth (see `.env` for relevant environment variables).
 
+# Code documentation
+
+Available at <https://tune-docs.fullyforged.com>, gets automatically updated
+with every push on the `main` branch.
+
 # Limitations
 
 - If you use Tune in combination with official Spotify clients, you will notice
