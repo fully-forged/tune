@@ -88,7 +88,7 @@ defmodule TuneWeb.LoggedInTest do
       check all(
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
-              profile <- Generators.profile(),
+              profile <- Generators.premium_profile(),
               item <- Generators.item(),
               device <- Generators.device(),
               volume_percent <- Generators.volume_percent()
