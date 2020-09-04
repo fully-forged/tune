@@ -23,7 +23,7 @@ defmodule TuneWeb.LoggedInTest do
 
       expect_successful_authentication(session_id, credentials, profile)
       expect_nothing_playing(session_id)
-      expect_no_suggestions_playlist(session_id)
+      expect_no_release_radar_playlist(session_id)
 
       {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
 
@@ -42,7 +42,7 @@ defmodule TuneWeb.LoggedInTest do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
         expect_item_playing(session_id, item, device)
-        expect_no_suggestions_playlist(session_id)
+        expect_no_release_radar_playlist(session_id)
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
 
@@ -65,7 +65,7 @@ defmodule TuneWeb.LoggedInTest do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
         player = expect_item_playing(session_id, item, device)
-        expect_no_suggestions_playlist(session_id)
+        expect_no_release_radar_playlist(session_id)
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
 
@@ -96,7 +96,7 @@ defmodule TuneWeb.LoggedInTest do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
         expect_successful_authentication(session_id, credentials, profile)
         player = expect_item_playing(session_id, item, device)
-        expect_no_suggestions_playlist(session_id)
+        expect_no_release_radar_playlist(session_id)
 
         {:ok, explorer_live, _html} = live(conn, Routes.explorer_path(conn, :suggestions))
 
@@ -159,7 +159,7 @@ defmodule TuneWeb.LoggedInTest do
 
         expect_successful_authentication(session_id, credentials, profile)
         expect_item_playing(session_id, item, device)
-        expect_no_suggestions_playlist(session_id)
+        expect_no_release_radar_playlist(session_id)
 
         {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
 
@@ -514,6 +514,29 @@ defmodule TuneWeb.LoggedInTest do
     end
   end
 
+  describe "suggestions" do
+    test "without release radar playlist", %{conn: conn} do
+      # Not necessary to run this as a property, as it doesn't have much
+      # expected variation - we just need some basic working data for the
+      # current session and user.
+      session_id = pick(Generators.session_id())
+      credentials = pick(Generators.credentials())
+      profile = pick(Generators.profile())
+      conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+      expect_successful_authentication(session_id, credentials, profile)
+      expect_nothing_playing(session_id)
+      expect_no_release_radar_playlist(session_id)
+
+      {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
+
+      assert html =~ "Cannot display Release Radar - Make sure you have access to the playlist."
+
+      assert render(explorer_live) =~
+               "Cannot display Release Radar - Make sure you have access to the playlist."
+    end
+  end
+
   defp escape(s) do
     s
     |> Phoenix.HTML.html_escape()
@@ -548,7 +571,7 @@ defmodule TuneWeb.LoggedInTest do
     player
   end
 
-  defp expect_no_suggestions_playlist(session_id) do
+  defp expect_no_release_radar_playlist(session_id) do
     Tune.Spotify.SessionMock
     |> expect(:search, 2, fn ^session_id, "Release Radar", [types: [:playlist], limit: 1] ->
       {:ok, %{playlists: %{items: [], total: 0}}}
