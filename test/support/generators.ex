@@ -2,7 +2,17 @@ defmodule Tune.Generators do
   @moduledoc false
   import StreamData
 
-  alias Tune.Spotify.Schema.{Album, Artist, Device, Episode, Publisher, Show, Track, User}
+  alias Tune.Spotify.Schema.{
+    Album,
+    Artist,
+    Device,
+    Episode,
+    Playlist,
+    Publisher,
+    Show,
+    Track,
+    User
+  }
 
   def search_type do
     one_of([
@@ -22,6 +32,26 @@ defmodule Tune.Generators do
 
   def item do
     one_of([track(), episode()])
+  end
+
+  def playlist do
+    bind(name(), &playlist/1)
+  end
+
+  def playlist(name) do
+    tuple(
+      {id(), description(), thumbnails(), uniq_list_of(track(), min_length: 1, max_length: 32)}
+    )
+    |> bind(fn {id, description, thumbnails, tracks} ->
+      constant(%Playlist{
+        id: id,
+        uri: "spotify:playlist:" <> id,
+        name: name,
+        description: description,
+        thumbnails: thumbnails,
+        tracks: tracks
+      })
+    end)
   end
 
   def track do

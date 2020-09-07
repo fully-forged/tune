@@ -536,10 +536,53 @@ defmodule TuneWeb.LoggedInTest do
                "Cannot display Release Radar - Make sure you have access to the playlist."
     end
 
-    # 1. With release radar playlist
     # 3. Top tracks with variable time interval
     # 4. Recommendations with variable time interval
     # 5. With error in fetching top tracks
+  end
+
+  property "with release radar playlist", %{conn: conn} do
+    top_tracks_limit = 24
+    time_range = "short_term"
+
+    check all(
+            credentials <- Generators.credentials(),
+            session_id <- Generators.session_id(),
+            profile <- Generators.profile(),
+            # item <- Generators.item(),
+            # device <- Generators.device(),
+            release_radar_playlist <- Generators.playlist("Release Radar"),
+            top_tracks <- uniq_list_of(Generators.track(), max_length: 24),
+            recommended_tracks <- uniq_list_of(Generators.track(), max_length: 24)
+          ) do
+      conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+      expect_successful_authentication(session_id, credentials, profile)
+      expect_nothing_playing(session_id)
+      expect_release_radar_playlist(session_id, release_radar_playlist)
+
+      expect_top_tracks(session_id, top_tracks, top_tracks_limit, time_range)
+
+      artist_ids = Track.artist_ids(top_tracks)
+      expect_recommendations_from_artists(session_id, artist_ids, recommended_tracks)
+
+      {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
+
+      assert html =~ "Release Radar"
+      assert render(explorer_live) =~ "Release Radar"
+
+      for track <- release_radar_playlist.tracks do
+        escaped_album_name = escape(track.album.name)
+        assert html =~ escaped_album_name
+        assert render(explorer_live) =~ escaped_album_name
+
+        for artist <- track.artists do
+          escaped_artist_name = escape(artist.name)
+          assert html =~ escaped_artist_name
+          assert render(explorer_live) =~ escaped_artist_name
+        end
+      end
+    end
   end
 
   defp escape(s) do
@@ -580,6 +623,36 @@ defmodule TuneWeb.LoggedInTest do
     Tune.Spotify.SessionMock
     |> expect(:search, 2, fn ^session_id, "Release Radar", [types: [:playlist], limit: 1] ->
       {:ok, %{playlists: %{items: [], total: 0}}}
+    end)
+  end
+
+  defp expect_release_radar_playlist(session_id, playlist) do
+    playlist_id = playlist.id
+
+    Tune.Spotify.SessionMock
+    |> expect(:search, 2, fn ^session_id, "Release Radar", [types: [:playlist], limit: 1] ->
+      {:ok, %{playlists: %{items: [playlist], total: 1}}}
+    end)
+    |> expect(:get_playlist, 2, fn ^session_id, ^playlist_id ->
+      {:ok, playlist}
+    end)
+  end
+
+  defp expect_top_tracks(session_id, top_tracks, limit, time_range) do
+    Tune.Spotify.SessionMock
+    |> expect(:top_tracks, 2, fn ^session_id, [limit: ^limit, time_range: ^time_range] ->
+      {:ok, top_tracks}
+    end)
+  end
+
+  defp expect_recommendations_from_artists(session_id, artist_ids, recommended_tracks) do
+    Tune.Spotify.SessionMock
+    |> expect(:get_recommendations_from_artists, 2, fn ^session_id, requested_artist_ids ->
+      for requested_artist_id <- requested_artist_ids do
+        assert requested_artist_id in artist_ids
+      end
+
+      {:ok, recommended_tracks}
     end)
   end
 end
