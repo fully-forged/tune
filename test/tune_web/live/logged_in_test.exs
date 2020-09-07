@@ -535,6 +535,11 @@ defmodule TuneWeb.LoggedInTest do
       assert render(explorer_live) =~
                "Cannot display Release Radar - Make sure you have access to the playlist."
     end
+
+    # 1. With release radar playlist
+    # 3. Top tracks with variable time interval
+    # 4. Recommendations with variable time interval
+    # 5. With error in fetching top tracks
   end
 
   defp escape(s) do
