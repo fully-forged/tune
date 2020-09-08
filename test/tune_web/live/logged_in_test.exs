@@ -535,10 +535,6 @@ defmodule TuneWeb.LoggedInTest do
       assert render(explorer_live) =~
                "Cannot display Release Radar - Make sure you have access to the playlist."
     end
-
-    # 3. Top tracks with variable time interval
-    # 4. Recommendations with variable time interval
-    # 5. With error in fetching top tracks
   end
 
   property "with release radar playlist", %{conn: conn} do
@@ -549,8 +545,6 @@ defmodule TuneWeb.LoggedInTest do
             credentials <- Generators.credentials(),
             session_id <- Generators.session_id(),
             profile <- Generators.profile(),
-            # item <- Generators.item(),
-            # device <- Generators.device(),
             release_radar_playlist <- Generators.playlist("Release Radar"),
             top_tracks <- uniq_list_of(Generators.track(), max_length: 24),
             recommended_tracks <- uniq_list_of(Generators.track(), max_length: 24)
@@ -575,6 +569,62 @@ defmodule TuneWeb.LoggedInTest do
         escaped_album_name = escape(track.album.name)
         assert html =~ escaped_album_name
         assert render(explorer_live) =~ escaped_album_name
+
+        for artist <- track.artists do
+          escaped_artist_name = escape(artist.name)
+          assert html =~ escaped_artist_name
+          assert render(explorer_live) =~ escaped_artist_name
+        end
+      end
+    end
+  end
+
+  property "with top albums and recommended tracks", %{conn: conn} do
+    top_tracks_limit = 24
+    time_range = "short_term"
+
+    check all(
+            credentials <- Generators.credentials(),
+            session_id <- Generators.session_id(),
+            profile <- Generators.profile(),
+            release_radar_playlist <- Generators.playlist("Release Radar"),
+            top_tracks <- uniq_list_of(Generators.track(), max_length: 24),
+            recommended_tracks <- uniq_list_of(Generators.track(), max_length: 24)
+          ) do
+      conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
+
+      expect_successful_authentication(session_id, credentials, profile)
+      expect_nothing_playing(session_id)
+      expect_release_radar_playlist(session_id, release_radar_playlist)
+
+      expect_top_tracks(session_id, top_tracks, top_tracks_limit, time_range)
+
+      artist_ids = Track.artist_ids(top_tracks)
+      expect_recommendations_from_artists(session_id, artist_ids, recommended_tracks)
+
+      {:ok, explorer_live, html} = live(conn, Routes.explorer_path(conn, :suggestions))
+
+      assert html =~ "Top Albums"
+      assert html =~ "Recommended Tracks"
+      assert render(explorer_live) =~ "Top Albums"
+      assert render(explorer_live) =~ "Recommended Tracks"
+
+      for album <- Album.from_tracks(top_tracks) do
+        escaped_album_name = escape(album.name)
+        assert html =~ escaped_album_name
+        assert render(explorer_live) =~ escaped_album_name
+
+        for artist <- album.artists do
+          escaped_artist_name = escape(artist.name)
+          assert html =~ escaped_artist_name
+          assert render(explorer_live) =~ escaped_artist_name
+        end
+      end
+
+      for track <- recommended_tracks do
+        escaped_track_name = escape(track.name)
+        assert html =~ escaped_track_name
+        assert render(explorer_live) =~ escaped_track_name
 
         for artist <- track.artists do
           escaped_artist_name = escape(artist.name)
