@@ -106,27 +106,49 @@ defmodule Tune.Spotify.Session.HTTP do
   alias Tune.Spotify.{Session, SessionRegistry}
   alias Phoenix.PubSub
 
+  @default_timeouts %{
+    refresh: 1000,
+    retry: 5000,
+    inactivity: 30_000
+  }
+
   defstruct session_id: nil,
             credentials: nil,
             user: nil,
             now_playing: :not_playing,
             devices: [],
-            subscribers: MapSet.new()
+            subscribers: MapSet.new(),
+            timeouts: @default_timeouts
 
-  @refresh_interval 1000
-  @retry_interval 5000
-  @inactivity_timeout 30_000
+  @type timeouts :: %{
+          refresh: timeout(),
+          retry: timeout(),
+          inactivity: timeout()
+        }
+  @type start_opts :: [
+          {:timeouts, timeouts()}
+        ]
 
   ################################################################################
   ################################## PUBLIC API ##################################
   ################################################################################
 
-  @spec start_link({Session.id(), Session.credentials()}) :: {:ok, pid()} | {:error, term()}
-  def start_link({session_id, credentials}), do: start_link(session_id, credentials)
+  @spec start_link({Session.id(), Session.credentials()}) ::
+          {:ok, pid()} | {:error, term()}
+  def start_link({session_id, credentials}),
+    do: start_link(session_id, credentials, timeouts: @default_timeouts)
 
-  @spec start_link(Session.id(), Session.credentials()) :: {:ok, pid()} | {:error, term()}
-  def start_link(session_id, credentials) do
-    GenStateMachine.start_link(__MODULE__, {session_id, credentials}, name: via(session_id))
+  @spec start_link({Session.id(), Session.credentials(), start_opts()}) ::
+          {:ok, pid()} | {:error, term()}
+  def start_link({session_id, credentials, start_opts}),
+    do: start_link(session_id, credentials, start_opts)
+
+  @spec start_link(Session.id(), Session.credentials(), start_opts()) ::
+          {:ok, pid()} | {:error, term()}
+  def start_link(session_id, credentials, start_opts) do
+    GenStateMachine.start_link(__MODULE__, {session_id, credentials, start_opts},
+      name: via(session_id)
+    )
   end
 
   @impl true
@@ -262,8 +284,9 @@ defmodule Tune.Spotify.Session.HTTP do
 
   @doc false
   @impl true
-  def init({session_id, credentials}) do
-    data = %__MODULE__{session_id: session_id, credentials: credentials}
+  def init({session_id, credentials, start_opts}) do
+    timeouts = Keyword.get(start_opts, :timeouts, @default_timeouts)
+    data = %__MODULE__{session_id: session_id, credentials: credentials, timeouts: timeouts}
     action = {:next_event, :internal, :authenticate}
     {:ok, :not_authenticated, data, action}
   end
@@ -281,8 +304,8 @@ defmodule Tune.Spotify.Session.HTTP do
         actions = [
           {:next_event, :internal, :get_now_playing},
           {:next_event, :internal, :get_devices},
-          {:state_timeout, @refresh_interval, :refresh_data},
-          {{:timeout, :inactivity}, @inactivity_timeout, :expired}
+          {:state_timeout, data.timeouts.refresh, :refresh_data},
+          {{:timeout, :inactivity}, data.timeouts.inactivity, :expired}
         ]
 
         {:next_state, :authenticated, data, actions}
@@ -296,7 +319,7 @@ defmodule Tune.Spotify.Session.HTTP do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, @retry_interval, :authenticate}
+        action = {:state_timeout, data.timeouts.retry, :authenticate}
         {:keep_state_and_data, action}
     end
   end
@@ -314,7 +337,7 @@ defmodule Tune.Spotify.Session.HTTP do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, @retry_interval, :refresh}
+        action = {:state_timeout, data.timeouts.retry, :refresh}
         {:keep_state_and_data, action}
     end
   end
@@ -330,7 +353,7 @@ defmodule Tune.Spotify.Session.HTTP do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, @retry_interval, :get_now_playing}
+        action = {:state_timeout, data.timeouts.retry, :get_now_playing}
         {:keep_state_and_data, action}
 
       {:ok, now_playing} ->
@@ -355,7 +378,7 @@ defmodule Tune.Spotify.Session.HTTP do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, @retry_interval, :get_devices}
+        action = {:state_timeout, data.timeouts.retry, :get_devices}
         {:keep_state_and_data, action}
 
       {:ok, devices} ->
@@ -382,7 +405,7 @@ defmodule Tune.Spotify.Session.HTTP do
 
       data = %{data | now_playing: now_playing, devices: devices}
 
-      action = {:state_timeout, @refresh_interval, :refresh_data}
+      action = {:state_timeout, data.timeouts.refresh, :refresh_data}
 
       {:keep_state, data, action}
     else
@@ -395,7 +418,7 @@ defmodule Tune.Spotify.Session.HTTP do
 
       # abnormal http error, retry in 5 seconds
       {:error, _reason} ->
-        action = {:state_timeout, @retry_interval, :refresh_data}
+        action = {:state_timeout, data.timeouts.retry, :refresh_data}
         {:keep_state_and_data, action}
     end
   end
@@ -420,7 +443,7 @@ defmodule Tune.Spotify.Session.HTTP do
     if MapSet.size(data.subscribers) == 0 do
       {:stop, :normal}
     else
-      action = {{:timeout, :inactivity}, @inactivity_timeout, :expired}
+      action = {{:timeout, :inactivity}, data.timeouts.inactivity, :expired}
       {:keep_state_and_data, action}
     end
   end
