@@ -85,6 +85,8 @@ Tune differs in these areas:
 - <kbd>w</kbd>: Volume up
 - <kbd>s</kbd>: Volume down
 - <kbd>/</kbd>: Focus search input
+- <kbd>q</kbd>: Focus device selector
+- <kbd>?</kbd>: Display a modal dialog with available shortcuts
   
 ### Free vs. Premium Subscriptions
 

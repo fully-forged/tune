@@ -18,6 +18,10 @@
           <kbd>/</kbd>
           <%= gettext("Search") %>
         </li>
+        <li>
+          <kbd>q</kbd>
+          <%= gettext("Focus device selector") %>
+        </li>
       </ul>
     </div>
     <div class="mini-player-help">

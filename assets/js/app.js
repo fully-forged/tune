@@ -96,6 +96,7 @@ Hooks.GlobalShortcuts = {
     const openButton = document.querySelector("#open-button");
     const searchInput = document.getElementById("q");
     const navBar = document.getElementById("navbar");
+    const deviceSelector = document.getElementById("device");
 
     closeButton.addEventListener("click", function () {
       modal.classList.toggle("closed");
@@ -137,6 +138,9 @@ Hooks.GlobalShortcuts = {
           event.preventDefault();
           navBar.scrollIntoView();
           searchInput.focus();
+          break;
+        case "q":
+          deviceSelector.focus();
           break;
         default:
           break;

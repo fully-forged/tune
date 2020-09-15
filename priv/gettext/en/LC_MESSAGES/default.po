@@ -332,32 +332,32 @@ msgid "Keyboard shortcuts"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:36
+#: lib/tune_web/templates/layout/help.html.eex:40
 msgid "Next"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:32
+#: lib/tune_web/templates/layout/help.html.eex:36
 msgid "Previous"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:28
+#: lib/tune_web/templates/layout/help.html.eex:32
 msgid "Toggle Play/Pause"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:44
+#: lib/tune_web/templates/layout/help.html.eex:48
 msgid "Volume down"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:40
+#: lib/tune_web/templates/layout/help.html.eex:44
 msgid "Volume up"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:24
+#: lib/tune_web/templates/layout/help.html.eex:28
 msgid "Audio Player"
 msgstr ""
 
@@ -369,4 +369,9 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/layout/help.html.eex:15
 msgid "Toggle help"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:23
+msgid "Focus device selector"
 msgstr ""
