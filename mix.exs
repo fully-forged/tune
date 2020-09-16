@@ -85,10 +85,11 @@ defmodule Tune.MixProject do
       main: "readme",
       extras: ["README.md"],
       before_closing_body_tag: &monospace_stylesheet/1,
-      nest_modules_by_prefix: [Tune.Spotify.Schema, Tune.Spotify.Session],
+      nest_modules_by_prefix: [Tune.Spotify.Schema, Tune.Spotify.Session, Tune.Spotify.Client],
       groups_for_modules: [
         "Spotify Schemas": ~r/Schema/,
         "Spotify Session": ~r/Session/,
+        "Spotify Client API": ~r/Client/,
         Authentication: ~r/Auth/,
         UI: TuneWeb.ExplorerLive,
         Routing: TuneWeb.Router.Helpers,

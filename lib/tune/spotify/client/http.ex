@@ -1,5 +1,10 @@
 defmodule Tune.Spotify.Client.HTTP do
-  @moduledoc false
+  @moduledoc """
+  This module implements the `Tune.Spotify.Client` behaviour and interacts with
+  the actual Spotify API.
+
+  Reference docs are available at: <https://developer.spotify.com/documentation/web-api/>
+  """
 
   @behaviour Tune.Spotify.Client
 
