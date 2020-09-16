@@ -183,7 +183,7 @@ The `TuneWeb` namespace defines authentication endpoints and the main
 `LiveView` (`TuneWeb.ExplorerLive`) that powers the entire user interface.
 
 Tune assumes multiple browser sessions for the same user, which is why it
-defines a `Tune.Spotify.Session` behaviour with `Tune.Spotify.Session.Worker`
+defines a `Tune.Spotify.Session` behaviour with `Tune.Spotify.Session.HTTP`
 as its main runtime implementation.
 
 Each worker is responsible to proxy interaction with the Spotify API, 

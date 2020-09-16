@@ -27,7 +27,7 @@ defmodule Tune.Spotify.Supervisor do
   defp start_session(id, credentials) do
     DynamicSupervisor.start_child(
       Tune.Spotify.SessionSupervisor,
-      {Tune.Spotify.Session.Worker, {id, credentials}}
+      {Tune.Spotify.Session.HTTP, {id, credentials}}
     )
   end
 

@@ -13,7 +13,7 @@ defmodule Tune.Spotify.Session do
   Two extra functions, `c:subscribe/1` and `c:broadcast/2`, are used to define
   the mechanism used to notify other processes of changes in the session state.
 
-  For a working implementation, see `Tune.Spotify.Session.Worker`.
+  For a working implementation, see `Tune.Spotify.Session.HTTP`.
   """
   alias Tune.Duration
   alias Tune.Spotify.{HttpApi, Schema}
