@@ -102,7 +102,7 @@ defmodule TuneWeb.LoggedInTest do
 
         assert has_element?(explorer_live, "[data-test-status=playing]")
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:toggle_play, 1, fn ^session_id ->
           new_player = %{player | status: :paused}
           send(explorer_live.pid, {:now_playing, new_player})
@@ -115,21 +115,21 @@ defmodule TuneWeb.LoggedInTest do
 
         assert has_element?(explorer_live, "[data-test-status=paused]")
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:next, 1, fn ^session_id -> :ok end)
 
         assert explorer_live
                |> element("[data-test-control=next]")
                |> render_click()
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:prev, 1, fn ^session_id -> :ok end)
 
         assert explorer_live
                |> element("[data-test-control=prev]")
                |> render_click()
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:set_volume, 1, fn ^session_id, ^volume_percent -> :ok end)
 
         assert explorer_live
@@ -138,7 +138,7 @@ defmodule TuneWeb.LoggedInTest do
 
         new_position_ms = max(player.progress_ms + 100, player.item.duration_ms - 100)
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:seek, 1, fn ^session_id, ^new_position_ms -> :ok end)
 
         assert explorer_live
@@ -212,7 +212,7 @@ defmodule TuneWeb.LoggedInTest do
         }
       }
 
-      Tune.Spotify.SessionMock
+      Tune.Spotify.Session.Mock
       |> expect(:search, 2, fn ^session_id,
                                "example search",
                                [types: [:track], limit: 24, offset: 0] ->
@@ -250,7 +250,7 @@ defmodule TuneWeb.LoggedInTest do
         track = Enum.random(tracks)
         track_name = track.name
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:search, 2, fn ^session_id,
                                  ^track_name,
                                  [types: [:track], limit: 24, offset: 0] ->
@@ -295,7 +295,7 @@ defmodule TuneWeb.LoggedInTest do
         item = Enum.random(items)
         item_name = TuneWeb.SearchView.name(item)
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:search, 2, fn ^session_id,
                                  ^item_name,
                                  [types: [^search_type], limit: 24, offset: 0] ->
@@ -350,7 +350,7 @@ defmodule TuneWeb.LoggedInTest do
         item_name = item.name
         item_uri = item.uri
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:search, 2, fn ^session_id,
                                  ^item_name,
                                  [types: [^search_type], limit: 24, offset: 0] ->
@@ -383,7 +383,7 @@ defmodule TuneWeb.LoggedInTest do
 
         artist_id = artist.id
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:get_artist, 2, fn ^session_id, ^artist_id -> {:ok, artist} end)
         |> expect(:get_artist_albums, 2, fn ^session_id, ^artist_id, limit: 24, offset: 0 ->
           {:ok, %{albums: albums, total: Enum.count(albums)}}
@@ -408,7 +408,7 @@ defmodule TuneWeb.LoggedInTest do
 
         artist_uri = artist.uri
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:play, 1, fn ^session_id, ^artist_uri -> :ok end)
 
         assert explorer_live
@@ -418,7 +418,7 @@ defmodule TuneWeb.LoggedInTest do
         [album] = Enum.take_random(albums, 1)
         album_uri = album.uri
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:play, 1, fn ^session_id, ^album_uri -> :ok end)
 
         assert explorer_live
@@ -440,7 +440,7 @@ defmodule TuneWeb.LoggedInTest do
 
         album_id = album.id
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:get_album, 2, fn ^session_id, ^album_id -> {:ok, album} end)
 
         {:ok, explorer_live, html} =
@@ -494,7 +494,7 @@ defmodule TuneWeb.LoggedInTest do
 
         album_uri = album.uri
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:play, 1, fn ^session_id, ^album_uri -> :ok end)
 
         assert explorer_live
@@ -504,7 +504,7 @@ defmodule TuneWeb.LoggedInTest do
         [track] = Enum.take_random(album.tracks, 1)
         track_uri = track.uri
 
-        Tune.Spotify.SessionMock
+        Tune.Spotify.Session.Mock
         |> expect(:play, 1, fn ^session_id, ^track_uri, ^album_uri -> :ok end)
 
         assert explorer_live
@@ -651,7 +651,7 @@ defmodule TuneWeb.LoggedInTest do
       expect_nothing_playing(session_id)
       expect_release_radar_playlist(session_id, release_radar_playlist)
 
-      Tune.Spotify.SessionMock
+      Tune.Spotify.Session.Mock
       |> expect(:top_tracks, 2, fn ^session_id,
                                    [limit: ^top_tracks_limit, time_range: ^time_range] ->
         {:error, 403}
@@ -671,7 +671,7 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   defp expect_successful_authentication(session_id, credentials, profile) do
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:setup, 3, fn ^session_id, ^credentials -> :ok end)
     |> expect(:get_profile, 3, fn ^session_id -> profile end)
     |> expect(:get_devices, 2, fn ^session_id -> [] end)
@@ -680,7 +680,7 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   defp expect_nothing_playing(session_id) do
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:now_playing, 2, fn ^session_id -> %Player{status: :not_playing} end)
   end
 
@@ -692,14 +692,14 @@ defmodule TuneWeb.LoggedInTest do
       device: device
     }
 
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:now_playing, 2, fn ^session_id -> player end)
 
     player
   end
 
   defp expect_no_release_radar_playlist(session_id) do
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:search, 2, fn ^session_id, "Release Radar", [types: [:playlist], limit: 1] ->
       {:ok, %{playlists: %{items: [], total: 0}}}
     end)
@@ -708,7 +708,7 @@ defmodule TuneWeb.LoggedInTest do
   defp expect_release_radar_playlist(session_id, playlist) do
     playlist_id = playlist.id
 
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:search, 2, fn ^session_id, "Release Radar", [types: [:playlist], limit: 1] ->
       {:ok, %{playlists: %{items: [playlist], total: 1}}}
     end)
@@ -718,14 +718,14 @@ defmodule TuneWeb.LoggedInTest do
   end
 
   defp expect_top_tracks(session_id, top_tracks, limit, time_range) do
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:top_tracks, 2, fn ^session_id, [limit: ^limit, time_range: ^time_range] ->
       {:ok, top_tracks}
     end)
   end
 
   defp expect_recommendations_from_artists(session_id, artist_ids, recommended_tracks) do
-    Tune.Spotify.SessionMock
+    Tune.Spotify.Session.Mock
     |> expect(:get_recommendations_from_artists, 2, fn ^session_id, requested_artist_ids ->
       for requested_artist_id <- requested_artist_ids do
         assert requested_artist_id in artist_ids
