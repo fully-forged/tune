@@ -3,6 +3,8 @@ Tune.Auth.html
 Tune.Config.html
 Tune.Duration.html
 Tune.Gettext.html
+Tune.Spotify.Client.HTTP.html
+Tune.Spotify.Client.html
 Tune.Spotify.Schema.Album.html
 Tune.Spotify.Schema.Artist.html
 Tune.Spotify.Schema.Device.html
@@ -14,7 +16,7 @@ Tune.Spotify.Schema.Show.html
 Tune.Spotify.Schema.Track.html
 Tune.Spotify.Schema.User.html
 Tune.Spotify.Schema.html
-Tune.Spotify.Session.Worker.html
+Tune.Spotify.Session.HTTP.html
 Tune.Spotify.Session.html
 TuneWeb.AuthController.html
 TuneWeb.AuthView.html
@@ -27,8 +29,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-c5e1b51d9f.js
-dist/sidebar_items-8e887f5965.js
+dist/search_items-c20feef56d.js
+dist/sidebar_items-505e276d74.js
 index.html
 readme.html
 search.html

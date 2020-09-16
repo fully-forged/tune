@@ -8,7 +8,7 @@
     <meta name="project" content="tune v0.1.0">
     <title>Tune — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-2a693ebc6ceec33a2045.css" />
-    <script src="dist/sidebar_items-8e887f5965.js"></script>
+    <script src="dist/sidebar_items-505e276d74.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-ba01209f31ac9a9695fd.js"></script>
   </head>
@@ -172,7 +172,7 @@ with every push on the <code class="inline">main</code> branch.</p><h3 id="appli
 <p>The <code class="inline">Tune</code> namespace defines the domain logic responsible to interact with the
 Spotify API and maintain running sessions for each logged-in user.</p><p>The <code class="inline">TuneWeb</code> namespace defines authentication endpoints and the main
 <code class="inline">LiveView</code> (<a href="TuneWeb.ExplorerLive.html"><code class="inline">TuneWeb.ExplorerLive</code></a>) that powers the entire user interface.</p><p>Tune assumes multiple browser sessions for the same user, which is why it
-defines a <a href="Tune.Spotify.Session.html"><code class="inline">Tune.Spotify.Session</code></a> behaviour with <a href="Tune.Spotify.Session.Worker.html"><code class="inline">Tune.Spotify.Session.Worker</code></a>
+defines a <a href="Tune.Spotify.Session.html"><code class="inline">Tune.Spotify.Session</code></a> behaviour with <a href="Tune.Spotify.Session.HTTP.html"><code class="inline">Tune.Spotify.Session.HTTP</code></a>
 as its main runtime implementation.</p><p>Each worker is responsible to proxy interaction with the Spotify API, 
 periodically poll for data changes, and broadcast corresponding events.</p><p>When a user opens a browser session, <a href="TuneWeb.ExplorerLive.html"><code class="inline">TuneWeb.ExplorerLive</code></a> either starts or
 simply reuses a worker named with the same session ID.</p><p>Each worker monitors its subscribers, so that it can shutdown when a user
