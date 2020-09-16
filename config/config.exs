@@ -16,7 +16,8 @@ config :tune, TuneWeb.Endpoint,
   live_view: [signing_salt: "Op07Dt9x"]
 
 config :tune,
-  spotify: Tune.Spotify.Session.HTTP
+  spotify: Tune.Spotify.Session.HTTP,
+  spotify_client: Tune.Spotify.Client.HTTP
 
 # Configures Elixir's Logger
 config :logger, :console,

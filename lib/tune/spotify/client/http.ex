@@ -1,4 +1,4 @@
-defmodule Tune.Spotify.HttpApi do
+defmodule Tune.Spotify.Client.HTTP do
   @moduledoc false
   alias Tune.Spotify.Schema.{
     Album,
