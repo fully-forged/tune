@@ -8,9 +8,9 @@ defmodule Tune.Auth do
 
   @spec load_user(http_session()) :: {:authenticated, Session.id(), User.t()} | {:error, term()}
   def load_user(%{"spotify_id" => session_id, "spotify_credentials" => credentials}) do
-    case spotify().setup(session_id, credentials) do
+    case spotify_session().setup(session_id, credentials) do
       :ok ->
-        {:authenticated, session_id, spotify().get_profile(session_id)}
+        {:authenticated, session_id, spotify_session().get_profile(session_id)}
 
       error ->
         error
@@ -19,5 +19,5 @@ defmodule Tune.Auth do
 
   def load_user(_session), do: {:error, :not_authenticated}
 
-  defp spotify, do: Application.get_env(:tune, :spotify)
+  defp spotify_session, do: Application.get_env(:tune, :spotify_session)
 end

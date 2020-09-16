@@ -1,11 +1,11 @@
-defmodule Tune.Spotify.Session.Worker do
+defmodule Tune.Spotify.Session.HTTP do
   @moduledoc """
-  This module implements a worker mapped to a user session, wrapping
+  This module implements a state machine mapped to a user session, wrapping
   interaction with the Spotify API.
 
   ## General structure
 
-  The worker implements the `Tune.Spotify.Session` behaviour for its public API
+  The state machine implements the `Tune.Spotify.Session` behaviour for its public API
   and uses `GenStateMachine` to model its lifecycle.
 
   If you're not familiar with the `gen_statem` behaviour (which powers
@@ -63,7 +63,7 @@ defmodule Tune.Spotify.Session.Worker do
   ## Data lifecycle
 
   Aside from acting as an API client for on-demand operations (e.g. search,
-  play/pause, etc.), the worker also regularly polls the Spotify API for
+  play/pause, etc.), the state machine also regularly polls the Spotify API for
   current player status and connected devices. Both pieces of information are
   kept in the state machine data for fast read and corresponding events are
   broadcasted when they change.
@@ -83,17 +83,17 @@ defmodule Tune.Spotify.Session.Worker do
   Multiple processes are able to subscribe to the events keyed by the session id.
 
   Broadcast and subscribe are implemented via `Phoenix.PubSub`, however the
-  Worker maintains its own set of monitored processes subscribed to the session
+  state machine maintains its own set of monitored processes subscribed to the session
   id.
 
   Subscription tracking is necessary to implementing automatic termination of a
-  worker after a period of inactivity. Without that, the worker would
+  state machine after a period of inactivity. Without that, the state machine would
   indefinitely poll the Spotify API, even when no client is interested into the
   topic, until a crash error or a node reboot.
 
-  Every 30 seconds, the worker fires a named `timeout` event, checking if
+  Every 30 seconds, the state machine fires a named `timeout` event, checking if
   there's any subscribed process. If not, it terminates. Subscribed processes
-  are monitored, so when they terminate, their exit is handled by the worker,
+  are monitored, so when they terminate, their exit is handled by the state machine,
   which removes them from its data.
 
   Usage of named `timeout` events is necessary, as they're guaranteed to fire
@@ -103,7 +103,7 @@ defmodule Tune.Spotify.Session.Worker do
   use GenStateMachine, restart: :transient
   @behaviour Tune.Spotify.Session
 
-  alias Tune.Spotify.{HttpApi, Session, SessionRegistry}
+  alias Tune.Spotify.{Session, SessionRegistry}
   alias Phoenix.PubSub
 
   defstruct session_id: nil,
@@ -272,7 +272,7 @@ defmodule Tune.Spotify.Session.Worker do
   @impl true
   def handle_event(event_type, :authenticate, :not_authenticated, data)
       when event_type in [:internal, :state_timeout] do
-    case HttpApi.get_profile(data.credentials.token) do
+    case spotify_client().get_profile(data.credentials.token) do
       {:ok, user} ->
         data = %{data | user: user}
 
@@ -303,7 +303,7 @@ defmodule Tune.Spotify.Session.Worker do
 
   def handle_event(event_type, :refresh, :expired, data)
       when event_type in [:internal, :state_timeout] do
-    case HttpApi.get_token(data.credentials.refresh_token) do
+    case spotify_client().get_token(data.credentials.refresh_token) do
       {:ok, new_credentials} ->
         data = %{data | credentials: new_credentials}
         action = {:next_event, :internal, :authenticate}
@@ -320,7 +320,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   def handle_event(:internal, :get_now_playing, :authenticated, data) do
-    case HttpApi.now_playing(data.credentials.token) do
+    case spotify_client().now_playing(data.credentials.token) do
       {:error, :invalid_token} ->
         {:stop, :invalid_token}
 
@@ -345,7 +345,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   def handle_event(:internal, :get_devices, :authenticated, data) do
-    case HttpApi.get_devices(data.credentials.token) do
+    case spotify_client().get_devices(data.credentials.token) do
       {:error, :invalid_token} ->
         {:stop, :invalid_token}
 
@@ -370,8 +370,8 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   def handle_event(:state_timeout, :refresh_data, :authenticated, data) do
-    with {:ok, now_playing} <- HttpApi.now_playing(data.credentials.token),
-         {:ok, devices} <- HttpApi.get_devices(data.credentials.token) do
+    with {:ok, now_playing} <- spotify_client().now_playing(data.credentials.token),
+         {:ok, devices} <- spotify_client().get_devices(data.credentials.token) do
       if data.now_playing !== now_playing do
         broadcast(data.session_id, {:now_playing, now_playing})
       end
@@ -446,7 +446,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, :toggle_play, %{now_playing: %{status: :playing}} = data) do
-    case HttpApi.pause(data.credentials.token) do
+    case spotify_client().pause(data.credentials.token) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -461,7 +461,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, :toggle_play, %{now_playing: %{status: :paused}} = data) do
-    case HttpApi.play(data.credentials.token) do
+    case spotify_client().play(data.credentials.token) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -481,7 +481,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:search, q, opts}, data) do
-    case HttpApi.search(data.credentials.token, q, opts) do
+    case spotify_client().search(data.credentials.token, q, opts) do
       {:ok, results} ->
         action = {:reply, from, {:ok, results}}
         {:keep_state_and_data, action}
@@ -492,7 +492,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:top_tracks, opts}, data) do
-    case HttpApi.top_tracks(data.credentials.token, opts) do
+    case spotify_client().top_tracks(data.credentials.token, opts) do
       {:ok, tracks} ->
         action = {:reply, from, {:ok, tracks}}
         {:keep_state_and_data, action}
@@ -503,7 +503,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:play, uri}, data) do
-    case HttpApi.play(data.credentials.token, uri) do
+    case spotify_client().play(data.credentials.token, uri) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -518,7 +518,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:play, uri, context_uri}, data) do
-    case HttpApi.play(data.credentials.token, uri, context_uri) do
+    case spotify_client().play(data.credentials.token, uri, context_uri) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -533,7 +533,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, :next, data) do
-    case HttpApi.next(data.credentials.token) do
+    case spotify_client().next(data.credentials.token) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -548,7 +548,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, :prev, data) do
-    case HttpApi.prev(data.credentials.token) do
+    case spotify_client().prev(data.credentials.token) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -563,7 +563,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:seek, position_ms}, data) do
-    case HttpApi.seek(data.credentials.token, position_ms) do
+    case spotify_client().seek(data.credentials.token, position_ms) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -578,7 +578,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_album, album_id}, data) do
-    case HttpApi.get_album(data.credentials.token, album_id) do
+    case spotify_client().get_album(data.credentials.token, album_id) do
       {:ok, album} ->
         actions = [
           {:reply, from, {:ok, album}}
@@ -592,7 +592,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_artist, artist_id}, data) do
-    case HttpApi.get_artist(data.credentials.token, artist_id) do
+    case spotify_client().get_artist(data.credentials.token, artist_id) do
       {:ok, artist} ->
         actions = [
           {:reply, from, {:ok, artist}}
@@ -606,7 +606,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_artist_albums, artist_id, opts}, data) do
-    case HttpApi.get_artist_albums(data.credentials.token, artist_id, opts) do
+    case spotify_client().get_artist_albums(data.credentials.token, artist_id, opts) do
       {:ok, albums} ->
         actions = [
           {:reply, from, {:ok, albums}}
@@ -620,7 +620,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_show, show_id}, data) do
-    case HttpApi.get_show(data.credentials.token, show_id) do
+    case spotify_client().get_show(data.credentials.token, show_id) do
       {:ok, show} ->
         actions = [
           {:reply, from, {:ok, show}}
@@ -634,7 +634,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_episodes, show_id}, data) do
-    case HttpApi.get_episodes(data.credentials.token, show_id) do
+    case spotify_client().get_episodes(data.credentials.token, show_id) do
       {:ok, episodes} ->
         actions = [
           {:reply, from, {:ok, episodes}}
@@ -648,7 +648,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_playlist, playlist_id}, data) do
-    case HttpApi.get_playlist(data.credentials.token, playlist_id) do
+    case spotify_client().get_playlist(data.credentials.token, playlist_id) do
       {:ok, playlist} ->
         actions = [
           {:reply, from, {:ok, playlist}}
@@ -672,7 +672,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:get_recommendations_from_artists, artist_ids}, data) do
-    case HttpApi.get_recommendations_from_artists(data.credentials.token, artist_ids) do
+    case spotify_client().get_recommendations_from_artists(data.credentials.token, artist_ids) do
       {:ok, tracks} ->
         actions = [
           {:reply, from, {:ok, tracks}}
@@ -694,7 +694,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:transfer_playback, device_id}, data) do
-    case HttpApi.transfer_playback(data.credentials.token, device_id) do
+    case spotify_client().transfer_playback(data.credentials.token, device_id) do
       :ok ->
         actions = [
           {:reply, from, :ok}
@@ -708,7 +708,7 @@ defmodule Tune.Spotify.Session.Worker do
   end
 
   defp handle_authenticated_call(from, {:set_volume, volume_percent}, data) do
-    case HttpApi.set_volume(data.credentials.token, volume_percent) do
+    case spotify_client().set_volume(data.credentials.token, volume_percent) do
       :ok ->
         actions = [
           {:next_event, :internal, :get_now_playing},
@@ -741,4 +741,6 @@ defmodule Tune.Spotify.Session.Worker do
   defp via(token) do
     {:via, Registry, {SessionRegistry, token}}
   end
+
+  defp spotify_client, do: Application.get_env(:tune, :spotify_client)
 end
