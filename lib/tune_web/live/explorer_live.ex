@@ -10,7 +10,7 @@ defmodule TuneWeb.ExplorerLive do
   ## Mounting and authentication
 
   When mounting, `TuneWeb.ExplorerLive` uses the session data to start a
-  Spotify session. Note that we use a private function `spotify/0` to load the appropriate
+  Spotify session. Note that we use a private function `spotify_session/0` to load the appropriate
   behaviour (for example in tests we use a mock).
 
   `mount/3` always loads user profile data, player status and currently available
@@ -74,20 +74,20 @@ defmodule TuneWeb.ExplorerLive do
   def mount(_params, session, socket) do
     case Tune.Auth.load_user(session) do
       {:authenticated, session_id, user} ->
-        now_playing = spotify().now_playing(session_id)
-        devices = spotify().get_devices(session_id)
+        now_playing = spotify_session().now_playing(session_id)
+        devices = spotify_session().get_devices(session_id)
 
         socket =
-          case spotify().get_player_token(session_id) do
+          case spotify_session().get_player_token(session_id) do
             {:ok, token} ->
               assign(socket, :player_token, token)
 
             error ->
-              handle_spotify_result(error, socket)
+              handle_spotify_session_result(error, socket)
           end
 
         if connected?(socket) do
-          spotify().subscribe(session_id)
+          spotify_session().subscribe(session_id)
         end
 
         {:ok,
@@ -122,7 +122,7 @@ defmodule TuneWeb.ExplorerLive do
 
   @impl true
   def handle_event("toggle_play_pause", %{"key" => " "}, socket) do
-    spotify().toggle_play(socket.assigns.session_id)
+    spotify_session().toggle_play(socket.assigns.session_id)
 
     {:noreply, socket}
   end
@@ -133,38 +133,38 @@ defmodule TuneWeb.ExplorerLive do
 
   def handle_event("toggle_play_pause", _params, socket) do
     socket.assigns.session_id
-    |> spotify().toggle_play()
-    |> handle_spotify_result(socket)
+    |> spotify_session().toggle_play()
+    |> handle_spotify_session_result(socket)
   end
 
   def handle_event("play", %{"uri" => uri, "context-uri" => context_uri}, socket) do
     socket.assigns.session_id
-    |> spotify().play(uri, context_uri)
-    |> handle_spotify_result(socket)
+    |> spotify_session().play(uri, context_uri)
+    |> handle_spotify_session_result(socket)
   end
 
   def handle_event("play", %{"uri" => uri}, socket) do
     socket.assigns.session_id
-    |> spotify().play(uri)
-    |> handle_spotify_result(socket)
+    |> spotify_session().play(uri)
+    |> handle_spotify_session_result(socket)
   end
 
   def handle_event("next", _params, socket) do
     socket.assigns.session_id
-    |> spotify().next()
-    |> handle_spotify_result(socket)
+    |> spotify_session().next()
+    |> handle_spotify_session_result(socket)
   end
 
   def handle_event("prev", _params, socket) do
     socket.assigns.session_id
-    |> spotify().prev()
-    |> handle_spotify_result(socket)
+    |> spotify_session().prev()
+    |> handle_spotify_session_result(socket)
   end
 
   def handle_event("seek", %{"position_ms" => position_ms}, socket) do
     socket.assigns.session_id
-    |> spotify().seek(position_ms)
-    |> handle_spotify_result(socket)
+    |> spotify_session().seek(position_ms)
+    |> handle_spotify_session_result(socket)
   end
 
   def handle_event("search", params, socket) do
@@ -184,7 +184,7 @@ defmodule TuneWeb.ExplorerLive do
          )}
 
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
@@ -198,17 +198,17 @@ defmodule TuneWeb.ExplorerLive do
        )}
     else
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
   def handle_event("transfer_playback", %{"device" => device_id}, socket) do
-    case spotify().transfer_playback(socket.assigns.session_id, device_id) do
+    case spotify_session().transfer_playback(socket.assigns.session_id, device_id) do
       :ok ->
         {:noreply, socket}
 
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
@@ -239,7 +239,7 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   def handle_event("refresh_devices", _params, socket) do
-    :ok = spotify().refresh_devices(socket.assigns.session_id)
+    :ok = spotify_session().refresh_devices(socket.assigns.session_id)
     {:noreply, socket}
   end
 
@@ -268,7 +268,7 @@ defmodule TuneWeb.ExplorerLive do
     {:noreply, assign(socket, :devices, devices)}
   end
 
-  defp spotify, do: Application.get_env(:tune, :spotify)
+  defp spotify_session, do: Application.get_env(:tune, :spotify_session)
 
   defp handle_suggestions(_params, _url, socket) do
     socket = assign(socket, :page_title, gettext("Suggestions"))
@@ -292,7 +292,7 @@ defmodule TuneWeb.ExplorerLive do
         {:noreply, assign(socket, :suggestions_playlist, :not_present)}
 
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
@@ -319,12 +319,12 @@ defmodule TuneWeb.ExplorerLive do
 
       search_opts = [types: [type], limit: limit, offset: offset]
 
-      case spotify().search(socket.assigns.session_id, q, search_opts) do
+      case spotify_session().search(socket.assigns.session_id, q, search_opts) do
         {:ok, results} ->
           {:noreply, assign(socket, :results, Map.get(results, type))}
 
         error ->
-          handle_spotify_result(error, socket)
+          handle_spotify_session_result(error, socket)
       end
     else
       {:noreply,
@@ -350,9 +350,9 @@ defmodule TuneWeb.ExplorerLive do
 
     socket = assign(socket, :page_title, gettext("Artist details"))
 
-    with {:ok, artist} <- spotify().get_artist(socket.assigns.session_id, artist_id),
+    with {:ok, artist} <- spotify_session().get_artist(socket.assigns.session_id, artist_id),
          {:ok, %{albums: albums, total: total_albums}} <-
-           spotify().get_artist_albums(socket.assigns.session_id, artist_id,
+           spotify_session().get_artist_albums(socket.assigns.session_id, artist_id,
              limit: limit,
              offset: offset
            ) do
@@ -367,14 +367,14 @@ defmodule TuneWeb.ExplorerLive do
        })}
     else
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
   defp handle_album_details(%{"album_id" => album_id}, _url, socket) do
     socket = assign(socket, :page_title, gettext("Album details"))
 
-    case spotify().get_album(socket.assigns.session_id, album_id) do
+    case spotify_session().get_album(socket.assigns.session_id, album_id) do
       {:ok, album} ->
         {:noreply,
          assign(socket,
@@ -383,15 +383,15 @@ defmodule TuneWeb.ExplorerLive do
          )}
 
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
   defp handle_show_details(%{"show_id" => show_id}, _url, socket) do
     socket = assign(socket, :page_title, gettext("Show details"))
 
-    with {:ok, show} <- spotify().get_show(socket.assigns.session_id, show_id),
-         {:ok, episodes} <- spotify().get_episodes(socket.assigns.session_id, show_id) do
+    with {:ok, show} <- spotify_session().get_show(socket.assigns.session_id, show_id),
+         {:ok, episodes} <- spotify_session().get_episodes(socket.assigns.session_id, show_id) do
       show = %{show | episodes: episodes}
 
       {:noreply,
@@ -401,7 +401,7 @@ defmodule TuneWeb.ExplorerLive do
        )}
     else
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
@@ -416,13 +416,13 @@ defmodule TuneWeb.ExplorerLive do
   defp parse_type("episode"), do: :episode
   defp parse_type("show"), do: :show
 
-  defp handle_spotify_result(:ok, socket), do: {:noreply, socket}
+  defp handle_spotify_session_result(:ok, socket), do: {:noreply, socket}
 
-  defp handle_spotify_result({:error, 404}, socket) do
+  defp handle_spotify_session_result({:error, 404}, socket) do
     {:noreply, put_flash(socket, :error, gettext("No available devices"))}
   end
 
-  defp handle_spotify_result({:error, reason}, socket) do
+  defp handle_spotify_session_result({:error, reason}, socket) do
     error_message = gettext("Spotify error: %{reason}", %{reason: inspect(reason)})
     {:noreply, put_flash(socket, :error, error_message)}
   end
@@ -430,13 +430,13 @@ defmodule TuneWeb.ExplorerLive do
   @suggestions_playlist_name "Release Radar"
   defp get_suggestions_playlist(session_id) do
     with {:ok, results} <-
-           spotify().search(session_id, @suggestions_playlist_name,
+           spotify_session().search(session_id, @suggestions_playlist_name,
              types: [:playlist],
              limit: 1
            ),
          simplified_playlist when is_struct(simplified_playlist) <-
            get_in(results, [:playlists, :items, Access.at(0)]) do
-      spotify().get_playlist(session_id, simplified_playlist.id)
+      spotify_session().get_playlist(session_id, simplified_playlist.id)
     else
       nil -> {:error, :not_present}
       error -> error
@@ -447,7 +447,7 @@ defmodule TuneWeb.ExplorerLive do
 
   defp get_top_tracks(session_id, time_range) do
     opts = [limit: @top_tracks_limit, time_range: time_range]
-    spotify().top_tracks(session_id, opts)
+    spotify_session().top_tracks(session_id, opts)
   end
 
   defp get_recommendations(session_id, tracks) do
@@ -457,16 +457,16 @@ defmodule TuneWeb.ExplorerLive do
       |> Enum.shuffle()
       |> Enum.take(5)
 
-    spotify().get_recommendations_from_artists(session_id, artist_ids)
+    spotify_session().get_recommendations_from_artists(session_id, artist_ids)
   end
 
   defp set_volume(volume_percent, socket) do
-    case spotify().set_volume(socket.assigns.session_id, volume_percent) do
+    case spotify_session().set_volume(socket.assigns.session_id, volume_percent) do
       :ok ->
         {:noreply, socket}
 
       error ->
-        handle_spotify_result(error, socket)
+        handle_spotify_session_result(error, socket)
     end
   end
 
