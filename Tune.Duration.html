@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.22.5">
+    <meta name="generator" content="ExDoc v0.22.6">
     <meta name="project" content="tune v0.1.0">
     <title>Tune.Duration — tune v0.1.0</title>
-    <link rel="stylesheet" href="dist/elixir-2a693ebc6ceec33a2045.css" />
+    <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
     <script src="dist/sidebar_items-505e276d74.js"></script>
       <script src="docs_config.js"></script>
-    <script async src="dist/app-ba01209f31ac9a9695fd.js"></script>
+    <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -156,14 +156,14 @@ Functions          </h1>
   <section class="docstring">
 
 <p>Given a duration in milliseconds, returns a string with the duration formatted
-as hours, minutes and seconds, omitting units where appropriate.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="8011456637-1">(</span><span class="mi">5</span><span class="p" data-group-id="8011456637-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="8011456637-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="8011456637-2">)</span><span class="w">
+as hours, minutes and seconds, omitting units where appropriate.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="2940562218-1">(</span><span class="mi">5</span><span class="p" data-group-id="2940562218-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="2940562218-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2940562218-2">)</span><span class="w">
 </span><span class="s">&quot;0:05&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="8011456637-3">(</span><span class="mi">61</span><span class="p" data-group-id="8011456637-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="8011456637-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="8011456637-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="2940562218-3">(</span><span class="mi">61</span><span class="p" data-group-id="2940562218-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="2940562218-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2940562218-4">)</span><span class="w">
 </span><span class="s">&quot;1:01&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">hours</span><span class="p" data-group-id="8011456637-5">(</span><span class="mi">2</span><span class="p" data-group-id="8011456637-5">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="8011456637-6">(</span><span class="n">milliseconds</span><span class="p" data-group-id="8011456637-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">hours</span><span class="p" data-group-id="2940562218-5">(</span><span class="mi">2</span><span class="p" data-group-id="2940562218-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="2940562218-6">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2940562218-6">)</span><span class="w">
 </span><span class="s">&quot;2:00:00&quot;</span></code></pre>  </section>
 </section>
 <section class="detail" id="human/1">
@@ -182,12 +182,12 @@ as hours, minutes and seconds, omitting units where appropriate.</p><pre><code c
       </div>
 
 <p>Given a duration in milliseconds, returns a localized, human-readable
-representation of that duration.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="3639751997-1">(</span><span class="mi">100</span><span class="p" data-group-id="3639751997-1">)</span><span class="w">
-</span><span class="s">&quot;Less than a minute&quot;</span></code></pre><p>Durations are rounded to the minute:</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="2080816301-1">(</span><span class="mi">61</span><span class="p" data-group-id="2080816301-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="2080816301-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2080816301-2">)</span><span class="w">
+representation of that duration.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="0301838814-1">(</span><span class="mi">100</span><span class="p" data-group-id="0301838814-1">)</span><span class="w">
+</span><span class="s">&quot;Less than a minute&quot;</span></code></pre><p>Durations are rounded to the minute:</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="4803497977-1">(</span><span class="mi">61</span><span class="p" data-group-id="4803497977-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="4803497977-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4803497977-2">)</span><span class="w">
 </span><span class="s">&quot;1 minute&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="2080816301-3">(</span><span class="mi">95</span><span class="p" data-group-id="2080816301-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="2080816301-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2080816301-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="4803497977-3">(</span><span class="mi">95</span><span class="p" data-group-id="4803497977-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="4803497977-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4803497977-4">)</span><span class="w">
 </span><span class="s">&quot;2 minutes&quot;</span></code></pre>  </section>
 </section>
           </div>
@@ -196,7 +196,7 @@ representation of that duration.</p><pre><code class="nohighlight makeup elixir"
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.22.5) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.22.6) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">
