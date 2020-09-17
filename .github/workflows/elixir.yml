@@ -6,19 +6,18 @@ on:
   pull_request:
     branches: [ main ]
 
+defaults:
+  runs-on: ubuntu-latest
+
+  strategy:
+    matrix:
+      elixir: ['1.10.4']
+      otp: ['23.0.3']
+
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        elixir: ['1.10.4']
-        otp: ['23.0.3']
-
+  lint:
     steps:
     - uses: actions/checkout@v2
-      with:
-        persist-credentials: false
 
     - name: Setup elixir
       uses: actions/setup-elixir@v1
@@ -46,11 +45,6 @@ jobs:
     - name: Check Credo
       run: mix credo list --format oneline
 
-    - name: Run Tests
-      run: mix test
-      env:
-        CI: "true"
-
     - name: Retrieve PLT Cache
       uses: actions/cache@v1
       id: plt-cache
@@ -66,6 +60,75 @@ jobs:
 
     - name: Run dialyzer
       run: mix dialyzer --no-check
+
+  test:
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup elixir
+      uses: actions/setup-elixir@v1
+      with:
+        elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
+        otp-version: ${{ matrix.otp }}
+
+    - name: Retrieve Mix Dependencies Cache
+      uses: actions/cache@v1
+      id: mix-cache
+      with:
+        path: deps
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+
+    - name: Install Dependencies
+      if: steps.mix-cache.outputs.cache-hit != 'true'
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+
+    - name: Run Tests
+      run: mix test
+      env:
+        CI: "true"
+
+    - name: Build docs
+      if: github.ref == 'refs/heads/main'
+      run: mix docs
+
+    - name: Deploy docs
+      if: success() && github.ref == 'refs/heads/main'
+      uses: JamesIves/github-pages-deploy-action@3.5.9
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: doc
+
+  docs:
+    needs: [lint, test]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: Setup elixir
+      uses: actions/setup-elixir@v1
+      with:
+        elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
+        otp-version: ${{ matrix.otp }}
+
+    - name: Retrieve Mix Dependencies Cache
+      uses: actions/cache@v1
+      id: mix-cache
+      with:
+        path: deps
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+
+    - name: Install Dependencies
+      if: steps.mix-cache.outputs.cache-hit != 'true'
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
 
     - name: Build docs
       if: github.ref == 'refs/heads/main'
