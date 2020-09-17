@@ -16,58 +16,61 @@ defmodule Tune.Spotify.Session.HTTPTest do
   setup [:set_mox_global, :verify_on_exit!]
 
   describe "initialization and authentication" do
-    property "it fetches the user profile" do
-      check all(
-              credentials <- Generators.credentials(),
-              session_id <- Generators.session_id(),
-              profile <- Generators.profile()
-            ) do
-        expect_profile(credentials.token, profile)
-        expect_nothing_playing(credentials.token)
-        expect_no_devices(credentials.token)
-
-        assert {:ok, _session_pid} =
-                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
-
-        assert profile == HTTP.get_profile(session_id)
-      end
+    setup do
+      [
+        credentials: pick(Generators.credentials()),
+        session_id: pick(Generators.session_id()),
+        profile: pick(Generators.profile())
+      ]
     end
 
-    property "it fetches the now playing information" do
-      check all(
-              credentials <- Generators.credentials(),
-              session_id <- Generators.session_id(),
-              profile <- Generators.profile(),
-              item <- Generators.item(),
-              device <- Generators.device()
-            ) do
-        expect_profile(credentials.token, profile)
-        expect_devices(credentials.token, [device])
-        player = expect_item_playing(credentials.token, item, device)
+    test "it fetches the user profile", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      expect_profile(credentials.token, profile)
+      expect_nothing_playing(credentials.token)
+      expect_no_devices(credentials.token)
 
-        assert {:ok, session_pid} =
-                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-        assert player == HTTP.now_playing(session_id)
-      end
+      assert profile == HTTP.get_profile(session_id)
     end
 
-    property "it fetches devices information" do
-      check all(
-              credentials <- Generators.credentials(),
-              session_id <- Generators.session_id(),
-              profile <- Generators.profile(),
-              device <- Generators.device()
-            ) do
-        expect_profile(credentials.token, profile)
-        expect_devices(credentials.token, [device])
-        expect_nothing_playing(credentials.token)
+    test "it fetches the now playing information", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      item = pick(Generators.item())
+      device = pick(Generators.device())
 
-        assert {:ok, session_pid} =
-                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      player = expect_item_playing(credentials.token, item, device)
 
-        assert [device] == HTTP.get_devices(session_id)
-      end
+      assert {:ok, session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      assert player == HTTP.now_playing(session_id)
+    end
+
+    test "it fetches devices information", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      device = pick(Generators.device())
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_nothing_playing(credentials.token)
+
+      assert {:ok, session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      assert [device] == HTTP.get_devices(session_id)
     end
   end
 
