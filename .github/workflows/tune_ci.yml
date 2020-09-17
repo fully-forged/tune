@@ -96,18 +96,6 @@ jobs:
       env:
         CI: "true"
 
-    - name: Build docs
-      if: github.ref == 'refs/heads/main'
-      run: mix docs
-
-    - name: Deploy docs
-      if: success() && github.ref == 'refs/heads/main'
-      uses: JamesIves/github-pages-deploy-action@3.5.9
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: doc
-
   docs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
