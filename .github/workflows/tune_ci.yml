@@ -110,6 +110,7 @@ jobs:
 
   docs:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     strategy:
       matrix:
@@ -144,11 +145,10 @@ jobs:
         mix deps.get
 
     - name: Build docs
-      if: github.ref == 'refs/heads/main'
       run: mix docs
 
     - name: Deploy docs
-      if: success() && github.ref == 'refs/heads/main'
+      if: ${{ success() }}
       uses: JamesIves/github-pages-deploy-action@3.5.9
       with:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
