@@ -6,16 +6,15 @@ on:
   pull_request:
     branches: [ main ]
 
-defaults:
-  runs-on: ubuntu-latest
-
-  strategy:
-    matrix:
-      elixir: ['1.10.4']
-      otp: ['23.0.3']
-
 jobs:
   lint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        elixir: ['1.10.4']
+        otp: ['23.0.3']
+
     steps:
     - uses: actions/checkout@v2
 
@@ -62,6 +61,13 @@ jobs:
       run: mix dialyzer --no-check
 
   test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        elixir: ['1.10.4']
+        otp: ['23.0.3']
+
     steps:
     - uses: actions/checkout@v2
 
@@ -103,6 +109,13 @@ jobs:
         FOLDER: doc
 
   docs:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        elixir: ['1.10.4']
+        otp: ['23.0.3']
+
     needs: [lint, test]
 
     steps:
