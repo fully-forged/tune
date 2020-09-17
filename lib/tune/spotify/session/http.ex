@@ -761,8 +761,8 @@ defmodule Tune.Spotify.Session.HTTP do
     end
   end
 
-  defp via(token) do
-    {:via, Registry, {SessionRegistry, token}}
+  defp via(session_id) do
+    {:via, Registry, {SessionRegistry, session_id}}
   end
 
   defp spotify_client, do: Application.get_env(:tune, :spotify_client)
