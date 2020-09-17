@@ -8,7 +8,7 @@
     <meta name="project" content="tune v0.1.0">
     <title>Tune.Spotify.Client — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
-    <script src="dist/sidebar_items-505e276d74.js"></script>
+    <script src="dist/sidebar_items-fc649dceef.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
   </head>
@@ -199,12 +199,12 @@ tune      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:play/2">play(token, arg2)</a>
+    <a href="#c:play/2">play(token, item_uri)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:play/3">play(token, arg2, arg3)</a>
+    <a href="#c:play/3">play(token, item_uri, context_uri)</a>
   </div>
 </div>
 <div class="summary-row">
@@ -418,7 +418,7 @@ Callbacks          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_album(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+          <pre>get_album(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Album.html#t:id/0">Tune.Spotify.Schema.Album.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -436,7 +436,7 @@ Callbacks          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_artist(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+          <pre>get_artist(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Artist.html#t:t/0">Tune.Spotify.Schema.Artist.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -454,7 +454,11 @@ Callbacks          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_artist_albums(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="#t:pagination_options/0">pagination_options</a>()) ::
+          <pre>get_artist_albums(
+  <a href="#t:token/0">token</a>(),
+  <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>(),
+  <a href="#t:pagination_options/0">pagination_options</a>()
+) ::
   {:ok, %{albums: [<a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()], total: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()}}
   | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
@@ -491,7 +495,7 @@ Callbacks          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_episodes(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+          <pre>get_episodes(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
   {:ok, [<a href="Tune.Spotify.Schema.Episode.html#t:t/0">Tune.Spotify.Schema.Episode.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -509,7 +513,8 @@ Callbacks          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_playlist(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>get_playlist(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Playlist.html#t:id/0">Tune.Spotify.Schema.Playlist.id</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
@@ -561,7 +566,7 @@ Callbacks          </h1>
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_show(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+          <pre>get_show(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Show.html#t:t/0">Tune.Spotify.Schema.Show.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -658,13 +663,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">play(token, arg2)</h1>
+    <h1 class="signature">play(token, item_uri)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>play(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>play(<a href="#t:token/0">token</a>(), item_uri :: <a href="Tune.Spotify.Schema.html#t:uri/0">Tune.Spotify.Schema.uri</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
@@ -675,13 +680,17 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">play(token, arg2, arg3)</h1>
+    <h1 class="signature">play(token, item_uri, context_uri)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>play(<a href="#t:token/0">token</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>play(
+  <a href="#t:token/0">token</a>(),
+  item_uri :: <a href="Tune.Spotify.Schema.html#t:uri/0">Tune.Spotify.Schema.uri</a>(),
+  context_uri :: <a href="Tune.Spotify.Schema.html#t:uri/0">Tune.Spotify.Schema.uri</a>()
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
