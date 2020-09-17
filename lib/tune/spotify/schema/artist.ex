@@ -12,7 +12,6 @@ defmodule Tune.Spotify.Schema.Artist do
   defstruct [:id, :uri, :name, :albums, :total_albums, :thumbnails]
 
   @type id :: Schema.id()
-
   @type t :: %__MODULE__{
           id: id(),
           uri: Schema.uri(),

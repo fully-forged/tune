@@ -18,8 +18,9 @@ defmodule Tune.Spotify.Schema.Show do
   ]
   defstruct [:id, :uri, :name, :description, :episodes, :publisher, :thumbnails, :total_episodes]
 
+  @type id :: Schema.id()
   @type t :: %__MODULE__{
-          id: Schema.id(),
+          id: id(),
           uri: Schema.uri(),
           name: String.t(),
           description: String.t(),

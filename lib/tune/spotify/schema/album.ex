@@ -33,9 +33,10 @@ defmodule Tune.Spotify.Schema.Album do
     :tracks
   ]
 
+  @type id :: Schema.id()
   @type album_type :: String.t()
   @type t :: %__MODULE__{
-          id: Schema.id(),
+          id: id(),
           uri: Schema.uri(),
           name: String.t(),
           album_type: album_type(),
