@@ -1,6 +1,6 @@
 # Tune
 
-![CI Status](https://github.com/fully-forged/tune/workflows/Elixir%20CI/badge.svg)
+![CI Status](https://github.com/fully-forged/tune/workflows/Tune%20CI/badge.svg)
 
 - [Tune](#tune)
   * [About](#about)
