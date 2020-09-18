@@ -41,7 +41,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
       session_id = pick(Generators.session_id())
       profile = pick(Generators.profile())
 
-      expect_token_refresh(old_credentials, new_credentials)
+      expect_profile_with_token_refresh(old_credentials, new_credentials)
       expect_profile(new_credentials.token, profile)
       expect_nothing_playing(new_credentials.token)
       expect_no_devices(new_credentials.token)
@@ -128,18 +128,18 @@ defmodule Tune.Spotify.Session.HTTPTest do
     end
   end
 
-  defp expect_token_refresh(old_credentials, new_credentials) do
+  defp expect_profile(token, profile) do
+    Client.Mock
+    |> expect(:get_profile, 1, fn ^token -> {:ok, profile} end)
+  end
+
+  defp expect_profile_with_token_refresh(old_credentials, new_credentials) do
     old_token = old_credentials.token
     refresh_token = old_credentials.refresh_token
 
     Client.Mock
     |> expect(:get_profile, 1, fn ^old_token -> {:error, :expired_token} end)
     |> expect(:get_token, 1, fn ^refresh_token -> {:ok, new_credentials} end)
-  end
-
-  defp expect_profile(token, profile) do
-    Client.Mock
-    |> expect(:get_profile, 1, fn ^token -> {:ok, profile} end)
   end
 
   defp expect_profile_with_network_error(token) do
