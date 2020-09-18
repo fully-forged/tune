@@ -31,6 +31,10 @@ defmodule Tune.Generators do
   def searchable(:show), do: show()
 
   def item do
+    one_of([album(), artist(), episode(), show(), track()])
+  end
+
+  def playable_item do
     one_of([track(), episode()])
   end
 

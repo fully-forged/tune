@@ -36,7 +36,7 @@ defmodule TuneWeb.LoggedInTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
-              item <- Generators.item(),
+              item <- Generators.playable_item(),
               device <- Generators.device()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
@@ -58,8 +58,8 @@ defmodule TuneWeb.LoggedInTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
-              item <- Generators.item(),
-              second_item <- Generators.item(),
+              item <- Generators.playable_item(),
+              second_item <- Generators.playable_item(),
               device <- Generators.device()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
@@ -89,7 +89,7 @@ defmodule TuneWeb.LoggedInTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.premium_profile(),
-              item <- Generators.item(),
+              item <- Generators.playable_item(),
               device <- Generators.device(),
               volume_percent <- Generators.volume_percent()
             ) do
@@ -152,7 +152,7 @@ defmodule TuneWeb.LoggedInTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.free_profile(),
-              item <- Generators.item(),
+              item <- Generators.playable_item(),
               device <- Generators.device()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
