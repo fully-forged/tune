@@ -6,7 +6,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
   import Eventually
 
   alias Tune.{Generators, Spotify.Schema, Spotify.Session.HTTP, Spotify.Client}
-  alias Schema.Player
+  alias Schema.{Episode, Player, Track}
 
   @default_timeouts %{
     refresh: 10,
@@ -98,7 +98,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
       session_id: session_id,
       profile: profile
     } do
-      item = pick(Generators.item())
+      item = pick(Generators.playable_item())
       device = pick(Generators.device())
 
       expect_profile(credentials.token, profile)
@@ -125,6 +125,160 @@ defmodule Tune.Spotify.Session.HTTPTest do
                HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
       assert [device] == HTTP.get_devices(session_id)
+    end
+  end
+
+  describe "player functionality" do
+    setup do
+      [
+        credentials: pick(Generators.credentials()),
+        session_id: pick(Generators.session_id()),
+        profile: pick(Generators.profile())
+      ]
+    end
+
+    test "toggling play when paused", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      item = pick(Generators.playable_item())
+      device = pick(Generators.device())
+
+      # Start a session with an item paused
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_item_paused(credentials.token, item, device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Toggle play/pause
+
+      expect_play(credentials.token)
+      player = expect_item_playing(credentials.token, item, device)
+
+      assert :ok == HTTP.toggle_play(session_id)
+      assert_eventually player == HTTP.now_playing(session_id)
+    end
+
+    test "toggling play when playing", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      item = pick(Generators.playable_item())
+      device = pick(Generators.device())
+
+      # Start a session with an item paused
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_item_playing(credentials.token, item, device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Toggle play/pause
+      expect_pause(credentials.token)
+      player = expect_item_paused(credentials.token, item, device)
+
+      assert :ok == HTTP.toggle_play(session_id)
+      assert_eventually player == HTTP.now_playing(session_id)
+    end
+
+    test "play an item", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      old_item = pick(Generators.playable_item())
+      new_item = pick(Generators.playable_item())
+      device = pick(Generators.device())
+
+      # Start a session playing an item
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_item_playing(credentials.token, old_item, device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Play another item
+
+      expect_play(credentials.token, new_item.uri)
+      player = expect_item_playing(credentials.token, new_item, device)
+
+      assert :ok == HTTP.play(session_id, new_item.uri)
+      assert_eventually player == HTTP.now_playing(session_id)
+    end
+
+    test "play an item with context", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      old_item = pick(Generators.playable_item())
+      new_item = pick(Generators.playable_item())
+      device = pick(Generators.device())
+
+      # Start a session playing an item
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_item_playing(credentials.token, old_item, device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Play another item with context
+
+      context_uri =
+        case new_item do
+          %Episode{show: show} -> show.uri
+          %Track{album: album} -> album.uri
+        end
+
+      expect_play(credentials.token, new_item.uri, context_uri)
+      player = expect_item_playing(credentials.token, new_item, device)
+
+      assert :ok == HTTP.play(session_id, new_item.uri, context_uri)
+      assert_eventually player == HTTP.now_playing(session_id)
+    end
+
+    test "next/prev", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      item = pick(Generators.playable_item())
+      next_item = pick(Generators.playable_item())
+      device = pick(Generators.device())
+
+      # Start a session with an item playing
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_item_playing(credentials.token, item, device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Skip to next item
+
+      expect_next(credentials.token)
+      player = expect_item_playing(credentials.token, next_item, device)
+      assert :ok == HTTP.next(session_id)
+      assert_eventually player == HTTP.now_playing(session_id)
+
+      # Skip to prev item
+
+      expect_prev(credentials.token)
+      player = expect_item_playing(credentials.token, item, device)
+      assert :ok == HTTP.prev(session_id)
+      assert_eventually player == HTTP.now_playing(session_id)
     end
   end
 
@@ -174,5 +328,49 @@ defmodule Tune.Spotify.Session.HTTPTest do
     |> expect(:now_playing, 1, fn ^token -> {:ok, player} end)
 
     player
+  end
+
+  defp expect_item_paused(token, item, device) do
+    player = %Player{
+      status: :paused,
+      item: item,
+      progress_ms: item.duration_ms - 100,
+      device: device
+    }
+
+    Client.Mock
+    |> expect(:now_playing, 1, fn ^token -> {:ok, player} end)
+
+    player
+  end
+
+  defp expect_play(token) do
+    Client.Mock
+    |> expect(:play, 1, fn ^token -> :ok end)
+  end
+
+  defp expect_play(token, item_uri) do
+    Client.Mock
+    |> expect(:play, 1, fn ^token, ^item_uri -> :ok end)
+  end
+
+  defp expect_play(token, item_uri, context_uri) do
+    Client.Mock
+    |> expect(:play, 1, fn ^token, ^item_uri, ^context_uri -> :ok end)
+  end
+
+  defp expect_pause(token) do
+    Client.Mock
+    |> expect(:pause, 1, fn ^token -> :ok end)
+  end
+
+  defp expect_next(token) do
+    Client.Mock
+    |> expect(:next, 1, fn ^token -> :ok end)
+  end
+
+  defp expect_prev(token) do
+    Client.Mock
+    |> expect(:prev, 1, fn ^token -> :ok end)
   end
 end
