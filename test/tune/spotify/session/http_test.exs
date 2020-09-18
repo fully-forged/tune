@@ -9,9 +9,9 @@ defmodule Tune.Spotify.Session.HTTPTest do
   alias Schema.{Episode, Player, Track}
 
   @default_timeouts %{
-    refresh: 10,
-    retry: 10,
-    inactivity: 10
+    refresh: 100,
+    retry: 100,
+    inactivity: 100
   }
 
   setup [:set_mox_global, :verify_on_exit!]
