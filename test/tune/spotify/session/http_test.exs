@@ -3,6 +3,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
   use ExUnitProperties
 
   import Mox
+  import Eventually
 
   alias Tune.{Generators, Spotify.Schema, Spotify.Session.HTTP, Spotify.Client}
   alias Schema.Player
@@ -64,9 +65,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
       assert {:ok, session_pid} =
                HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      Process.sleep(@default_timeouts.retry)
-
-      assert profile == HTTP.get_profile(session_id)
+      assert_eventually profile == HTTP.get_profile(session_id)
     end
   end
 
