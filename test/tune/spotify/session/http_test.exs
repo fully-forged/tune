@@ -280,6 +280,53 @@ defmodule Tune.Spotify.Session.HTTPTest do
       assert :ok == HTTP.prev(session_id)
       assert_eventually player == HTTP.now_playing(session_id)
     end
+
+    test "set volume", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      item = pick(Generators.playable_item())
+      device = pick(Generators.device())
+
+      # Start a session with an item playing
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [device])
+      expect_item_playing(credentials.token, item, device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Set volume to a 100
+
+      expect_set_volume(credentials.token, 100)
+      assert :ok == HTTP.set_volume(session_id, 100)
+    end
+
+    test "transfer playback", %{
+      credentials: credentials,
+      session_id: session_id,
+      profile: profile
+    } do
+      item = pick(Generators.playable_item())
+      old_device = pick(Generators.device())
+      new_device = pick(Generators.device())
+
+      # Start a session with an item playing on the old device
+
+      expect_profile(credentials.token, profile)
+      expect_devices(credentials.token, [old_device, new_device])
+      expect_item_playing(credentials.token, item, old_device)
+
+      assert {:ok, _session_pid} =
+               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+      # Transfer playback to the new device
+
+      expect_transfer_playback(credentials.token, new_device.id)
+      assert :ok == HTTP.transfer_playback(session_id, new_device.id)
+    end
   end
 
   defp expect_profile(token, profile) do
@@ -372,5 +419,15 @@ defmodule Tune.Spotify.Session.HTTPTest do
   defp expect_prev(token) do
     Client.Mock
     |> expect(:prev, 1, fn ^token -> :ok end)
+  end
+
+  defp expect_set_volume(token, volume_percent) do
+    Client.Mock
+    |> expect(:set_volume, 1, fn ^token, ^volume_percent -> :ok end)
+  end
+
+  defp expect_transfer_playback(token, device_id) do
+    Client.Mock
+    |> expect(:transfer_playback, 1, fn ^token, ^device_id -> :ok end)
   end
 end
