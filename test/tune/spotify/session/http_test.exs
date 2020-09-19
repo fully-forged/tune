@@ -9,7 +9,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
   alias Schema.{Episode, Player, Track}
 
   @default_timeouts %{
-    refresh: 100,
+    refresh: 200,
     retry: 100,
     inactivity: 100
   }
@@ -18,314 +18,371 @@ defmodule Tune.Spotify.Session.HTTPTest do
 
   describe "failed authentication" do
     @tag capture_log: true
-    test "with an expired token, the process stops" do
-      credentials = pick(Generators.credentials())
-      session_id = pick(Generators.session_id())
+    property "with an expired token, the process stops" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              max_runs: 5
+            ) do
+        token = credentials.token
 
-      token = credentials.token
+        Client.Mock
+        |> expect(:get_profile, 1, fn ^token -> {:error, :invalid_token} end)
 
-      Client.Mock
-      |> expect(:get_profile, 1, fn ^token -> {:error, :invalid_token} end)
+        Process.flag(:trap_exit, true)
 
-      Process.flag(:trap_exit, true)
+        assert {:ok, session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
-
-      assert_receive {:EXIT, ^session_pid, :invalid_token}
+        assert_receive {:EXIT, ^session_pid, :invalid_token}
+      end
     end
 
-    test "with an expired token, the process refreshes the token and retries" do
-      old_credentials = pick(Generators.credentials())
-      new_credentials = pick(Generators.credentials())
-      session_id = pick(Generators.session_id())
-      profile = pick(Generators.profile())
+    property "with an expired token, the process refreshes the token and retries" do
+      check all(
+              old_credentials <- Generators.credentials(),
+              new_credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              max_runs: 5
+            ) do
+        expect_profile_with_token_refresh(old_credentials, new_credentials)
+        expect_profile(new_credentials.token, profile)
+        expect_nothing_playing(new_credentials.token)
+        expect_no_devices(new_credentials.token)
 
-      expect_profile_with_token_refresh(old_credentials, new_credentials)
-      expect_profile(new_credentials.token, profile)
-      expect_nothing_playing(new_credentials.token)
-      expect_no_devices(new_credentials.token)
+        assert {:ok, session_pid} =
+                 HTTP.start_link(session_id, old_credentials, timeouts: @default_timeouts)
 
-      assert {:ok, session_pid} =
-               HTTP.start_link(session_id, old_credentials, timeouts: @default_timeouts)
-
-      assert profile == HTTP.get_profile(session_id)
+        assert profile == HTTP.get_profile(session_id)
+      end
     end
 
-    test "with a transient network error, the process retries" do
-      credentials = pick(Generators.credentials())
-      session_id = pick(Generators.session_id())
-      profile = pick(Generators.profile())
+    property "with a transient network error, the process retries" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              max_runs: 5
+            ) do
+        expect_profile_with_network_error(credentials.token)
+        expect_profile(credentials.token, profile)
+        expect_nothing_playing(credentials.token)
+        expect_no_devices(credentials.token)
 
-      expect_profile_with_network_error(credentials.token)
-      expect_profile(credentials.token, profile)
-      expect_nothing_playing(credentials.token)
-      expect_no_devices(credentials.token)
+        assert {:ok, session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
-
-      assert_eventually profile == HTTP.get_profile(session_id)
+        assert_eventually profile == HTTP.get_profile(session_id)
+      end
     end
   end
 
   describe "successful authentication" do
-    setup do
-      [
-        credentials: pick(Generators.credentials()),
-        session_id: pick(Generators.session_id()),
-        profile: pick(Generators.profile())
-      ]
+    property "it fetches the user profile" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              max_runs: 5
+            ) do
+        expect_profile(credentials.token, profile)
+        expect_nothing_playing(credentials.token)
+        expect_no_devices(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        assert profile == HTTP.get_profile(session_id)
+      end
     end
 
-    test "it fetches the user profile", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      expect_profile(credentials.token, profile)
-      expect_nothing_playing(credentials.token)
-      expect_no_devices(credentials.token)
+    property "it fetches the now playing information" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              max_runs: 5
+            ) do
+        item = pick(Generators.playable_item())
+        device = pick(Generators.device())
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        player = expect_item_playing(credentials.token, item, device)
 
-      assert profile == HTTP.get_profile(session_id)
+        assert {:ok, session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        assert player == HTTP.now_playing(session_id)
+      end
     end
 
-    test "it fetches the now playing information", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "it fetches devices information" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              max_runs: 5
+            ) do
+        device = pick(Generators.device())
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_nothing_playing(credentials.token)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      player = expect_item_playing(credentials.token, item, device)
+        assert {:ok, session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
-
-      assert player == HTTP.now_playing(session_id)
-    end
-
-    test "it fetches devices information", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      device = pick(Generators.device())
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_nothing_playing(credentials.token)
-
-      assert {:ok, session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
-
-      assert [device] == HTTP.get_devices(session_id)
+        assert [device] == HTTP.get_devices(session_id)
+      end
     end
   end
 
   describe "player functionality" do
-    setup do
-      [
-        credentials: pick(Generators.credentials()),
-        session_id: pick(Generators.session_id()),
-        profile: pick(Generators.profile())
-      ]
+    property "toggling play when paused" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item paused
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_item_paused(credentials.token, item, device)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Toggle play/pause
+
+        expect_play(credentials.token)
+        player = expect_item_playing(credentials.token, item, device)
+
+        assert :ok == HTTP.toggle_play(session_id)
+        assert_eventually player == HTTP.now_playing(session_id)
+      end
     end
 
-    test "toggling play when paused", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "toggling play when playing" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item paused
 
-      # Start a session with an item paused
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_item_playing(credentials.token, item, device)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_item_paused(credentials.token, item, device)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        # Toggle play/pause
+        expect_pause(credentials.token)
+        player = expect_item_paused(credentials.token, item, device)
 
-      # Toggle play/pause
-
-      expect_play(credentials.token)
-      player = expect_item_playing(credentials.token, item, device)
-
-      assert :ok == HTTP.toggle_play(session_id)
-      assert_eventually player == HTTP.now_playing(session_id)
+        assert :ok == HTTP.toggle_play(session_id)
+        assert_eventually player == HTTP.now_playing(session_id)
+      end
     end
 
-    test "toggling play when playing", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "play an item" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              old_item <- Generators.playable_item(),
+              new_item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session playing an item
 
-      # Start a session with an item paused
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_item_playing(credentials.token, old_item, device)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_item_playing(credentials.token, item, device)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        # Play another item
 
-      # Toggle play/pause
-      expect_pause(credentials.token)
-      player = expect_item_paused(credentials.token, item, device)
+        expect_play(credentials.token, new_item.uri)
+        player = expect_item_playing(credentials.token, new_item, device)
 
-      assert :ok == HTTP.toggle_play(session_id)
-      assert_eventually player == HTTP.now_playing(session_id)
+        assert :ok == HTTP.play(session_id, new_item.uri)
+        assert_eventually player == HTTP.now_playing(session_id)
+      end
     end
 
-    test "play an item", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      old_item = pick(Generators.playable_item())
-      new_item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "play an item with context" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              old_item <- Generators.playable_item(),
+              new_item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session playing an item
 
-      # Start a session playing an item
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_item_playing(credentials.token, old_item, device)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_item_playing(credentials.token, old_item, device)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        # Play another item with context
 
-      # Play another item
+        context_uri =
+          case new_item do
+            %Episode{show: show} -> show.uri
+            %Track{album: album} -> album.uri
+          end
 
-      expect_play(credentials.token, new_item.uri)
-      player = expect_item_playing(credentials.token, new_item, device)
+        expect_play(credentials.token, new_item.uri, context_uri)
+        player = expect_item_playing(credentials.token, new_item, device)
 
-      assert :ok == HTTP.play(session_id, new_item.uri)
-      assert_eventually player == HTTP.now_playing(session_id)
+        assert :ok == HTTP.play(session_id, new_item.uri, context_uri)
+        assert_eventually player == HTTP.now_playing(session_id)
+      end
     end
 
-    test "play an item with context", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      old_item = pick(Generators.playable_item())
-      new_item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "next/prev" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              next_item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item playing
 
-      # Start a session playing an item
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_item_playing(credentials.token, item, device)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_item_playing(credentials.token, old_item, device)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        # Skip to next item
 
-      # Play another item with context
+        expect_next(credentials.token)
+        player = expect_item_playing(credentials.token, next_item, device)
+        assert :ok == HTTP.next(session_id)
+        assert_eventually player == HTTP.now_playing(session_id)
 
-      context_uri =
-        case new_item do
-          %Episode{show: show} -> show.uri
-          %Track{album: album} -> album.uri
-        end
+        # Skip to prev item
 
-      expect_play(credentials.token, new_item.uri, context_uri)
-      player = expect_item_playing(credentials.token, new_item, device)
-
-      assert :ok == HTTP.play(session_id, new_item.uri, context_uri)
-      assert_eventually player == HTTP.now_playing(session_id)
+        expect_prev(credentials.token)
+        player = expect_item_playing(credentials.token, item, device)
+        assert :ok == HTTP.prev(session_id)
+        assert_eventually player == HTTP.now_playing(session_id)
+      end
     end
 
-    test "next/prev", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      item = pick(Generators.playable_item())
-      next_item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "set volume" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item playing
 
-      # Start a session with an item playing
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        expect_item_playing(credentials.token, item, device)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_item_playing(credentials.token, item, device)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        # Set volume to a 100
 
-      # Skip to next item
-
-      expect_next(credentials.token)
-      player = expect_item_playing(credentials.token, next_item, device)
-      assert :ok == HTTP.next(session_id)
-      assert_eventually player == HTTP.now_playing(session_id)
-
-      # Skip to prev item
-
-      expect_prev(credentials.token)
-      player = expect_item_playing(credentials.token, item, device)
-      assert :ok == HTTP.prev(session_id)
-      assert_eventually player == HTTP.now_playing(session_id)
+        expect_set_volume(credentials.token, 100)
+        assert :ok == HTTP.set_volume(session_id, 100)
+      end
     end
 
-    test "set volume", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      item = pick(Generators.playable_item())
-      device = pick(Generators.device())
+    property "transfer playback" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              old_device <- Generators.device(),
+              new_device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item playing on the old device
 
-      # Start a session with an item playing
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [old_device, new_device])
+        expect_item_playing(credentials.token, item, old_device)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [device])
-      expect_item_playing(credentials.token, item, device)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        # Transfer playback to the new device
 
-      # Set volume to a 100
-
-      expect_set_volume(credentials.token, 100)
-      assert :ok == HTTP.set_volume(session_id, 100)
+        expect_transfer_playback(credentials.token, new_device.id)
+        assert :ok == HTTP.transfer_playback(session_id, new_device.id)
+      end
     end
 
-    test "transfer playback", %{
-      credentials: credentials,
-      session_id: session_id,
-      profile: profile
-    } do
-      item = pick(Generators.playable_item())
-      old_device = pick(Generators.device())
-      new_device = pick(Generators.device())
+    property "get and refresh devices" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              old_device <- Generators.device(),
+              new_device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item playing on the old device
 
-      # Start a session with an item playing on the old device
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [old_device])
+        expect_nothing_playing(credentials.token)
 
-      expect_profile(credentials.token, profile)
-      expect_devices(credentials.token, [old_device, new_device])
-      expect_item_playing(credentials.token, item, old_device)
+        timeouts =
+          @default_timeouts
+          |> Map.put(:inactivity, 300)
 
-      assert {:ok, _session_pid} =
-               HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+        assert {:ok, _session_pid} = HTTP.start_link(session_id, credentials, timeouts: timeouts)
 
-      # Transfer playback to the new device
+        # Get initial devices
 
-      expect_transfer_playback(credentials.token, new_device.id)
-      assert :ok == HTTP.transfer_playback(session_id, new_device.id)
+        assert [old_device] == HTTP.get_devices(session_id)
+
+        # Change available devices and force a refresh
+
+        expect_devices(credentials.token, [new_device])
+
+        assert :ok == HTTP.refresh_devices(session_id)
+        assert [new_device] == HTTP.get_devices(session_id)
+
+        # Auto refresh cycle returns different devices
+
+        expect_devices(credentials.token, [old_device])
+        expect_nothing_playing(credentials.token)
+
+        assert_eventually [old_device] == HTTP.get_devices(session_id)
+      end
     end
   end
 
