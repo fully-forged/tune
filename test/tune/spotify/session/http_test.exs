@@ -425,8 +425,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
               search_type <- Generators.search_type(),
               query <- Generators.search_query(),
               items <-
-                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 24),
-              max_runs: 5
+                uniq_list_of(Generators.searchable(search_type), min_length: 0, max_length: 24)
             ) do
         # Start a session
 
