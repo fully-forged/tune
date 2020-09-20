@@ -359,11 +359,8 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_devices(credentials.token, [old_device])
         expect_nothing_playing(credentials.token)
 
-        timeouts =
-          @default_timeouts
-          |> Map.put(:inactivity, 300)
-
-        assert {:ok, _session_pid} = HTTP.start_link(session_id, credentials, timeouts: timeouts)
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
         # Get initial devices
 
@@ -375,13 +372,44 @@ defmodule Tune.Spotify.Session.HTTPTest do
 
         assert :ok == HTTP.refresh_devices(session_id)
         assert [new_device] == HTTP.get_devices(session_id)
+      end
+    end
 
-        # Auto refresh cycle returns different devices
+    property "auto-refresh of data" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              old_device <- Generators.device(),
+              new_device <- Generators.device(),
+              old_item <- Generators.playable_item(),
+              new_item <- Generators.playable_item(),
+              max_runs: 5
+            ) do
+        # Start a session with the old item playing on the old device
 
+        expect_profile(credentials.token, profile)
         expect_devices(credentials.token, [old_device])
-        expect_nothing_playing(credentials.token)
+        old_player = expect_item_playing(credentials.token, old_item, old_device)
 
-        assert_eventually [old_device] == HTTP.get_devices(session_id)
+        timeouts =
+          @default_timeouts
+          |> Map.put(:inactivity, 300)
+
+        assert {:ok, _session_pid} = HTTP.start_link(session_id, credentials, timeouts: timeouts)
+
+        # Get initial devices
+
+        assert [old_device] == HTTP.get_devices(session_id)
+        assert old_player == HTTP.now_playing(session_id)
+
+        # Auto refresh cycle returns different playing item and devices
+
+        expect_devices(credentials.token, [new_device])
+        new_player = expect_item_playing(credentials.token, new_item, new_device)
+
+        assert_eventually [new_device] == HTTP.get_devices(session_id)
+        assert_eventually new_player == HTTP.now_playing(session_id)
       end
     end
   end
