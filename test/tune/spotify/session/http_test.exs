@@ -452,6 +452,86 @@ defmodule Tune.Spotify.Session.HTTPTest do
     end
   end
 
+  describe "get item" do
+    property "it returns an artist" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              artist <- Generators.artist(),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Get artist
+
+        expect_get_artist(credentials.token, artist)
+
+        assert {:ok, artist} == HTTP.get_artist(session_id, artist.id)
+      end
+    end
+
+    property "it returns an album" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              album <- Generators.album(),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Get artist
+
+        expect_get_album(credentials.token, album)
+
+        assert {:ok, album} == HTTP.get_album(session_id, album.id)
+      end
+    end
+
+    property "it returns an artist's albums" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              artist_id <- Generators.id(),
+              albums <- uniq_list_of(Generators.album(), min_length: 1, max_length: 24),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Get an artist's albums
+
+        opts = [limit: 10, offset: 0]
+
+        expect_get_artist_albums(credentials.token, artist_id, albums, opts)
+
+        assert {:ok, albums} == HTTP.get_artist_albums(session_id, artist_id, opts)
+      end
+    end
+  end
+
   defp expect_profile(token, profile) do
     Client.Mock
     |> expect(:get_profile, 1, fn ^token -> {:ok, profile} end)
@@ -574,5 +654,24 @@ defmodule Tune.Spotify.Session.HTTPTest do
     end)
 
     search_results
+  end
+
+  defp expect_get_artist(token, artist) do
+    artist_id = artist.id
+
+    Client.Mock
+    |> expect(:get_artist, fn ^token, ^artist_id -> {:ok, artist} end)
+  end
+
+  defp expect_get_album(token, album) do
+    album_id = album.id
+
+    Client.Mock
+    |> expect(:get_album, fn ^token, ^album_id -> {:ok, album} end)
+  end
+
+  defp expect_get_artist_albums(token, artist_id, albums, opts) do
+    Client.Mock
+    |> expect(:get_artist_albums, fn ^token, ^artist_id, ^opts -> {:ok, albums} end)
   end
 end
