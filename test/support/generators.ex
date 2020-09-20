@@ -40,6 +40,10 @@ defmodule Tune.Generators do
     one_of([track(), episode()])
   end
 
+  def item_with_details do
+    one_of([album(), artist(), show()])
+  end
+
   def playlist do
     bind(name(), &playlist/1)
   end
