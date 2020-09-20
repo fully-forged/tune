@@ -414,6 +414,42 @@ defmodule Tune.Spotify.Session.HTTPTest do
     end
   end
 
+  describe "search" do
+    property "it returns categorized results" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              search_type <- Generators.search_type(),
+              query <- Generators.search_query(),
+              items <-
+                uniq_list_of(Generators.searchable(search_type), min_length: 1, max_length: 24),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Perform search
+
+        search_results =
+          expect_search_results(credentials.token, query, items,
+            search_type: search_type,
+            limit: 24,
+            offset: 0
+          )
+
+        assert {:ok, search_results} ==
+                 HTTP.search(session_id, query, types: [search_type], limit: 24, offset: 0)
+      end
+    end
+  end
+
   defp expect_profile(token, profile) do
     Client.Mock
     |> expect(:get_profile, 1, fn ^token -> {:ok, profile} end)
@@ -514,5 +550,27 @@ defmodule Tune.Spotify.Session.HTTPTest do
   defp expect_transfer_playback(token, device_id) do
     Client.Mock
     |> expect(:transfer_playback, 1, fn ^token, ^device_id -> :ok end)
+  end
+
+  defp expect_search_results(token, query, items, opts) do
+    search_type = Keyword.fetch!(opts, :search_type)
+    limit = Keyword.get(opts, :limit, 24)
+    offset = Keyword.get(opts, :offset, 0)
+
+    search_results = %{
+      search_type => %{
+        items: items,
+        total: Enum.count(items)
+      }
+    }
+
+    Client.Mock
+    |> expect(:search, 1, fn ^token,
+                             ^query,
+                             [types: [^search_type], limit: ^limit, offset: ^offset] ->
+      {:ok, search_results}
+    end)
+
+    search_results
   end
 end
