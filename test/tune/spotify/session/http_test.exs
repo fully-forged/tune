@@ -314,6 +314,8 @@ defmodule Tune.Spotify.Session.HTTPTest do
         # Set volume to a 100
 
         expect_set_volume(credentials.token, 100)
+        expect_item_playing(credentials.token, item, device)
+
         assert :ok == HTTP.set_volume(session_id, 100)
       end
     end
