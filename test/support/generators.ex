@@ -30,8 +30,18 @@ defmodule Tune.Generators do
   def searchable(:episode), do: episode()
   def searchable(:show), do: show()
 
+  def search_query, do: string(:printable, max_length: 128)
+
   def item do
+    one_of([album(), artist(), episode(), show(), track()])
+  end
+
+  def playable_item do
     one_of([track(), episode()])
+  end
+
+  def item_with_details do
+    one_of([album(), artist(), show()])
   end
 
   def playlist do

@@ -57,7 +57,8 @@ defmodule Tune.MixProject do
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
       {:mox, "~> 0.5", only: :test},
-      {:stream_data, "~> 0.5.0", only: :test}
+      {:stream_data, "~> 0.5.0", only: :test},
+      {:eventually, "~> 1.1", only: :test}
     ]
   end
 
