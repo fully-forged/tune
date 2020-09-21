@@ -6,7 +6,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
   import Eventually
 
   alias Tune.{Generators, Spotify.Schema, Spotify.Session.HTTP, Spotify.Client}
-  alias Schema.{Album, Artist, Episode, Player, Show, Track}
+  alias Schema.{Album, Artist, Episode, Player, Playlist, Show, Track}
 
   @default_timeouts %{
     refresh: 200,
@@ -457,7 +457,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
-              item <- Generators.item_with_details()
+              item <- one_of([Generators.item_with_details(), Generators.playlist()])
             ) do
         # Start a session
 
@@ -478,6 +478,10 @@ defmodule Tune.Spotify.Session.HTTPTest do
           %Artist{id: id} ->
             expect_get_artist(credentials.token, item)
             assert {:ok, item} == HTTP.get_artist(session_id, id)
+
+          %Playlist{id: id} ->
+            expect_get_playlist(credentials.token, item)
+            assert {:ok, item} == HTTP.get_playlist(session_id, id)
 
           %Show{id: id} ->
             expect_get_show(credentials.token, item)
@@ -658,6 +662,13 @@ defmodule Tune.Spotify.Session.HTTPTest do
 
     Client.Mock
     |> expect(:get_show, fn ^token, ^show_id -> {:ok, show} end)
+  end
+
+  defp expect_get_playlist(token, playlist) do
+    playlist_id = playlist.id
+
+    Client.Mock
+    |> expect(:get_playlist, fn ^token, ^playlist_id -> {:ok, playlist} end)
   end
 
   defp expect_get_artist_albums(token, artist_id, albums, opts) do
