@@ -615,6 +615,33 @@ defmodule Tune.Spotify.Session.HTTPTest do
                  HTTP.get_recommendations_from_artists(session_id, artist_ids)
       end
     end
+
+    property "it returns top tracks" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              top_tracks <-
+                uniq_list_of(Generators.track(), min_length: 1, max_length: 24),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Get top tracks
+        top_tracks_options = [time_range: "short_term", limit: 24, offset: 0]
+
+        expect_top_tracks(credentials.token, top_tracks_options, top_tracks)
+
+        assert {:ok, top_tracks} == HTTP.top_tracks(session_id, top_tracks_options)
+      end
+    end
   end
 
   defp expect_profile(token, profile) do
@@ -789,5 +816,10 @@ defmodule Tune.Spotify.Session.HTTPTest do
     |> expect(:get_recommendations_from_artists, fn ^token, ^artist_ids ->
       {:ok, recommended_tracks}
     end)
+  end
+
+  defp expect_top_tracks(token, top_tracks_options, top_tracks) do
+    Client.Mock
+    |> expect(:top_tracks, fn ^token, ^top_tracks_options -> {:ok, top_tracks} end)
   end
 end
