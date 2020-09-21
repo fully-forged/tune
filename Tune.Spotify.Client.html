@@ -129,17 +129,17 @@ tune      </a>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_album/2">get_album(token, arg2)</a>
+    <a href="#c:get_album/2">get_album(token, album_id)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_artist/2">get_artist(token, arg2)</a>
+    <a href="#c:get_artist/2">get_artist(token, artist_id)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_artist_albums/3">get_artist_albums(token, arg2, pagination_options)</a>
+    <a href="#c:get_artist_albums/3">get_artist_albums(token, artist_id, pagination_options)</a>
   </div>
 </div>
 <div class="summary-row">
@@ -149,12 +149,12 @@ tune      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_episodes/2">get_episodes(token, arg2)</a>
+    <a href="#c:get_episodes/2">get_episodes(token, show_id)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_playlist/2">get_playlist(token, arg2)</a>
+    <a href="#c:get_playlist/2">get_playlist(token, playlist_id)</a>
   </div>
 </div>
 <div class="summary-row">
@@ -164,12 +164,12 @@ tune      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_recommendations_from_artists/2">get_recommendations_from_artists(token, list)</a>
+    <a href="#c:get_recommendations_from_artists/2">get_recommendations_from_artists(token, artist_ids)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_show/2">get_show(token, arg2)</a>
+    <a href="#c:get_show/2">get_show(token, show_id)</a>
   </div>
 </div>
 <div class="summary-row">
@@ -219,12 +219,12 @@ tune      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:seek/2">seek(token, arg2)</a>
+    <a href="#c:seek/2">seek(token, position_ms)</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:set_volume/2">set_volume(token, arg2)</a>
+    <a href="#c:set_volume/2">set_volume(token, volume_percent)</a>
   </div>
 </div>
 <div class="summary-row">
@@ -234,7 +234,7 @@ tune      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:transfer_playback/2">transfer_playback(token, arg2)</a>
+    <a href="#c:transfer_playback/2">transfer_playback(token, device_id)</a>
   </div>
 </div>
   </div>
@@ -412,13 +412,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_album(token, arg2)</h1>
+    <h1 class="signature">get_album(token, album_id)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_album(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Album.html#t:id/0">Tune.Spotify.Schema.Album.id</a>()) ::
+          <pre>get_album(<a href="#t:token/0">token</a>(), album_id :: <a href="Tune.Spotify.Schema.Album.html#t:id/0">Tune.Spotify.Schema.Album.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -430,13 +430,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_artist(token, arg2)</h1>
+    <h1 class="signature">get_artist(token, artist_id)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_artist(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()) ::
+          <pre>get_artist(<a href="#t:token/0">token</a>(), artist_id :: <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Artist.html#t:t/0">Tune.Spotify.Schema.Artist.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -448,7 +448,7 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_artist_albums(token, arg2, pagination_options)</h1>
+    <h1 class="signature">get_artist_albums(token, artist_id, pagination_options)</h1>
   </div>
 
   <section class="docstring">
@@ -456,7 +456,7 @@ Callbacks          </h1>
       <div class="specs">
           <pre>get_artist_albums(
   <a href="#t:token/0">token</a>(),
-  <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>(),
+  artist_id :: <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>(),
   <a href="#t:pagination_options/0">pagination_options</a>()
 ) ::
   {:ok, %{albums: [<a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()], total: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()}}
@@ -489,13 +489,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_episodes(token, arg2)</h1>
+    <h1 class="signature">get_episodes(token, show_id)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_episodes(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
+          <pre>get_episodes(<a href="#t:token/0">token</a>(), show_id :: <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
   {:ok, [<a href="Tune.Spotify.Schema.Episode.html#t:t/0">Tune.Spotify.Schema.Episode.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -507,13 +507,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_playlist(token, arg2)</h1>
+    <h1 class="signature">get_playlist(token, playlist_id)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_playlist(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Playlist.html#t:id/0">Tune.Spotify.Schema.Playlist.id</a>()) ::
+          <pre>get_playlist(<a href="#t:token/0">token</a>(), playlist_id :: <a href="Tune.Spotify.Schema.Playlist.html#t:id/0">Tune.Spotify.Schema.Playlist.id</a>()) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -542,14 +542,16 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_recommendations_from_artists(token, list)</h1>
+    <h1 class="signature">get_recommendations_from_artists(token, artist_ids)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_recommendations_from_artists(<a href="#t:token/0">token</a>(), [<a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()]) ::
-  {:ok, [<a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>get_recommendations_from_artists(
+  <a href="#t:token/0">token</a>(),
+  artist_ids :: [<a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()]
+) :: {:ok, [<a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
@@ -560,13 +562,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_show(token, arg2)</h1>
+    <h1 class="signature">get_show(token, show_id)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>get_show(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
+          <pre>get_show(<a href="#t:token/0">token</a>(), show_id :: <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Show.html#t:t/0">Tune.Spotify.Schema.Show.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
@@ -736,13 +738,14 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">seek(token, arg2)</h1>
+    <h1 class="signature">seek(token, position_ms)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>seek(<a href="#t:token/0">token</a>(), <a href="Tune.Duration.html#t:milliseconds/0">Tune.Duration.milliseconds</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>seek(<a href="#t:token/0">token</a>(), position_ms :: <a href="Tune.Duration.html#t:milliseconds/0">Tune.Duration.milliseconds</a>()) ::
+  :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
@@ -753,14 +756,16 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">set_volume(token, arg2)</h1>
+    <h1 class="signature">set_volume(token, volume_percent)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>set_volume(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Device.html#t:volume_percent/0">Tune.Spotify.Schema.Device.volume_percent</a>()) ::
-  :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>set_volume(
+  <a href="#t:token/0">token</a>(),
+  volume_percent :: <a href="Tune.Spotify.Schema.Device.html#t:volume_percent/0">Tune.Spotify.Schema.Device.volume_percent</a>()
+) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
@@ -789,13 +794,13 @@ Callbacks          </h1>
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">transfer_playback(token, arg2)</h1>
+    <h1 class="signature">transfer_playback(token, device_id)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>transfer_playback(<a href="#t:token/0">token</a>(), <a href="Tune.Spotify.Schema.Device.html#t:id/0">Tune.Spotify.Schema.Device.id</a>()) ::
+          <pre>transfer_playback(<a href="#t:token/0">token</a>(), device_id :: <a href="Tune.Spotify.Schema.Device.html#t:id/0">Tune.Spotify.Schema.Device.id</a>()) ::
   :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
