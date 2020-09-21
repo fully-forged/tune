@@ -16,7 +16,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
 
   setup [:set_mox_global, :verify_on_exit!]
 
-  describe "failed authentication" do
+  describe "auth/profile" do
     @tag capture_log: true
     property "with an expired token, the process stops" do
       check all(
@@ -76,9 +76,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         assert_eventually profile == HTTP.get_profile(session_id)
       end
     end
-  end
 
-  describe "successful authentication" do
     property "it fetches the user profile" do
       check all(
               credentials <- Generators.credentials(),
@@ -96,17 +94,36 @@ defmodule Tune.Spotify.Session.HTTPTest do
         assert profile == HTTP.get_profile(session_id)
       end
     end
+  end
 
-    property "it fetches the now playing information" do
+  describe "player" do
+    property "it returns the player token" do
       check all(
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
               max_runs: 5
             ) do
-        item = pick(Generators.playable_item())
-        device = pick(Generators.device())
+        expect_profile(credentials.token, profile)
+        expect_nothing_playing(credentials.token)
+        expect_no_devices(credentials.token)
 
+        assert {:ok, session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        assert {:ok, credentials.token} == HTTP.get_player_token(session_id)
+      end
+    end
+
+    property "it fetches the now playing information" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
         expect_profile(credentials.token, profile)
         expect_devices(credentials.token, [device])
         player = expect_item_playing(credentials.token, item, device)
@@ -123,9 +140,9 @@ defmodule Tune.Spotify.Session.HTTPTest do
               credentials <- Generators.credentials(),
               session_id <- Generators.session_id(),
               profile <- Generators.profile(),
+              device <- Generators.device(),
               max_runs: 5
             ) do
-        device = pick(Generators.device())
         expect_profile(credentials.token, profile)
         expect_devices(credentials.token, [device])
         expect_nothing_playing(credentials.token)
@@ -136,9 +153,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         assert [device] == HTTP.get_devices(session_id)
       end
     end
-  end
 
-  describe "player functionality" do
     property "toggling play when paused" do
       check all(
               credentials <- Generators.credentials(),
@@ -317,6 +332,35 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_item_playing(credentials.token, item, device)
 
         assert :ok == HTTP.set_volume(session_id, 100)
+      end
+    end
+
+    property "seek" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              item <- Generators.playable_item(),
+              device <- Generators.device(),
+              max_runs: 5
+            ) do
+        # Start a session with an item playing
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [device])
+        player = expect_item_playing(credentials.token, item, device)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Seek a position in the song
+
+        new_position_ms = max(player.progress_ms + 100, player.item.duration_ms - 100)
+
+        expect_seek(credentials.token, new_position_ms)
+        expect_item_playing(credentials.token, item, device)
+
+        assert :ok == HTTP.seek(session_id, new_position_ms)
       end
     end
 
@@ -614,6 +658,11 @@ defmodule Tune.Spotify.Session.HTTPTest do
   defp expect_set_volume(token, volume_percent) do
     Client.Mock
     |> expect(:set_volume, 1, fn ^token, ^volume_percent -> :ok end)
+  end
+
+  defp expect_seek(token, position_ms) do
+    Client.Mock
+    |> expect(:seek, 1, fn ^token, ^position_ms -> :ok end)
   end
 
   defp expect_transfer_playback(token, device_id) do
