@@ -495,7 +495,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
     end
   end
 
-  describe "get item" do
+  describe "content" do
     property "it returns an item" do
       check all(
               credentials <- Generators.credentials(),
@@ -559,6 +559,32 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_get_artist_albums(credentials.token, artist_id, albums, opts)
 
         assert {:ok, albums} == HTTP.get_artist_albums(session_id, artist_id, opts)
+      end
+    end
+
+    property "it returns a show's episodes" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              show_id <- Generators.id(),
+              episodes <- uniq_list_of(Generators.episode(), min_length: 1, max_length: 24),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Get a show's episodes
+
+        expect_get_episodes(credentials.token, show_id, episodes)
+
+        assert {:ok, episodes} == HTTP.get_episodes(session_id, show_id)
       end
     end
   end
@@ -723,5 +749,10 @@ defmodule Tune.Spotify.Session.HTTPTest do
   defp expect_get_artist_albums(token, artist_id, albums, opts) do
     Client.Mock
     |> expect(:get_artist_albums, fn ^token, ^artist_id, ^opts -> {:ok, albums} end)
+  end
+
+  defp expect_get_episodes(token, show_id, episodes) do
+    Client.Mock
+    |> expect(:get_episodes, fn ^token, ^show_id -> {:ok, episodes} end)
   end
 end
