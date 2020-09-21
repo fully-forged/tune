@@ -57,20 +57,21 @@ defmodule Tune.Spotify.Client do
   @callback play(token(), item_uri :: Schema.uri(), context_uri :: Schema.uri()) ::
               :ok | {:error, term()}
   @callback prev(token()) :: :ok | {:error, term()}
-  @callback seek(token(), Duration.milliseconds()) :: :ok | {:error, term()}
-  @callback set_volume(token(), Device.volume_percent()) :: :ok | {:error, term()}
-  @callback transfer_playback(token(), Device.id()) :: :ok | {:error, term()}
+  @callback seek(token(), position_ms :: Duration.milliseconds()) :: :ok | {:error, term()}
+  @callback set_volume(token(), volume_percent :: Device.volume_percent()) ::
+              :ok | {:error, term()}
+  @callback transfer_playback(token(), device_id :: Device.id()) :: :ok | {:error, term()}
 
   ## CONTENT
-  @callback get_album(token(), Album.id()) :: {:ok, Album.t()} | {:error, term()}
-  @callback get_artist(token(), Artist.id()) :: {:ok, Artist.t()} | {:error, term()}
-  @callback get_artist_albums(token(), Artist.id(), pagination_options()) ::
+  @callback get_album(token(), album_id :: Album.id()) :: {:ok, Album.t()} | {:error, term()}
+  @callback get_artist(token(), artist_id :: Artist.id()) :: {:ok, Artist.t()} | {:error, term()}
+  @callback get_artist_albums(token(), artist_id :: Artist.id(), pagination_options()) ::
               {:ok, %{albums: [Album.t()], total: pos_integer()}} | {:error, term()}
-  @callback get_episodes(token(), Show.id()) :: {:ok, [Episode.t()]} | {:error, term()}
-  @callback get_playlist(token(), Playlist.id()) :: {:ok, map()} | {:error, term()}
-  @callback get_recommendations_from_artists(token(), [Artist.id()]) ::
+  @callback get_episodes(token(), show_id :: Show.id()) :: {:ok, [Episode.t()]} | {:error, term()}
+  @callback get_playlist(token(), playlist_id :: Playlist.id()) :: {:ok, map()} | {:error, term()}
+  @callback get_recommendations_from_artists(token(), artist_ids :: [Artist.id()]) ::
               {:ok, [Track.t()]} | {:error, term()}
-  @callback get_show(token(), Show.id()) :: {:ok, Show.t()} | {:error, term()}
+  @callback get_show(token(), show_id :: Show.id()) :: {:ok, Show.t()} | {:error, term()}
   @callback search(token(), q(), search_options()) :: {:ok, search_results()} | {:error, term()}
   @callback top_tracks(token(), top_tracks_options()) :: {:ok, [Track.t()]} | {:error, term()}
 end
