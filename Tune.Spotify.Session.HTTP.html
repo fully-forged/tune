@@ -8,7 +8,7 @@
     <meta name="project" content="tune v0.1.0">
     <title>Tune.Spotify.Session.HTTP — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
-    <script src="dist/sidebar_items-fc649dceef.js"></script>
+    <script src="dist/sidebar_items-88abceb2ac.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
   </head>
@@ -147,6 +147,21 @@ irrespectively of state changes.</p>        </section>
             </a>
             Summary
           </h1>
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:start_opts/0">start_opts()</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:timeouts/0">timeouts()</a>
+  </div>
+</div>
+  </div>
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -169,12 +184,56 @@ irrespectively of state changes.</p>        </section>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#start_link/2">start_link(session_id, credentials)</a>
+    <a href="#start_link/3">start_link(session_id, credentials, start_opts)</a>
   </div>
 </div>
   </div>
         </section>
 
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types          </h1>
+          <div class="types-list">
+<section class="detail" id="t:start_opts/0">
+  <div class="detail-header">
+    <a href="#t:start_opts/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">start_opts()</h1>
+  </div>
+
+  <section class="docstring">
+      <h2>Specs</h2>
+      <div class="specs">
+          <pre>start_opts() :: [{:timeouts, <a href="#t:timeouts/0">timeouts</a>()}]</pre>
+      </div>
+
+  </section>
+</section>
+<section class="detail" id="t:timeouts/0">
+  <div class="detail-header">
+    <a href="#t:timeouts/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">timeouts()</h1>
+  </div>
+
+  <section class="docstring">
+      <h2>Specs</h2>
+      <div class="specs">
+          <pre>timeouts() :: %{refresh: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">timeout</a>(), retry: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">timeout</a>(), inactivity: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">timeout</a>()}</pre>
+      </div>
+
+  </section>
+</section>
+          </div>
+        </section>
         <section id="functions" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#functions">
@@ -223,24 +282,30 @@ Functions          </h1>
       <div class="specs">
           <pre>start_link({<a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(), <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>()}) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>start_link(
+  {<a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(), <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>(), <a href="#t:start_opts/0">start_opts</a>()}
+) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
 </section>
-<section class="detail" id="start_link/2">
+<section class="detail" id="start_link/3">
   <div class="detail-header">
-    <a href="#start_link/2" class="detail-link" title="Link to this function">
+    <a href="#start_link/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">start_link(session_id, credentials)</h1>
+    <h1 class="signature">start_link(session_id, credentials, start_opts)</h1>
   </div>
 
   <section class="docstring">
       <h2>Specs</h2>
       <div class="specs">
-          <pre>start_link(<a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(), <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>()) ::
-  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>start_link(
+  <a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(),
+  <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>(),
+  <a href="#t:start_opts/0">start_opts</a>()
+) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
