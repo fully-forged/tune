@@ -111,7 +111,12 @@ defmodule Tune.Spotify.Session.HTTPTest do
         assert {:ok, session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
-        assert {:ok, credentials.token} == HTTP.get_player_token(session_id)
+        assert :ok == HTTP.subscribe(session_id)
+
+        player_token = credentials.token
+
+        assert {:ok, player_token} == HTTP.get_player_token(session_id)
+        assert_receive {:player_token, ^player_token}
       end
     end
 
@@ -131,7 +136,10 @@ defmodule Tune.Spotify.Session.HTTPTest do
         assert {:ok, session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
+        assert :ok == HTTP.subscribe(session_id)
+
         assert player == HTTP.now_playing(session_id)
+        assert_receive {:now_playing, ^player}
       end
     end
 
@@ -150,7 +158,10 @@ defmodule Tune.Spotify.Session.HTTPTest do
         assert {:ok, session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
+        assert :ok == HTTP.subscribe(session_id)
+
         assert [device] == HTTP.get_devices(session_id)
+        assert_receive {:devices, [^device]}
       end
     end
 
