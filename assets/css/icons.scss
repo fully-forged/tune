@@ -23,3 +23,13 @@
     fill: black;
   }
 }
+
+.lyrics {
+  svg {
+    fill: #2c3e50;
+  }
+
+  &:hover svg {
+    fill: #ff6633;
+  }
+}

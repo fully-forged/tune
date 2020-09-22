@@ -25,4 +25,20 @@ defmodule TuneWeb.TrackView do
     q = [search_query: artist.name <> " " <> track.name]
     "https://www.youtube.com/results?" <> URI.encode_query(q)
   end
+
+  @spec musixmatch_link(Track.t(), Artist.t()) :: String.t()
+  def musixmatch_link(track, artist) do
+    Path.join([
+      "https://www.musixmatch.com/lyrics",
+      parameterize(artist.name),
+      parameterize(track.name)
+    ])
+  end
+
+  @unsafe_characters ~w(< > # % { } | \ ^ ~ [ ] ` ' ’ ")
+  defp parameterize(s) do
+    s
+    |> String.replace(@unsafe_characters, "-")
+    |> Slug.slugify(lowercase: false, separator: ?-)
+  end
 end
