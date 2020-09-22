@@ -11,6 +11,9 @@
         <%= link to: youtube_link(track, @artist), class: "youtube", target: "_blank" do %>
           <%= render "icon_youtube.html", [] %>
         <% end %>
+        <%= link to: musixmatch_link(track, @artist), class: "lyrics", target: "_blank" do %>
+          <%= render "icon_lyrics.html", [] %>
+        <% end %>
       </li>
     <% else %>
       <li data-test-id="<%= track.id %>">
@@ -22,6 +25,9 @@
         <% end %>
         <%= link to: youtube_link(track, @artist), class: "youtube", target: "_blank" do %>
           <%= render "icon_youtube.html", [] %>
+        <% end %>
+        <%= link to: musixmatch_link(track, @artist), class: "lyrics", target: "_blank" do %>
+          <%= render "icon_lyrics.html", [] %>
         <% end %>
       </li>
     <% end %>
