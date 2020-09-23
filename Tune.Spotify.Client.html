@@ -8,7 +8,7 @@
     <meta name="project" content="tune v0.1.0">
     <title>Tune.Spotify.Client — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
-    <script src="dist/sidebar_items-88abceb2ac.js"></script>
+    <script src="dist/sidebar_items-42a03ecf5f.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
   </head>
@@ -100,6 +100,11 @@ tune      </a>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:q/0">q()</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:recently_played_tracks_options/0">recently_played_tracks_options()</a>
   </div>
 </div>
 <div class="summary-row">
@@ -214,6 +219,11 @@ tune      </a>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#c:recently_played_tracks/2">recently_played_tracks(token, recently_played_tracks_options)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#c:search/3">search(token, q, search_options)</a>
   </div>
 </div>
@@ -313,6 +323,27 @@ Types          </h1>
       <h2>Specs</h2>
       <div class="specs">
           <pre>q() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+      </div>
+
+  </section>
+</section>
+<section class="detail" id="t:recently_played_tracks_options/0">
+  <div class="detail-header">
+    <a href="#t:recently_played_tracks_options/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">recently_played_tracks_options()</h1>
+  </div>
+
+  <section class="docstring">
+      <h2>Specs</h2>
+      <div class="specs">
+          <pre>recently_played_tracks_options() :: [
+  limit: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>(),
+  after: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>(),
+  after: <a href="https://hexdocs.pm/elixir/DateTime.html#t:t/0">DateTime.t</a>()
+]</pre>
       </div>
 
   </section>
@@ -710,6 +741,24 @@ Callbacks          </h1>
       <h2>Specs</h2>
       <div class="specs">
           <pre>prev(<a href="#t:token/0">token</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+      </div>
+
+  </section>
+</section>
+<section class="detail" id="c:recently_played_tracks/2">
+  <div class="detail-header">
+    <a href="#c:recently_played_tracks/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">recently_played_tracks(token, recently_played_tracks_options)</h1>
+  </div>
+
+  <section class="docstring">
+      <h2>Specs</h2>
+      <div class="specs">
+          <pre>recently_played_tracks(<a href="#t:token/0">token</a>(), <a href="#t:recently_played_tracks_options/0">recently_played_tracks_options</a>()) ::
+  {:ok, [<a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
       </div>
 
   </section>
