@@ -45,6 +45,11 @@
     font-weight: bold;
   }
 
+  svg {
+    height: 3rem;
+    width: 3rem;
+  }
+
   .device {
     font-size: 3rem;
     display: flex;
@@ -53,11 +58,6 @@
 
     .notice {
       font-size: 1.4rem;
-    }
-
-    svg {
-      height: 3rem;
-      width: 3rem;
     }
 
     form {
@@ -80,13 +80,24 @@
   }
 
   .controls {
-    .button-group {
-      margin-bottom: 1rem;
-    }
-
     a {
       font-size: 1.2em;
     }
+  }
+
+  .volume {
+    margin-left: 1rem;
+
+    .volume-up-button,
+    .volume-down-button {
+      font-size: 1em;
+      line-height: 1em;
+      cursor: pointer;
+    }
+  }
+
+  #volume {
+    margin-right: 0.4rem;
   }
 }
 
@@ -134,6 +145,11 @@
       form {
         margin-right: 2rem;
       }
+    }
+
+    .volume {
+      width: 100%;
+      margin-left: 0;
     }
   }
 }

@@ -31,16 +31,26 @@
       <%= render "icon_next.html", [] %>
     </a>
   </div>
-  <%= content_tag :label, gettext("Set volume"), for: "volume", class: "visually-hidden" %>
-  <input type="range"
-         id="volume"
-         data-test-control="volume"
-         value="<%= @device.volume_percent %>"
-         min="0"
-         max="100"
-         aria-valuenow="<%= @device.volume_percent %>"
-         aria-valuemin="0"
-         aria-valuemax="100"
-         step="1"
-         phx-hook="VolumeSlider" />
+</div>
+<div class="volume">
+  <div class="button-group">
+    <%= content_tag :label, gettext("Set volume"), for: "volume", class: "visually-hidden" %>
+    <span class="volume-down-button" phx-click="dec_volume" data-test-control="dec_volume">
+      <%= render "icon_volume_down.html", [] %>
+    </span>
+    <input type="range"
+           id="volume"
+           data-test-control="volume"
+           value="<%= @device.volume_percent %>"
+           min="0"
+           max="100"
+           aria-valuenow="<%= @device.volume_percent %>"
+           aria-valuemin="0"
+           aria-valuemax="100"
+           step="1"
+           phx-hook="VolumeSlider" />
+    <span class="volume-up-button" phx-click="inc_volume" data-test-control="inc_volume">
+      <%= render "icon_volume_up.html", [] %>
+    </span>
+  </div>
 </div>

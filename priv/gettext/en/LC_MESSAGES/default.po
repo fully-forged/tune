@@ -227,7 +227,7 @@ msgid "Select"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/player/controls.html.eex:34
+#: lib/tune_web/templates/player/controls.html.eex:37
 msgid "Set volume"
 msgstr ""
 
