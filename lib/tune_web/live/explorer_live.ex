@@ -64,6 +64,7 @@ defmodule TuneWeb.ExplorerLive do
     per_page: 24,
     page: 1,
     suggestions_playlist: :not_fetched,
+    suggestions_recently_played_albums: :not_fetched,
     suggestions_top_albums: :not_fetched,
     suggestions_top_albums_time_range: @default_time_range,
     suggestions_recommended_tracks: :not_fetched,
@@ -279,12 +280,15 @@ defmodule TuneWeb.ExplorerLive do
              socket.assigns.session_id,
              socket.assigns.suggestions_top_albums_time_range
            ),
+         {:ok, recently_played_tracks} <-
+           spotify_session().recently_played_tracks(socket.assigns.session_id, limit: 50),
          {:ok, recommended_tracks} <-
            get_recommendations(socket.assigns.session_id, top_tracks) do
       {:noreply,
        assign(socket,
          suggestions_playlist: playlist,
          suggestions_top_albums: Album.from_tracks(top_tracks),
+         suggestions_recently_played_albums: Album.from_tracks(recently_played_tracks),
          suggestions_recommended_tracks: recommended_tracks
        )}
     else

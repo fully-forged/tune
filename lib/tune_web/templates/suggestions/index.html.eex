@@ -6,6 +6,17 @@
   <% playlist -> %>
     <%= render PlaylistView, "show.html", playlist: playlist, now_playing: @now_playing, socket: @socket %>
   <% end %>
+
+<%= case @suggestions_recently_played_albums do %>
+  <% :not_fetched -> %>
+    <%= content_tag :p, gettext("Cannot display recently played albums.") %>
+  <% albums -> %>
+    <%= render "recently_played_albums.html",
+      albums: albums,
+      now_playing: @now_playing,
+      socket: @socket %>
+  <% end %>
+
 <%= case @suggestions_top_albums do %>
   <% :not_fetched -> %>
     <%= content_tag :p, gettext("Cannot display top albums.") %>

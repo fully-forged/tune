@@ -546,6 +546,7 @@ defmodule TuneWeb.LoggedInTest do
               profile <- Generators.profile(),
               release_radar_playlist <- Generators.playlist("Release Radar"),
               top_tracks <- uniq_list_of(Generators.track(), max_length: 24),
+              recently_played_tracks <- uniq_list_of(Generators.track(), max_length: 24),
               recommended_tracks <- uniq_list_of(Generators.track(), max_length: 24)
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
@@ -555,6 +556,7 @@ defmodule TuneWeb.LoggedInTest do
         expect_release_radar_playlist(session_id, release_radar_playlist)
 
         expect_top_tracks(session_id, top_tracks, top_tracks_limit, time_range)
+        expect_recently_played_tracks(session_id, recently_played_tracks, 50)
 
         artist_ids = Track.artist_ids(top_tracks)
         expect_recommendations_from_artists(session_id, artist_ids, recommended_tracks)
@@ -578,7 +580,7 @@ defmodule TuneWeb.LoggedInTest do
       end
     end
 
-    property "with top albums and recommended tracks", %{conn: conn} do
+    property "with top albums, recently played albums and recommended tracks", %{conn: conn} do
       top_tracks_limit = 24
       time_range = "short_term"
 
@@ -588,6 +590,7 @@ defmodule TuneWeb.LoggedInTest do
               profile <- Generators.profile(),
               release_radar_playlist <- Generators.playlist("Release Radar"),
               top_tracks <- uniq_list_of(Generators.track(), max_length: 24),
+              recently_played_tracks <- uniq_list_of(Generators.track(), max_length: 24),
               recommended_tracks <- uniq_list_of(Generators.track(), max_length: 24)
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
@@ -597,6 +600,7 @@ defmodule TuneWeb.LoggedInTest do
         expect_release_radar_playlist(session_id, release_radar_playlist)
 
         expect_top_tracks(session_id, top_tracks, top_tracks_limit, time_range)
+        expect_recently_played_tracks(session_id, recently_played_tracks, 50)
 
         artist_ids = Track.artist_ids(top_tracks)
         expect_recommendations_from_artists(session_id, artist_ids, recommended_tracks)
@@ -609,6 +613,18 @@ defmodule TuneWeb.LoggedInTest do
         assert render(explorer_live) =~ "Recommended Tracks"
 
         for album <- Album.from_tracks(top_tracks) do
+          escaped_album_name = escape(album.name)
+          assert html =~ escaped_album_name
+          assert render(explorer_live) =~ escaped_album_name
+
+          for artist <- album.artists do
+            escaped_artist_name = escape(artist.name)
+            assert html =~ escaped_artist_name
+            assert render(explorer_live) =~ escaped_artist_name
+          end
+        end
+
+        for album <- Album.from_tracks(recently_played_tracks) do
           escaped_album_name = escape(album.name)
           assert html =~ escaped_album_name
           assert render(explorer_live) =~ escaped_album_name
@@ -721,6 +737,13 @@ defmodule TuneWeb.LoggedInTest do
     Tune.Spotify.Session.Mock
     |> expect(:top_tracks, 2, fn ^session_id, [limit: ^limit, time_range: ^time_range] ->
       {:ok, top_tracks}
+    end)
+  end
+
+  defp expect_recently_played_tracks(session_id, recently_played_tracks, limit) do
+    Tune.Spotify.Session.Mock
+    |> expect(:recently_played_tracks, 2, fn ^session_id, [limit: ^limit] ->
+      {:ok, recently_played_tracks}
     end)
   end
 
