@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:422
+#: lib/tune_web/live/explorer_live.ex:439
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:426
+#: lib/tune_web/live/explorer_live.ex:443
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -211,8 +211,8 @@ msgid "Cannot display Release Radar."
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/suggestions/index.html.eex:11
 #: lib/tune_web/templates/suggestions/index.html.eex:22
+#: lib/tune_web/templates/suggestions/index.html.eex:33
 msgid "Cannot display top albums."
 msgstr ""
 
@@ -267,27 +267,27 @@ msgid "The app has been updated."
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:375
+#: lib/tune_web/live/explorer_live.ex:392
 msgid "Album details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:382
+#: lib/tune_web/live/explorer_live.ex:399
 msgid "Album details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:351
+#: lib/tune_web/live/explorer_live.ex:368
 msgid "Artist details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:366
+#: lib/tune_web/live/explorer_live.ex:383
 msgid "Artist details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:409
+#: lib/tune_web/live/explorer_live.ex:426
 msgid "Episode details"
 msgstr ""
 
@@ -297,27 +297,27 @@ msgid "Home"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:304
+#: lib/tune_web/live/explorer_live.ex:321
 msgid "Search results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:318
+#: lib/tune_web/live/explorer_live.ex:335
 msgid "Search results for %{q}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:391
+#: lib/tune_web/live/explorer_live.ex:408
 msgid "Show details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:400
+#: lib/tune_web/live/explorer_live.ex:417
 msgid "Show details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:274
+#: lib/tune_web/live/explorer_live.ex:288
 msgid "Suggestions"
 msgstr ""
 
@@ -374,4 +374,19 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/layout/help.html.eex:23
 msgid "Focus device selector"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/index.html.eex:12
+msgid "Cannot display recently played albums."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/recently_played_albums.html.eex:5
+msgid "Generated from Recently Played Tracks."
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/suggestions/recently_played_albums.html.eex:4
+msgid "Recently Played Albums"
 msgstr ""

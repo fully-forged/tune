@@ -1,0 +1,11 @@
+<article class="top-albums">
+  <div class="filter">
+    <div class="meta">
+      <%= content_tag :h1, gettext("Recently Played Albums") %>
+      <%= content_tag :p, gettext("Generated from Recently Played Tracks.") %>
+    </div>
+  </div>
+  <div class="results">
+    <%= render_many @albums, TuneWeb.SearchView, "result.html", as: :item, socket: @socket %>
+  </div>
+</article>
