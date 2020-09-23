@@ -28,6 +28,9 @@ defmodule Tune.Spotify.Client do
   @type item_type :: :album | :artist | :playlist | :track | :show | :episode | :playlist
   @type pagination_option :: {:limit, pos_integer()} | {:offset, pos_integer()}
   @type pagination_options :: [pagination_option()]
+  @type recently_played_tracks_options :: [
+          {:limit, pos_integer()} | {:after, DateTime.t()} | {:after, DateTime.t()}
+        ]
   @type search_options :: [{:types, [item_type()]} | pagination_option()]
   @type search_results :: %{
           optional(item_type()) => %{
@@ -72,6 +75,8 @@ defmodule Tune.Spotify.Client do
   @callback get_recommendations_from_artists(token(), artist_ids :: [Artist.id()]) ::
               {:ok, [Track.t()]} | {:error, term()}
   @callback get_show(token(), show_id :: Show.id()) :: {:ok, Show.t()} | {:error, term()}
+  @callback recently_played_tracks(token(), recently_played_tracks_options()) ::
+              {:ok, [Track.t()]} | {:error, term()}
   @callback search(token(), q(), search_options()) :: {:ok, search_results()} | {:error, term()}
   @callback top_tracks(token(), top_tracks_options()) :: {:ok, [Track.t()]} | {:error, term()}
 end

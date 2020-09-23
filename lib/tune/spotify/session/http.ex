@@ -204,6 +204,11 @@ defmodule Tune.Spotify.Session.HTTP do
   end
 
   @impl true
+  def recently_played_tracks(session_id, opts) do
+    GenStateMachine.call(via(session_id), {:recently_played_tracks, opts})
+  end
+
+  @impl true
   def seek(session_id, position_ms) do
     GenStateMachine.call(via(session_id), {:seek, position_ms})
   end
@@ -507,6 +512,17 @@ defmodule Tune.Spotify.Session.HTTP do
     case spotify_client().search(data.credentials.token, q, opts) do
       {:ok, results} ->
         action = {:reply, from, {:ok, results}}
+        {:keep_state_and_data, action}
+
+      error ->
+        handle_common_errors(error, data, from)
+    end
+  end
+
+  defp handle_authenticated_call(from, {:recently_played_tracks, opts}, data) do
+    case spotify_client().recently_played_tracks(data.credentials.token, opts) do
+      {:ok, tracks} ->
+        action = {:reply, from, {:ok, tracks}}
         {:keep_state_and_data, action}
 
       error ->

@@ -1,7 +1,6 @@
 defmodule Tune.Spotify.Client.HTTP do
   @moduledoc """
-  This module implements the `Tune.Spotify.Client` behaviour and interacts with
-  the actual Spotify API.
+  This module implements the `Tune.Spotify.Client` behaviour and interacts with the actual Spotify API.
 
   Reference docs are available at: <https://developer.spotify.com/documentation/web-api/>
   """
@@ -417,6 +416,43 @@ defmodule Tune.Spotify.Client.HTTP do
           |> parse_show()
 
         {:ok, show}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
+  @default_limit 20
+  @impl true
+  def recently_played_tracks(token, opts) do
+    params = %{
+      limit: Keyword.get(opts, :limit, @default_limit)
+    }
+
+    params =
+      case Keyword.get(opts, :before) do
+        nil -> params
+        before_time -> Map.put(params, :before, DateTime.to_unix(before_time))
+      end
+
+    params =
+      case Keyword.get(opts, :after) do
+        nil -> params
+        before_time -> Map.put(params, :before, DateTime.to_unix(before_time))
+      end
+
+    case json_get(
+           @base_url <> "/me/player/recently-played?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        results =
+          response.body
+          |> Jason.decode!()
+          |> get_in(["items", Access.all(), "track"])
+          |> Enum.map(&parse_track/1)
+
+        {:ok, results}
 
       other_response ->
         handle_errors(other_response)
