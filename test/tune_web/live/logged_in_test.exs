@@ -60,6 +60,7 @@ defmodule TuneWeb.LoggedInTest do
               profile <- Generators.profile(),
               item <- Generators.playable_item(),
               second_item <- Generators.playable_item(),
+              recently_played_tracks <- uniq_list_of(Generators.track(), max_length: 24),
               device <- Generators.device()
             ) do
         conn = init_test_session(conn, spotify_id: session_id, spotify_credentials: credentials)
@@ -76,6 +77,7 @@ defmodule TuneWeb.LoggedInTest do
 
         new_player = %{player | item: second_item, progress_ms: second_item.duration_ms - 100}
 
+        expect_single_recently_played_tracks(session_id, recently_played_tracks, 50)
         send(explorer_live.pid, {:now_playing, new_player})
 
         escaped_item_name = escape(second_item.name)
@@ -743,6 +745,13 @@ defmodule TuneWeb.LoggedInTest do
   defp expect_recently_played_tracks(session_id, recently_played_tracks, limit) do
     Tune.Spotify.Session.Mock
     |> expect(:recently_played_tracks, 2, fn ^session_id, [limit: ^limit] ->
+      {:ok, recently_played_tracks}
+    end)
+  end
+
+  defp expect_single_recently_played_tracks(session_id, recently_played_tracks, limit) do
+    Tune.Spotify.Session.Mock
+    |> expect(:recently_played_tracks, 1, fn ^session_id, [limit: ^limit] ->
       {:ok, recently_played_tracks}
     end)
   end

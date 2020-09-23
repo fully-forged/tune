@@ -256,6 +256,19 @@ defmodule TuneWeb.ExplorerLive do
         send_update(ProgressBarComponent, id: :progress_bar, progress_ms: player.progress_ms)
         {:noreply, socket}
 
+      :item in changes ->
+        case spotify_session().recently_played_tracks(socket.assigns.session_id, limit: 50) do
+          {:ok, recently_played_tracks} ->
+            {:noreply,
+             assign(socket,
+               suggestions_recently_played_albums: Album.from_tracks(recently_played_tracks),
+               now_playing: player
+             )}
+
+          error ->
+            handle_spotify_session_result(error, socket)
+        end
+
       true ->
         {:noreply, assign(socket, :now_playing, player)}
     end
