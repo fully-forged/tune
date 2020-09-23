@@ -627,6 +627,38 @@ defmodule Tune.Spotify.Session.HTTPTest do
       end
     end
 
+    property "it returns recently played tracks" do
+      check all(
+              credentials <- Generators.credentials(),
+              session_id <- Generators.session_id(),
+              profile <- Generators.profile(),
+              recently_played_tracks <-
+                uniq_list_of(Generators.track(), min_length: 1, max_length: 24),
+              max_runs: 5
+            ) do
+        # Start a session
+
+        expect_profile(credentials.token, profile)
+        expect_devices(credentials.token, [])
+        expect_nothing_playing(credentials.token)
+
+        assert {:ok, _session_pid} =
+                 HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
+
+        # Get recently played tracks
+        recently_played_tracks_options = [limit: 50]
+
+        expect_recently_played_tracks(
+          credentials.token,
+          recently_played_tracks_options,
+          recently_played_tracks
+        )
+
+        assert {:ok, recently_played_tracks} ==
+                 HTTP.recently_played_tracks(session_id, recently_played_tracks_options)
+      end
+    end
+
     property "it returns top tracks" do
       check all(
               credentials <- Generators.credentials(),
@@ -832,5 +864,12 @@ defmodule Tune.Spotify.Session.HTTPTest do
   defp expect_top_tracks(token, top_tracks_options, top_tracks) do
     Client.Mock
     |> expect(:top_tracks, fn ^token, ^top_tracks_options -> {:ok, top_tracks} end)
+  end
+
+  defp expect_recently_played_tracks(token, recently_played_tracks_options, top_tracks) do
+    Client.Mock
+    |> expect(:recently_played_tracks, fn ^token, ^recently_played_tracks_options ->
+      {:ok, top_tracks}
+    end)
   end
 end
