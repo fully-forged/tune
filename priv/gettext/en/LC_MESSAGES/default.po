@@ -292,7 +292,7 @@ msgid "Episode details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/root.html.leex:8
+#: lib/tune_web/templates/layout/root.html.leex:10
 msgid "Home"
 msgstr ""
 

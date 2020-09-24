@@ -4,10 +4,16 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-title" content="Tune">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || gettext("Home"), suffix: " · Tune" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link phx-track-static rel="icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>">
+    <link phx-track-static rel="apple-touch-icon" href="<%= Routes.static_path(@conn, "/images/favicon-120.png") %>">
+    <link phx-track-static rel="apple-touch-icon" sizes="152x152" href="<%= Routes.static_path(@conn, "/images/favicon-152.png") %>">
+    <link phx-track-static rel="apple-touch-icon" sizes="167x167" href="<%= Routes.static_path(@conn, "/images/favicon-167.png") %>">
+    <link phx-track-static rel="apple-touch-icon" sizes="180x180" href="<%= Routes.static_path(@conn, "/images/favicon-180.png") %>">
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body onclick="">
