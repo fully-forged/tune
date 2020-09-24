@@ -229,6 +229,8 @@ The project is setup to deploy on Heroku, please make sure you:
   [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 - YouTube icon made by [Freepik](https://www.flaticon.com/authors/freepik
   "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+- Lyrics icon made by [Freepik](https://www.flaticon.com/authors/freepik
+  "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 
 ## Code of Conduct
 
