@@ -221,16 +221,14 @@ The project is setup to deploy on Heroku, please make sure you:
 
 ## Credits
 
-- Mini player icons from [Bootstrap Icons](https://icons.getbootstrap.com/)
-- Wikipedia icon made by [Freepik](https://www.flaticon.com/authors/freepik
+- Wikipedia icon by [Freepik](https://www.flaticon.com/authors/freepik
   "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-- Last.fm icon made by [Pixel
+- Last.fm icon by [Pixel
   perfect](https://www.flaticon.com/authors/pixel-perfect "Pixel perfect") from
   [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-- YouTube icon made by [Freepik](https://www.flaticon.com/authors/freepik
+- YouTube icon by [Freepik](https://www.flaticon.com/authors/freepik
   "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
-- Lyrics icon made by [Freepik](https://www.flaticon.com/authors/freepik
-  "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
+- All remaining icons from [Remix Icon](https://remixicon.com/)
 
 ## Code of Conduct
 
