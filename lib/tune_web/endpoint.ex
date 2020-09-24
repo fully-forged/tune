@@ -28,7 +28,7 @@ defmodule TuneWeb.Endpoint do
     at: "/",
     from: :tune,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only_matching: ~w(css fonts images js favicon robots)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
