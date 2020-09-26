@@ -104,15 +104,6 @@
 
 @media (max-width: 1024px) {
   .mini-player {
-    .meta,
-    .progress span {
-      font-size: 0.8em;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .mini-player {
     justify-content: space-between;
     flex-wrap: wrap;
 
@@ -132,7 +123,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        max-width: 11rem;
+        max-width: 32rem;
       }
     }
 
@@ -151,6 +142,16 @@
     .volume {
       width: 100%;
       margin-left: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .mini-player {
+    .meta {
+      .name {
+        max-width: 11rem;
+      }
     }
   }
 }
