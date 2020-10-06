@@ -51,7 +51,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_nothing_playing(new_credentials.token)
         expect_no_devices(new_credentials.token)
 
-        assert {:ok, session_pid} =
+        assert {:ok, _session_pid} =
                  HTTP.start_link(session_id, old_credentials, timeouts: @default_timeouts)
 
         assert profile == HTTP.get_profile(session_id)
@@ -70,7 +70,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_nothing_playing(credentials.token)
         expect_no_devices(credentials.token)
 
-        assert {:ok, session_pid} =
+        assert {:ok, _session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
         assert_eventually profile == HTTP.get_profile(session_id)
@@ -108,7 +108,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_nothing_playing(credentials.token)
         expect_no_devices(credentials.token)
 
-        assert {:ok, session_pid} =
+        assert {:ok, _session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
         assert :ok == HTTP.subscribe(session_id)
@@ -133,7 +133,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_devices(credentials.token, [device])
         player = expect_item_playing(credentials.token, item, device)
 
-        assert {:ok, session_pid} =
+        assert {:ok, _session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
         assert :ok == HTTP.subscribe(session_id)
@@ -155,7 +155,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
         expect_devices(credentials.token, [device])
         expect_nothing_playing(credentials.token)
 
-        assert {:ok, session_pid} =
+        assert {:ok, _session_pid} =
                  HTTP.start_link(session_id, credentials, timeouts: @default_timeouts)
 
         assert :ok == HTTP.subscribe(session_id)
