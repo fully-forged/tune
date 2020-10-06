@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.22.6">
     <meta name="project" content="tune v0.1.0">
+
     <title>Tune.Spotify.Session — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
+
     <script src="dist/sidebar_items-42a03ecf5f.js"></script>
+
       <script src="docs_config.js"></script>
+
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+
 <div class="main">
 
 <button class="sidebar-button sidebar-toggle">
@@ -41,17 +47,20 @@
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
       <a href="readme.html" class="sidebar-projectName">
-tune      </a>
+tune
+      </a>
       <strong class="sidebar-projectVersion">
         v0.1.0
       </strong>
     </div>
+
   </div>
 
   <ul class="sidebar-listNav">
     <li><a id="extras-list" href="#full-list">Pages</a></li>
 
       <li><a id="modules-list" href="#full-list">Modules</a></li>
+
 
   </ul>
   <div class="gradient"></div>
@@ -63,7 +72,8 @@ tune      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Tune.Spotify.Session <small>behaviour</small> <small class="app-vsn">(tune v0.1.0)</small>
+Tune.Spotify.Session <small>behaviour</small> <small class="app-vsn">(tune v0.1.0)</small>
+
       </h1>
 
 
@@ -73,7 +83,9 @@ authentication credentials, the implementation should perform authentication
 in <a href="#c:setup/2"><code class="inline">setup/2</code></a>. If successful, a session should be opened and used for any
 other function keyed by the same session id.</p><p>Most of the behaviour functions cover the Spotify HTTP Api and return structs
 defined under <a href="Tune.Spotify.Schema.html"><code class="inline">Tune.Spotify.Schema</code></a>.</p><p>Two extra functions, <a href="#c:subscribe/1"><code class="inline">subscribe/1</code></a> and <a href="#c:broadcast/2"><code class="inline">broadcast/2</code></a>, are used to define
-the mechanism used to notify other processes of changes in the session state.</p><p>For a working implementation, see <a href="Tune.Spotify.Session.HTTP.html"><code class="inline">Tune.Spotify.Session.HTTP</code></a>.</p>        </section>
+the mechanism used to notify other processes of changes in the session state.</p><p>For a working implementation, see <a href="Tune.Spotify.Session.HTTP.html"><code class="inline">Tune.Spotify.Session.HTTP</code></a>.</p>
+        </section>
+
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -83,6 +95,7 @@ the mechanism used to notify other processes of changes in the session state.</p
             </a>
             Summary
           </h1>
+
   <div class="summary-types summary">
     <h2>
       <a href="#types">Types</a>
@@ -90,39 +103,55 @@ the mechanism used to notify other processes of changes in the session state.</p
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:context_uri/0">context_uri()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:credentials/0">credentials()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:id/0">id()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:item_id/0">item_id()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:message/0">message()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:player_token/0">player_token()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:uri/0">uri()</a>
+
   </div>
+
 </div>
+
   </div>
+
   <div class="summary-callbacks summary">
     <h2>
       <a href="#callbacks">Callbacks</a>
@@ -130,135 +159,190 @@ the mechanism used to notify other processes of changes in the session state.</p
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:broadcast/2">broadcast(id, message)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_album/2">get_album(id, album_id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_artist/2">get_artist(id, artist_id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_artist_albums/3">get_artist_albums(id, artist_id, pagination_options)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_devices/1">get_devices(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_episodes/2">get_episodes(id, show_id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_player_token/1">get_player_token(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_playlist/2">get_playlist(id, playlist_id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_profile/1">get_profile(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_recommendations_from_artists/2">get_recommendations_from_artists(id, artist_ids)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_show/2">get_show(id, show_id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:next/1">next(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:now_playing/1">now_playing(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:play/2">play(id, uri)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:play/3">play(id, uri, context_uri)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:prev/1">prev(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:recently_played_tracks/2">recently_played_tracks(id, recently_played_tracks_options)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:refresh_devices/1">refresh_devices(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:search/3">search(id, query, search_options)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:seek/2">seek(id, position_ms)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:set_volume/2">set_volume(id, volume_percent)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:setup/2">setup(id, credentials)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:subscribe/1">subscribe(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:toggle_play/1">toggle_play(id)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:top_tracks/2">top_tracks(id, top_tracks_options)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:transfer_playback/2">transfer_playback(id, device_id)</a>
+
   </div>
+
 </div>
+
   </div>
+
         </section>
+
 
         <section id="types" class="details-list">
           <h1 class="section-heading">
@@ -266,205 +350,284 @@ the mechanism used to notify other processes of changes in the session state.</p
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
+Types
+          </h1>
           <div class="types-list">
 <section class="detail" id="t:context_uri/0">
+
   <div class="detail-header">
     <a href="#t:context_uri/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">context_uri()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>context_uri() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:credentials/0">
+
   <div class="detail-header">
     <a href="#t:credentials/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">credentials()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>credentials() :: <a href="https://hexdocs.pm/ueberauth/Ueberauth.Auth.Credentials.html#t:t/0">Ueberauth.Auth.Credentials.t</a>()</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:id/0">
+
   <div class="detail-header">
     <a href="#t:id/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">id()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>id() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:item_id/0">
+
   <div class="detail-header">
     <a href="#t:item_id/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">item_id()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>item_id() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:message/0">
+
   <div class="detail-header">
     <a href="#t:message/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">message()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>message() ::
   {:now_playing, <a href="Tune.Spotify.Schema.Player.html#t:t/0">Tune.Spotify.Schema.Player.t</a>()}
   | {:player_token, <a href="#t:player_token/0">player_token</a>()}
   | {:devices, [<a href="Tune.Spotify.Schema.Device.html#t:t/0">Tune.Spotify.Schema.Device.t</a>()]}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:player_token/0">
+
   <div class="detail-header">
     <a href="#t:player_token/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">player_token()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>player_token() :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">binary</a>() | nil</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:uri/0">
+
   <div class="detail-header">
     <a href="#t:uri/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">uri()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>uri() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
         <section id="callbacks" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#callbacks">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Callbacks          </h1>
+Callbacks
+          </h1>
           <div class="callbacks-list">
 <section class="detail" id="c:broadcast/2">
+
   <div class="detail-header">
     <a href="#c:broadcast/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">broadcast(id, message)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>broadcast(<a href="#t:id/0">id</a>(), <a href="#t:message/0">message</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_album/2">
+
   <div class="detail-header">
     <a href="#c:get_album/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_album(id, album_id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_album(<a href="#t:id/0">id</a>(), album_id :: <a href="Tune.Spotify.Schema.Album.html#t:id/0">Tune.Spotify.Schema.Album.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_artist/2">
+
   <div class="detail-header">
     <a href="#c:get_artist/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_artist(id, artist_id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_artist(<a href="#t:id/0">id</a>(), artist_id :: <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Artist.html#t:t/0">Tune.Spotify.Schema.Artist.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_artist_albums/3">
+
   <div class="detail-header">
     <a href="#c:get_artist_albums/3" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_artist_albums(id, artist_id, pagination_options)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_artist_albums(
   <a href="#t:id/0">id</a>(),
   artist_id :: <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>(),
@@ -472,404 +635,562 @@ Callbacks          </h1>
 ) ::
   {:ok, %{albums: [<a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()], total: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()}}
   | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_devices/1">
+
   <div class="detail-header">
     <a href="#c:get_devices/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_devices(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_devices(<a href="#t:id/0">id</a>()) :: {:ok, [<a href="Tune.Spotify.Schema.Device.html#t:t/0">Tune.Spotify.Schema.Device.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_episodes/2">
+
   <div class="detail-header">
     <a href="#c:get_episodes/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_episodes(id, show_id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_episodes(<a href="#t:id/0">id</a>(), show_id :: <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
   {:ok, [<a href="Tune.Spotify.Schema.Episode.html#t:t/0">Tune.Spotify.Schema.Episode.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_player_token/1">
+
   <div class="detail-header">
     <a href="#c:get_player_token/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_player_token(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_player_token(<a href="#t:id/0">id</a>()) :: {:ok, <a href="#t:player_token/0">player_token</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_playlist/2">
+
   <div class="detail-header">
     <a href="#c:get_playlist/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_playlist(id, playlist_id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_playlist(<a href="#t:id/0">id</a>(), playlist_id :: <a href="Tune.Spotify.Schema.Playlist.html#t:id/0">Tune.Spotify.Schema.Playlist.id</a>()) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_profile/1">
+
   <div class="detail-header">
     <a href="#c:get_profile/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_profile(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_profile(<a href="#t:id/0">id</a>()) :: {:ok, <a href="Tune.Spotify.Schema.User.html#t:t/0">Tune.Spotify.Schema.User.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_recommendations_from_artists/2">
+
   <div class="detail-header">
     <a href="#c:get_recommendations_from_artists/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_recommendations_from_artists(id, artist_ids)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_recommendations_from_artists(
   <a href="#t:id/0">id</a>(),
   artist_ids :: [<a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>()]
 ) :: {:ok, [<a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:get_show/2">
+
   <div class="detail-header">
     <a href="#c:get_show/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">get_show(id, show_id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>get_show(<a href="#t:id/0">id</a>(), show_id :: <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
   {:ok, <a href="Tune.Spotify.Schema.Show.html#t:t/0">Tune.Spotify.Schema.Show.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:next/1">
+
   <div class="detail-header">
     <a href="#c:next/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">next(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>next(<a href="#t:id/0">id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:now_playing/1">
+
   <div class="detail-header">
     <a href="#c:now_playing/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">now_playing(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>now_playing(<a href="#t:id/0">id</a>()) :: <a href="Tune.Spotify.Schema.Player.html#t:t/0">Tune.Spotify.Schema.Player.t</a>() | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:play/2">
+
   <div class="detail-header">
     <a href="#c:play/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">play(id, uri)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>play(<a href="#t:id/0">id</a>(), <a href="#t:uri/0">uri</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:play/3">
+
   <div class="detail-header">
     <a href="#c:play/3" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">play(id, uri, context_uri)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>play(<a href="#t:id/0">id</a>(), <a href="#t:uri/0">uri</a>(), <a href="#t:context_uri/0">context_uri</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:prev/1">
+
   <div class="detail-header">
     <a href="#c:prev/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">prev(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>prev(<a href="#t:id/0">id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:recently_played_tracks/2">
+
   <div class="detail-header">
     <a href="#c:recently_played_tracks/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">recently_played_tracks(id, recently_played_tracks_options)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>recently_played_tracks(
   <a href="#t:id/0">id</a>(),
   recently_played_tracks_options ::
     <a href="Tune.Spotify.Client.html#t:recently_played_tracks_options/0">Tune.Spotify.Client.recently_played_tracks_options</a>()
 ) :: {:ok, [<a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:refresh_devices/1">
+
   <div class="detail-header">
     <a href="#c:refresh_devices/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">refresh_devices(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>refresh_devices(<a href="#t:id/0">id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:search/3">
+
   <div class="detail-header">
     <a href="#c:search/3" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">search(id, query, search_options)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>search(
   <a href="#t:id/0">id</a>(),
   query :: <a href="Tune.Spotify.Client.html#t:q/0">Tune.Spotify.Client.q</a>(),
   search_options :: <a href="Tune.Spotify.Client.html#t:search_options/0">Tune.Spotify.Client.search_options</a>()
 ) :: {:ok, <a href="Tune.Spotify.Client.html#t:search_results/0">Tune.Spotify.Client.search_results</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:seek/2">
+
   <div class="detail-header">
     <a href="#c:seek/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">seek(id, position_ms)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>seek(<a href="#t:id/0">id</a>(), position_ms :: <a href="Tune.Duration.html#t:milliseconds/0">Tune.Duration.milliseconds</a>()) ::
   :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:set_volume/2">
+
   <div class="detail-header">
     <a href="#c:set_volume/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">set_volume(id, volume_percent)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>set_volume(<a href="#t:id/0">id</a>(), volume_percent :: <a href="Tune.Spotify.Schema.Device.html#t:volume_percent/0">Tune.Spotify.Schema.Device.volume_percent</a>()) ::
   :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:setup/2">
+
   <div class="detail-header">
     <a href="#c:setup/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">setup(id, credentials)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>setup(<a href="#t:id/0">id</a>(), <a href="#t:credentials/0">credentials</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:subscribe/1">
+
   <div class="detail-header">
     <a href="#c:subscribe/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">subscribe(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>subscribe(<a href="#t:id/0">id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:toggle_play/1">
+
   <div class="detail-header">
     <a href="#c:toggle_play/1" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">toggle_play(id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>toggle_play(<a href="#t:id/0">id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:top_tracks/2">
+
   <div class="detail-header">
     <a href="#c:top_tracks/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">top_tracks(id, top_tracks_options)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>top_tracks(<a href="#t:id/0">id</a>(), top_tracks_options :: <a href="Tune.Spotify.Client.html#t:top_tracks_options/0">Tune.Spotify.Client.top_tracks_options</a>()) ::
   {:ok, [<a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="c:transfer_playback/2">
+
   <div class="detail-header">
     <a href="#c:transfer_playback/2" class="detail-link" title="Link to this callback">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
     <h1 class="signature">transfer_playback(id, device_id)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>transfer_playback(<a href="#t:id/0">id</a>(), device_id :: <a href="Tune.Spotify.Schema.Device.html#t:id/0">Tune.Spotify.Schema.Device.id</a>()) ::
   :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
       <footer class="footer">
         <p>
           <span class="line">
@@ -883,7 +1204,9 @@ Callbacks          </h1>
           </span>
         </p>
         <p>
+
             <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
@@ -908,5 +1231,6 @@ Callbacks          </h1>
     font-family: IBM Plex Mono, Fira Code, Inconsolata,Menlo,Courier,monospace;
   }
 </style>
+
   </body>
 </html>

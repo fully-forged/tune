@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.22.6">
     <meta name="project" content="tune v0.1.0">
+
     <title>Tune.Duration — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
+
     <script src="dist/sidebar_items-42a03ecf5f.js"></script>
+
       <script src="docs_config.js"></script>
+
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+
 <div class="main">
 
 <button class="sidebar-button sidebar-toggle">
@@ -41,17 +47,20 @@
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
       <a href="readme.html" class="sidebar-projectName">
-tune      </a>
+tune
+      </a>
       <strong class="sidebar-projectVersion">
         v0.1.0
       </strong>
     </div>
+
   </div>
 
   <ul class="sidebar-listNav">
     <li><a id="extras-list" href="#full-list">Pages</a></li>
 
       <li><a id="modules-list" href="#full-list">Modules</a></li>
+
 
   </ul>
   <div class="gradient"></div>
@@ -63,12 +72,15 @@ tune      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Tune.Duration <small class="app-vsn">(tune v0.1.0)</small>
+Tune.Duration <small class="app-vsn">(tune v0.1.0)</small>
+
       </h1>
 
 
         <section id="moduledoc">
-<p>Provides functions to convert millisecond durations to different formats.</p>        </section>
+<p>Provides functions to convert millisecond durations to different formats.</p>
+        </section>
+
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -78,6 +90,7 @@ tune      </a>
             </a>
             Summary
           </h1>
+
   <div class="summary-types summary">
     <h2>
       <a href="#types">Types</a>
@@ -85,9 +98,13 @@ tune      </a>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:milliseconds/0">milliseconds()</a>
+
   </div>
+
 </div>
+
   </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -95,19 +112,28 @@ tune      </a>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#hms/1">hms(milliseconds)</a>
+
   </div>
+
     <div class="summary-synopsis"><p>Given a duration in milliseconds, returns a string with the duration formatted
 as hours, minutes and seconds, omitting units where appropriate.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#human/1">human(milliseconds)</a>
+
   </div>
+
     <div class="summary-synopsis"><p>Given a duration in milliseconds, returns a localized, human-readable
 representation of that duration.</p></div>
+
 </div>
+
   </div>
+
         </section>
+
 
         <section id="types" class="details-list">
           <h1 class="section-heading">
@@ -115,83 +141,107 @@ representation of that duration.</p></div>
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
+Types
+          </h1>
           <div class="types-list">
 <section class="detail" id="t:milliseconds/0">
+
   <div class="detail-header">
     <a href="#t:milliseconds/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">milliseconds()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>milliseconds() :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
         <section id="functions" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Functions          </h1>
+Functions
+          </h1>
           <div class="functions-list">
 <section class="detail" id="hms/1">
+
   <div class="detail-header">
     <a href="#hms/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">hms(milliseconds)</h1>
+
+
   </div>
 
   <section class="docstring">
 
 <p>Given a duration in milliseconds, returns a string with the duration formatted
-as hours, minutes and seconds, omitting units where appropriate.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="0473064753-1">(</span><span class="mi">5</span><span class="p" data-group-id="0473064753-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="0473064753-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="0473064753-2">)</span><span class="w">
+as hours, minutes and seconds, omitting units where appropriate.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="1571930540-1">(</span><span class="mi">5</span><span class="p" data-group-id="1571930540-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="1571930540-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="1571930540-2">)</span><span class="w">
 </span><span class="s">&quot;0:05&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="0473064753-3">(</span><span class="mi">61</span><span class="p" data-group-id="0473064753-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="0473064753-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="0473064753-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="1571930540-3">(</span><span class="mi">61</span><span class="p" data-group-id="1571930540-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="1571930540-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="1571930540-4">)</span><span class="w">
 </span><span class="s">&quot;1:01&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">hours</span><span class="p" data-group-id="0473064753-5">(</span><span class="mi">2</span><span class="p" data-group-id="0473064753-5">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="0473064753-6">(</span><span class="n">milliseconds</span><span class="p" data-group-id="0473064753-6">)</span><span class="w">
-</span><span class="s">&quot;2:00:00&quot;</span></code></pre>  </section>
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">hours</span><span class="p" data-group-id="1571930540-5">(</span><span class="mi">2</span><span class="p" data-group-id="1571930540-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="1571930540-6">(</span><span class="n">milliseconds</span><span class="p" data-group-id="1571930540-6">)</span><span class="w">
+</span><span class="s">&quot;2:00:00&quot;</span></code></pre>
+  </section>
 </section>
 <section class="detail" id="human/1">
+
   <div class="detail-header">
     <a href="#human/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">human(milliseconds)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>human(<a href="#t:milliseconds/0">milliseconds</a>()) :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+
       </div>
 
 <p>Given a duration in milliseconds, returns a localized, human-readable
-representation of that duration.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="6745712907-1">(</span><span class="mi">100</span><span class="p" data-group-id="6745712907-1">)</span><span class="w">
-</span><span class="s">&quot;Less than a minute&quot;</span></code></pre><p>Durations are rounded to the minute:</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="6893670150-1">(</span><span class="mi">61</span><span class="p" data-group-id="6893670150-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="6893670150-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="6893670150-2">)</span><span class="w">
+representation of that duration.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="8825727879-1">(</span><span class="mi">100</span><span class="p" data-group-id="8825727879-1">)</span><span class="w">
+</span><span class="s">&quot;Less than a minute&quot;</span></code></pre><p>Durations are rounded to the minute:</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="2456097578-1">(</span><span class="mi">61</span><span class="p" data-group-id="2456097578-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="2456097578-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2456097578-2">)</span><span class="w">
 </span><span class="s">&quot;1 minute&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="6893670150-3">(</span><span class="mi">95</span><span class="p" data-group-id="6893670150-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="6893670150-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="6893670150-4">)</span><span class="w">
-</span><span class="s">&quot;2 minutes&quot;</span></code></pre>  </section>
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="2456097578-3">(</span><span class="mi">95</span><span class="p" data-group-id="2456097578-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="2456097578-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="2456097578-4">)</span><span class="w">
+</span><span class="s">&quot;2 minutes&quot;</span></code></pre>
+  </section>
 </section>
+
           </div>
         </section>
+
       <footer class="footer">
         <p>
           <span class="line">
@@ -205,7 +255,9 @@ representation of that duration.</p><pre><code class="nohighlight makeup elixir"
           </span>
         </p>
         <p>
+
             <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
@@ -230,5 +282,6 @@ representation of that duration.</p><pre><code class="nohighlight makeup elixir"
     font-family: IBM Plex Mono, Fira Code, Inconsolata,Menlo,Courier,monospace;
   }
 </style>
+
   </body>
 </html>

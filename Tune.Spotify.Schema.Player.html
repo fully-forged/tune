@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.22.6">
     <meta name="project" content="tune v0.1.0">
+
     <title>Tune.Spotify.Schema.Player — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
+
     <script src="dist/sidebar_items-42a03ecf5f.js"></script>
+
       <script src="docs_config.js"></script>
+
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+
 <div class="main">
 
 <button class="sidebar-button sidebar-toggle">
@@ -41,17 +47,20 @@
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
       <a href="readme.html" class="sidebar-projectName">
-tune      </a>
+tune
+      </a>
       <strong class="sidebar-projectVersion">
         v0.1.0
       </strong>
     </div>
+
   </div>
 
   <ul class="sidebar-listNav">
     <li><a id="extras-list" href="#full-list">Pages</a></li>
 
       <li><a id="modules-list" href="#full-list">Modules</a></li>
+
 
   </ul>
   <div class="gradient"></div>
@@ -63,12 +72,15 @@ tune      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Tune.Spotify.Schema.Player <small class="app-vsn">(tune v0.1.0)</small>
+Tune.Spotify.Schema.Player <small class="app-vsn">(tune v0.1.0)</small>
+
       </h1>
 
 
         <section id="moduledoc">
-<p>Represents the status of a users playing device.</p>        </section>
+<p>Represents the status of a users playing device.</p>
+        </section>
+
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -78,6 +90,7 @@ tune      </a>
             </a>
             Summary
           </h1>
+
   <div class="summary-types summary">
     <h2>
       <a href="#types">Types</a>
@@ -85,14 +98,20 @@ tune      </a>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:prop/0">prop()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:t/0">t()</a>
+
   </div>
+
 </div>
+
   </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -100,10 +119,15 @@ tune      </a>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#changes/2">changes(p1, p2)</a>
+
   </div>
+
 </div>
+
   </div>
+
         </section>
+
 
         <section id="types" class="details-list">
           <h1 class="section-heading">
@@ -111,76 +135,103 @@ tune      </a>
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
+Types
+          </h1>
           <div class="types-list">
 <section class="detail" id="t:prop/0">
+
   <div class="detail-header">
     <a href="#t:prop/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">prop()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>prop() :: :status | :item | :progress_ms | :device</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:t/0">
+
   <div class="detail-header">
     <a href="#t:t/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">t()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>t() :: %Tune.Spotify.Schema.Player{
   device: <a href="Tune.Spotify.Schema.Device.html#t:t/0">Tune.Spotify.Schema.Device.t</a>(),
   item: <a href="Tune.Spotify.Schema.Track.html#t:t/0">Tune.Spotify.Schema.Track.t</a>() | <a href="Tune.Spotify.Schema.Episode.html#t:t/0">Tune.Spotify.Schema.Episode.t</a>(),
   progress_ms: <a href="Tune.Duration.html#t:milliseconds/0">Tune.Duration.milliseconds</a>(),
   status: :not_playing | :paused | :playing
 }</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
         <section id="functions" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Functions          </h1>
+Functions
+          </h1>
           <div class="functions-list">
 <section class="detail" id="changes/2">
+
   <div class="detail-header">
     <a href="#changes/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">changes(p1, p2)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>changes(<a href="#t:t/0">t</a>(), <a href="#t:t/0">t</a>()) :: [<a href="#t:prop/0">prop</a>()]</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
       <footer class="footer">
         <p>
           <span class="line">
@@ -194,7 +245,9 @@ Functions          </h1>
           </span>
         </p>
         <p>
+
             <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
@@ -219,5 +272,6 @@ Functions          </h1>
     font-family: IBM Plex Mono, Fira Code, Inconsolata,Menlo,Courier,monospace;
   }
 </style>
+
   </body>
 </html>

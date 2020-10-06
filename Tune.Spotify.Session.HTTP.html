@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.22.6">
     <meta name="project" content="tune v0.1.0">
+
     <title>Tune.Spotify.Session.HTTP — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
+
     <script src="dist/sidebar_items-42a03ecf5f.js"></script>
+
       <script src="docs_config.js"></script>
+
     <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+
 <div class="main">
 
 <button class="sidebar-button sidebar-toggle">
@@ -41,17 +47,20 @@
   <div class="sidebar-header">
     <div class="sidebar-projectDetails">
       <a href="readme.html" class="sidebar-projectName">
-tune      </a>
+tune
+      </a>
       <strong class="sidebar-projectVersion">
         v0.1.0
       </strong>
     </div>
+
   </div>
 
   <ul class="sidebar-listNav">
     <li><a id="extras-list" href="#full-list">Pages</a></li>
 
       <li><a id="modules-list" href="#full-list">Modules</a></li>
+
 
   </ul>
   <div class="gradient"></div>
@@ -63,7 +72,8 @@ tune      </a>
     <div id="content" class="content-inner">
 
       <h1>
-        Tune.Spotify.Session.HTTP <small class="app-vsn">(tune v0.1.0)</small>
+Tune.Spotify.Session.HTTP <small class="app-vsn">(tune v0.1.0)</small>
+
       </h1>
 
 
@@ -137,7 +147,9 @@ topic, until a crash error or a node reboot.</p><p>Every 30 seconds, the state m
 there's any subscribed process. If not, it terminates. Subscribed processes
 are monitored, so when they terminate, their exit is handled by the state machine,
 which removes them from its data.</p><p>Usage of named <code class="inline">timeout</code> events is necessary, as they're guaranteed to fire
-irrespectively of state changes.</p>        </section>
+irrespectively of state changes.</p>
+        </section>
+
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -147,6 +159,7 @@ irrespectively of state changes.</p>        </section>
             </a>
             Summary
           </h1>
+
   <div class="summary-types summary">
     <h2>
       <a href="#types">Types</a>
@@ -154,14 +167,20 @@ irrespectively of state changes.</p>        </section>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:start_opts/0">start_opts()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:timeouts/0">timeouts()</a>
+
   </div>
+
 </div>
+
   </div>
+
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -169,26 +188,38 @@ irrespectively of state changes.</p>        </section>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#callback_mode/0">callback_mode()</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#child_spec/1">child_spec(arg)</a>
+
   </div>
+
     <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#start_link/1">start_link(arg)</a>
+
   </div>
+
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#start_link/3">start_link(session_id, credentials, start_opts)</a>
+
   </div>
+
 </div>
+
   </div>
+
         </section>
+
 
         <section id="types" class="details-list">
           <h1 class="section-heading">
@@ -196,122 +227,165 @@ irrespectively of state changes.</p>        </section>
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Types          </h1>
+Types
+          </h1>
           <div class="types-list">
 <section class="detail" id="t:start_opts/0">
+
   <div class="detail-header">
     <a href="#t:start_opts/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">start_opts()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>start_opts() :: [{:timeouts, <a href="#t:timeouts/0">timeouts</a>()}]</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="t:timeouts/0">
+
   <div class="detail-header">
     <a href="#t:timeouts/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
     <h1 class="signature">timeouts()</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>timeouts() :: %{refresh: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">timeout</a>(), retry: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">timeout</a>(), inactivity: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">timeout</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
         <section id="functions" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#functions">
               <span class="icon-link" aria-hidden="true"></span>
               <span class="sr-only">Link to this section</span>
             </a>
-Functions          </h1>
+Functions
+          </h1>
           <div class="functions-list">
 <section class="detail" id="callback_mode/0">
+
   <div class="detail-header">
     <a href="#callback_mode/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">callback_mode()</h1>
+
+
   </div>
 
   <section class="docstring">
 
+
   </section>
 </section>
 <section class="detail" id="child_spec/1">
+
   <div class="detail-header">
     <a href="#child_spec/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">child_spec(arg)</h1>
+
+
   </div>
 
   <section class="docstring">
 
-<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a> in Elixir v1.6+.</p>  </section>
+<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a> in Elixir v1.6+.</p>
+  </section>
 </section>
 <section class="detail" id="start_link/1">
+
   <div class="detail-header">
     <a href="#start_link/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">start_link(arg)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>start_link({<a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(), <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>()}) ::
   {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
           <pre>start_link(
   {<a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(), <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>(), <a href="#t:start_opts/0">start_opts</a>()}
 ) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
 <section class="detail" id="start_link/3">
+
   <div class="detail-header">
     <a href="#start_link/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">start_link(session_id, credentials, start_opts)</h1>
+
+
   </div>
 
   <section class="docstring">
+
       <h2>Specs</h2>
       <div class="specs">
+
           <pre>start_link(
   <a href="Tune.Spotify.Session.html#t:id/0">Tune.Spotify.Session.id</a>(),
   <a href="Tune.Spotify.Session.html#t:credentials/0">Tune.Spotify.Session.credentials</a>(),
   <a href="#t:start_opts/0">start_opts</a>()
 ) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
       </div>
+
 
   </section>
 </section>
+
           </div>
         </section>
+
       <footer class="footer">
         <p>
           <span class="line">
@@ -325,7 +399,9 @@ Functions          </h1>
           </span>
         </p>
         <p>
+
             <a href="api-reference.html" title="API reference" class="line footer-button">API Reference</a>
+
           <button class="line footer-button display-shortcuts-help">
             Display keyboard shortcuts
           </button>
@@ -350,5 +426,6 @@ Functions          </h1>
     font-family: IBM Plex Mono, Fira Code, Inconsolata,Menlo,Courier,monospace;
   }
 </style>
+
   </body>
 </html>
