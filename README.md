@@ -18,7 +18,7 @@
   * [Development](#development)
     + [Setup](#setup)
     + [Running the application](#running-the-application)
-    + [Tests, dialyzer and credo](#tests--dialyzer-and-credo)
+    + [Tests, dialyzer and credo](#tests-dialyzer-and-credo)
     + [Documentation](#documentation)
     + [Application structure](#application-structure)
     + [Telemetry](#telemetry)
