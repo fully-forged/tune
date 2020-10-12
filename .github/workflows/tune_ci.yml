@@ -41,6 +41,9 @@ jobs:
     - name: Check Formatting
       run: mix format --check-formatted
 
+    - name: Check Credo
+      run: mix credo list --format oneline
+
     - name: Retrieve PLT Cache
       uses: actions/cache@v1
       id: plt-cache
