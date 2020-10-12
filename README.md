@@ -18,7 +18,7 @@
   * [Development](#development)
     + [Setup](#setup)
     + [Running the application](#running-the-application)
-    + [Tests, dialyzer](#tests--dialyzer)
+    + [Tests, dialyzer and credo](#tests--dialyzer-and-credo)
     + [Documentation](#documentation)
     + [Application structure](#application-structure)
     + [Telemetry](#telemetry)
@@ -165,9 +165,9 @@ Next you can install all dependencies with `mix setup`.
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-### Tests, dialyzer
+### Tests, dialyzer and Credo
 
-You can run tests with `mix test` and dialyzer with `mix dialyzer`.
+You can run tests with `mix test`, dialyzer with `mix dialyzer` and Credo with `mix credo`.
 
 ### Documentation
 
