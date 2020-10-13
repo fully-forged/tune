@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.22.6">
+    <meta name="generator" content="ExDoc v0.23.0">
     <meta name="project" content="tune v0.1.0">
 
     <title>Tune.Spotify.Session.HTTP — tune v0.1.0</title>
@@ -14,7 +14,7 @@
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+    <script async src="dist/app-60a0c9f10e9e52eae31f.js"></script>
 
   </head>
   <body data-type="modules">
@@ -84,8 +84,8 @@ interaction with the Spotify API.</p><h2 id="module-general-structure" class="se
   General structure
 </h2>
 <p>The state machine implements the <a href="Tune.Spotify.Session.html"><code class="inline">Tune.Spotify.Session</code></a> behaviour for its public API
-and uses <a href="https://hexdocs.pm/gen_state_machine/GenStateMachine.html"><code class="inline">GenStateMachine</code></a> to model its lifecycle.</p><p>If you're not familiar with the <code class="inline">gen_statem</code> behaviour (which powers
-<a href="https://hexdocs.pm/gen_state_machine/GenStateMachine.html"><code class="inline">GenStateMachine</code></a>), it's beneficial to read
+and uses <a href="https://hexdocs.pm/gen_state_machine/2.1.0/GenStateMachine.html"><code class="inline">GenStateMachine</code></a> to model its lifecycle.</p><p>If you're not familiar with the <code class="inline">gen_statem</code> behaviour (which powers
+<a href="https://hexdocs.pm/gen_state_machine/2.1.0/GenStateMachine.html"><code class="inline">GenStateMachine</code></a>), it's beneficial to read
 <a href="http://erlang.org/doc/design_principles/statem.html">http://erlang.org/doc/design_principles/statem.html</a> before proceeding
 further.</p><p>The state machine uses the <code class="inline">handle_event_function</code> callback mode and has 3
 states: <code class="inline">:not_authenticated</code>, <code class="inline">:authenticated</code> and <code class="inline">:expired</code>.</p><pre><code class="nohighlight makeup elixir"><span class="w">                              </span><span class="err">┌</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">┐</span><span class="w">
@@ -138,7 +138,7 @@ event is automatically expired.</p><p>Automatic fetching will resume once the ma
   <a href="#module-subscriptions" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Subscriptions
 </h2>
-<p>Multiple processes are able to subscribe to the events keyed by the session id.</p><p>Broadcast and subscribe are implemented via <a href="https://hexdocs.pm/phoenix_pubsub/Phoenix.PubSub.html"><code class="inline">Phoenix.PubSub</code></a>, however the
+<p>Multiple processes are able to subscribe to the events keyed by the session id.</p><p>Broadcast and subscribe are implemented via <a href="https://hexdocs.pm/phoenix_pubsub/2.0.0/Phoenix.PubSub.html"><code class="inline">Phoenix.PubSub</code></a>, however the
 state machine maintains its own set of monitored processes subscribed to the session
 id.</p><p>Subscription tracking is necessary to implementing automatic termination of a
 state machine after a period of inactivity. Without that, the state machine would
@@ -390,7 +390,7 @@ Functions
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.22.6) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.23.0) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">

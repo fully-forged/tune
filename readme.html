@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="ExDoc v0.22.6">
+    <meta name="generator" content="ExDoc v0.23.0">
     <meta name="project" content="tune v0.1.0">
 
     <title>Tune — tune v0.1.0</title>
@@ -14,7 +14,7 @@
 
       <script src="docs_config.js"></script>
 
-    <script async src="dist/app-aaa6eb1824b11a32f32d.js"></script>
+    <script async src="dist/app-60a0c9f10e9e52eae31f.js"></script>
 
   </head>
   <body data-type="extras">
@@ -71,7 +71,7 @@ tune
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>Tune</h1><p><img src="https://github.com/fully-forged/tune/workflows/Tune%20CI/badge.svg" alt="CI Status"></img></p><ul><li><a href="#tune">Tune</a><ul><li><a href="#about">About</a><ul><li><a href="#album-details">Album details</a></li><li><a href="#global-search">Global Search</a></li><li><a href="#artist-details">Artist details</a></li><li><a href="#top-albums-and-recommendations">Top albums and recommendations</a></li><li><a href="#release-radar">Release radar</a></li></ul></li><li><a href="#usage">Usage</a><ul><li><a href="#scope-and-features">Scope and features</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li><li><a href="#free-vs-premium-subscriptions">Free vs. Premium Subscriptions</a></li><li><a href="#data-retention-and-privacy">Data retention and privacy</a></li><li><a href="#issues-with-devices-and-playback">Issues with devices and playback</a></li></ul></li><li><a href="#development">Development</a><ul><li><a href="#setup">Setup</a></li><li><a href="#running-the-application">Running the application</a></li><li><a href="#tests--dialyzer">Tests, dialyzer</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#application-structure">Application structure</a></li><li><a href="#telemetry">Telemetry</a></li></ul></li><li><a href="#deployment">Deployment</a></li><li><a href="#credits">Credits</a></li><li><a href="#code-of-conduct">Code of Conduct</a></li><li><a href="#license">License</a></li></ul></li></ul><h2 id="about" class="section-heading">
+<h1>Tune</h1><p><img src="https://github.com/fully-forged/tune/workflows/Tune%20CI/badge.svg" alt="CI Status"></img></p><ul><li><a href="#tune">Tune</a><ul><li><a href="#about">About</a><ul><li><a href="#album-details">Album details</a></li><li><a href="#global-search">Global Search</a></li><li><a href="#artist-details">Artist details</a></li><li><a href="#top-albums-and-recommendations">Top albums and recommendations</a></li><li><a href="#release-radar">Release radar</a></li></ul></li><li><a href="#usage">Usage</a><ul><li><a href="#scope-and-features">Scope and features</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li><li><a href="#free-vs-premium-subscriptions">Free vs. Premium Subscriptions</a></li><li><a href="#data-retention-and-privacy">Data retention and privacy</a></li><li><a href="#issues-with-devices-and-playback">Issues with devices and playback</a></li></ul></li><li><a href="#development">Development</a><ul><li><a href="#setup">Setup</a></li><li><a href="#running-the-application">Running the application</a></li><li><a href="#tests-dialyzer-and-credo">Tests, dialyzer and credo</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#application-structure">Application structure</a></li><li><a href="#telemetry">Telemetry</a></li></ul></li><li><a href="#deployment">Deployment</a></li><li><a href="#credits">Credits</a></li><li><a href="#code-of-conduct">Code of Conduct</a></li><li><a href="#license">License</a></li></ul></li></ul><h2 id="about" class="section-heading">
   <a href="#about" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   About
 </h2>
@@ -161,15 +161,15 @@ install the correct versions required (see the <code class="inline">.tool-versio
 details).</p><p>Next, make sure you setup the required environment variables as detailed in
 <code class="inline">.env</code> by copying the file to <code class="inline">.env.local</code> and adjusting values as needed.</p><p>Please see the <a href="https://hexdocs.pm/vapor/Vapor.Provider.Dotenv.html#content">Vapor
 docs</a> for more
-detail on the dotenv configuration provider.</p><p>To create secrets, (e.g. for <code class="inline">SECRET_KEY_BASE</code>), use <a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Gen.Secret.html"><code class="inline">mix phx.gen.secret</code></a>.</p><p>Next you can install all dependencies with <code class="inline">mix setup</code>.</p><h3 id="running-the-application" class="section-heading">
+detail on the dotenv configuration provider.</p><p>To create secrets, (e.g. for <code class="inline">SECRET_KEY_BASE</code>), use <a href="https://hexdocs.pm/phoenix/1.5.5/Mix.Tasks.Phx.Gen.Secret.html"><code class="inline">mix phx.gen.secret</code></a>.</p><p>Next you can install all dependencies with <code class="inline">mix setup</code>.</p><h3 id="running-the-application" class="section-heading">
   <a href="#running-the-application" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Running the application
 </h3>
-<ul><li>Start the application with <a href="https://hexdocs.pm/phoenix/Mix.Tasks.Phx.Server.html"><code class="inline">mix phx.server</code></a></li><li>To start the application and an IEx console connected to it, use <code class="inline">iex -S mix phx.server</code></li></ul><p>Now you can visit <a href="http://localhost:4000"><code class="inline">localhost:4000</code></a> from your browser.</p><h3 id="tests-dialyzer" class="section-heading">
-  <a href="#tests-dialyzer" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Tests, dialyzer
+<ul><li>Start the application with <a href="https://hexdocs.pm/phoenix/1.5.5/Mix.Tasks.Phx.Server.html"><code class="inline">mix phx.server</code></a></li><li>To start the application and an IEx console connected to it, use <code class="inline">iex -S mix phx.server</code></li></ul><p>Now you can visit <a href="http://localhost:4000"><code class="inline">localhost:4000</code></a> from your browser.</p><h3 id="tests-dialyzer-and-credo" class="section-heading">
+  <a href="#tests-dialyzer-and-credo" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Tests, dialyzer and Credo
 </h3>
-<p>You can run tests with <a href="https://hexdocs.pm/mix/Mix.Tasks.Test.html"><code class="inline">mix test</code></a> and dialyzer with <a href="https://hexdocs.pm/dialyxir/Mix.Tasks.Dialyzer.html"><code class="inline">mix dialyzer</code></a>.</p><h3 id="documentation" class="section-heading">
+<p>You can run tests with <a href="https://hexdocs.pm/mix/Mix.Tasks.Test.html"><code class="inline">mix test</code></a>, dialyzer with <a href="https://hexdocs.pm/dialyxir/1.0.0/Mix.Tasks.Dialyzer.html"><code class="inline">mix dialyzer</code></a> and Credo with <a href="https://hexdocs.pm/credo/1.5.0-rc.4/Mix.Tasks.Credo.html"><code class="inline">mix credo</code></a>.</p><h3 id="documentation" class="section-heading">
   <a href="#documentation" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Documentation
 </h3>
@@ -218,7 +218,7 @@ perfect</a> from
         <p>
           <span class="line">
             Built using
-            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.22.6) for the
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.23.0) for the
             <a href="https://elixir-lang.org" title="Elixir" target="_blank">Elixir programming language</a>.
           </span>
           <span class="line">
