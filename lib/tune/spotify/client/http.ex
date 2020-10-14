@@ -558,31 +558,55 @@ defmodule Tune.Spotify.Client.HTTP do
 
   defp handle_errors(response) do
     case response do
-      {:ok, %{status: 401, body: body}} ->
+      {:ok, %{status: 401 = status, body: body}} ->
         if body =~ "expired" do
-          Logger.warn(fn ->
-            "Spotify HTTP Api error: expired token"
-          end)
-
+          track_error(:expired_token, status)
           {:error, :expired_token}
         else
-          Logger.warn(fn ->
-            "Spotify HTTP Api error: invalid token"
-          end)
-
+          track_error(:invalid_token, status)
           {:error, :invalid_token}
         end
 
       {:ok, %{status: status, body: body}} ->
-        Logger.warn(fn ->
-          "Spotify HTTP Api error: #{status}, #{body}"
-        end)
-
+        track_error(:error_response, status, body)
         {:error, status}
 
-      error ->
+      {:error, reason} = error ->
+        track_connection_error(reason)
         error
     end
+  end
+
+  defp track_error(type, status) do
+    Logger.warn(fn ->
+      "Spotify HTTP Api error: #{type}"
+    end)
+
+    :telemetry.execute([:tune, :spotify, :api_error], %{count: 1}, %{
+      error_type: type,
+      status: status
+    })
+  end
+
+  defp track_error(type, status, body) do
+    Logger.warn(fn ->
+      "Spotify HTTP Api error: #{status}, #{body}"
+    end)
+
+    :telemetry.execute([:tune, :spotify, :api_error], %{count: 1}, %{
+      error_type: type,
+      status: status
+    })
+  end
+
+  defp track_connection_error(reason) do
+    Logger.warn(fn ->
+      "Spotify HTTP Api connection error: #{reason}"
+    end)
+
+    :telemetry.execute([:tune, :spotify, :api_error], %{count: 1}, %{
+      error_type: :connection_error
+    })
   end
 
   defp parse_auth_data(data, refresh_token) do
