@@ -39,7 +39,7 @@ defmodule Tune.MixProject do
       {:phoenix_live_view, "~> 0.14.3"},
       {:phoenix_html, "~> 2.11"},
       {:gettext, "~> 0.11"},
-      {:phoenix_live_dashboard, "~> 0.2.0"},
+      {:phoenix_live_dashboard, "~> 0.3.1"},
       {:circular_buffer, "~> 0.3.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
