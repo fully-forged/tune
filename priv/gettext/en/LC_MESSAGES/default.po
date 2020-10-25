@@ -43,12 +43,12 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, elixir-format
-#: lib/tune_web/controllers/auth_controller.ex:31
+#: lib/tune_web/controllers/auth_controller.ex:39
 msgid "Error authenticating via Spotify"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/controllers/auth_controller.ex:42
+#: lib/tune_web/controllers/auth_controller.ex:51
 msgid "Logged out"
 msgstr ""
 
@@ -389,4 +389,14 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/suggestions/recently_played_albums.html.eex:4
 msgid "Recently Played Albums"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/controllers/auth_controller.ex:15
+msgid "Hello %{name}!"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/controllers/auth_controller.ex:19
+msgid "Hello %{name}!\nAs you don't have a premium account, the embedded audio player and all audio controls are disabled.\n"
 msgstr ""

@@ -6,17 +6,25 @@ defmodule TuneWeb.AuthController do
 
   plug Ueberauth
 
+  @spec callback(Plug.Conn.t(), any) :: Plug.Conn.t()
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     premium? = get_in(auth.extra.raw_info, [:user, "product"]) == "premium"
 
     conn =
       if premium? do
-        put_flash(conn, :info, "Hello #{auth.info.name}!")
+        message = gettext("Hello %{name}!", %{name: auth.info.name})
+        put_flash(conn, :info, message)
       else
-        put_flash(conn, :warning, """
-        Hello #{auth.info.name}!
-        As you don't have a premium account, the embedded audio player and all audio controls are disabled.
-        """)
+        message =
+          gettext(
+            """
+            Hello %{name}!
+            As you don't have a premium account, the embedded audio player and all audio controls are disabled.
+            """,
+            %{name: auth.info.name}
+          )
+
+        put_flash(conn, :warning, message)
       end
 
     conn
@@ -37,6 +45,7 @@ defmodule TuneWeb.AuthController do
     render(conn, "new.html")
   end
 
+  @spec delete(Plug.Conn.t(), any) :: Plug.Conn.t()
   def delete(conn, _params) do
     conn
     |> put_flash(:info, gettext("Logged out"))
@@ -44,6 +53,7 @@ defmodule TuneWeb.AuthController do
     |> redirect(to: Routes.explorer_path(conn, :suggestions))
   end
 
+  @spec ensure_authenticated(Plug.Conn.t(), any) :: Plug.Conn.t()
   def ensure_authenticated(conn, _opts) do
     session = get_session(conn)
 
