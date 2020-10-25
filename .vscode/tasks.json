@@ -1,0 +1,132 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build",
+      "command": "mix",
+      "group": "build",
+      "args": [
+        "compile"
+      ],
+      "problemMatcher": [
+        "$mixCompileError",
+        "$mixCompileWarning"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Run All Tests",
+      "command": "mix test",
+      "type": "shell",
+      "group": "test",
+      "problemMatcher": [
+        "$mixCompileError",
+        "$mixCompileWarning",
+        "$mixTestFailure"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Set Focused Test",
+      "group": "test",
+      "type": "shell",
+      "command": "echo -n ${relativeFile}:${lineNumber} > ${workspaceRoot}/.vscode/TEST_FOCUS",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Clear Focused Test",
+      "group": "test",
+      "type": "shell",
+      "command": "rm ${workspaceRoot}/.vscode/TEST_FOCUS",
+      "presentation": {
+        "echo": true,
+        "reveal": "never",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Run Focused Test",
+      "command": "mix test $(cat ${workspaceRoot}/.vscode/TEST_FOCUS)",
+      "type": "shell",
+      "group": "test",
+      "problemMatcher": [
+        "$mixCompileError",
+        "$mixCompileWarning",
+        "$mixTestFailure"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Debug Focused Test",
+      "command": "iex -S mix test $(cat ${workspaceRoot}/.vscode/TEST_FOCUS)",
+      "type": "shell",
+      "group": "test",
+      "problemMatcher": [
+        "$mixCompileError",
+        "$mixCompileWarning",
+        "$mixTestFailure"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new"
+      }
+    },
+    {
+      "label": "Test Current File",
+      "command": "mix test ${relativeFile}",
+      "group": "test",
+      "type": "shell",
+      "problemMatcher": [
+        "$mixCompileError",
+        "$mixCompileWarning",
+        "$mixTestFailure"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Run Current Test at line",
+      "command": "mix test ${relativeFile}:${lineNumber}",
+      "group": "test",
+      "type": "shell",
+      "problemMatcher": [
+        "$mixCompileError",
+        "$mixCompileWarning",
+        "$mixTestFailure"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+  ]
+}
