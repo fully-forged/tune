@@ -10,7 +10,7 @@
     <title>Tune.Spotify.Session.HTTP — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
 
-    <script src="dist/sidebar_items-42a03ecf5f.js"></script>
+    <script src="dist/sidebar_items-adca90a218.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -84,8 +84,8 @@ interaction with the Spotify API.</p><h2 id="module-general-structure" class="se
   General structure
 </h2>
 <p>The state machine implements the <a href="Tune.Spotify.Session.html"><code class="inline">Tune.Spotify.Session</code></a> behaviour for its public API
-and uses <a href="https://hexdocs.pm/gen_state_machine/2.1.0/GenStateMachine.html"><code class="inline">GenStateMachine</code></a> to model its lifecycle.</p><p>If you're not familiar with the <code class="inline">gen_statem</code> behaviour (which powers
-<a href="https://hexdocs.pm/gen_state_machine/2.1.0/GenStateMachine.html"><code class="inline">GenStateMachine</code></a>), it's beneficial to read
+and uses <a href="https://hexdocs.pm/gen_state_machine/3.0.0/GenStateMachine.html"><code class="inline">GenStateMachine</code></a> to model its lifecycle.</p><p>If you're not familiar with the <code class="inline">gen_statem</code> behaviour (which powers
+<a href="https://hexdocs.pm/gen_state_machine/3.0.0/GenStateMachine.html"><code class="inline">GenStateMachine</code></a>), it's beneficial to read
 <a href="http://erlang.org/doc/design_principles/statem.html">http://erlang.org/doc/design_principles/statem.html</a> before proceeding
 further.</p><p>The state machine uses the <code class="inline">handle_event_function</code> callback mode and has 3
 states: <code class="inline">:not_authenticated</code>, <code class="inline">:authenticated</code> and <code class="inline">:expired</code>.</p><pre><code class="nohighlight makeup elixir"><span class="w">                              </span><span class="err">┌</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">─</span><span class="err">┐</span><span class="w">
@@ -187,14 +187,7 @@ irrespectively of state changes.</p>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#callback_mode/0">callback_mode()</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#child_spec/1">child_spec(arg)</a>
+    <a href="#child_spec/1">child_spec(init_arg)</a>
 
   </div>
 
@@ -291,23 +284,6 @@ Types
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="callback_mode/0">
-
-  <div class="detail-header">
-    <a href="#callback_mode/0" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">callback_mode()</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-
-  </section>
-</section>
 <section class="detail" id="child_spec/1">
 
   <div class="detail-header">
@@ -315,14 +291,14 @@ Functions
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">child_spec(arg)</h1>
+    <h1 class="signature">child_spec(init_arg)</h1>
 
 
   </div>
 
   <section class="docstring">
 
-<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a> in Elixir v1.6+.</p>
+<p>Returns a specification to start this module under a supervisor.</p><p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
   </section>
 </section>
 <section class="detail" id="start_link/1">
