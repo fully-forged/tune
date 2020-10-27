@@ -47,7 +47,7 @@ defmodule Tune.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:ueberauth_spotify, "~> 0.2.1"},
       {:finch, "~> 0.5.0"},
-      {:gen_state_machine, "~> 2.1"},
+      {:gen_state_machine, "~> 3.0"},
       {:vapor, "~> 0.10.0"},
       {:anonymous_name_generator, "~> 0.1.3"},
       {:slugify, "~> 1.3"},
