@@ -16,15 +16,15 @@
           <%= content_tag :h1, @artist.name %>
           <%= content_tag :p, total_albums(@artist) %>
           <div class="reference-links">
-            <%= link to: wikipedia_link(@artist), target: "_blank", class: "svg-link wikipedia" do %>
+            <%= link to: Link.wikipedia(@artist), target: "_blank", class: "svg-link wikipedia" do %>
               <%= render "icon_wikipedia.html", [] %>
               <%= content_tag :span, gettext("Open in Wikipedia"), class: "visually-hidden" %>
             <% end %>
-            <%= link to: last_fm_link(@artist), target: "_blank", class: "svg-link last-fm" do %>
+            <%= link to: Link.last_fm(@artist), target: "_blank", class: "svg-link last-fm" do %>
               <%= render TuneWeb.TrackView, "icon_last_fm.html", [] %>
               <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
             <% end %>
-            <%= link to: youtube_link(@artist), target: "_blank", class: "svg-link youtube" do %>
+            <%= link to: Link.youtube(@artist), target: "_blank", class: "svg-link youtube" do %>
               <%= render TuneWeb.TrackView, "icon_youtube.html", [] %>
               <%= content_tag :span, gettext("Open in YouTube"), class: "visually-hidden" %>
             <% end %>

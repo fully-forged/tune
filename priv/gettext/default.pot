@@ -231,7 +231,7 @@ msgid "Set volume"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/views/artist_view.ex:46
+#: lib/tune_web/views/artist_view.ex:25
 msgid "1 album"
 msgid_plural "%{count} albums"
 msgstr[0] ""

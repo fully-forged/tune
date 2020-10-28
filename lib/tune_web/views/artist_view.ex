@@ -6,33 +6,12 @@ defmodule TuneWeb.ArtistView do
   @default_medium_thumbnail "https://via.placeholder.com/150"
 
   alias Tune.Spotify.Schema.{Album, Artist}
+  alias Tune.Link
   alias TuneWeb.PaginationView
 
   @spec artwork(Artist.t()) :: String.t()
   defp artwork(%Artist{thumbnails: thumbnails}),
     do: Map.get(thumbnails, :medium, @default_artwork)
-
-  @spec wikipedia_link(Artist.t()) :: String.t()
-  defp wikipedia_link(artist) do
-    Path.join([
-      "https://en.wikipedia.org/wiki",
-      artist.name <> "_(band)"
-    ])
-  end
-
-  @spec last_fm_link(Artist.t()) :: String.t()
-  defp last_fm_link(artist) do
-    Path.join([
-      "https://www.last.fm/music",
-      URI.encode(artist.name)
-    ])
-  end
-
-  @spec youtube_link(Artist.t()) :: String.t()
-  defp youtube_link(artist) do
-    q = [search_query: artist.name]
-    "https://www.youtube.com/results?" <> URI.encode_query(q)
-  end
 
   @spec thumbnail(Album.t()) :: String.t()
   defp thumbnail(%Album{thumbnails: thumbnails}) do
