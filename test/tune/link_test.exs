@@ -129,12 +129,21 @@ defmodule Tune.LinkTest do
         assert track_uri.host == "www.musixmatch.com"
 
         assert track_uri.path =~ "/lyrics/"
-        unsafe_characters = ~w(< > # % { } | \ ^ ~ [ ] ` ' ’ ")
+        unsafe_characters = ~w(< > # % \( \) { } | \ ^ ~ [ ] ` ' ’ ")
 
         for unsafe_character <- unsafe_characters do
           refute String.contains?(track_uri.path, unsafe_character)
         end
       end
+    end
+
+    test "edge cases" do
+      track = pick(Generators.track())
+      main_artist = Album.main_artist(track.album)
+
+      track = %{track | name: "(-)"}
+
+      assert is_binary(Link.musixmatch(track, main_artist))
     end
   end
 end

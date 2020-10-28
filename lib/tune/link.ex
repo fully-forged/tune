@@ -71,10 +71,11 @@ defmodule Tune.Link do
     ])
   end
 
-  @unsafe_characters ~w(< > # % { } | \ ^ ~ [ ] ` ' ’ ")
+  @unsafe_characters ~w(< > # % { } \( \) | \ ^ ~ [ ] ` ' ’ ")
   defp parameterize(s) do
     s
     |> String.replace(@unsafe_characters, "-")
-    |> Slug.slugify(lowercase: false, separator: ?-)
+    |> Slug.slugify(lowercase: false, separator: ?-, ignore: ["-"])
+    |> Kernel.||("")
   end
 end
