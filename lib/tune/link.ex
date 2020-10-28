@@ -1,4 +1,8 @@
 defmodule Tune.Link do
+  @moduledoc """
+  Provides functions to generate integration links from tracks, artists and albums.
+  """
+
   alias Tune.Spotify.Schema.{Album, Artist, Track}
 
   @spec last_fm(Album.t() | Artist.t()) :: String.t()
