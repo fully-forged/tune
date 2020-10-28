@@ -3,6 +3,7 @@ Tune.Auth.html
 Tune.Config.html
 Tune.Duration.html
 Tune.Gettext.html
+Tune.Link.html
 Tune.Spotify.Client.HTTP.html
 Tune.Spotify.Client.html
 Tune.Spotify.Schema.Album.html
@@ -29,8 +30,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-c333e4bd83.js
-dist/sidebar_items-adca90a218.js
+dist/search_items-91d925ce26.js
+dist/sidebar_items-7be82b9d27.js
 index.html
 readme.html
 search.html
