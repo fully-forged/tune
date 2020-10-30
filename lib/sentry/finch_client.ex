@@ -1,4 +1,8 @@
 defmodule Sentry.FinchClient do
+  @moduledoc """
+  Defines a small shim to use `Finch` as a `Sentry.HTTPClient`.
+  """
+
   @behaviour Sentry.HTTPClient
 
   def child_spec do
