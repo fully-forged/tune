@@ -168,3 +168,9 @@ kbd {
     font-size: 1.4em;
   }
 }
+
+@media (max-width: 768px) {
+  .button-small {
+    padding: 0 0.8rem;
+  }
+}

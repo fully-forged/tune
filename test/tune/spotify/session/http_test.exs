@@ -565,7 +565,7 @@ defmodule Tune.Spotify.Session.HTTPTest do
 
         # Get an artist's albums
 
-        opts = [limit: 10, offset: 0]
+        opts = [limit: 10, offset: 0, album_group: :all]
 
         expect_get_artist_albums(credentials.token, artist_id, albums, opts)
 

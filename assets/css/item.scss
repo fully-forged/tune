@@ -47,6 +47,16 @@
     border-bottom: 1px solid lighten($text-color, 40%);
     margin-top: 2rem;
   }
+
+  .filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .button {
+      margin-bottom: 0;
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -79,6 +89,14 @@
 
       .reference-links {
         justify-content: center;
+        margin-top: 1rem;
+      }
+    }
+
+    .filters {
+      flex-direction: column;
+
+      .pagination {
         margin-top: 1rem;
       }
     }
