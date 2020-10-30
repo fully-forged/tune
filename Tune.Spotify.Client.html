@@ -10,7 +10,7 @@
     <title>Tune.Spotify.Client — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
 
-    <script src="dist/sidebar_items-7be82b9d27.js"></script>
+    <script src="dist/sidebar_items-4d9080a8aa.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -97,6 +97,20 @@ Tune.Spotify.Client <small>behaviour</small> <small class="app-vsn">(tune v0.1.0
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#t:album_group/0">album_group()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:get_artist_albums_options/0">get_artist_albums_options()</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#t:item_type/0">item_type()</a>
 
   </div>
@@ -181,7 +195,7 @@ Tune.Spotify.Client <small>behaviour</small> <small class="app-vsn">(tune v0.1.0
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#c:get_artist_albums/3">get_artist_albums(token, artist_id, pagination_options)</a>
+    <a href="#c:get_artist_albums/3">get_artist_albums(token, artist_id, get_artist_albums_options)</a>
 
   </div>
 
@@ -341,6 +355,56 @@ Tune.Spotify.Client <small>behaviour</small> <small class="app-vsn">(tune v0.1.0
 Types
           </h1>
           <div class="types-list">
+<section class="detail" id="t:album_group/0">
+
+  <div class="detail-header">
+    <a href="#t:album_group/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">album_group()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>album_group() :: :all | :album | :single | :appears_on | :compilation</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="t:get_artist_albums_options/0">
+
+  <div class="detail-header">
+    <a href="#t:get_artist_albums_options/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">get_artist_albums_options()</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_artist_albums_options() :: [
+  {:album_group, <a href="#t:album_group/0">album_group</a>()} | <a href="#t:pagination_option/0">pagination_option</a>()
+]</pre>
+
+      </div>
+
+
+  </section>
+</section>
 <section class="detail" id="t:item_type/0">
 
   <div class="detail-header">
@@ -643,7 +707,7 @@ Callbacks
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this callback</span>
     </a>
-    <h1 class="signature">get_artist_albums(token, artist_id, pagination_options)</h1>
+    <h1 class="signature">get_artist_albums(token, artist_id, get_artist_albums_options)</h1>
 
 
   </div>
@@ -656,7 +720,7 @@ Callbacks
           <pre>get_artist_albums(
   <a href="#t:token/0">token</a>(),
   artist_id :: <a href="Tune.Spotify.Schema.Artist.html#t:id/0">Tune.Spotify.Schema.Artist.id</a>(),
-  <a href="#t:pagination_options/0">pagination_options</a>()
+  <a href="#t:get_artist_albums_options/0">get_artist_albums_options</a>()
 ) ::
   {:ok, %{albums: [<a href="Tune.Spotify.Schema.Album.html#t:t/0">Tune.Spotify.Schema.Album.t</a>()], total: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()}}
   | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
