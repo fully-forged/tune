@@ -53,17 +53,18 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:439
+#: lib/tune_web/live/explorer_live.ex:453
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:443
+#: lib/tune_web/live/explorer_live.ex:457
 msgid "Spotify error: %{reason}"
 msgstr ""
 
 #, elixir-format
 #: lib/tune_web/templates/header/search.html.eex:8
+#: lib/tune_web/views/artist_view.ex:31
 msgid "Album"
 msgstr ""
 
@@ -267,27 +268,27 @@ msgid "The app has been updated."
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:392
+#: lib/tune_web/live/explorer_live.ex:400
 msgid "Album details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:399
+#: lib/tune_web/live/explorer_live.ex:407
 msgid "Album details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:368
+#: lib/tune_web/live/explorer_live.ex:374
 msgid "Artist details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:383
+#: lib/tune_web/live/explorer_live.ex:391
 msgid "Artist details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:426
+#: lib/tune_web/live/explorer_live.ex:434
 msgid "Episode details"
 msgstr ""
 
@@ -297,27 +298,27 @@ msgid "Home"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:321
+#: lib/tune_web/live/explorer_live.ex:322
 msgid "Search results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:335
+#: lib/tune_web/live/explorer_live.ex:336
 msgid "Search results for %{q}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:408
+#: lib/tune_web/live/explorer_live.ex:416
 msgid "Show details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:417
+#: lib/tune_web/live/explorer_live.ex:425
 msgid "Show details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:288
+#: lib/tune_web/live/explorer_live.ex:289
 msgid "Suggestions"
 msgstr ""
 
@@ -399,4 +400,24 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/controllers/auth_controller.ex:19
 msgid "Hello %{name}!\nAs you don't have a premium account, the embedded audio player and all audio controls are disabled.\n"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/artist_view.ex:30
+msgid "All"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/artist_view.ex:33
+msgid "Appears On"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/artist_view.ex:34
+msgid "Compilation"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/artist_view.ex:32
+msgid "Single"
 msgstr ""

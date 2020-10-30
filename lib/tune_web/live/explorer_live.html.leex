@@ -46,7 +46,13 @@
       <% :album_details -> %>
         <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
       <% :artist_details -> %>
-        <%= render ArtistView, "show.html", artist: @item, now_playing: @now_playing, page: @page, per_page: @per_page, socket: @socket %>
+        <%= render ArtistView, "show.html",
+              artist: @item,
+              now_playing: @now_playing,
+              page: @page,
+              per_page: @per_page,
+              artist_albums_group: @artist_albums_group,
+              socket: @socket %>
       <% :show_details -> %>
         <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
       <% action when action in [:episode_details] -> %>

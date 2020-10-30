@@ -303,12 +303,19 @@ defmodule Tune.Spotify.Client.HTTP do
   def get_artist_albums(token, artist_id, opts) do
     limit = Keyword.get(opts, :limit, @default_limit)
     offset = Keyword.get(opts, :offset, @default_offset)
+    album_group = Keyword.get(opts, :album_group, :all)
 
     params = %{
       market: "from_token",
       limit: limit,
       offset: offset
     }
+
+    params =
+      case album_group do
+        :all -> params
+        other_group -> Map.put(params, :include_groups, other_group)
+      end
 
     case json_get(
            @base_url <> "/artists/" <> artist_id <> "/albums" <> "?" <> URI.encode_query(params),

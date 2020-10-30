@@ -61,6 +61,7 @@ defmodule TuneWeb.ExplorerLive do
     user: nil,
     now_playing: %Player{},
     item: :not_fetched,
+    artist_albums_group: :all,
     per_page: 24,
     page: 1,
     suggestions_playlist: :not_fetched,
@@ -353,6 +354,11 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp handle_artist_details(%{"artist_id" => artist_id} = params, _url, socket) do
+    album_group =
+      params
+      |> Map.get("album_group", "all")
+      |> parse_album_group()
+
     page =
       params
       |> Map.get("page", "1")
@@ -371,13 +377,15 @@ defmodule TuneWeb.ExplorerLive do
          {:ok, %{albums: albums, total: total_albums}} <-
            spotify_session().get_artist_albums(socket.assigns.session_id, artist_id,
              limit: limit,
-             offset: offset
+             offset: offset,
+             album_group: album_group
            ) do
       artist = %{artist | albums: albums, total_albums: total_albums}
 
       {:noreply,
        assign(socket, %{
          item: artist,
+         artist_albums_group: album_group,
          page: page,
          per_page: limit,
          page_title: gettext("Artist details for %{name}", %{name: artist.name})
@@ -432,6 +440,12 @@ defmodule TuneWeb.ExplorerLive do
   defp parse_type("artist"), do: :artist
   defp parse_type("episode"), do: :episode
   defp parse_type("show"), do: :show
+
+  defp parse_album_group("all"), do: :all
+  defp parse_album_group("album"), do: :album
+  defp parse_album_group("single"), do: :single
+  defp parse_album_group("appears_on"), do: :appears_on
+  defp parse_album_group("compilation"), do: :compilation
 
   defp handle_spotify_session_result(:ok, socket), do: {:noreply, socket}
 

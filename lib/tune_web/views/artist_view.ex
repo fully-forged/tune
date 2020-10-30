@@ -24,4 +24,14 @@ defmodule TuneWeb.ArtistView do
   defp total_albums(artist) do
     ngettext("1 album", "%{count} albums", artist.total_albums)
   end
+
+  defp album_groups do
+    [
+      all: gettext("All"),
+      album: gettext("Album"),
+      single: gettext("Single"),
+      appears_on: gettext("Appears On"),
+      compilation: gettext("Compilation")
+    ]
+  end
 end
