@@ -45,6 +45,8 @@ defmodule Tune.Spotify.Client do
           }
         }
   @type top_tracks_options :: [{:time_range, String.t()} | pagination_option()]
+  @type album_group :: :all | :album | :single | :appears_on | :compilation
+  @type get_artist_albums_options :: [{:album_group, album_group()} | pagination_option()]
 
   ## AUTH/PROFILE
   @callback get_profile(token()) :: {:ok, User.t()} | {:error, term()}
@@ -68,7 +70,7 @@ defmodule Tune.Spotify.Client do
   ## CONTENT
   @callback get_album(token(), album_id :: Album.id()) :: {:ok, Album.t()} | {:error, term()}
   @callback get_artist(token(), artist_id :: Artist.id()) :: {:ok, Artist.t()} | {:error, term()}
-  @callback get_artist_albums(token(), artist_id :: Artist.id(), pagination_options()) ::
+  @callback get_artist_albums(token(), artist_id :: Artist.id(), get_artist_albums_options()) ::
               {:ok, %{albums: [Album.t()], total: pos_integer()}} | {:error, term()}
   @callback get_episodes(token(), show_id :: Show.id()) :: {:ok, [Episode.t()]} | {:error, term()}
   @callback get_playlist(token(), playlist_id :: Playlist.id()) :: {:ok, map()} | {:error, term()}
