@@ -92,7 +92,7 @@ jobs:
         mix deps.get
 
     - name: Run Tests
-      run: mix test
+      run: mix test --timeout 120000
       env:
         CI: "true"
 
