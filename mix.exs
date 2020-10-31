@@ -95,7 +95,8 @@ defmodule Tune.MixProject do
         Authentication: ~r/Auth/,
         UI: TuneWeb.ExplorerLive,
         Routing: TuneWeb.Router.Helpers,
-        Core: [Tune.Config, Tune.Gettext, Tune.Duration]
+        Core: [Tune.Config, Tune.Gettext, Tune.Duration],
+        Integrations: Tune.Link
       ]
     ]
   end

@@ -1,6 +1,10 @@
 defmodule Tune.Link do
   @moduledoc """
   Provides functions to generate integration links from tracks, artists and albums.
+
+  Implementations are extremely naive and rely on building URLs from metadata,
+  but there are times when they simply don't work, particularly with titles
+  that have suffixes like "2017 remaster" or "feat. another artist name".
   """
 
   alias Tune.Spotify.Schema.{Album, Artist, Track}
