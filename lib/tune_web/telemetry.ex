@@ -53,16 +53,24 @@ defmodule TuneWeb.Telemetry do
       summary("vm.total_run_queue_lengths.cpu"),
       summary("vm.total_run_queue_lengths.io"),
 
-      # HTTP
+      # HTTP - Spotify
       summary("finch.request.stop.duration",
         unit: {:native, :millisecond},
         tags: [:normalized_path],
-        tag_values: &add_normalized_path/1
+        tag_values: &add_normalized_path/1,
+        keep: &keep_spotify/1,
+        reporter_options: [
+          nav: "HTTP - Spotify"
+        ]
       ),
       summary("finch.response.stop.duration",
         unit: {:native, :millisecond},
         tags: [:normalized_path],
-        tag_values: &add_normalized_path/1
+        tag_values: &add_normalized_path/1,
+        keep: &keep_spotify/1,
+        reporter_options: [
+          nav: "HTTP - Spotify"
+        ]
       )
     ]
   end
@@ -77,5 +85,9 @@ defmodule TuneWeb.Telemetry do
 
   defp add_normalized_path(metadata) do
     Map.put(metadata, :normalized_path, URI.parse(metadata.path).path)
+  end
+
+  defp keep_spotify(meta) do
+    meta.host =~ "spotify"
   end
 end
