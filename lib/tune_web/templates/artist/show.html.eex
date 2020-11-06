@@ -44,7 +44,7 @@
             <%= render PaginationView, "selector.html",
                 pagination_opts: PaginationView.pagination_opts(@page, @per_page, @artist.total_albums),
                 url_fn: fn(current_page, per_page) ->
-                  Routes.explorer_path(@socket, :artist_details, @artist.id, page: current_page, per_page: per_page)
+                  Routes.explorer_path(@socket, :artist_details, @artist.id, album_group: @artist_album_group, page: current_page, per_page: per_page)
                 end %>
           <% end %>
         </div>
