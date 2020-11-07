@@ -15,6 +15,10 @@
           <%= gettext("Toggle help") %>
         </li>
         <li>
+          <kbd>h</kbd>
+          <%= gettext("Home") %>
+        </li>
+        <li>
           <kbd>/</kbd>
           <%= gettext("Search") %>
         </li>

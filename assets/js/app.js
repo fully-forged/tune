@@ -90,6 +90,7 @@ Hooks.AudioPlayer = {
 
 Hooks.GlobalShortcuts = {
   mounted() {
+    const logo = document.querySelector(".logo a");
     const modal = document.querySelector("#help");
     const modalOverlay = document.querySelector("#modal-overlay");
     const closeButton = document.querySelector("#close-button");
@@ -125,6 +126,9 @@ Hooks.GlobalShortcuts = {
           break;
         case "s":
           this.pushEvent("dec_volume", {});
+          break;
+        case "h":
+          logo.click();
           break;
         case "?":
           modal.classList.toggle("closed");

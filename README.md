@@ -80,6 +80,7 @@ Tune differs in these areas:
 ### Keyboard shortcuts
 
 - <kbd>Space</kbd>: Play/Pause
+- <kbd>h</kbd>: Home
 - <kbd>a</kbd>: Prev
 - <kbd>d</kbd>: Next
 - <kbd>w</kbd>: Volume up
