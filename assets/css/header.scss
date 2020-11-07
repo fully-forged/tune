@@ -73,6 +73,19 @@ $logo-dimension: 4rem;
   }
 }
 
+#q {
+  width: 10rem;
+  transition: width 0.5s ease-in-out;
+
+  &:focus {
+    width: 32rem;
+  }
+}
+
+#type {
+  max-width: 10rem;
+}
+
 @media (max-width: 1024px) {
   #navbar {
     grid-template-columns: $logo-dimension 8fr 4fr;
@@ -107,8 +120,22 @@ $logo-dimension: 4rem;
     button {
       font-size: 1.2rem;
     }
+  }
 
-    input {
+  #q {
+    width: 20rem;
+
+    &:focus {
+      width: 20rem;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  #q {
+    width: 12rem;
+
+    &:focus {
       width: 12rem;
     }
   }
