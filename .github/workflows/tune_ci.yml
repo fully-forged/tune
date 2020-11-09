@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        elixir: ['1.11.1']
+        elixir: ['1.11.2']
         otp: ['23.1.2']
 
     steps:
@@ -65,7 +65,7 @@ jobs:
 
     strategy:
       matrix:
-        elixir: ['1.11.1']
+        elixir: ['1.11.2']
         otp: ['23.1.2']
 
     steps:
@@ -102,7 +102,7 @@ jobs:
 
     strategy:
       matrix:
-        elixir: ['1.11.1']
+        elixir: ['1.11.2']
         otp: ['23.1.2']
 
     needs: [lint, test]
