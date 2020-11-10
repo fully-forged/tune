@@ -5,19 +5,12 @@ defmodule Sentry.FinchClient do
 
   @behaviour Sentry.HTTPClient
 
+  @impl true
   def child_spec do
-    opts = [name: Sentry.Finch]
-
-    Supervisor.child_spec(
-      %{
-        id: __MODULE__,
-        start: {Finch, :start_link, [opts]},
-        type: :supervisor
-      },
-      []
-    )
+    Finch.child_spec(name: Sentry.Finch)
   end
 
+  @impl true
   def post(url, headers, body) do
     request = Finch.build(:post, url, headers, body)
 
