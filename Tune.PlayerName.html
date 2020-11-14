@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.23.0">
     <meta name="project" content="tune v0.1.0">
 
-    <title>TuneWeb.AuthController — tune v0.1.0</title>
+    <title>Tune.PlayerName — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
 
     <script src="dist/sidebar_items-c01a155a35.js"></script>
@@ -72,13 +72,18 @@ tune
     <div id="content" class="content-inner">
 
       <h1>
-TuneWeb.AuthController <small class="app-vsn">(tune v0.1.0)</small>
+Tune.PlayerName <small class="app-vsn">(tune v0.1.0)</small>
 
       </h1>
 
 
         <section id="moduledoc">
-<p>Controls authentication via the Spotify API.</p>
+<p>This module contains logic to generate player names
+with a reasonable degree of entropy without the need of a stateful generator.</p><p>Player names are supposed to be unique for a given user/session. A user is
+likely to have &lt; 10 clients open at any given time.</p><p>To guarantee a unique player name, we start with a list of 250+ musical
+instruments. At generation time, we pick one random instrument and
+append a value derived from current time, rounded to the second.</p><p>Names are taken from a text list stored in priv/name_generator/instruments.txt,
+copied from <a href="https://simple.wikipedia.org/wiki/List_of_musical_instruments.">https://simple.wikipedia.org/wiki/List_of_musical_instruments.</a></p>
         </section>
 
 
@@ -97,30 +102,11 @@ TuneWeb.AuthController <small class="app-vsn">(tune v0.1.0)</small>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#callback/2">callback(conn, params)</a>
+    <a href="#random_slug/0">random_slug()</a>
 
   </div>
 
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#delete/2">delete(conn, params)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#ensure_authenticated/2">ensure_authenticated(conn, opts)</a>
-
-  </div>
-
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#new/2">new(conn, params)</a>
-
-  </div>
+    <div class="summary-synopsis"><p>Pick an instrument at random and return it in slug form.</p></div>
 
 </div>
 
@@ -138,14 +124,14 @@ TuneWeb.AuthController <small class="app-vsn">(tune v0.1.0)</small>
 Functions
           </h1>
           <div class="functions-list">
-<section class="detail" id="callback/2">
+<section class="detail" id="random_slug/0">
 
   <div class="detail-header">
-    <a href="#callback/2" class="detail-link" title="Link to this function">
+    <a href="#random_slug/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">callback(conn, params)</h1>
+    <h1 class="signature">random_slug()</h1>
 
 
   </div>
@@ -155,76 +141,11 @@ Functions
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>callback(<a href="https://hexdocs.pm/plug/1.11.0/Plug.Conn.html#t:t/0">Plug.Conn.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/plug/1.11.0/Plug.Conn.html#t:t/0">Plug.Conn.t</a>()</pre>
+          <pre>random_slug() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
 
       </div>
 
-
-  </section>
-</section>
-<section class="detail" id="delete/2">
-
-  <div class="detail-header">
-    <a href="#delete/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">delete(conn, params)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>delete(<a href="https://hexdocs.pm/plug/1.11.0/Plug.Conn.html#t:t/0">Plug.Conn.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/plug/1.11.0/Plug.Conn.html#t:t/0">Plug.Conn.t</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="ensure_authenticated/2">
-
-  <div class="detail-header">
-    <a href="#ensure_authenticated/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">ensure_authenticated(conn, opts)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-      <h2>Specs</h2>
-      <div class="specs">
-
-          <pre>ensure_authenticated(<a href="https://hexdocs.pm/plug/1.11.0/Plug.Conn.html#t:t/0">Plug.Conn.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()) :: <a href="https://hexdocs.pm/plug/1.11.0/Plug.Conn.html#t:t/0">Plug.Conn.t</a>()</pre>
-
-      </div>
-
-
-  </section>
-</section>
-<section class="detail" id="new/2">
-
-  <div class="detail-header">
-    <a href="#new/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">new(conn, params)</h1>
-
-
-  </div>
-
-  <section class="docstring">
-
-
+<p>Pick an instrument at random and return it in slug form.</p>
   </section>
 </section>
 
