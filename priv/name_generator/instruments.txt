@@ -1,0 +1,254 @@
+Accordion
+Bagpipes
+Banjo
+Banjo cello
+Bass banjo
+Five-stringed banjo
+Bluegrass banjo
+Four-stringed banjo
+Plectrum banjo
+Six-stringed banjo
+Tenor banjo
+Zither banjo
+Bass guitar
+Bassoon
+Contrabassoon/double bassoon
+Tenoroon
+Berimbau
+Bongo
+Cello
+Clarinet
+Alto clarinet
+Bass clarinet
+Basset clarinet
+Basset horn
+Clarinette d'amour
+Contra-alto clarinet
+Contrabass clarinet
+Piccolo clarinet
+A♭ clarinet
+Sopranino clarinet
+E♭ clarinet
+D clarinet
+Soprano clarinet
+C clarinet
+B♭ clarinet
+A clarinet
+G clarinet
+Octocontra-alto clarinet
+Octocontrabass clarinet
+Clavichord
+Cor anglais
+Cornet
+Cymbal
+Dhime
+Didgeridoo
+Dizi
+Double bass
+Drum kit
+Erhu
+Euphonium
+Fiddle
+Flute
+Alto flute
+Bass flute
+Contra-alto flute
+Contrabass flute
+Subcontrabass flute
+Double contrabass flute
+Hyperbass flute
+French horn
+Glass harmonica
+Glockenspiel
+Gong
+Guitar
+Acoustic guitar
+Baritone guitar
+Bass guitar
+Chitarra battente
+Cigar box guitar
+Classical guitar
+Electric guitar
+Electric bass guitar
+Extended-range guitars
+Alto guitar
+Seven-string guitar
+Eight-string guitar
+Ten-string guitar
+Harp guitar
+Flamenco guitar
+Fusetar
+Guitarra quinta huapanguera
+Guitar synthesizer
+Guitarrón (argentino)
+Guitarrón (chileno)
+Guitarrón (mexicano)
+Guitarrón (uruguayo)
+Gut-stringed guitars
+Lap steel guitars
+Dobro
+National Steel
+Multi-necked guitars
+Double-neck guitar
+Triple-neck guitar
+Quadruple-neck guitar
+Five-neck guitar
+Six-neck guitar
+Seven-neck guitar
+Eight-neck guitar
+Rock Ock
+Twelve-neck guitar
+Nine-string guitar
+Nylon-string guitars
+Octave guitar
+Pedal steel guitar
+Resophonic guitar
+Steel-string acoustic guitar
+Tenor guitar
+Terz guitar
+Twelve-string guitar
+Yotar
+Guqin
+Guzheng
+Hang
+Harmonica
+Chromatic harmonica
+Diatonic harmonica
+Tremolo harmonica
+Orchestral harmonica
+ChenGong harmonica
+Harmonium
+Harp
+Harpsichord
+Hammered dulcimer
+Hulusi
+Hurdy gurdy
+Jew’s harp
+Kalimba
+Lute
+Lyre
+Mandolin
+Mando-bass
+Mandocello
+Mandola
+Octave mandolin
+Marimba
+Melodica
+Oboe
+Bass/Baritone oboe
+Contrabass oboe
+Cor anglais/English horn
+Oboe d'amore
+Oboe da caccia
+Piccolo oboe/Oboe musette
+Ocarina
+Transverse ocarina
+Pendant ocarina
+Inline ocarina
+Multi chambered ocarina
+Keyed ocarina
+Slide ocarina
+Octobass
+Organ
+Otamatone
+Oud
+Pan Pipes
+Panduri
+Pennywhistle
+Piano
+Piccolo
+Pipa
+Pungi
+Recorder
+Garklein
+Sopranino
+Descant
+Treble or alto
+Tenor
+Bass
+Great bass
+Contra bass
+Subcontra bass
+Sub-subcontrabass
+Venova
+Santoor
+Sarod
+Saxophone
+Alto saxophone
+Baritone saxophone
+Bass saxophone
+C melody saxophone
+C Soprano saxophone
+Contrabass saxophone
+Mezzo-soprano saxophone (Alto in F)
+Sopranino saxophone
+Soprano saxophone
+Soprillo
+Subcontrabass saxophone
+Tenor saxophone
+Tubax
+Venova
+Xaphoon
+Shehnai
+Sheng
+Sitar
+Steelpan
+Suona
+Synthesizer
+Tabla
+Tambourine
+Timpani
+Triangle
+Trombone
+Sopranino trombone
+Soprano trombone
+Alto trombone
+Tenor trombone
+Bass trombone
+Contrabass trombone
+Valve trombone
+Renaissance trombone
+Trumpet
+Soprano trumpet
+Bass trumpet
+Baroque trumpet
+Bass trumpet
+Rotary valve trumpet
+Theremin
+Tuba
+Bass tuba
+Contrabass tuba
+Subcontrabass tuba
+Ukulele
+Pocket ukulele
+Soprano ukulele
+Concert ukulele
+Tenor ukulele
+Eight-string tenor
+Five-string tenor
+Lili'u
+Six-string tenor
+Baritone ukulele
+Bass ukulele
+Contrabass ukulele
+U-bass
+Cigar box ukulele
+Viola
+Violin
+Piccolo violino
+Viola
+Viola d'amore
+Tenor viola
+Tenor violin
+Baritone violin
+Electric violin
+Cello (violoncello)
+Piccolo cello
+Vocal cords
+Whamola
+Xylophone
+Zither
+Alpine zither (harp zither)
+Concert zither
+Guitar zither
+Overtone zither

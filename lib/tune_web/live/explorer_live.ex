@@ -502,6 +502,6 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp generate_player_id do
-    "Tune " <> AnonymousNameGenerator.generate_random()
+    "tune-" <> Tune.PlayerName.random_slug()
   end
 end
