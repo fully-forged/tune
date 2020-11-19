@@ -10,7 +10,7 @@
     <title>Tune.Spotify.Session — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
 
-    <script src="dist/sidebar_items-c01a155a35.js"></script>
+    <script src="dist/sidebar_items-fc16f88372.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -313,6 +313,13 @@ the mechanism used to notify other processes of changes in the session state.</p
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:subscribe/1">subscribe(id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:subscribers_count/1">subscribers_count(id)</a>
 
   </div>
 
@@ -1107,6 +1114,30 @@ Callbacks
       <div class="specs">
 
           <pre>subscribe(<a href="#t:id/0">id</a>()) :: :ok | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:subscribers_count/1">
+
+  <div class="detail-header">
+    <a href="#c:subscribers_count/1" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">subscribers_count(id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>subscribers_count(<a href="#t:id/0">id</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pos_integer</a>()</pre>
 
       </div>
 
