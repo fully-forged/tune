@@ -48,7 +48,13 @@ defmodule TuneWeb.LiveDashboard.SpotifySessionsPage do
     ]
   end
 
-  defp filter(clients_count, _params) do
+  defp filter(clients_count, params) do
     clients_count
+    |> Enum.filter(fn session -> session_match?(session, params[:search]) end)
+    |> Enum.sort_by(fn session -> session[params[:sort_by]] end, params[:sort_dir])
+    |> Enum.take(params[:limit])
   end
+
+  defp session_match?(_session, nil), do: true
+  defp session_match?(session, search_string), do: String.contains?(session[:id], search_string)
 end
