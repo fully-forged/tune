@@ -19,9 +19,10 @@ defmodule TuneWeb.LiveDashboard.SpotifySessionsPage do
     )
   end
 
-  defp fetch_session_counts(params, _node) do
+  defp fetch_session_counts(params, node) do
     clients_count =
-      Tune.Spotify.Supervisor.clients_count()
+      node
+      |> :rpc.call(Tune.Spotify.Supervisor, :clients_count, [])
       |> filter(params)
 
     {clients_count, length(clients_count)}
