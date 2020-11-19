@@ -84,4 +84,5 @@ defmodule Tune.Spotify.Session do
   ## SUBSCRIPTIONS
   @callback broadcast(id(), message()) :: :ok | {:error, term()}
   @callback subscribe(id()) :: :ok | {:error, term()}
+  @callback subscribers_count(id()) :: pos_integer()
 end

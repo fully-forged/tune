@@ -59,7 +59,10 @@ defmodule TuneWeb.Router do
 
     live_dashboard "/dashboard",
       metrics: TuneWeb.Telemetry,
-      metrics_history: {TuneWeb.Telemetry.Storage, :metrics_history, []}
+      metrics_history: {TuneWeb.Telemetry.Storage, :metrics_history, []},
+      additional_pages: [
+        spotify_sessions: TuneWeb.LiveDashboard.SpotifySessionsPage
+      ]
   end
 
   defp admin_auth(conn, _opts) do
