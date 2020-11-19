@@ -164,6 +164,11 @@ defmodule Tune.Spotify.Session.HTTP do
   end
 
   @impl true
+  def subscribers_count(session_id) do
+    GenStateMachine.call(via(session_id), :subscribers_count)
+  end
+
+  @impl true
   def broadcast(session_id, message) do
     PubSub.broadcast(Tune.PubSub, session_id, message)
   end
@@ -433,6 +438,11 @@ defmodule Tune.Spotify.Session.HTTP do
     Process.monitor(pid)
     action = {:reply, from, :ok}
     {:keep_state, %{data | subscribers: new_subscribers}, action}
+  end
+
+  def handle_event({:call, from}, :subscribers_count, _state, data) do
+    action = {:reply, from, MapSet.size(data.subscribers)}
+    {:keep_state_and_data, action}
   end
 
   def handle_event({:call, from}, msg, :authenticated, data) do

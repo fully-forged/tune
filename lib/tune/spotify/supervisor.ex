@@ -35,4 +35,13 @@ defmodule Tune.Spotify.Supervisor do
     count = DynamicSupervisor.count_children(Tune.Spotify.SessionSupervisor)
     :telemetry.execute([:tune, :session, :count], count)
   end
+
+  def clients_count do
+    Tune.Spotify.SessionRegistry
+    |> Registry.select([{{:"$1", :"$2", :_}, [], [{{:"$1", :"$2"}}]}])
+    |> Enum.map(fn {id, pid} ->
+      subscribers_count = Tune.Spotify.Session.HTTP.subscribers_count(id)
+      %{id: id, pid: pid, clients_count: subscribers_count}
+    end)
+  end
 end
