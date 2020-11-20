@@ -20,12 +20,12 @@ defmodule TuneWeb.LiveDashboard.SpotifySessionsPage do
   end
 
   defp fetch_session_counts(params, node) do
-    clients_count =
+    sessions =
       node
-      |> :rpc.call(Tune.Spotify.Supervisor, :clients_count, [])
+      |> :rpc.call(Tune.Spotify.Supervisor, :sessions, [])
       |> filter(params)
 
-    {clients_count, length(clients_count)}
+    {Enum.take(sessions, params[:limit]), length(sessions)}
   end
 
   defp columns do
@@ -48,11 +48,10 @@ defmodule TuneWeb.LiveDashboard.SpotifySessionsPage do
     ]
   end
 
-  defp filter(clients_count, params) do
-    clients_count
+  defp filter(sessions, params) do
+    sessions
     |> Enum.filter(fn session -> session_match?(session, params[:search]) end)
     |> Enum.sort_by(fn session -> session[params[:sort_by]] end, params[:sort_dir])
-    |> Enum.take(params[:limit])
   end
 
   defp session_match?(_session, nil), do: true

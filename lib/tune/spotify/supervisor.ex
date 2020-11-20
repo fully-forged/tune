@@ -36,7 +36,7 @@ defmodule Tune.Spotify.Supervisor do
     :telemetry.execute([:tune, :session, :count], count)
   end
 
-  def clients_count do
+  def sessions do
     Tune.Spotify.SessionRegistry
     |> Registry.select([{{:"$1", :"$2", :_}, [], [{{:"$1", :"$2"}}]}])
     |> Enum.map(fn {id, pid} ->
