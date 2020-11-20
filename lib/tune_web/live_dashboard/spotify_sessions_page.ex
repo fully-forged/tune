@@ -13,13 +13,13 @@ defmodule TuneWeb.LiveDashboard.SpotifySessionsPage do
       columns: columns(),
       id: :spotify_sessions,
       row_attrs: &row_attrs/1,
-      row_fetcher: &fetch_session_counts/2,
+      row_fetcher: &fetch_sessions/2,
       rows_name: "sessions",
       title: "Spotify Sessions"
     )
   end
 
-  defp fetch_session_counts(params, node) do
+  defp fetch_sessions(params, node) do
     sessions =
       node
       |> :rpc.call(Tune.Spotify.Supervisor, :sessions, [])
