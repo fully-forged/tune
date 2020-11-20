@@ -40,10 +40,10 @@ defmodule TuneWeb.LiveDashboard.SpotifySessionsPage do
     ]
   end
 
-  defp row_attrs(table) do
+  defp row_attrs(session) do
     [
       {"phx-click", "show_info"},
-      {"phx-value-info", encode_pid(table[:pid])},
+      {"phx-value-info", encode_pid(session[:pid])},
       {"phx-page-loading", true}
     ]
   end
