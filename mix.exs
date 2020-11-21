@@ -36,10 +36,10 @@ defmodule Tune.MixProject do
   defp deps do
     [
       {:phoenix, "~> 1.5.3"},
-      {:phoenix_live_view, "~> 0.14.3"},
+      {:phoenix_live_view, "~> 0.15.0"},
       {:phoenix_html, "~> 2.11"},
       {:gettext, "~> 0.11"},
-      {:phoenix_live_dashboard, "~> 0.3.1"},
+      {:phoenix_live_dashboard, "~> 0.4.0"},
       {:circular_buffer, "~> 0.3.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
