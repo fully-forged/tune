@@ -24,7 +24,7 @@ defmodule TuneWeb.Telemetry do
     [
       # Tune Metrics
       summary("tune.session.count.active"),
-      counter("tune.spotify.api_error.count",
+      summary("tune.spotify.api_error.count",
         tags: [:error_type]
       ),
 
