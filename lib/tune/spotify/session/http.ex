@@ -103,7 +103,7 @@ defmodule Tune.Spotify.Session.HTTP do
   use GenStateMachine, restart: :transient
   @behaviour Tune.Spotify.Session
 
-  alias Tune.Spotify.{Session, SessionRegistry}
+  alias Tune.Spotify.{Schema, Session, SessionRegistry}
   alias Phoenix.PubSub
 
   @default_timeouts %{
@@ -115,7 +115,7 @@ defmodule Tune.Spotify.Session.HTTP do
   defstruct session_id: nil,
             credentials: nil,
             user: nil,
-            now_playing: :not_playing,
+            now_playing: %Schema.Player{},
             devices: [],
             subscribers: MapSet.new(),
             timeouts: @default_timeouts
