@@ -7,7 +7,7 @@ defmodule TuneWeb.Telemetry.Storage do
   @moduledoc false
   use GenServer
 
-  @history_buffer_size 500
+  @history_buffer_size 1000
 
   def metrics_history(metric) do
     GenServer.call(__MODULE__, {:data, metric})
