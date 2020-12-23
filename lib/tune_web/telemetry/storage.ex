@@ -1,5 +1,5 @@
 defmodule TuneWeb.Telemetry.Storage do
-  # Lifted from
+  # Lifted directly from
   # https://github.com/phoenixframework/phoenix_live_dashboard/blob/master/guides/metrics_history.md,
   # this module is responsible to keep an in-memory copy of recent telemetry
   # data.
@@ -22,10 +22,12 @@ defmodule TuneWeb.Telemetry.Storage do
     Process.flag(:trap_exit, true)
 
     metric_histories_map =
-      Enum.into(metrics, %{}, fn metric ->
+      metrics
+      |> Enum.map(fn metric ->
         attach_handler(metric)
         {metric, CircularBuffer.new(@history_buffer_size)}
       end)
+      |> Map.new()
 
     {:ok, metric_histories_map}
   end
