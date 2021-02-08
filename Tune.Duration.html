@@ -16,6 +16,7 @@
 
     <script async src="dist/app-60a0c9f10e9e52eae31f.js"></script>
 
+
   </head>
   <body data-type="modules">
     <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
@@ -196,14 +197,14 @@ Functions
   <section class="docstring">
 
 <p>Given a duration in milliseconds, returns a string with the duration formatted
-as hours, minutes and seconds, omitting units where appropriate.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="4148245273-1">(</span><span class="mi">5</span><span class="p" data-group-id="4148245273-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="4148245273-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4148245273-2">)</span><span class="w">
+as hours, minutes and seconds, omitting units where appropriate.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="4113961904-1">(</span><span class="mi">5</span><span class="p" data-group-id="4113961904-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="4113961904-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4113961904-2">)</span><span class="w">
 </span><span class="s">&quot;0:05&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="4148245273-3">(</span><span class="mi">61</span><span class="p" data-group-id="4148245273-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="4148245273-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4148245273-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="4113961904-3">(</span><span class="mi">61</span><span class="p" data-group-id="4113961904-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="4113961904-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4113961904-4">)</span><span class="w">
 </span><span class="s">&quot;1:01&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">hours</span><span class="p" data-group-id="4148245273-5">(</span><span class="mi">2</span><span class="p" data-group-id="4148245273-5">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="4148245273-6">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4148245273-6">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">hours</span><span class="p" data-group-id="4113961904-5">(</span><span class="mi">2</span><span class="p" data-group-id="4113961904-5">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">hms</span><span class="p" data-group-id="4113961904-6">(</span><span class="n">milliseconds</span><span class="p" data-group-id="4113961904-6">)</span><span class="w">
 </span><span class="s">&quot;2:00:00&quot;</span></code></pre>
   </section>
 </section>
@@ -229,12 +230,12 @@ as hours, minutes and seconds, omitting units where appropriate.</p><pre><code c
       </div>
 
 <p>Given a duration in milliseconds, returns a localized, human-readable
-representation of that duration.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="7680130698-1">(</span><span class="mi">100</span><span class="p" data-group-id="7680130698-1">)</span><span class="w">
-</span><span class="s">&quot;Less than a minute&quot;</span></code></pre><p>Durations are rounded to the minute:</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="6781781854-1">(</span><span class="mi">61</span><span class="p" data-group-id="6781781854-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="6781781854-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="6781781854-2">)</span><span class="w">
+representation of that duration.</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="5348749694-1">(</span><span class="mi">100</span><span class="p" data-group-id="5348749694-1">)</span><span class="w">
+</span><span class="s">&quot;Less than a minute&quot;</span></code></pre><p>Durations are rounded to the minute:</p><pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="8621689763-1">(</span><span class="mi">61</span><span class="p" data-group-id="8621689763-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="8621689763-2">(</span><span class="n">milliseconds</span><span class="p" data-group-id="8621689763-2">)</span><span class="w">
 </span><span class="s">&quot;1 minute&quot;</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="6781781854-3">(</span><span class="mi">95</span><span class="p" data-group-id="6781781854-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="6781781854-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="6781781854-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">milliseconds</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">:timer</span><span class="o">.</span><span class="n">seconds</span><span class="p" data-group-id="8621689763-3">(</span><span class="mi">95</span><span class="p" data-group-id="8621689763-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">Tune.Duration</span><span class="o">.</span><span class="n">human</span><span class="p" data-group-id="8621689763-4">(</span><span class="n">milliseconds</span><span class="p" data-group-id="8621689763-4">)</span><span class="w">
 </span><span class="s">&quot;2 minutes&quot;</span></code></pre>
   </section>
 </section>
@@ -277,6 +278,7 @@ representation of that duration.</p><pre><code class="nohighlight makeup elixir"
   </div>
 </section>
 </div>
+
 <style>
   .content-inner code {
     font-family: IBM Plex Mono, Fira Code, Inconsolata,Menlo,Courier,monospace;
