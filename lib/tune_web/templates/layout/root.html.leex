@@ -8,6 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <%= csrf_meta_tag() %>
     <%= live_title_tag assigns[:page_title] || gettext("Home"), suffix: " · Tune" %>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <link phx-track-static rel="icon" href="<%= Routes.static_path(@conn, "/favicon.ico") %>">
     <link phx-track-static rel="apple-touch-icon" href="<%= Routes.static_path(@conn, "/images/favicon-120.png") %>">
@@ -19,6 +20,6 @@
   <body onclick="">
     <%= @inner_content %>
     <%= render "help.html" %>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
   </body>
 </html>
