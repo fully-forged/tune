@@ -53,12 +53,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:453
+#: lib/tune_web/live/explorer_live.ex:467
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:457
+#: lib/tune_web/live/explorer_live.ex:471
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -288,11 +288,6 @@ msgid "Artist details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:434
-msgid "Episode details"
-msgstr ""
-
-#, elixir-format
 #: lib/tune_web/templates/layout/help.html.eex:19
 #: lib/tune_web/templates/layout/root.html.leex:10
 msgid "Home"
@@ -309,12 +304,12 @@ msgid "Search results for %{q}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:416
+#: lib/tune_web/live/explorer_live.ex:416 lib/tune_web/live/explorer_live.ex:434
 msgid "Show details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:425
+#: lib/tune_web/live/explorer_live.ex:425 lib/tune_web/live/explorer_live.ex:444
 msgid "Show details for %{name}"
 msgstr ""
 

@@ -430,9 +430,23 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
-  defp handle_episode_details(_params, _url, socket) do
-    socket = assign(socket, :page_title, gettext("Episode details"))
-    {:noreply, socket}
+  defp handle_episode_details(%{"episode_id" => episode_id}, _url, socket) do
+    socket = assign(socket, :page_title, gettext("Show details"))
+
+    with {:ok, episode} <- spotify_session().get_episode(socket.assigns.session_id, episode_id),
+         {:ok, episodes} <-
+           spotify_session().get_episodes(socket.assigns.session_id, episode.show.id) do
+      show = %{episode.show | episodes: episodes}
+
+      {:noreply,
+       assign(socket,
+         item: show,
+         page_title: gettext("Show details for %{name}", %{name: show.name})
+       )}
+    else
+      error ->
+        handle_spotify_session_result(error, socket)
+    end
   end
 
   defp parse_type("track"), do: :track

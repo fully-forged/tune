@@ -443,7 +443,7 @@ defmodule Tune.Spotify.Client.HTTP do
         episode =
           response.body
           |> Jason.decode!()
-          |> parse_episode()
+          |> parse_episode_with_metadata()
 
         {:ok, episode}
 
