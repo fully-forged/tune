@@ -2,12 +2,13 @@
 
 .episode-list {
   li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 2rem 4fr 1fr;
+    grid-template-areas:
+      "playing-indicator name duration"
+      "description description description";
     border-bottom: 1px solid lighten($text-color, 40%);
     margin-bottom: 0;
-    flex-wrap: wrap;
 
     &:hover {
       background-color: lighten($accent-color, 20%);
@@ -16,13 +17,17 @@
     }
 
     .playing-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-area: playing-indicator;
+      grid-row: 1 / span 2;
       min-width: 2rem;
-      text-align: right;
     }
 
     .name {
+      grid-area: name;
       margin: 0.5rem 1rem;
-      flex: 1;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -30,12 +35,16 @@
     }
 
     .duration {
-      margin-right: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      grid-area: duration;
+      margin: 0.5rem 1rem;
     }
 
     .description {
-      flex-grow: 1;
-      margin: 0 3rem 1rem 3rem;
+      grid-area: description;
+      margin: 0 3rem 0.5rem 3rem;
       font-size: 1.2rem;
     }
 
