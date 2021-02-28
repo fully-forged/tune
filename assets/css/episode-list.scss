@@ -27,7 +27,7 @@
 
     .name {
       grid-area: name;
-      margin: 0.5rem 1rem;
+      margin: 1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -44,8 +44,7 @@
 
     .description {
       grid-area: description;
-      margin: 0 3rem 0.5rem 3rem;
-      font-size: 1.2rem;
+      margin: 0 3rem 1rem 3rem;
     }
 
     &.playing {
