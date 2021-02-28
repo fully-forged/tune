@@ -5,7 +5,7 @@
 
   .details {
     display: grid;
-    grid-template-columns: max-content 4fr;
+    grid-template-columns: minmax(24rem, 1fr) 4fr;
     grid-template-areas: "artwork meta";
     column-gap: 2rem;
     margin-bottom: 2rem;
