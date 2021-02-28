@@ -249,6 +249,11 @@ defmodule Tune.Spotify.Session.HTTP do
   end
 
   @impl true
+  def get_episode(session_id, episode_id) do
+    GenStateMachine.call(via(session_id), {:get_episode, episode_id})
+  end
+
+  @impl true
   def get_episodes(session_id, show_id) do
     GenStateMachine.call(via(session_id), {:get_episodes, show_id})
   end
@@ -673,6 +678,20 @@ defmodule Tune.Spotify.Session.HTTP do
       {:ok, show} ->
         actions = [
           {:reply, from, {:ok, show}}
+        ]
+
+        {:keep_state_and_data, actions}
+
+      error ->
+        handle_common_errors(error, data, from)
+    end
+  end
+
+  defp handle_authenticated_call(from, {:get_episode, episode_id}, data) do
+    case spotify_client().get_episode(data.credentials.token, episode_id) do
+      {:ok, episode} ->
+        actions = [
+          {:reply, from, {:ok, episode}}
         ]
 
         {:keep_state_and_data, actions}

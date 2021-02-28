@@ -541,6 +541,10 @@ defmodule Tune.Spotify.Session.HTTPTest do
           %Show{id: id} ->
             expect_get_show(credentials.token, item)
             assert {:ok, item} == HTTP.get_show(session_id, id)
+
+          %Episode{id: id} ->
+            expect_get_episode(credentials.token, item)
+            assert {:ok, item} == HTTP.get_episode(session_id, id)
         end
       end
     end
@@ -835,6 +839,13 @@ defmodule Tune.Spotify.Session.HTTPTest do
 
     Client.Mock
     |> expect(:get_show, fn ^token, ^show_id -> {:ok, show} end)
+  end
+
+  defp expect_get_episode(token, episode) do
+    episode_id = episode.id
+
+    Client.Mock
+    |> expect(:get_episode, fn ^token, ^episode_id -> {:ok, episode} end)
   end
 
   defp expect_get_playlist(token, playlist) do

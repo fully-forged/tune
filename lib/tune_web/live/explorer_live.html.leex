@@ -55,10 +55,8 @@
               socket: @socket %>
       <% :show_details -> %>
         <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
-      <% action when action in [:episode_details] -> %>
-        <div class="full-screen-notice">
-          <p>Cannot display this item yet.</p>
-        </div>
+      <% :episode_details -> %>
+        <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
       <% end %>
     <%= live_component @socket, MiniPlayerComponent, player_id: @player_id, premium?: @premium?, now_playing: @now_playing, devices: @devices, id: :mini_player %>
     <%= if @premium? do %>

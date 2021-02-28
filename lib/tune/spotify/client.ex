@@ -73,6 +73,8 @@ defmodule Tune.Spotify.Client do
   @callback get_artist_albums(token(), artist_id :: Artist.id(), get_artist_albums_options()) ::
               {:ok, %{albums: [Album.t()], total: pos_integer()}} | {:error, term()}
   @callback get_episodes(token(), show_id :: Show.id()) :: {:ok, [Episode.t()]} | {:error, term()}
+  @callback get_episode(token(), episode_id :: Episode.id()) ::
+              {:ok, Episode.t()} | {:error, term()}
   @callback get_playlist(token(), playlist_id :: Playlist.id()) :: {:ok, map()} | {:error, term()}
   @callback get_recommendations_from_artists(token(), artist_ids :: [Artist.id()]) ::
               {:ok, [Track.t()]} | {:error, term()}

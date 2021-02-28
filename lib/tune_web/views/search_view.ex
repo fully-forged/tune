@@ -17,6 +17,10 @@ defmodule TuneWeb.SearchView do
   def name(%Episode{name: name}), do: name
 
   @spec authors(result_item(), Phoenix.Socket.t()) :: [{String.t(), nil | String.t()}]
+  defp authors(%Episode{publisher: :not_fetched}, _socket) do
+    nil
+  end
+
   defp authors(%Episode{publisher: publisher}, _socket) do
     publisher.name
   end

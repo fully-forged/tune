@@ -429,6 +429,29 @@ defmodule Tune.Spotify.Client.HTTP do
     end
   end
 
+  @impl true
+  def get_episode(token, episode_id) do
+    params = %{
+      market: "from_token"
+    }
+
+    case json_get(
+           @base_url <> "/episodes/" <> episode_id <> "?" <> URI.encode_query(params),
+           auth_headers(token)
+         ) do
+      {:ok, %{status: 200} = response} ->
+        episode =
+          response.body
+          |> Jason.decode!()
+          |> parse_episode_with_metadata()
+
+        {:ok, episode}
+
+      other_response ->
+        handle_errors(other_response)
+    end
+  end
+
   @default_limit 20
   @impl true
   def recently_played_tracks(token, opts) do
