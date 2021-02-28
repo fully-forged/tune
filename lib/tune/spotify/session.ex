@@ -73,6 +73,8 @@ defmodule Tune.Spotify.Session do
               {:ok, [Schema.Track.t()]} | {:error, term()}
   @callback get_show(id(), show_id :: Schema.Show.id()) ::
               {:ok, Schema.Show.t()} | {:error, term()}
+  @callback get_episode(id(), episode_id :: Schema.Episode.id()) ::
+              {:ok, Schema.Episode.t()} | {:error, term()}
   @callback recently_played_tracks(
               id(),
               recently_played_tracks_options :: Client.recently_played_tracks_options()

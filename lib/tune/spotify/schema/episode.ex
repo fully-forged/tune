@@ -11,8 +11,10 @@ defmodule Tune.Spotify.Schema.Episode do
   @enforce_keys [:id, :uri, :name, :description, :duration_ms, :show, :publisher, :thumbnails]
   defstruct [:id, :uri, :name, :description, :duration_ms, :show, :publisher, :thumbnails]
 
+  @type id :: Schema.id()
+
   @type t :: %__MODULE__{
-          id: Schema.id(),
+          id: id(),
           uri: Schema.uri(),
           name: String.t(),
           description: String.t(),

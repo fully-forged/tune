@@ -41,7 +41,7 @@ defmodule Tune.Generators do
   end
 
   def item_with_details do
-    one_of([album(), artist(), show()])
+    one_of([album(), artist(), show(), episode()])
   end
 
   def playlist do
