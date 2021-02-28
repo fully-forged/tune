@@ -10,7 +10,7 @@
     <title>Tune.Spotify.Session — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-9f91ebe876dc01d67920.css" />
 
-    <script src="dist/sidebar_items-fc16f88372.js"></script>
+    <script src="dist/sidebar_items-3da2c4e3dd.js"></script>
 
       <script src="docs_config.js"></script>
 
@@ -188,6 +188,13 @@ the mechanism used to notify other processes of changes in the session state.</p
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#c:get_devices/1">get_devices(id)</a>
+
+  </div>
+
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#c:get_episode/2">get_episode(id, episode_id)</a>
 
   </div>
 
@@ -667,6 +674,31 @@ Callbacks
       <div class="specs">
 
           <pre>get_devices(<a href="#t:id/0">id</a>()) :: {:ok, [<a href="Tune.Spotify.Schema.Device.html#t:t/0">Tune.Spotify.Schema.Device.t</a>()]} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+
+      </div>
+
+
+  </section>
+</section>
+<section class="detail" id="c:get_episode/2">
+
+  <div class="detail-header">
+    <a href="#c:get_episode/2" class="detail-link" title="Link to this callback">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this callback</span>
+    </a>
+    <h1 class="signature">get_episode(id, episode_id)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>get_episode(<a href="#t:id/0">id</a>(), episode_id :: <a href="Tune.Spotify.Schema.Episode.html#t:id/0">Tune.Spotify.Schema.Episode.id</a>()) ::
+  {:ok, <a href="Tune.Spotify.Schema.Episode.html#t:t/0">Tune.Spotify.Schema.Episode.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
 
       </div>
 
