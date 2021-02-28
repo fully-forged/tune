@@ -14,7 +14,7 @@
         </div>
         <div class="meta">
           <%= content_tag :h1, @show.name %>
-          <%= content_tag :p, @show.description %>
+          <%= content_tag :p, rich_description(@show) %>
           <%= content_tag :p do %>
             <%= content_tag :span, @show.publisher.name, class: "publisher" %>
             ·

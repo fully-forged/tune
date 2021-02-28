@@ -19,4 +19,11 @@ defmodule TuneWeb.ShowView do
       total_episodes
     )
   end
+
+  @spec rich_description(Show.t()) :: Phoenix.HTML.safe()
+  defp rich_description(%Show{description: description}) do
+    description
+    |> ExAutolink.link(args: %{rel: "nofollow noreferrer", target: "_blank"})
+    |> raw()
+  end
 end

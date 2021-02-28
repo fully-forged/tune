@@ -12,7 +12,7 @@
         <span class="playing-indicator">&nbsp;</span>
         <span class="name" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= episode.name %></span>
         <span class="duration"><%= Tune.Duration.hms(episode.duration_ms) %></span>
-        <p class="description" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= episode.description %></p>
+        <p class="description" phx-click="play" phx-value-uri="<%= episode.uri %>"><%= rich_description(episode) %></p>
       </li>
     <% end %>
   <% end %>

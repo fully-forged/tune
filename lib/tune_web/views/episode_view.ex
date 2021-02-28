@@ -9,4 +9,11 @@ defmodule TuneWeb.EpisodeView do
     do: true
 
   defp playing?(_episode, _now_playing), do: false
+
+  @spec rich_description(Episode.t()) :: Phoenix.HTML.safe()
+  defp rich_description(%Episode{description: description}) do
+    description
+    |> ExAutolink.link(args: %{rel: "nofollow noreferrer", target: "_blank"})
+    |> raw()
+  end
 end

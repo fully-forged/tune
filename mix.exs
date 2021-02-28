@@ -38,6 +38,7 @@ defmodule Tune.MixProject do
       {:phoenix, "~> 1.5.3"},
       {:phoenix_live_view, "~> 0.15.0"},
       {:phoenix_html, "~> 2.11"},
+      {:ex_autolink, "~> 0.2.0"},
       {:gettext, "~> 0.11"},
       {:phoenix_live_dashboard, "~> 0.4.0"},
       {:circular_buffer, "~> 0.3.0"},
