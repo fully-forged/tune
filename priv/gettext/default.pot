@@ -35,7 +35,7 @@ msgid "%{hours} and %{minutes}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/views/album_view.ex:31 lib/tune_web/views/playlist_view.ex:27
+#: lib/tune_web/views/album_view.ex:31 lib/tune_web/views/playlist_view.ex:28
 msgid "1 track, %{formatted_duration}"
 msgid_plural "%{count} tracks, %{formatted_duration}"
 msgstr[0] ""
