@@ -84,19 +84,19 @@ defmodule TuneWeb.SearchView do
 
   @spec thumbnail(result_item()) :: String.t()
   defp thumbnail(%Track{album: album}),
-    do: resolve_thumbnail(album.thumbnails, [:medium, :large])
+    do: resolve_thumbnail(album.thumbnails, [:small, :medium])
 
   defp thumbnail(%Album{thumbnails: thumbnails}),
-    do: resolve_thumbnail(thumbnails, [:medium, :large])
+    do: resolve_thumbnail(thumbnails, [:small, :medium])
 
   defp thumbnail(%Artist{thumbnails: thumbnails}),
-    do: resolve_thumbnail(thumbnails, [:medium, :large])
+    do: resolve_thumbnail(thumbnails, [:small, :medium])
 
   defp thumbnail(%Show{thumbnails: thumbnails}),
-    do: resolve_thumbnail(thumbnails, [:medium, :large])
+    do: resolve_thumbnail(thumbnails, [:small, :medium])
 
   defp thumbnail(%Episode{thumbnails: thumbnails}),
-    do: resolve_thumbnail(thumbnails, [:medium, :large])
+    do: resolve_thumbnail(thumbnails, [:small, :medium])
 
   @spec resolve_thumbnail(Schema.thumbnails(), [Schema.thumbnail_size()]) :: String.t()
   defp resolve_thumbnail(thumbnails, preferred_sizes) do

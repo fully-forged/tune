@@ -2,14 +2,15 @@ defmodule TuneWeb.PlaylistView do
   @moduledoc false
   use TuneWeb, :view
 
-  alias Tune.Spotify.Schema.Playlist
+  alias Tune.Spotify.Schema
+  alias Schema.Playlist
   alias TuneWeb.{PlayerView, SearchView}
 
   @default_artwork "https://via.placeholder.com/300"
 
   @spec artwork(Playlist.t()) :: String.t()
   defp artwork(playlist),
-    do: Map.get(playlist.thumbnails, :large, @default_artwork)
+    do: resolve_thumbnail(playlist.thumbnails, [:medium, :large])
 
   defp group_label("single"), do: "Singles"
   defp group_label("album"), do: "Albums"
@@ -30,5 +31,12 @@ defmodule TuneWeb.PlaylistView do
       tracks_count,
       %{formatted_duration: formatted_duration}
     )
+  end
+
+  @spec resolve_thumbnail(Schema.thumbnails(), [Schema.thumbnail_size()]) :: String.t()
+  defp resolve_thumbnail(thumbnails, preferred_sizes) do
+    Enum.find_value(thumbnails, @default_artwork, fn {size, url} ->
+      if size in preferred_sizes, do: url
+    end)
   end
 end
