@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "deploy": "webpack --mode production",
-    "watch": "webpack --mode development --watch"
+    "watch": "webpack --mode development --watch",
+    "test": "jest"
   },
   "dependencies": {
     "phoenix": "file:../deps/phoenix",
@@ -18,6 +19,7 @@
     "babel-loader": "^8.0.0",
     "copy-webpack-plugin": "^6.0.3",
     "css-loader": "^3.4.2",
+    "jest": "^26.6.3",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.1",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
