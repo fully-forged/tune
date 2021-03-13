@@ -170,6 +170,10 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 You can run tests with `mix test`, dialyzer with `mix dialyzer` and Credo with `mix credo`.
 
+The application also includes a minimal JS test suite (currently used as a
+playground to understand how to effectively test Phoenix LiveView hooks). You
+can run it with `cd assets` and then `npm test`.
+
 ### Documentation
 
 Available at <https://tune-docs.fullyforged.com>, gets automatically updated
