@@ -2,8 +2,9 @@ import { lsMock } from "../test-helpers";
 import VolumeSlider from "../VolumeSlider";
 
 test("on change, it sends the set_volume event", () => {
-  const slider = document.createElement("input");
-  slider.type = "range";
+  document.body.innerHTML = `<input type="range">`;
+  const slider = document.querySelector("input");
+
   const ls = lsMock(slider, VolumeSlider);
 
   ls.mounted();
