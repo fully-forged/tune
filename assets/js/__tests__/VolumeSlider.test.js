@@ -8,7 +8,8 @@ test("on change, it sends the set_volume event", () => {
 
   ls.mounted();
   slider.value = "50";
-  ls.trigger("change");
+  const evt = new Event("change");
+  ls.trigger(evt);
 
   expect(ls.pushEvent).toHaveBeenCalledWith("set_volume", {
     volume_percent: 50,
