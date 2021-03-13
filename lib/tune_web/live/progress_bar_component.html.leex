@@ -3,13 +3,14 @@
   <%= content_tag :label, gettext("Current track position"), for: "progress-bar", class: "visually-hidden" %>
   <progress
     id="progress-bar"
-    data-premium="<%= @premium? %>"
+    <%= if @premium? do %>
+      phx-hook="ProgressBar"
+    <% end %>
     data-test-control="progress"
     value="<%= @progress_ms %>"
     aria-valuenow="<%= @progress_ms %>"
     max="<%= @total_duration_ms %>"
     aria-valuemax="<%= @total_duration_ms %>"
-    phx-hook="ProgressBar"
     tabindex="0">
     <%= Tune.Duration.hms(@progress_ms) %>
   </progress>

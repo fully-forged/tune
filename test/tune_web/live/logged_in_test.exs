@@ -145,6 +145,10 @@ defmodule TuneWeb.LoggedInTest do
 
         assert explorer_live
                |> element("[data-test-control=progress]")
+               |> render() =~ ~s(phx-hook="ProgressBar")
+
+        assert explorer_live
+               |> element("[data-test-control=progress]")
                |> render_hook("seek", %{"position_ms" => new_position_ms})
       end
     end
@@ -168,9 +172,9 @@ defmodule TuneWeb.LoggedInTest do
         escaped_item_name = escape(item.name)
         assert html =~ escaped_item_name
 
-        assert explorer_live
+        refute explorer_live
                |> element("[data-test-control=progress]")
-               |> render() =~ ~s(data-premium="false")
+               |> render() =~ ~s(phx-hook="ProgressBar")
 
         refute has_element?(explorer_live, "[data-test-control=next]")
         refute has_element?(explorer_live, "[data-test-control=prev]")
