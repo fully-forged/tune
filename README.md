@@ -223,6 +223,7 @@ The project is setup to deploy on Heroku, please make sure you:
 - configure environment variables
 - add the buildpacks detailed at <https://hexdocs.pm/phoenix/heroku.html>
 - to enable exception tracking via [Sentry](https://sentry.io), make sure you define a `SENTRY_DSN` environment variable
+- to enable metrics tracking via [AppSignal](https://appsignal.com), make sure you defined the environment variables listed at <https://docs.appsignal.com/elixir/configuration/#minimal-required-configuration>
 
 ## Credits
 
