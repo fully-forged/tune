@@ -20,6 +20,7 @@ defmodule Tune.Application do
       Tune.Spotify.Supervisor,
       # Start the Telemetry supervisor
       TuneWeb.Telemetry,
+      {TelemetryMetricsAppsignal, [metrics: TuneWeb.Telemetry.metrics()]},
       {TuneWeb.Telemetry.Storage, TuneWeb.Telemetry.metrics()}
       # {Tune.Worker, arg}
     ]
