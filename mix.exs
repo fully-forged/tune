@@ -52,6 +52,8 @@ defmodule Tune.MixProject do
       {:vapor, "~> 0.10.0"},
       {:slugify, "~> 1.3"},
       {:sentry, "~> 8.0"},
+      {:appsignal, "~> 2.0"},
+      {:appsignal_phoenix, "~> 2.0.0"},
       {:ex_doc, "~> 0.22", only: :dev, runtime: false},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, ">= 0.0.0", only: :test},
