@@ -39,7 +39,7 @@ defmodule TuneWeb.ExplorerLive do
 
   use TuneWeb, :live_view
 
-  alias Tune.Spotify.Schema.{Album, Player, Track, User}
+  alias Tune.Spotify.Schema.{Album, Device, Player, Track, User}
 
   alias TuneWeb.{
     AlbumView,
@@ -516,6 +516,6 @@ defmodule TuneWeb.ExplorerLive do
   end
 
   defp generate_device_name do
-    "tune-" <> Tune.Spotify.Schema.Device.Name.random_slug()
+    "tune-" <> Device.generate_name()
   end
 end

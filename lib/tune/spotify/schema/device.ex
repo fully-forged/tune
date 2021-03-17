@@ -4,9 +4,11 @@ defmodule Tune.Spotify.Schema.Device do
   """
 
   alias Tune.Spotify.Schema
+  alias Schema.Device.Name
 
   @type id :: Schema.id()
   @type volume_percent :: nil | 0..100
+  @type name :: String.t()
 
   @enforce_keys [
     :id,
@@ -32,8 +34,11 @@ defmodule Tune.Spotify.Schema.Device do
           is_active: boolean(),
           is_private_session: boolean(),
           is_restricted: boolean(),
-          name: String.t(),
+          name: name(),
           type: String.t(),
           volume_percent: volume_percent()
         }
+
+  @spec generate_name() :: name()
+  def generate_name, do: Name.random_slug()
 end
