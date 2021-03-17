@@ -2,7 +2,7 @@ export default {
   player: null,
   initPlayer() {
     this.player = new Spotify.Player({
-      name: this.playerName(),
+      name: this.deviceName(),
       getOAuthToken: (cb) => {
         cb(this.token());
       },
@@ -25,8 +25,8 @@ export default {
   token() {
     return this.el.dataset.token;
   },
-  playerName() {
-    return this.el.dataset.playerId;
+  deviceName() {
+    return this.el.dataset.deviceName;
   },
   mounted() {
     if (window.spotifySDKReady) {
