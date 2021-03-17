@@ -96,7 +96,7 @@ defmodule TuneWeb.ExplorerLive do
          socket
          |> assign(@initial_state)
          |> assign(:static_changed, static_changed?(socket))
-         |> assign_new(:player_id, &generate_player_id/0)
+         |> assign_new(:device_name, &generate_device_name/0)
          |> assign(
            session_id: session_id,
            user: user,
@@ -515,7 +515,7 @@ defmodule TuneWeb.ExplorerLive do
     end
   end
 
-  defp generate_player_id do
-    "tune-" <> Tune.PlayerName.random_slug()
+  defp generate_device_name do
+    "tune-" <> Tune.Spotify.Schema.Device.Name.random_slug()
   end
 end

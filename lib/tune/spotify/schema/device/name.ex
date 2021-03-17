@@ -1,17 +1,18 @@
-defmodule Tune.PlayerName do
+defmodule Tune.Spotify.Schema.Device.Name do
   @moduledoc """
-  This module contains logic to generate player names
-  with a reasonable degree of entropy without the need of a stateful generator.
+  This module contains logic to generate player names with a reasonable degree
+  of entropy without the need of a stateful generator.
 
   Player names are supposed to be unique for a given user/session. A user is
   likely to have < 10 clients open at any given time.
 
   To guarantee a unique player name, we start with a list of 250+ musical
-  instruments. At generation time, we pick one random instrument and
-  append a value derived from current time, rounded to the second.
+  instruments. At generation time, we pick one random instrument and append a
+  value derived from current time, rounded to the second.
 
-  Names are taken from a text list stored in priv/name_generator/instruments.txt,
-  copied from https://simple.wikipedia.org/wiki/List_of_musical_instruments.
+  Names are taken from a text list stored in
+  `priv/name_generator/instruments.txt`, copied from
+  https://simple.wikipedia.org/wiki/List_of_musical_instruments.
   """
 
   instruments_file =
