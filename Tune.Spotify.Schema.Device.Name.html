@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.24.0">
     <meta name="project" content="tune v0.1.0">
 
-    <title>Tune.Spotify.Session.get_show — tune v0.1.0</title>
+    <title>Tune.Spotify.Schema.Device.Name — tune v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-44c37a375f.js"></script>
@@ -79,20 +79,68 @@ tune
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>Tune.Spotify.Session.get_show</h1>
+      <h1>
+Tune.Spotify.Schema.Device.Name <small class="app-vsn">(tune v0.1.0)</small>
 
-<div class="deprecated">
-  You're seeing just the callback <code>get_show</code>, go back to <a href="Tune.Spotify.Session.html">Tune.Spotify.Session</a> module for more information.
+      </h1>
+
+
+        <section id="moduledoc">
+<p>This module contains logic to generate player names with a reasonable degree
+of entropy without the need of a stateful generator.</p><p>Player names are supposed to be unique for a given user/session. A user is
+likely to have &lt; 10 clients open at any given time.</p><p>To guarantee a unique player name, we start with a list of 250+ musical
+instruments. At generation time, we pick one random instrument and append a
+value derived from current time, rounded to the second.</p><p>Names are taken from a text list stored in
+<code class="inline">priv/name_generator/instruments.txt</code>, copied from
+<a href="https://simple.wikipedia.org/wiki/List_of_musical_instruments.">https://simple.wikipedia.org/wiki/List_of_musical_instruments.</a></p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#random_slug/0">random_slug()</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>Pick an instrument at random and return it in slug form.</p></div>
+
 </div>
 
-<section class="detail" id="c:get_show/2">
+  </div>
+
+        </section>
+
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="random_slug/0">
 
   <div class="detail-header">
-    <a href="#c:get_show/2" class="detail-link" title="Link to this callback">
+    <a href="#random_slug/0" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this callback</span>
+      <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">get_show(id, show_id)</h1>
+    <h1 class="signature">random_slug()</h1>
 
 
   </div>
@@ -102,15 +150,16 @@ tune
       <h2>Specs</h2>
       <div class="specs">
 
-          <pre>get_show(<a href="#t:id/0">id</a>(), show_id :: <a href="Tune.Spotify.Schema.Show.html#t:id/0">Tune.Spotify.Schema.Show.id</a>()) ::
-  {:ok, <a href="Tune.Spotify.Schema.Show.html#t:t/0">Tune.Spotify.Schema.Show.t</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+          <pre>random_slug() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
 
       </div>
 
-
+<p>Pick an instrument at random and return it in slug form.</p>
   </section>
 </section>
 
+          </div>
+        </section>
 
       <footer class="footer">
         <p>

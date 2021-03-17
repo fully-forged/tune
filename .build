@@ -5,11 +5,11 @@ Tune.Config.html
 Tune.Duration.html
 Tune.Gettext.html
 Tune.Link.html
-Tune.PlayerName.html
 Tune.Spotify.Client.HTTP.html
 Tune.Spotify.Client.html
 Tune.Spotify.Schema.Album.html
 Tune.Spotify.Schema.Artist.html
+Tune.Spotify.Schema.Device.Name.html
 Tune.Spotify.Schema.Device.html
 Tune.Spotify.Schema.Episode.html
 Tune.Spotify.Schema.Player.html
@@ -32,8 +32,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-d79d6b479a.js
-dist/sidebar_items-3da2c4e3dd.js
+dist/search_items-fcd10cc294.js
+dist/sidebar_items-44c37a375f.js
 index.html
 readme.html
 search.html
