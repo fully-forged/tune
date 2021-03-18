@@ -1,6 +1,6 @@
 <header>
   <nav id="navbar">
-    <div class="logo">
+    <div id="logo">
       <%= render TuneWeb.HeaderView, "icon_logo.html" %>
     </div>
     <div class="links">
