@@ -26,6 +26,14 @@
           <kbd>q</kbd>
           <%= gettext("Focus device selector") %>
         </li>
+        <li>
+          <kbd>n</kbd>
+          <%= gettext("When available, go to the next page") %>
+        </li>
+        <li>
+          <kbd>p</kbd>
+          <%= gettext("When available, go to the previous page") %>
+        </li>
       </ul>
     </div>
     <div class="mini-player-help">

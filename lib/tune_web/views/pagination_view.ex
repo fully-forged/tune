@@ -49,7 +49,7 @@ defmodule TuneWeb.PaginationView do
       content_tag(:li, "<", class: "current")
     else
       content_tag :li do
-        live_patch("<", to: url_fn.(page, pagination_opts.per_page))
+        live_patch("<", id: "previous-page", to: url_fn.(page, pagination_opts.per_page))
       end
     end
   end
@@ -61,7 +61,7 @@ defmodule TuneWeb.PaginationView do
       content_tag(:li, ">", class: "current")
     else
       content_tag :li do
-        live_patch(">", to: url_fn.(page, pagination_opts.per_page))
+        live_patch(">", id: "next-page", to: url_fn.(page, pagination_opts.per_page))
       end
     end
   end
