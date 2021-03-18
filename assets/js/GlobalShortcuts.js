@@ -56,6 +56,22 @@ export default {
         case "q":
           deviceSelector.focus();
           break;
+        case "n":
+          // We delay resolving this element as it gets added
+          // and removed as needed
+          const nextPageLink = document.querySelector("#next-page");
+          if (nextPageLink) {
+            nextPageLink.click();
+          }
+          break;
+        case "p":
+          // We delay resolving this element as it gets added
+          // and removed as needed
+          const previousPageLink = document.querySelector("#previous-page");
+          if (previousPageLink) {
+            previousPageLink.click();
+          }
+          break;
         default:
           break;
       }

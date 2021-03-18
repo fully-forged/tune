@@ -87,6 +87,8 @@ Tune differs in these areas:
 - <kbd>s</kbd>: Volume down
 - <kbd>/</kbd>: Focus search input
 - <kbd>q</kbd>: Focus device selector
+- <kbd>n</kbd>: When available, go to the next page
+- <kbd>p</kbd>: When available, go to the previous page
 - <kbd>?</kbd>: Display a modal dialog with available shortcuts
   
 ### Free vs. Premium Subscriptions

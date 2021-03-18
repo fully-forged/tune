@@ -329,32 +329,32 @@ msgid "Keyboard shortcuts"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:44
+#: lib/tune_web/templates/layout/help.html.eex:52
 msgid "Next"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:40
+#: lib/tune_web/templates/layout/help.html.eex:48
 msgid "Previous"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:36
+#: lib/tune_web/templates/layout/help.html.eex:44
 msgid "Toggle Play/Pause"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:52
+#: lib/tune_web/templates/layout/help.html.eex:60
 msgid "Volume down"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:48
+#: lib/tune_web/templates/layout/help.html.eex:56
 msgid "Volume up"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/layout/help.html.eex:32
+#: lib/tune_web/templates/layout/help.html.eex:40
 msgid "Audio Player"
 msgstr ""
 
@@ -416,4 +416,14 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/views/artist_view.ex:32
 msgid "Single"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:31
+msgid "When available, go to the next page"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/layout/help.html.eex:35
+msgid "When available, go to the previous page"
 msgstr ""
