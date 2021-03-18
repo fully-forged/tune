@@ -5,9 +5,9 @@ export default {
     const modalOverlay = document.querySelector("#modal-overlay");
     const closeButton = document.querySelector("#close-button");
     const openButton = document.querySelector("#open-button");
-    const searchInput = document.getElementById("q");
-    const navBar = document.getElementById("navbar");
-    const deviceSelector = document.getElementById("device");
+    const searchInput = document.querySelector("#q");
+    const navBar = document.querySelector("#navbar");
+    const deviceSelector = document.querySelector("#device");
 
     closeButton.addEventListener("click", function () {
       modal.classList.toggle("closed");
