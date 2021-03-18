@@ -12,7 +12,7 @@ $thumb-width: 16px;
 $thumb-radius: 4px;
 $thumb-shadow-size: 0;
 $thumb-border-color: $light-gray;
-$thumb-border-width: 1px;
+$thumb-border-width: 2px;
 @import "./input-range";
 
 html {
@@ -66,7 +66,7 @@ progress {
 
   &::-moz-progress-bar {
     background-color: $accent-color;
-    border: 1px solid $light-gray;
+    border: 2px solid $light-gray;
     border-radius: 4px;
   }
 
@@ -77,7 +77,7 @@ progress {
 
   &::-webkit-progress-value {
     background-color: $accent-color;
-    border: 1px solid $light-gray;
+    border: 2px solid $light-gray;
     border-radius: 4px;
     transition: width 0.1s;
   }
