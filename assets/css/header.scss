@@ -9,7 +9,7 @@ $logo-dimension: 4rem;
   padding: 1rem;
   background-color: white;
 
-  .logo {
+  #logo {
     grid-area: logo;
     display: flex;
     align-items: center;
@@ -108,7 +108,7 @@ $logo-dimension: 4rem;
       }
     }
 
-    .logo,
+    #logo,
     .search,
     .profile,
     .links {

@@ -1,6 +1,6 @@
 export default {
   mounted() {
-    const logo = document.querySelector(".logo a");
+    const logo = document.querySelector("#logo a");
     const modal = document.querySelector("#help");
     const modalOverlay = document.querySelector("#modal-overlay");
     const closeButton = document.querySelector("#close-button");
