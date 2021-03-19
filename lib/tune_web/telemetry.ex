@@ -40,7 +40,8 @@ defmodule TuneWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
       summary("phoenix.live_view.handle_params.stop.duration",
-        tags: [:uri],
+        tags: [:live_action],
+        tag_values: &add_live_action/1,
         unit: {:native, :millisecond}
       ),
       summary("phoenix.live_view.handle_event.stop.duration",
@@ -86,6 +87,10 @@ defmodule TuneWeb.Telemetry do
 
   defp add_normalized_path(metadata) do
     Map.put(metadata, :normalized_path, URI.parse(metadata.path).path)
+  end
+
+  defp add_live_action(metadata) do
+    Map.put(metadata, :live_action, metadata.socket.assigns.live_action)
   end
 
   defp keep_spotify(meta) do
