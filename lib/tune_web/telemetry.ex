@@ -40,11 +40,12 @@ defmodule TuneWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
       summary("phoenix.live_view.handle_params.stop.duration",
+        tags: [:uri],
         unit: {:native, :millisecond}
       ),
       summary("phoenix.live_view.handle_event.stop.duration",
-        unit: {:native, :millisecond},
-        tags: [:event]
+        tags: [:event],
+        unit: {:native, :millisecond}
       ),
 
       # VM Metrics
