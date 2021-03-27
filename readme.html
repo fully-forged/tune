@@ -79,7 +79,7 @@ tune
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>Tune</h1><p><img src="https://github.com/fully-forged/tune/workflows/Tune%20CI/badge.svg" alt="CI Status"></img></p><ul><li><a href="#tune">Tune</a><ul><li><a href="#about">About</a><ul><li><a href="#album-details">Album details</a></li><li><a href="#global-search">Global Search</a></li><li><a href="#artist-details">Artist details</a></li><li><a href="#top-albums-and-recommendations">Top albums and recommendations</a></li><li><a href="#release-radar">Release radar</a></li></ul></li><li><a href="#usage">Usage</a><ul><li><a href="#scope-and-features">Scope and features</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li><li><a href="#free-vs-premium-subscriptions">Free vs. Premium Subscriptions</a></li><li><a href="#data-retention-and-privacy">Data retention and privacy</a></li><li><a href="#issues-with-devices-and-playback">Issues with devices and playback</a></li></ul></li><li><a href="#development">Development</a><ul><li><a href="#setup">Setup</a></li><li><a href="#running-the-application">Running the application</a></li><li><a href="#tests-dialyzer-and-credo">Tests, dialyzer and credo</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#application-structure">Application structure</a></li><li><a href="#telemetry">Telemetry</a></li></ul></li><li><a href="#deployment">Deployment</a></li><li><a href="#credits">Credits</a></li><li><a href="#code-of-conduct">Code of Conduct</a></li><li><a href="#license">License</a></li></ul></li></ul><h2 id="about" class="section-heading">
+<h1>Tune</h1><p><img src="https://github.com/fully-forged/tune/workflows/Tune%20CI/badge.svg" alt="CI Status"></img></p><ul><li><a href="#tune">Tune</a><ul><li><a href="#about">About</a><ul><li><a href="#album-details">Album details</a></li><li><a href="#global-search">Global Search</a></li><li><a href="#artist-details">Artist details</a></li><li><a href="#top-albums-and-recommendations">Top albums and recommendations</a></li><li><a href="#release-radar">Release radar</a></li></ul></li><li><a href="#usage">Usage</a><ul><li><a href="#scope-and-features">Scope and features</a></li><li><a href="#keyboard-shortcuts">Keyboard shortcuts</a></li><li><a href="#free-vs-premium-subscriptions">Free vs. Premium Subscriptions</a></li><li><a href="#data-retention-and-privacy">Data retention and privacy</a></li><li><a href="#duplicated-content">Duplicated content</a></li><li><a href="#issues-with-devices-and-playback">Issues with devices and playback</a></li></ul></li><li><a href="#development">Development</a><ul><li><a href="#setup">Setup</a></li><li><a href="#running-the-application">Running the application</a></li><li><a href="#tests-dialyzer-and-credo">Tests, dialyzer and credo</a></li><li><a href="#documentation">Documentation</a></li><li><a href="#application-structure">Application structure</a></li><li><a href="#telemetry">Telemetry</a></li></ul></li><li><a href="#deployment">Deployment</a></li><li><a href="#credits">Credits</a></li><li><a href="#code-of-conduct">Code of Conduct</a></li><li><a href="#license">License</a></li></ul></li></ul><h2 id="about" class="section-heading">
   <a href="#about" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   About
 </h2>
@@ -141,7 +141,15 @@ supported</a>).</p><h3 id="data-retention-and-privacy" class="section-heading">
 </h3>
 <p>Tune doesn't have any persistent storage: upon successful authentication,
 credentials are only stored in your browser's cookies and kept in memory in the application.</p><p>Credentials are cleared at most 30 seconds after you close the last browser
-session, even if you don't explicitly logout.</p><p>At this point in time, credentials may be printed in logs and/or crash reports.</p><h3 id="issues-with-devices-and-playback" class="section-heading">
+session, even if you don't explicitly logout.</p><p>At this point in time, credentials may be printed in logs and/or crash reports.</p><h3 id="duplicated-content" class="section-heading">
+  <a href="#duplicated-content" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Duplicated content
+</h3>
+<p>In some cases, search results or specific listings will display duplicated
+content (e.g. the exact same album twice). This is due to the Spotify API
+returning duplicated results which only differ in the ID.</p><p>It's not clear why this happens: it could be that the artist uploaded the same
+album multiple times, it could be that different editions are available in
+specific territories.</p><h3 id="issues-with-devices-and-playback" class="section-heading">
   <a href="#issues-with-devices-and-playback" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
   Issues with devices and playback
 </h3>
