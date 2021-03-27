@@ -14,6 +14,7 @@
     + [Keyboard shortcuts](#keyboard-shortcuts)
     + [Free vs. Premium Subscriptions](#free-vs-premium-subscriptions)
     + [Data retention and privacy](#data-retention-and-privacy)
+    + [Duplicated content](#duplicated-content)
     + [Issues with devices and playback](#issues-with-devices-and-playback)
   * [Development](#development)
     + [Setup](#setup)
@@ -120,6 +121,16 @@ Credentials are cleared at most 30 seconds after you close the last browser
 session, even if you don't explicitly logout.
 
 At this point in time, credentials may be printed in logs and/or crash reports.
+
+### Duplicated content
+
+In some cases, search results or specific listings will display duplicated
+content (e.g. the exact same album twice). This is due to the Spotify API
+returning duplicated results which only differ in the ID.
+
+It's not clear why this happens: it could be that the artist uploaded the same
+album multiple times, it could be that different editions are available in
+specific territories.
 
 ### Issues with devices and playback
 
