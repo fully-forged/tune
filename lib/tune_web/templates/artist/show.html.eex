@@ -16,6 +16,10 @@
           <%= content_tag :h1, @artist.name %>
           <%= content_tag :p, total_albums(@artist) %>
           <div class="reference-links">
+            <%= link to: @artist.spotify_url, target: "_blank", class: "svg-link spotify" do %>
+              <%= render TuneWeb.TrackView, "icon_spotify.html", [] %>
+              <%= content_tag :span, gettext("Open in Spotify"), class: "visually-hidden" %>
+            <% end %>
             <%= link to: Link.wikipedia(@artist), target: "_blank", class: "svg-link wikipedia" do %>
               <%= render "icon_wikipedia.html", [] %>
               <%= content_tag :span, gettext("Open in Wikipedia"), class: "visually-hidden" %>

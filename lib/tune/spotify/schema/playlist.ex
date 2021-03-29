@@ -10,6 +10,7 @@ defmodule Tune.Spotify.Schema.Playlist do
     :id,
     :uri,
     :name,
+    :spotify_url,
     :description,
     :thumbnails,
     :tracks
@@ -18,6 +19,7 @@ defmodule Tune.Spotify.Schema.Playlist do
     :id,
     :uri,
     :name,
+    :spotify_url,
     :description,
     :thumbnails,
     :tracks
@@ -28,6 +30,7 @@ defmodule Tune.Spotify.Schema.Playlist do
           id: id(),
           uri: Schema.uri(),
           name: String.t(),
+          spotify_url: String.t(),
           description: String.t(),
           thumbnails: Schema.thumbnails(),
           tracks: [Track.t()] | :not_fetched

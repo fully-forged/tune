@@ -14,6 +14,8 @@ defmodule Tune.Generators do
     User
   }
 
+  @spotify_open_url "https://open.spotify.com/"
+
   def search_type do
     one_of([
       constant(:track),
@@ -57,6 +59,7 @@ defmodule Tune.Generators do
         id: id,
         uri: "spotify:playlist:" <> id,
         name: name,
+        spotify_url: @spotify_open_url <> "playlist/" <> id,
         description: description,
         thumbnails: thumbnails,
         tracks: tracks
@@ -72,6 +75,7 @@ defmodule Tune.Generators do
           id: id,
           uri: "spotify:track:" <> id,
           name: name,
+          spotify_url: @spotify_open_url <> "track/" <> id,
           duration_ms: duration,
           track_number: track_number,
           disc_number: disc_number,
@@ -89,6 +93,7 @@ defmodule Tune.Generators do
         id: id,
         uri: "spotify:artist:" <> id,
         name: name,
+        spotify_url: @spotify_open_url <> "artist/" <> id,
         albums: :not_fetched,
         total_albums: :not_fetched,
         thumbnails: thumbnails
@@ -117,6 +122,7 @@ defmodule Tune.Generators do
           id: id,
           uri: "spotify:album:" <> id,
           name: name,
+          spotify_url: @spotify_open_url <> "album/" <> id,
           album_type: album_type,
           album_group: album_group,
           artists: artists,
@@ -141,6 +147,7 @@ defmodule Tune.Generators do
           id: id,
           uri: "spotify:album:" <> id,
           name: name,
+          spotify_url: @spotify_open_url <> "album/" <> id,
           album_type: album_type,
           album_group: album_group,
           artists: artists,
@@ -160,6 +167,7 @@ defmodule Tune.Generators do
         id: id,
         uri: "spotify:track:" <> id,
         name: name,
+        spotify_url: @spotify_open_url <> "track/" <> id,
         duration_ms: duration,
         track_number: track_number,
         disc_number: disc_number,
@@ -177,6 +185,7 @@ defmodule Tune.Generators do
           id: id,
           uri: "spotify:episode:" <> id,
           name: name,
+          spotify_url: @spotify_open_url <> "episode/" <> id,
           description: description,
           duration_ms: duration,
           show: show,
@@ -200,6 +209,7 @@ defmodule Tune.Generators do
         id: id,
         uri: "spotify:show:" <> id,
         name: name,
+        spotify_url: @spotify_open_url <> "show/" <> id,
         description: description,
         episodes: :not_fetched,
         publisher: publisher,

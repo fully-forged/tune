@@ -8,8 +8,28 @@ defmodule Tune.Spotify.Schema.Episode do
   alias Tune.{Duration, Spotify.Schema}
   alias Schema.{Publisher, Show}
 
-  @enforce_keys [:id, :uri, :name, :description, :duration_ms, :show, :publisher, :thumbnails]
-  defstruct [:id, :uri, :name, :description, :duration_ms, :show, :publisher, :thumbnails]
+  @enforce_keys [
+    :id,
+    :uri,
+    :name,
+    :spotify_url,
+    :description,
+    :duration_ms,
+    :show,
+    :publisher,
+    :thumbnails
+  ]
+  defstruct [
+    :id,
+    :uri,
+    :name,
+    :spotify_url,
+    :description,
+    :duration_ms,
+    :show,
+    :publisher,
+    :thumbnails
+  ]
 
   @type id :: Schema.id()
 
@@ -17,6 +37,7 @@ defmodule Tune.Spotify.Schema.Episode do
           id: id(),
           uri: Schema.uri(),
           name: String.t(),
+          spotify_url: String.t(),
           description: String.t(),
           duration_ms: Duration.milliseconds(),
           show: Show.t() | :not_fetched,
