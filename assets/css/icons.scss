@@ -33,3 +33,13 @@
     fill: #ff6633;
   }
 }
+
+.spotify {
+  svg {
+    fill: #1ed760;
+  }
+
+  &:hover svg {
+    fill: black;
+  }
+}

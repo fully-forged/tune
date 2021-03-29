@@ -23,6 +23,10 @@
             <%= content_tag :span, total_duration(@album), class: "total-duration" %>
           <% end %>
           <div class="reference-links">
+            <%= link to: @album.spotify_url, target: "_blank", class: "svg-link spotify" do %>
+              <%= render TuneWeb.TrackView, "icon_spotify.html", [] %>
+              <%= content_tag :span, gettext("Open in Spotify"), class: "visually-hidden" %>
+            <% end %>
             <%= link to: Link.last_fm(@album), target: "_blank", class: "svg-link last-fm" do %>
               <%= render TuneWeb.TrackView, "icon_last_fm.html", [] %>
               <%= content_tag :span, gettext("Open in Last.fm"), class: "visually-hidden" %>
