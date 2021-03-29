@@ -5,6 +5,10 @@
         <span class="track-number">&#127926;</span>
         <span class="name" phx-click="play" phx-value-uri="<%= track.uri %>" phx-value-context-uri="<%= @album.uri %>"><%= track.name %></span>
         <span class="duration"><%= Tune.Duration.hms(track.duration_ms) %></span>
+        <%= link to: track.spotify_url, target: "_blank", class: "spotify" do %>
+          <%= render TuneWeb.TrackView, "icon_spotify.html", [] %>
+          <%= content_tag :span, gettext("Open in Spotify"), class: "visually-hidden" %>
+        <% end %>
         <%= link to: Link.last_fm(track, @album, @artist), class: "last-fm", target: "_blank" do %>
           <%= render "icon_last_fm.html", [] %>
         <% end %>
@@ -20,6 +24,10 @@
         <span class="track-number"><%= track.track_number %></span>
         <span class="name" phx-click="play" phx-value-uri="<%= track.uri %>" phx-value-context-uri="<%= @album.uri %>"><%= track.name %></span>
         <span class="duration"><%= Tune.Duration.hms(track.duration_ms) %></span>
+        <%= link to: track.spotify_url, target: "_blank", class: "spotify" do %>
+          <%= render TuneWeb.TrackView, "icon_spotify.html", [] %>
+          <%= content_tag :span, gettext("Open in Spotify"), class: "visually-hidden" %>
+        <% end %>
         <%= link to: Link.last_fm(track, @album, @artist), class: "last-fm", target: "_blank" do %>
           <%= render "icon_last_fm.html", [] %>
         <% end %>

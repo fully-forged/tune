@@ -430,6 +430,7 @@ msgstr ""
 
 #, elixir-format
 #: lib/tune_web/templates/album/show.html.eex:28
-#: lib/tune_web/templates/artist/show.html.eex:21
+#: lib/tune_web/templates/artist/show.html.eex:21 lib/tune_web/templates/track/list.html.eex:10
+#: lib/tune_web/templates/track/list.html.eex:29
 msgid "Open in Spotify"
 msgstr ""
