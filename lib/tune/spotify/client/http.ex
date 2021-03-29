@@ -698,6 +698,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       duration_ms: Map.get(item, "duration_ms"),
       track_number: Map.get(item, "track_number"),
       disc_number: Map.get(item, "disc_number"),
@@ -717,6 +718,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       duration_ms: Map.get(item, "duration_ms"),
       track_number: Map.get(item, "track_number"),
       disc_number: Map.get(item, "disc_number"),
@@ -730,6 +732,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       albums: :not_fetched,
       total_albums: :not_fetched,
       thumbnails:
@@ -748,6 +751,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       album_type: Map.get(item, "album_type"),
       album_group: Map.get(item, "album_group", "album"),
       release_date: Map.get(item, "release_date"),
@@ -787,6 +791,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       description: Map.get(item, "description"),
       duration_ms: Map.get(item, "duration_ms"),
       thumbnails:
@@ -808,6 +813,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       description: Map.get(item, "description"),
       duration_ms: Map.get(item, "duration_ms"),
       thumbnails:
@@ -824,6 +830,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       description: Map.get(item, "description"),
       episodes: :not_fetched,
       publisher: %Publisher{
@@ -914,6 +921,7 @@ defmodule Tune.Spotify.Client.HTTP do
       id: Map.get(item, "id"),
       uri: Map.get(item, "uri"),
       name: Map.get(item, "name"),
+      spotify_url: parse_spotify_url(item),
       description: Map.get(item, "description"),
       thumbnails:
         item
@@ -943,5 +951,9 @@ defmodule Tune.Spotify.Client.HTTP do
       type: Map.get(device, "type"),
       volume_percent: Map.get(device, "volume_percent")
     }
+  end
+
+  defp parse_spotify_url(item) do
+    get_in(item, ["external_urls", "spotify"])
   end
 end
