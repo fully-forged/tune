@@ -240,6 +240,14 @@ The project is setup to deploy on Heroku, please make sure you:
 
 ## Credits
 
+All content and metadata is provided by Spotify unless explicitly stated.
+Content is owned by many different right holders.
+
+Icons:
+
+- Spotify icon by
+  [Spotify](https://developer.spotify.com/documentation/general/design-and-branding/#using-our-logo
+  "Spotify Logo")
 - Wikipedia icon by [Freepik](https://www.flaticon.com/authors/freepik
   "Freepik") from [www.flaticon.com](https://www.flaticon.com/ "Flaticon")
 - Last.fm icon by [Pixel
