@@ -2,32 +2,6 @@
 
 ![CI Status](https://github.com/fully-forged/tune/workflows/Tune%20CI/badge.svg)
 
-- [Tune](#tune)
-  * [About](#about)
-    + [Album details](#album-details)
-    + [Global Search](#global-search)
-    + [Artist details](#artist-details)
-    + [Top albums and recommendations](#top-albums-and-recommendations)
-    + [Release radar](#release-radar)
-  * [Usage](#usage)
-    + [Scope and features](#scope-and-features)
-    + [Keyboard shortcuts](#keyboard-shortcuts)
-    + [Free vs. Premium Subscriptions](#free-vs-premium-subscriptions)
-    + [Data retention and privacy](#data-retention-and-privacy)
-    + [Duplicated content](#duplicated-content)
-    + [Issues with devices and playback](#issues-with-devices-and-playback)
-  * [Development](#development)
-    + [Setup](#setup)
-    + [Running the application](#running-the-application)
-    + [Tests, dialyzer and credo](#tests-dialyzer-and-credo)
-    + [Documentation](#documentation)
-    + [Application structure](#application-structure)
-    + [Telemetry](#telemetry)
-  * [Deployment](#deployment)
-  * [Credits](#credits)
-  * [Code of Conduct](#code-of-conduct)
-  * [License](#license)
-
 ## About
 
 Tune is a Spotify browser and remote application with a focus on performance
