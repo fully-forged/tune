@@ -167,7 +167,7 @@ jobs:
         elixir: ['1.11.3']
         otp: ['23.2.4']
 
-    needs: [lint, test, js_test]
+    needs: [lint, test, js_compile, js_test]
 
     steps:
     - uses: actions/checkout@v2
