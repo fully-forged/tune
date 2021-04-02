@@ -15,6 +15,7 @@
         <div class="meta">
           <%= content_tag :h1, @artist.name %>
           <%= content_tag :p, total_albums(@artist) %>
+          <%= genre(@artist) %>
           <div class="reference-links">
             <%= link to: @artist.spotify_url, target: "_blank", class: "svg-link spotify" do %>
               <%= render TuneWeb.TrackView, "icon_spotify.html", [] %>

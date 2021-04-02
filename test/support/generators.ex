@@ -87,8 +87,8 @@ defmodule Tune.Generators do
   end
 
   def artist do
-    tuple({id(), name(), thumbnails()})
-    |> bind(fn {id, name, thumbnails} ->
+    tuple({id(), name(), genres(), thumbnails()})
+    |> bind(fn {id, name, genres, thumbnails} ->
       constant(%Artist{
         id: id,
         uri: "spotify:artist:" <> id,
@@ -96,6 +96,7 @@ defmodule Tune.Generators do
         spotify_url: @spotify_open_url <> "artist/" <> id,
         albums: :not_fetched,
         total_albums: :not_fetched,
+        genres: genres,
         thumbnails: thumbnails
       })
     end)

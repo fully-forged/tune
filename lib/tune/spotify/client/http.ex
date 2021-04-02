@@ -735,6 +735,7 @@ defmodule Tune.Spotify.Client.HTTP do
       spotify_url: parse_spotify_url(item),
       albums: :not_fetched,
       total_albums: :not_fetched,
+      genres: Map.get(item, "genres"),
       thumbnails:
         if Map.has_key?(item, "images") do
           item
