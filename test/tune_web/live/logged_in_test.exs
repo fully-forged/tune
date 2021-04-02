@@ -416,6 +416,17 @@ defmodule TuneWeb.LoggedInTest do
         assert html =~ escaped_artist_name
         assert render(explorer_live) =~ escaped_artist_name
 
+        case artist.genres do
+          [] ->
+            refute has_element?(explorer_live, ".genre")
+
+          genres ->
+            for genre <- genres do
+              assert html =~ genre
+              assert render(explorer_live) =~ genre
+            end
+        end
+
         artist_uri = artist.uri
 
         Tune.Spotify.Session.Mock
@@ -491,6 +502,17 @@ defmodule TuneWeb.LoggedInTest do
 
         assert html =~ Album.release_year(album)
         assert render(explorer_live) =~ Album.release_year(album)
+
+        case album.genres do
+          [] ->
+            refute has_element?(explorer_live, ".genre")
+
+          genres ->
+            for genre <- genres do
+              assert html =~ genre
+              assert render(explorer_live) =~ genre
+            end
+        end
 
         assert html =~
                  album

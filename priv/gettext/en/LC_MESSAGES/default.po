@@ -104,13 +104,13 @@ msgid "Not playing"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/album/show.html.eex:32
-#: lib/tune_web/templates/artist/show.html.eex:29
+#: lib/tune_web/templates/album/show.html.eex:33
+#: lib/tune_web/templates/artist/show.html.eex:30
 msgid "Open in Last.fm"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/artist/show.html.eex:25
+#: lib/tune_web/templates/artist/show.html.eex:26
 msgid "Open in Wikipedia"
 msgstr ""
 
@@ -252,8 +252,8 @@ msgid "Source"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/album/show.html.eex:36
-#: lib/tune_web/templates/artist/show.html.eex:33
+#: lib/tune_web/templates/album/show.html.eex:37
+#: lib/tune_web/templates/artist/show.html.eex:34
 msgid "Open in YouTube"
 msgstr ""
 
@@ -429,8 +429,8 @@ msgid "When available, go to the previous page"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/templates/album/show.html.eex:28
-#: lib/tune_web/templates/artist/show.html.eex:21 lib/tune_web/templates/track/list.html.eex:10
+#: lib/tune_web/templates/album/show.html.eex:29
+#: lib/tune_web/templates/artist/show.html.eex:22 lib/tune_web/templates/track/list.html.eex:10
 #: lib/tune_web/templates/track/list.html.eex:29
 msgid "Open in Spotify"
 msgstr ""

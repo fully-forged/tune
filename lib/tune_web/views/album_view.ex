@@ -35,4 +35,13 @@ defmodule TuneWeb.AlbumView do
       %{formatted_duration: formatted_duration}
     )
   end
+
+  @spec genre(Album.t()) :: nil | String.t()
+  defp genre(%Album{genres: []}), do: nil
+
+  defp genre(%Album{genres: genres}) do
+    content_tag :h3, class: "genre" do
+      Enum.join(genres, ", ")
+    end
+  end
 end

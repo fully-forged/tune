@@ -19,6 +19,7 @@ defmodule Tune.Spotify.Schema.Album do
     :release_date,
     :release_date_precision,
     :thumbnails,
+    :genres,
     :tracks
   ]
   defstruct [
@@ -32,6 +33,7 @@ defmodule Tune.Spotify.Schema.Album do
     :release_date,
     :release_date_precision,
     :thumbnails,
+    :genres,
     :tracks
   ]
 
@@ -47,6 +49,7 @@ defmodule Tune.Spotify.Schema.Album do
           artists: [Artist.t()] | :not_fetched,
           release_date: String.t(),
           release_date_precision: String.t(),
+          genres: [String.t()],
           thumbnails: Schema.thumbnails(),
           tracks: [Track.t()] | :not_fetched
         }

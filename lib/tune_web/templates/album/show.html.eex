@@ -17,6 +17,7 @@
             <%= authors(@album, @socket) %>
           <% end %>
           <%= content_tag :h1, @album.name %>
+          <%= genre(@album) %>
           <%= content_tag :p do %>
             <%= content_tag :span, Album.release_year(@album), class: "release-date" %>
             ·

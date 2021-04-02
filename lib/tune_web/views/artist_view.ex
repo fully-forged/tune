@@ -34,4 +34,13 @@ defmodule TuneWeb.ArtistView do
       compilation: gettext("Compilation")
     ]
   end
+
+  @spec genre(Artist.t()) :: nil | String.t()
+  defp genre(%Artist{genres: []}), do: nil
+
+  defp genre(%Artist{genres: genres}) do
+    content_tag :h3, class: "genre" do
+      Enum.join(genres, ", ")
+    end
+  end
 end
