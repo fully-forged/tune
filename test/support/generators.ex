@@ -348,7 +348,11 @@ defmodule Tune.Generators do
   end
 
   def genres do
-    list_of(string(:printable, min_length: 16, max_length: 128))
+    uniq_list_of(genre(), max_length: 8)
+  end
+
+  defp genre do
+    string(:printable, min_length: 16, max_length: 128)
   end
 
   defp release_year do
