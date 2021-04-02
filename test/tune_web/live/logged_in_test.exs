@@ -492,6 +492,17 @@ defmodule TuneWeb.LoggedInTest do
         assert html =~ Album.release_year(album)
         assert render(explorer_live) =~ Album.release_year(album)
 
+        case album.genres do
+          [] ->
+            refute has_element?(explorer_live, ".genre")
+
+          genres ->
+            for genre <- genres do
+              assert html =~ genre
+              assert render(explorer_live) =~ genre
+            end
+        end
+
         assert html =~
                  album
                  |> Album.total_duration_ms()

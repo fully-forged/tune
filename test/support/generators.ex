@@ -114,10 +114,10 @@ defmodule Tune.Generators do
   def album(artists) do
     bind(release_date_precision(), fn release_date_precision ->
       tuple(
-        {id(), name(), thumbnails(), album_type(), album_group(),
+        {id(), name(), thumbnails(), album_type(), album_group(), genres(),
          release_date(release_date_precision)}
       )
-      |> bind(fn {id, name, thumbnails, album_type, album_group, release_date} ->
+      |> bind(fn {id, name, thumbnails, album_type, album_group, genres, release_date} ->
         constant(%Album{
           id: id,
           uri: "spotify:album:" <> id,
@@ -127,6 +127,7 @@ defmodule Tune.Generators do
           album_group: album_group,
           artists: artists,
           thumbnails: thumbnails,
+          genres: genres,
           release_date: release_date,
           release_date_precision: release_date_precision,
           tracks: :not_fetched
@@ -138,11 +139,12 @@ defmodule Tune.Generators do
   def album_with_tracks do
     bind(release_date_precision(), fn release_date_precision ->
       tuple(
-        {id(), name(), thumbnails(), album_type(), album_group(),
+        {id(), name(), thumbnails(), album_type(), album_group(), genres(),
          release_date(release_date_precision), artists(),
          uniq_list_of(album_track(), min_length: 1, max_length: 32)}
       )
-      |> bind(fn {id, name, thumbnails, album_type, album_group, release_date, artists, tracks} ->
+      |> bind(fn {id, name, thumbnails, album_type, album_group, genres, release_date, artists,
+                  tracks} ->
         constant(%Album{
           id: id,
           uri: "spotify:album:" <> id,
@@ -152,6 +154,7 @@ defmodule Tune.Generators do
           album_group: album_group,
           artists: artists,
           thumbnails: thumbnails,
+          genres: genres,
           release_date: release_date,
           release_date_precision: release_date_precision,
           tracks: tracks
@@ -341,6 +344,10 @@ defmodule Tune.Generators do
       constant("compilation"),
       constant("appears_on")
     ])
+  end
+
+  def genres do
+    list_of(string(:printable, min_length: 16, max_length: 128))
   end
 
   defp release_year do

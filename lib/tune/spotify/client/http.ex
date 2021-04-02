@@ -764,6 +764,7 @@ defmodule Tune.Spotify.Client.HTTP do
         item
         |> Map.get("images")
         |> parse_thumbnails(),
+      genres: Map.get(item, "genres"),
       tracks:
         if Map.has_key?(item, "tracks") do
           item
