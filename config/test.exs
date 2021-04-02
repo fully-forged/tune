@@ -14,4 +14,4 @@ config :tune,
 config :logger, level: :warn
 
 config :stream_data,
-  max_runs: if(System.get_env("CI"), do: 30, else: 10)
+  max_runs: if(System.get_env("CI"), do: 20, else: 10)
