@@ -102,17 +102,22 @@ jobs:
     name: "JS Compile"
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        elixir: ['1.11.3']
+        otp: ['23.2.4']
+
     steps:
     - uses: actions/checkout@v2
 
-    - name: Retrieve Mix Dependencies Cache
+    - name: Retrieve Npm Dependencies Cache
       uses: actions/cache@v1
       id: npm-cache
       with:
         path: assets/node_modules
         key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/assets/package-lock.json')) }}
 
-    - name: Install Dependencies
+    - name: Install NPM Dependencies
       if: steps.npm-cache.outputs.cache-hit != 'true'
       run: cd assets && npm install
 
@@ -129,7 +134,7 @@ jobs:
         path: deps
         key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
 
-    - name: Install Dependencies
+    - name: Install Mix Dependencies
       if: steps.mix-cache.outputs.cache-hit != 'true'
       run: |
         mix local.rebar --force
