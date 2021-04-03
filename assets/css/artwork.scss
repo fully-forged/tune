@@ -10,7 +10,6 @@
   .play-button {
     display: flex;
     transition: all 0.2s ease-in-out;
-    opacity: 0;
     position: absolute;
     text-align: center;
     color: white;
@@ -45,10 +44,10 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (hover: hover) {
   .artwork {
     .play-button {
-      opacity: 1;
+      opacity: 0;
     }
   }
 }
