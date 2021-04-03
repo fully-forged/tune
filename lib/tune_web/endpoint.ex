@@ -12,7 +12,8 @@ defmodule TuneWeb.Endpoint do
     key: "_tune_key",
     signing_salt: "2txYZyfx",
     encryption_salt: {__MODULE__, :config, [:session_encryption_salt]},
-    same_site: "Lax"
+    same_site: "Lax",
+    max_age: 24 * 60 * 60 * 365
   ]
 
   socket "/socket", TuneWeb.UserSocket,
