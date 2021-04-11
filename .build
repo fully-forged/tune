@@ -9,6 +9,7 @@ Tune.Spotify.Client.HTTP.html
 Tune.Spotify.Client.html
 Tune.Spotify.Schema.Album.html
 Tune.Spotify.Schema.Artist.html
+Tune.Spotify.Schema.Copyright.html
 Tune.Spotify.Schema.Device.Name.html
 Tune.Spotify.Schema.Device.html
 Tune.Spotify.Schema.Episode.html
@@ -32,8 +33,8 @@ dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/search_items-e3a014a463.js
-dist/sidebar_items-44c37a375f.js
+dist/search_items-b737496fa7.js
+dist/sidebar_items-ea2a3f53b7.js
 index.html
 readme.html
 search.html
