@@ -24,6 +24,15 @@ import StopKeyDownPropagation from "./StopKeyDownPropagation";
 
 window.spotifySDKReady = false;
 
+// Fix Mobile Safari vh issue (https://www.bram.us/2020/05/06/100vh-in-safari-on-ios/)
+const setVh = () => {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+};
+
+window.addEventListener("load", setVh);
+window.addEventListener("resize", setVh);
+
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")
   .getAttribute("content");
