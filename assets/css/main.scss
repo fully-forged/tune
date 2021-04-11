@@ -1,18 +1,48 @@
 main {
-  max-width: 75%;
-  margin: 0 auto;
-  padding-bottom: 10rem;
+  height: 100vh;
 }
 
-@media (max-width: 1024px) {
-  main {
-    max-width: 92%;
+#explorer {
+  display: grid;
+  grid-template-rows: min-content min-content 1fr min-content;
+  grid-template-areas:
+    "header"
+    "alert"
+    "media"
+    "miniplayer";
+  height: 100%;
+
+  header {
+    grid-area: header;
   }
 }
 
-@media (max-width: 768px) {
-  main {
-    max-width: 90%;
-    padding-bottom: 20rem;
+.alert {
+  margin-left: 10%;
+  margin-right: 10%;
+  grid-area: "alert";
+}
+
+.media {
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 1rem;
+  grid-area: media;
+  overflow-y: scroll;
+}
+
+.mini-player {
+  grid-area: miniplayer;
+}
+
+@media (max-width: 1024px) {
+  .alert {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .media {
+    padding-left: 5%;
+    padding-right: 5%;
   }
 }

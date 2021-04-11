@@ -1,12 +1,12 @@
-<header>
-  <nav id="navbar">
-    <%= render TuneWeb.HeaderView, "logo.html", socket: @socket %>
-    <%= render TuneWeb.HeaderView, "search.html", socket: @socket, q: @q, type: @type %>
-    <%= render TuneWeb.HeaderView, "profile.html", socket: @socket, user: @user %>
-  </nav>
-</header>
 <main role="main">
   <section id="explorer">
+    <header>
+      <nav id="navbar">
+        <%= render TuneWeb.HeaderView, "logo.html", socket: @socket %>
+        <%= render TuneWeb.HeaderView, "search.html", socket: @socket, q: @q, type: @type %>
+        <%= render TuneWeb.HeaderView, "profile.html", socket: @socket, user: @user %>
+      </nav>
+    </header>
     <a href="#" class="alert alert-info" role="alert"
       phx-click="lv:clear-flash"
       phx-value-key="info"><%= live_flash(@flash, :info) %></a>
@@ -25,39 +25,41 @@
       </div>
     <% end %>
 
-    <%= case @live_action do %>
-      <% :suggestions -> %>
-        <%= render SuggestionsView, "index.html",
-          suggestions_playlist: @suggestions_playlist,
-          suggestions_recently_played_albums: @suggestions_recently_played_albums,
-          suggestions_top_albums: @suggestions_top_albums,
-          suggestions_top_albums_time_range: @suggestions_top_albums_time_range,
-          suggestions_recommended_tracks: @suggestions_recommended_tracks,
-          suggestions_recommended_tracks_time_range: @suggestions_recommended_tracks_time_range,
-          now_playing: @now_playing,
-          socket: @socket %>
-      <% :search -> %>
-        <%= render PaginationView, "selector.html",
-            pagination_opts: PaginationView.pagination_opts(@page, @per_page, @results.total),
-            url_fn: fn(current_page, per_page) ->
-              Routes.explorer_path(@socket, :search, q: @q, type: @type, page: current_page, per_page: per_page)
-            end %>
-        <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
-      <% :album_details -> %>
-        <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
-      <% :artist_details -> %>
-        <%= render ArtistView, "show.html",
-              artist: @item,
-              now_playing: @now_playing,
-              page: @page,
-              per_page: @per_page,
-              artist_albums_group: @artist_albums_group,
-              socket: @socket %>
-      <% :show_details -> %>
-        <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
-      <% :episode_details -> %>
-        <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
-      <% end %>
+    <div class="media">
+      <%= case @live_action do %>
+        <% :suggestions -> %>
+          <%= render SuggestionsView, "index.html",
+            suggestions_playlist: @suggestions_playlist,
+            suggestions_recently_played_albums: @suggestions_recently_played_albums,
+            suggestions_top_albums: @suggestions_top_albums,
+            suggestions_top_albums_time_range: @suggestions_top_albums_time_range,
+            suggestions_recommended_tracks: @suggestions_recommended_tracks,
+            suggestions_recommended_tracks_time_range: @suggestions_recommended_tracks_time_range,
+            now_playing: @now_playing,
+            socket: @socket %>
+        <% :search -> %>
+          <%= render PaginationView, "selector.html",
+              pagination_opts: PaginationView.pagination_opts(@page, @per_page, @results.total),
+              url_fn: fn(current_page, per_page) ->
+                Routes.explorer_path(@socket, :search, q: @q, type: @type, page: current_page, per_page: per_page)
+              end %>
+          <%= render SearchView, "results.html", q: @q, results: @results, socket: @socket %>
+        <% :album_details -> %>
+          <%= render AlbumView, "show.html", album: @item, now_playing: @now_playing, socket: @socket %>
+        <% :artist_details -> %>
+          <%= render ArtistView, "show.html",
+                artist: @item,
+                now_playing: @now_playing,
+                page: @page,
+                per_page: @per_page,
+                artist_albums_group: @artist_albums_group,
+                socket: @socket %>
+        <% :show_details -> %>
+          <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
+        <% :episode_details -> %>
+          <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
+        <% end %>
+    </div>
     <%= live_component @socket, MiniPlayerComponent, device_name: @device_name, premium?: @premium?, now_playing: @now_playing, devices: @devices, id: :mini_player %>
     <%= if @premium? do %>
       <script defer src="https://sdk.scdn.co/spotify-player.js"></script>
