@@ -10,6 +10,7 @@ defmodule Tune.Spotify.Client.HTTP do
   alias Tune.Spotify.Schema.{
     Album,
     Artist,
+    Copyright,
     Device,
     Episode,
     Player,
@@ -766,6 +767,14 @@ defmodule Tune.Spotify.Client.HTTP do
         |> Map.get("images")
         |> parse_thumbnails(),
       genres: Map.get(item, "genres"),
+      copyrights:
+        if Map.has_key?(item, "copyrights") do
+          item
+          |> Map.get("copyrights")
+          |> Enum.map(&parse_copyright/1)
+        else
+          :not_fetched
+        end,
       tracks:
         if Map.has_key?(item, "tracks") do
           item
@@ -957,5 +966,12 @@ defmodule Tune.Spotify.Client.HTTP do
 
   defp parse_spotify_url(item) do
     get_in(item, ["external_urls", "spotify"])
+  end
+
+  defp parse_copyright(copyright) do
+    %Copyright{
+      text: Map.get(copyright, "text"),
+      type: Map.get(copyright, "type")
+    }
   end
 end

@@ -20,6 +20,7 @@ defmodule Tune.Spotify.Schema.Album do
     :release_date_precision,
     :thumbnails,
     :genres,
+    :copyrights,
     :tracks
   ]
   defstruct [
@@ -34,6 +35,7 @@ defmodule Tune.Spotify.Schema.Album do
     :release_date_precision,
     :thumbnails,
     :genres,
+    :copyrights,
     :tracks
   ]
 
@@ -50,6 +52,7 @@ defmodule Tune.Spotify.Schema.Album do
           release_date: String.t(),
           release_date_precision: String.t(),
           genres: [String.t()],
+          copyrights: [Schema.Copyright.t()] | :not_fetched,
           thumbnails: Schema.thumbnails(),
           tracks: [Track.t()] | :not_fetched
         }
@@ -115,5 +118,14 @@ defmodule Tune.Spotify.Schema.Album do
     tracks
     |> Enum.map(& &1.album)
     |> Enum.uniq()
+  end
+
+  @spec has_copyrights?(t()) :: boolean()
+  def has_copyrights?(album) do
+    case album.copyrights do
+      :not_fetched -> false
+      [] -> false
+      _other -> true
+    end
   end
 end
