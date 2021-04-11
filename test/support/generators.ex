@@ -5,6 +5,7 @@ defmodule Tune.Generators do
   alias Tune.Spotify.Schema.{
     Album,
     Artist,
+    Copyright,
     Device,
     Episode,
     Playlist,
@@ -131,6 +132,7 @@ defmodule Tune.Generators do
           genres: genres,
           release_date: release_date,
           release_date_precision: release_date_precision,
+          copyrights: :not_fetched,
           tracks: :not_fetched
         })
       end)
@@ -142,10 +144,11 @@ defmodule Tune.Generators do
       tuple(
         {id(), name(), thumbnails(), album_type(), album_group(), genres(),
          release_date(release_date_precision), artists(),
-         uniq_list_of(album_track(), min_length: 1, max_length: 32)}
+         uniq_list_of(album_track(), min_length: 1, max_length: 32),
+         uniq_list_of(copyright(), max_length: 3)}
       )
       |> bind(fn {id, name, thumbnails, album_type, album_group, genres, release_date, artists,
-                  tracks} ->
+                  tracks, copyrights} ->
         constant(%Album{
           id: id,
           uri: "spotify:album:" <> id,
@@ -158,6 +161,7 @@ defmodule Tune.Generators do
           genres: genres,
           release_date: release_date,
           release_date_precision: release_date_precision,
+          copyrights: copyrights,
           tracks: tracks
         })
       end)
@@ -330,6 +334,13 @@ defmodule Tune.Generators do
     end)
   end
 
+  def copyright do
+    tuple({copyright_type(), copyright_text()})
+    |> bind(fn {copyright_type, copyright_text} ->
+      constant(%Copyright{type: copyright_type, text: copyright_text})
+    end)
+  end
+
   def product do
     one_of([constant("premium")])
   end
@@ -367,5 +378,13 @@ defmodule Tune.Generators do
     # to make things simpler, days are capped at 28 to avoid differentiating
     # between months
     map(integer(1..28), &to_string/1)
+  end
+
+  defp copyright_type do
+    one_of([constant("C"), constant("P")])
+  end
+
+  defp copyright_text do
+    string(:printable, min_length: 16, max_length: 128)
   end
 end
