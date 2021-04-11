@@ -433,3 +433,8 @@ msgstr ""
 #: lib/tune_web/templates/track/list.html.eex:29
 msgid "Open in Spotify"
 msgstr ""
+
+#, elixir-format
+#: lib/tune_web/templates/album/show.html.eex:46
+msgid "Disc %{disc_number}"
+msgstr ""

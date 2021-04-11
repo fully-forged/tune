@@ -43,7 +43,7 @@
         <div class="tracklist">
           <%= if Album.has_multiple_discs?(@album) do %>
             <%= for {disc, tracks} <- Album.grouped_tracks(@album) do %>
-                <p>Disc <%= disc %></p>
+                <p><%= gettext("Disc %{disc_number}", disc_number: disc)%></p>
                 <%= render TrackView, "list.html", tracks: tracks, artist: Album.main_artist(@album), album: @album, now_playing: @now_playing %>
             <% end %>
           <% else %>
