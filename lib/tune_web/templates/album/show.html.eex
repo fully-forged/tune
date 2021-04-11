@@ -54,7 +54,7 @@
       <%= if Album.has_copyrights?(@album) do %>
         <section class="copyrights">
           <%= for copyright <- @album.copyrights do %>
-            <p><%= copyright.text %></p>
+            <p><%= copyright_icon(copyright) %> <%= copyright.text %></p>
           <% end %>
         </section>
       <% end %>

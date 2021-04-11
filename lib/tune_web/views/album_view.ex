@@ -2,7 +2,7 @@ defmodule TuneWeb.AlbumView do
   @moduledoc false
   use TuneWeb, :view
 
-  alias Tune.{Link, Spotify.Schema.Album}
+  alias Tune.{Link, Spotify.Schema.Album, Spotify.Schema.Copyright}
   alias TuneWeb.TrackView
 
   @default_artwork "https://via.placeholder.com/300"
@@ -44,4 +44,8 @@ defmodule TuneWeb.AlbumView do
       Enum.join(genres, ", ")
     end
   end
+
+  @spec copyright_icon(Copyright.t()) :: Phoenix.HTML.safe()
+  defp copyright_icon(%Copyright{type: "C"}), do: raw("&copy;")
+  defp copyright_icon(%Copyright{type: "P"}), do: raw("&copysr;")
 end
