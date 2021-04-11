@@ -45,7 +45,6 @@ defmodule TuneWeb.ExplorerLive do
     AlbumView,
     ArtistView,
     MiniPlayerComponent,
-    PaginationView,
     ProgressBarComponent,
     SearchView,
     ShowView,

@@ -6,6 +6,7 @@ defmodule TuneWeb.SearchView do
 
   alias Tune.Spotify.Schema
   alias Schema.{Album, Artist, Episode, Show, Track}
+  alias TuneWeb.PaginationView
 
   @type result_item() :: Album.t() | Artist.t() | Episode.t() | Show.t() | Track.t()
 

@@ -52,12 +52,12 @@ msgid "Logged out"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:467
+#: lib/tune_web/live/explorer_live.ex:466
 msgid "No available devices"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:471
+#: lib/tune_web/live/explorer_live.ex:470
 msgid "Spotify error: %{reason}"
 msgstr ""
 
@@ -267,22 +267,22 @@ msgid "The app has been updated."
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:400
+#: lib/tune_web/live/explorer_live.ex:399
 msgid "Album details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:407
+#: lib/tune_web/live/explorer_live.ex:406
 msgid "Album details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:374
+#: lib/tune_web/live/explorer_live.ex:373
 msgid "Artist details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:391
+#: lib/tune_web/live/explorer_live.ex:390
 msgid "Artist details for %{name}"
 msgstr ""
 
@@ -293,27 +293,27 @@ msgid "Home"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:322
+#: lib/tune_web/live/explorer_live.ex:321
 msgid "Search results"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:336
+#: lib/tune_web/live/explorer_live.ex:335
 msgid "Search results for %{q}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:416 lib/tune_web/live/explorer_live.ex:434
+#: lib/tune_web/live/explorer_live.ex:415 lib/tune_web/live/explorer_live.ex:433
 msgid "Show details"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:425 lib/tune_web/live/explorer_live.ex:444
+#: lib/tune_web/live/explorer_live.ex:424 lib/tune_web/live/explorer_live.ex:443
 msgid "Show details for %{name}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/live/explorer_live.ex:289
+#: lib/tune_web/live/explorer_live.ex:288
 msgid "Suggestions"
 msgstr ""
 
