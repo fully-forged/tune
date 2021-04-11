@@ -514,6 +514,17 @@ defmodule TuneWeb.LoggedInTest do
             end
         end
 
+        case album.copyrights do
+          [] ->
+            refute has_element?(explorer_live, ".copyrights")
+
+          copyrights ->
+            for copyright <- copyrights do
+              assert html =~ copyright.text
+              assert render(explorer_live) =~ copyright.text
+            end
+        end
+
         assert html =~
                  album
                  |> Album.total_duration_ms()
