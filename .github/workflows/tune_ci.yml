@@ -17,7 +17,7 @@ jobs:
         otp: ['23.2.4']
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
 
     - name: Setup elixir
       uses: erlef/setup-elixir@v1
@@ -71,7 +71,7 @@ jobs:
         otp: ['23.2.4']
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
 
     - name: Setup elixir
       uses: erlef/setup-elixir@v1
@@ -108,7 +108,7 @@ jobs:
         otp: ['23.2.4']
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
 
     - name: Retrieve Npm Dependencies Cache
       uses: actions/cache@v2.1.5
@@ -149,7 +149,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
 
     - name: Install Dependencies
       run: cd assets && npm install
@@ -170,7 +170,7 @@ jobs:
     needs: [lint, test, js_compile, js_test]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
       with:
         persist-credentials: false
 
