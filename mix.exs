@@ -41,7 +41,7 @@ defmodule Tune.MixProject do
       {:ex_autolink, "~> 0.2.0"},
       {:gettext, "~> 0.11"},
       {:phoenix_live_dashboard, "~> 0.4.0"},
-      {:circular_buffer, "~> 0.3.0"},
+      {:circular_buffer, "~> 0.4.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
       {:jason, "~> 1.0"},
