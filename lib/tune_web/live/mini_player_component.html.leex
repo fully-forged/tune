@@ -23,7 +23,7 @@
         <%= img_tag thumbnail(item), alt: name(item) %>
       <% end %>
       <%= render PlayerView, "meta.html", item: item, socket: @socket %>
-      <%= live_component @socket, ProgressBarComponent, id: :progress_bar, premium?: @premium?, progress_ms: progress_ms, total_duration_ms: item.duration_ms %>
+      <%= live_component ProgressBarComponent, id: :progress_bar, premium?: @premium?, progress_ms: progress_ms, total_duration_ms: item.duration_ms %>
       <%= if @premium? do %>
         <%= render PlayerView, "controls.html", status: status, device: device %>
       <% end %>
