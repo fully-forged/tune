@@ -61,7 +61,7 @@
           <%= render ShowView, "show.html", show: @item, now_playing: @now_playing, socket: @socket %>
         <% end %>
     </div>
-    <%= live_component @socket, MiniPlayerComponent, device_name: @device_name, premium?: @premium?, now_playing: @now_playing, devices: @devices, id: :mini_player %>
+    <%= live_component MiniPlayerComponent, device_name: @device_name, premium?: @premium?, now_playing: @now_playing, devices: @devices, id: :mini_player %>
     <%= if @premium? do %>
       <script defer src="https://sdk.scdn.co/spotify-player.js"></script>
       <%= tag :div, id: "player", phx_hook: "AudioPlayer", data_token: @player_token, data_device_name: @device_name %>
