@@ -161,11 +161,6 @@ The application also includes a minimal JS test suite (currently used as a
 playground to understand how to effectively test Phoenix LiveView hooks). You
 can run it with `cd assets` and then `npm test`.
 
-### Documentation
-
-Available at <https://tune-docs.fullyforged.com>, gets automatically updated
-with every push on the `main` branch.
-
 ### Application structure
 
 The `Tune` namespace defines the domain logic responsible to interact with the
