@@ -59,6 +59,7 @@ defmodule TuneWeb.Endpoint do
   plug Plug.Session, @session_options
   plug TuneWeb.Router
 
+  @impl true
   def init(_type, config) do
     %{web: runtime_overrides} = Vapor.load!(Tune.Config)
 
