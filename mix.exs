@@ -35,12 +35,12 @@ defmodule Tune.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.3"},
-      {:phoenix_live_view, "~> 0.15.0"},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix, "~> 1.5.9"},
+      {:phoenix_live_view, "~> 0.16.0"},
+      {:phoenix_html, "~> 3.0.0"},
       {:ex_autolink, "~> 0.2.0"},
       {:gettext, "~> 0.11"},
-      {:phoenix_live_dashboard, "~> 0.4.0"},
+      {:phoenix_live_dashboard, "~> 0.5.0"},
       {:circular_buffer, "~> 0.4.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
