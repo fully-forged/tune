@@ -35,7 +35,7 @@ defmodule Tune.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.9"},
+      {:phoenix, "~> 1.6.2"},
       {:phoenix_live_view, "~> 0.16.0"},
       {:phoenix_html, "~> 3.0.0"},
       {:ex_autolink, "~> 0.2.0"},
