@@ -12,8 +12,9 @@ defmodule TuneWeb.PlaylistView do
   defp artwork(playlist),
     do: resolve_thumbnail(playlist.thumbnails, [:medium, :large])
 
-  defp group_label("single"), do: "Singles"
-  defp group_label("album"), do: "Albums"
+  defp group_label("single"), do: gettext("Singles")
+  defp group_label("album"), do: gettext("Albums")
+  defp group_label("compilation"), do: gettext("Compilations")
   defp group_label(other), do: other
 
   @spec total_duration(Playlist.t()) :: String.t()
