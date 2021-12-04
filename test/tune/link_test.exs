@@ -89,9 +89,7 @@ defmodule Tune.LinkTest do
         assert track_uri.host == "www.last.fm"
 
         assert track_uri.path ==
-                 "/music/#{URI.encode(main_artist.name)}/#{URI.encode(track.album.name)}/#{
-                   URI.encode(track.name)
-                 }"
+                 "/music/#{URI.encode(main_artist.name)}/#{URI.encode(track.album.name)}/#{URI.encode(track.name)}"
       end
     end
   end
