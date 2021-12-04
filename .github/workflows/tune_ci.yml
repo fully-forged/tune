@@ -13,8 +13,8 @@ jobs:
 
     strategy:
       matrix:
-        elixir: ['1.11.3']
-        otp: ['23.2.4']
+        elixir: ['1.13.0']
+        otp: ['24.1.7']
 
     steps:
     - uses: actions/checkout@v2.4.0
@@ -67,8 +67,8 @@ jobs:
 
     strategy:
       matrix:
-        elixir: ['1.11.3']
-        otp: ['23.2.4']
+        elixir: ['1.13.0']
+        otp: ['24.1.7']
 
     steps:
     - uses: actions/checkout@v2.4.0
@@ -104,8 +104,8 @@ jobs:
 
     strategy:
       matrix:
-        elixir: ['1.11.3']
-        otp: ['23.2.4']
+        elixir: ['1.13.0']
+        otp: ['24.1.7']
 
     steps:
     - uses: actions/checkout@v2.4.0
