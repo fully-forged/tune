@@ -110,20 +110,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2.4.0
 
-    - uses: actions/setup-node@v2
+    - name: Install Node
+      uses: actions/setup-node@v2
       with:
         node-version: '17.2.0'
-
-    - name: Retrieve Npm Dependencies Cache
-      uses: actions/cache@v2.1.7
-      id: npm-cache
-      with:
-        path: assets/node_modules
-        key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/assets/package-lock.json')) }}
-
-    - name: Install NPM Dependencies
-      if: steps.npm-cache.outputs.cache-hit != 'true'
-      run: cd assets && npm install
 
     - name: Setup elixir
       uses: erlef/setup-elixir@v1
@@ -145,6 +135,17 @@ jobs:
         mix local.hex --force
         mix deps.get
 
+    - name: Retrieve Npm Dependencies Cache
+      uses: actions/cache@v2.1.7
+      id: npm-cache
+      with:
+        path: assets/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/assets/package-lock.json')) }}
+
+    - name: Install NPM Dependencies
+      if: steps.npm-cache.outputs.cache-hit != 'true'
+      run: cd assets && npm install
+
     - name: Compile assets
       run: cd assets && npm run deploy
 
@@ -155,9 +156,37 @@ jobs:
     steps:
     - uses: actions/checkout@v2.4.0
 
-    - uses: actions/setup-node@v2
+    - name: Install Node
+      uses: actions/setup-node@v2
       with:
         node-version: '17.2.0'
+
+    - name: Setup elixir
+      uses: erlef/setup-elixir@v1
+      with:
+        elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
+        otp-version: ${{ matrix.otp }}
+
+    - name: Retrieve Mix Dependencies Cache
+      uses: actions/cache@v2.1.7
+      id: mix-cache
+      with:
+        path: deps
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+
+    - name: Install Mix Dependencies
+      if: steps.mix-cache.outputs.cache-hit != 'true'
+      run: |
+        mix local.rebar --force
+        mix local.hex --force
+        mix deps.get
+
+    - name: Retrieve Npm Dependencies Cache
+      uses: actions/cache@v2.1.7
+      id: npm-cache
+      with:
+        path: assets/node_modules
+        key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}{1}', github.workspace, '/assets/package-lock.json')) }}
 
     - name: Install Dependencies
       run: cd assets && npm install
