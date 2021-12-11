@@ -35,7 +35,7 @@ msgid "%{hours} and %{minutes}"
 msgstr ""
 
 #, elixir-format
-#: lib/tune_web/views/album_view.ex:31 lib/tune_web/views/playlist_view.ex:28
+#: lib/tune_web/views/album_view.ex:31 lib/tune_web/views/playlist_view.ex:29
 msgid "1 track, %{formatted_duration}"
 msgid_plural "%{count} tracks, %{formatted_duration}"
 msgstr[0] ""
@@ -437,4 +437,19 @@ msgstr ""
 #, elixir-format
 #: lib/tune_web/templates/album/show.html.eex:46
 msgid "Disc %{disc_number}"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/playlist_view.ex:16
+msgid "Albums"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/playlist_view.ex:17
+msgid "Compilations"
+msgstr ""
+
+#, elixir-format
+#: lib/tune_web/views/playlist_view.ex:15
+msgid "Singles"
 msgstr ""
