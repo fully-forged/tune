@@ -37,7 +37,7 @@ defmodule Tune.MixProject do
     [
       {:phoenix, "~> 1.6.2"},
       {:phoenix_live_view, "~> 0.16.0"},
-      {:phoenix_html, "~> 3.0.0"},
+      {:phoenix_html, "~> 3.2.0"},
       {:ex_autolink, "~> 0.2.0"},
       {:gettext, "~> 0.11"},
       {:phoenix_live_dashboard, "~> 0.5.0"},
