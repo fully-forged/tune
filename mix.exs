@@ -59,7 +59,7 @@ defmodule Tune.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:floki, ">= 0.0.0", only: :test},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:credo, "~> 1.5.0-rc.4", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.6.5", only: [:dev, :test], runtime: false},
       {:mox, "~> 1.0", only: :test},
       {:stream_data, "~> 0.5.0", only: :test},
       {:eventually, "~> 1.1", only: :test}
